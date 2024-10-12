@@ -7,6 +7,8 @@ namespace Devotion.Controllers
     {
         private List<Component> _components;
 
+        public static Player Instance { get; private set; }
+
         private void Start()
         {
             _components = new List<Component>(GetComponents<Component>());

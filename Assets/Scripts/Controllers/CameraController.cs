@@ -15,7 +15,7 @@ namespace Devotion.Controllers
         private bool _isFollowing = true;
         private bool _isMovingToTarget = false;
 
-        public void InitManager()
+        public new void InitManager()
         {
             _mainCamera = Camera.main;
             _player = Player.Instance.gameObject.transform;
