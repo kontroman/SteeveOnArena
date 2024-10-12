@@ -1,4 +1,7 @@
-public interface IManager
+namespace Devotion.Interfaces
 {
-    public void InitManager();
+    public interface IManager
+    {
+        public void InitManager();
+    }
 }

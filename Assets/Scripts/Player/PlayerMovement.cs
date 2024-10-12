@@ -9,13 +9,18 @@ namespace Devotion.Player
     {
         [SerializeField] private float _speed = 5f;
         [SerializeField] private float _rotationSpeed = 10f;
+
         public float MoveSpeed => _speed;
+        public float RotationSpeed => _rotationSpeed;
 
         private CharacterController _characterController;
         private bool _canMove = true;
 
+        private Transform _cameraTransform;
+
         private void Start()
         {
+            _cameraTransform = Camera.main.transform;
             _characterController = GetComponent<CharacterController>();
         }
 
@@ -37,12 +42,17 @@ namespace Devotion.Player
             if (moveDirection.magnitude > 0.1f)
             {
                 moveDirection.Normalize();
+
+                Vector3 cameraForward = _cameraTransform.forward;
+                cameraForward.y = 0;
+                Quaternion cameraRotation = Quaternion.LookRotation(cameraForward);
+                moveDirection = cameraRotation * moveDirection;
+
                 _characterController.Move(moveDirection * MoveSpeed * Time.deltaTime);
 
-                Vector3 targetDirection = new Vector3(moveX, 0, moveZ);
-                if (targetDirection != Vector3.zero)
+                if (moveDirection != Vector3.zero)
                 {
-                    Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
+                    Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
                     transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, _rotationSpeed * Time.deltaTime);
                 }
             }
