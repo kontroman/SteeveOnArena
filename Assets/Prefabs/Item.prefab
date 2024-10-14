@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 3113649767290711479}
   - component: {fileID: 7849931227994273036}
   - component: {fileID: 8599182443116486423}
-  - component: {fileID: 4825229845673763567}
   - component: {fileID: 6621316148761914644}
   m_Layer: 0
   m_Name: Item
@@ -108,19 +107,6 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4825229845673763567
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 553822994538010830}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d73819d383b3483428d0634f2b686fd6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _name: "\u041C\u0435\u0447 \u043A\u043E\u0440\u043E\u043B\u044F"
 --- !u!114 &6621316148761914644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -133,7 +119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1748f5f72bad7094d827e96983182591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _positionInput: {x: 0, y: 0.3, z: 0}
+  _step: {x: 0, y: 0.27, z: 0}
   _rotation: {x: 0, y: 180, z: 0}
   _duration: 2.2
   _repeats: -1
