@@ -1,19 +1,33 @@
 using Devotion.Item;
 using UnityEngine;
 using UnityEngine.UI;
+using Devotion.Controllers;
 
 namespace Devotion.Item
 {
     public class ItemView : MonoBehaviour
     {
         [SerializeField] private Item _item;
-        [SerializeField] private GameObject _gameObject;
-        //[SerializeField] private Text _name;
+        [SerializeField] private GameObject _prefab;
 
-        private void Start()
+        private void OnTriggerEnter(Collider other)
         {
-            _gameObject = _item.GameObject;
-            //_name.text = _item.Name;
+            if (other.gameObject.TryGetComponent(out Inventory inventoryPlayer))
+            {
+                if (_item.IsAddInventory == false)
+                    ActivateInstantly();
+                else
+                    AddInventory(inventoryPlayer);
+
+            }
+        }
+
+        private void ActivateInstantly() => _item.Activation();
+
+        public void AddInventory(Inventory inventoryPlayer)
+        {
+            inventoryPlayer.GetItem(_item);
+            gameObject.SetActive(false); // late add( create)  pool items 
         }
     }
 }
