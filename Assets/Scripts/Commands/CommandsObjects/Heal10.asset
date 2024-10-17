@@ -9,11 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d73819d383b3483428d0634f2b686fd6, type: 3}
-  m_Name: Sword
+  m_Script: {fileID: 11500000, guid: cdfe95d6d61fe074cb95e17a86c0f46e, type: 3}
+  m_Name: Heal10
   m_EditorClassIdentifier: 
-  _name: Sword
-  _resource: {fileID: 0}
-  _amountResources: 1
-  _isAddInventory: 0
-  command: {fileID: 11400000, guid: 9acb1d36dab9c654cae33423b5372b5b, type: 2}
+  _healthIncreaseAmount: 10

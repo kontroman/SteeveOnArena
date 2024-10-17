@@ -1,22 +1,27 @@
-using Devotion.Item;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Devotion.Items;
+using Devotion.Resourse;
 
-public class Inventory : MonoBehaviour
+namespace Devotion.Controllers
 {
-    private List<Item> items;
-
-    private void Start()
+    public class Inventory : MonoBehaviour
     {
-        items = new List<Item>();
+        private List<ItemView> items;
+
+        private void Start()
+        {
+            items = new List<ItemView>();
+        }
+
+        public void AddItem(ItemView item)
+        {
+            items.Add(item);
+        }
+
+        public void AddResource(Resource resource, int amount)
+        {
+            Debug.Log($"Added {amount} of {resource.name} to inventory.");
+        }
     }
-
-    public void GetItem(Item item)
-    {
-        items.Add(item);
-        Debug.Log(item.Name);
-
-    }   
 }

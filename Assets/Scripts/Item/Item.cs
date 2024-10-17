@@ -1,7 +1,8 @@
 using UnityEngine;
 using Devotion.Resourse;
+using Devotion.Commands;
 
-namespace Devotion.Item
+namespace Devotion.Items
 {
     [CreateAssetMenu(fileName = "New Item", menuName = "Item/Create new item", order = 51)]
     public class Item : ScriptableObject
@@ -11,14 +12,13 @@ namespace Devotion.Item
         [SerializeField] private int _amountResources;
         [SerializeField] private bool _isAddInventory = true;
 
+        [SerializeField] public BaseCommand command;
+
         public string Name => _name;
         public Resource Resource => _resource;
         public int AmountResources => _amountResources;
         public bool IsAddInventory => _isAddInventory;
-        
-        public void Activation()
-        {
 
-        }
+        public delegate void Activation();
     }
 }
