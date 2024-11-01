@@ -4843,7 +4843,7 @@ GameObject:
   - component: {fileID: 873198578197101934}
   - component: {fileID: 8809575606026630856}
   m_Layer: 0
-  m_Name: Knife
+  m_Name: Sword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4879,7 +4879,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _item: {fileID: 11400000, guid: 94a791fc770d0434da8b2b659ad50574, type: 2}
-  _prefab: {fileID: 7097826775940330933}
 --- !u!136 &873198578197101934
 CapsuleCollider:
   m_ObjectHideFlags: 0
