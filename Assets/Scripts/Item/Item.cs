@@ -1,5 +1,6 @@
 using UnityEngine;
 using Devotion.Resourse;
+using Sirenix.OdinInspector;
 
 namespace Devotion.Items
 {
@@ -13,6 +14,11 @@ namespace Devotion.Items
 
         [SerializeField] public BaseCommand command;
 
+        [HideLabel, MinMaxSlider(0, 100, true)]
+        [SerializeField] private Vector2 _minMaxSlider;
+
+        public float LowerBound { get { return _minMaxSlider.x; } }
+        public float UpperBound { get { return _minMaxSlider.y; } }
         public string Name => _name;
         public GameObject Prefab => _prefab;
         public int AmountResources => _amountResources;

@@ -242,9 +242,6 @@ GameObject:
   - component: {fileID: 307652368}
   - component: {fileID: 307652367}
   - component: {fileID: 307652366}
-  - component: {fileID: 307652365}
-  - component: {fileID: 307652364}
-  - component: {fileID: 307652372}
   m_Layer: 0
   m_Name: Stone (4)
   m_TagString: Untagged
@@ -252,36 +249,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &307652364
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 307652363}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad8f3c2e3b6cf3641be66437f54debf3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _item: {fileID: 11400000, guid: 94a791fc770d0434da8b2b659ad50574, type: 2}
-  _lowerBound: 10
-  _upperBound: 50
---- !u!114 &307652365
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 307652363}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad8f3c2e3b6cf3641be66437f54debf3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _item: {fileID: 11400000, guid: d431e8f8ec350ea4fbe7a3a1526b7f18, type: 2}
-  _lowerBound: 10
-  _upperBound: 50
 --- !u!114 &307652366
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -295,10 +262,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _drops:
-  - {fileID: 307652365}
-  - {fileID: 307652364}
-  - {fileID: 307652372}
-  _isOneDrop: 1
+  - {fileID: 11400000, guid: 647cc1c966c36f040a9880865f9307be, type: 2}
+  - {fileID: 11400000, guid: d431e8f8ec350ea4fbe7a3a1526b7f18, type: 2}
+  - {fileID: 11400000, guid: 94a791fc770d0434da8b2b659ad50574, type: 2}
+  _isOneDrop: 0
 --- !u!114 &307652367
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -330,8 +297,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1.2408146, y: 1, z: 1.2908062}
+  m_Center: {x: -0.12040739, y: 0, z: 0.14540347}
 --- !u!23 &307652369
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -397,21 +364,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &307652372
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 307652363}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad8f3c2e3b6cf3641be66437f54debf3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _item: {fileID: 11400000, guid: 647cc1c966c36f040a9880865f9307be, type: 2}
-  _lowerBound: 10
-  _upperBound: 50
 --- !u!1 &376550991
 GameObject:
   m_ObjectHideFlags: 0
@@ -426,9 +378,6 @@ GameObject:
   - component: {fileID: 376550996}
   - component: {fileID: 376550995}
   - component: {fileID: 376550994}
-  - component: {fileID: 376550993}
-  - component: {fileID: 376550992}
-  - component: {fileID: 376551000}
   m_Layer: 0
   m_Name: Stone (3)
   m_TagString: Untagged
@@ -436,36 +385,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &376550992
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 376550991}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad8f3c2e3b6cf3641be66437f54debf3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _item: {fileID: 11400000, guid: 94a791fc770d0434da8b2b659ad50574, type: 2}
-  _lowerBound: 10
-  _upperBound: 50
---- !u!114 &376550993
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 376550991}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad8f3c2e3b6cf3641be66437f54debf3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _item: {fileID: 11400000, guid: d431e8f8ec350ea4fbe7a3a1526b7f18, type: 2}
-  _lowerBound: 10
-  _upperBound: 50
 --- !u!114 &376550994
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -479,9 +398,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _drops:
-  - {fileID: 376550993}
-  - {fileID: 376550992}
-  - {fileID: 376551000}
+  - {fileID: 11400000, guid: 647cc1c966c36f040a9880865f9307be, type: 2}
+  - {fileID: 11400000, guid: d431e8f8ec350ea4fbe7a3a1526b7f18, type: 2}
+  - {fileID: 11400000, guid: 94a791fc770d0434da8b2b659ad50574, type: 2}
   _isOneDrop: 0
 --- !u!114 &376550995
 MonoBehaviour:
@@ -514,8 +433,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1.1447047, y: 1, z: 1.2677153}
+  m_Center: {x: -0.07235257, y: 0, z: 0.019953497}
 --- !u!23 &376550997
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -581,21 +500,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &376551000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 376550991}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad8f3c2e3b6cf3641be66437f54debf3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _item: {fileID: 11400000, guid: 647cc1c966c36f040a9880865f9307be, type: 2}
-  _lowerBound: 10
-  _upperBound: 50
 --- !u!1 &384116221
 GameObject:
   m_ObjectHideFlags: 0
@@ -1875,9 +1779,6 @@ GameObject:
   - component: {fileID: 2043315986}
   - component: {fileID: 2043315985}
   - component: {fileID: 2043315984}
-  - component: {fileID: 2043315983}
-  - component: {fileID: 2043315982}
-  - component: {fileID: 2043315981}
   m_Layer: 0
   m_Name: Stone (5)
   m_TagString: Untagged
@@ -1885,51 +1786,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2043315981
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2043315980}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad8f3c2e3b6cf3641be66437f54debf3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _item: {fileID: 11400000, guid: 647cc1c966c36f040a9880865f9307be, type: 2}
-  _lowerBound: 10
-  _upperBound: 50
---- !u!114 &2043315982
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2043315980}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad8f3c2e3b6cf3641be66437f54debf3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _item: {fileID: 11400000, guid: 94a791fc770d0434da8b2b659ad50574, type: 2}
-  _lowerBound: 10
-  _upperBound: 50
---- !u!114 &2043315983
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2043315980}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad8f3c2e3b6cf3641be66437f54debf3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _item: {fileID: 11400000, guid: d431e8f8ec350ea4fbe7a3a1526b7f18, type: 2}
-  _lowerBound: 10
-  _upperBound: 50
 --- !u!114 &2043315984
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1943,10 +1799,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _drops:
-  - {fileID: 2043315983}
-  - {fileID: 2043315982}
-  - {fileID: 2043315981}
-  _isOneDrop: 1
+  - {fileID: 11400000, guid: 647cc1c966c36f040a9880865f9307be, type: 2}
+  - {fileID: 11400000, guid: d431e8f8ec350ea4fbe7a3a1526b7f18, type: 2}
+  - {fileID: 11400000, guid: 94a791fc770d0434da8b2b659ad50574, type: 2}
+  _isOneDrop: 0
 --- !u!114 &2043315985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1978,8 +1834,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1.279421, y: 1, z: 1.0665914}
+  m_Center: {x: -0.1397107, y: 0, z: 0.03329592}
 --- !u!23 &2043315987
 MeshRenderer:
   m_ObjectHideFlags: 0
