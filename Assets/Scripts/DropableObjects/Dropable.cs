@@ -8,7 +8,7 @@ namespace Devotion.Drop
         [Header("List drops")]
         [SerializeField] private List<Drop> _drops;
 
-        [Header("Drop only or more ")]
+        [Header("Drop only or more")]
         [SerializeField] private bool _isOneDrop;
 
         private int _maxChanceDrop = 101;
@@ -20,7 +20,6 @@ namespace Devotion.Drop
         {
             _currentDrops = new List<Drop>();
             _currentChanceDrop = Random.Range(_minChanceDrop, _maxChanceDrop);
-            Debug.Log(gameObject.name + "  " + _currentChanceDrop);
         }
 
         private void OnDestroy()
@@ -57,7 +56,6 @@ namespace Devotion.Drop
             }
 
             _currentChanceDrop = Random.Range(0, _currentDrops.Count + 1);
-            Debug.LogError(gameObject.name + "  " + _currentChanceDrop);
 
             for (int i = 0; i < _currentDrops.Count; i++)
             {
