@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using Devotion.Interfaces;
 using Devotion.Managers;
 
 namespace Devotion.Controllers
@@ -9,7 +8,7 @@ namespace Devotion.Controllers
     {
         public static GameRoot Instance { get; private set; }
 
-        public List<BaseManager> _managers = new List<BaseManager>();
+        private Dictionary<System.Type, BaseManager> _managers = new Dictionary<System.Type, BaseManager>();
 
         private void Awake()
         {
@@ -26,24 +25,32 @@ namespace Devotion.Controllers
 
         public T GetManager<T>() where T : BaseManager
         {
-            T manager = _managers.Find(m => m is T) as T;
+            System.Type type = typeof(T);
 
-            if (manager != null)
+            if (_managers.TryGetValue(type, out BaseManager manager))
             {
-                return manager;
+                return manager as T;
             }
             else
             {
-                manager = Resources.Load("ManagersPrefabs/" + typeof(T).Name) as T;
+                T loadedManager = Resources.Load<T>("ManagersPrefabs/" + type.Name);
 
-                if (manager != null)
+                if (loadedManager != null)
                 {
-                    _managers.Add(manager);
+                    var instantiatedManager = Instantiate(loadedManager);
+                    instantiatedManager.transform.parent = transform;
+                    _managers[type] = instantiatedManager;
+
+                    Debug.Log($"Created {type.Name} by request");
+
+                    return loadedManager;
                 }
                 else
-                    Debug.LogWarning($"Manager {typeof(T).Name} not found in ManagersPrefabs folder");
+                {
+                    Debug.Log($"Manager {type.Name} not found in ManagersPrefabs folder");
 
-                return manager;
+                    return null;
+                }
             }
         }
     }

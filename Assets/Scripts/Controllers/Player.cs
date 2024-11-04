@@ -11,6 +11,8 @@ namespace Devotion.Controllers
 
         private void Start()
         {
+            Instance = this;
+
             _components = new List<Component>(GetComponents<Component>());
         }
 
