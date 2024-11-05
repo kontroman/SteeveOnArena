@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d73819d383b3483428d0634f2b686fd6, type: 3}
   m_Name: Coin
   m_EditorClassIdentifier: 
-  _name: 
-  _amountResources: 0
+  _name: Coin
+  _amountResources: 1
   _prefab: {fileID: 553822994538010830, guid: 88fcfd5835e1ca2458163526259dc930, type: 3}
   _isAddInventory: 1
   command: {fileID: 11400000, guid: 9acb1d36dab9c654cae33423b5372b5b, type: 2}

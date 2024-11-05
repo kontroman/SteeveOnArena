@@ -7,7 +7,7 @@ namespace Devotion.Items
     {
         [SerializeField] private Item _item;
 
-        private void OnTriggerEnter(Collider other)
+        private void OnCollizionEnter(Collision other)
         {
             if (other.gameObject.TryGetComponent(out Inventory inventoryPlayer))
             {

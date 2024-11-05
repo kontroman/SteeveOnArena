@@ -1,5 +1,4 @@
 using UnityEngine;
-using Devotion.Resourse;
 using Sirenix.OdinInspector;
 
 namespace Devotion.Items
