@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
-namespace Devotion.Player
+namespace Devotion.PlayerSystem
 {
     [RequireComponent(typeof(CharacterController))]
     public class PlayerMovement : MonoBehaviour
@@ -41,6 +40,8 @@ namespace Devotion.Player
 
             if (moveDirection.magnitude > 0.1f)
             {
+                Controllers.Player.Instance.GetComponentFromList<Animator>().SetBool("isRunning", true);
+
                 moveDirection.Normalize();
 
                 Vector3 cameraForward = _cameraTransform.forward;
@@ -56,11 +57,28 @@ namespace Devotion.Player
                     transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, _rotationSpeed * Time.deltaTime);
                 }
             }
+            else
+            {
+                Controllers.Player.Instance.GetComponentFromList<Animator>().SetBool("isRunning", false);
+            }
         }
 
         public void SetMovement(bool canMove)
         {
             _canMove = canMove;
+        }
+
+        public void RotatePlayerToTarget(Transform target)
+        {
+            float duration = 0.5f;
+
+            Vector3 direction = (target.position - transform.position).normalized;
+            direction.y = 0;
+
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+            Vector3 targetEulerAngles = new Vector3(0, targetRotation.eulerAngles.y, 0);
+
+            transform.DORotate(targetEulerAngles, duration, RotateMode.FastBeyond360);
         }
     }
 }

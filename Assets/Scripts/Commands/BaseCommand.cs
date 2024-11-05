@@ -1,13 +1,13 @@
 using Devotion.Commands;
+using System;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public abstract class BaseCommand : ScriptableObject, ICommand
 {
-    public abstract void Execute();
-
-    public virtual void Execute(System.Action callback)
+    public virtual async Task Execute(Action callback)
     {
-        Execute();
-        callback?.Invoke();
+        await Task.Run(() => Execute(callback));
+        //callback?.Invoke();
     }
 }
