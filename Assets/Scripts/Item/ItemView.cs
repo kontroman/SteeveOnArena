@@ -7,7 +7,7 @@ namespace Devotion.Items
     {
         [SerializeField] private Item _item;
 
-        private void OnCollizionEnter(Collision other)
+        private void OnTriggerEnter(Collider other)
         {
             if (other.gameObject.TryGetComponent(out Inventory inventoryPlayer))
             {
@@ -19,15 +19,13 @@ namespace Devotion.Items
                 {
                     AddInventory(inventoryPlayer);
                 }
-
             }
         }
 
         private void AddInventory(Inventory inventoryPlayer)
         {
             inventoryPlayer.AddItem(this);
-
-            Destroy(gameObject);
+            Destroy(this.gameObject);
         }
     }
 }

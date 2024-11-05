@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Devotion.Item
 {
-    public class AnimationIDEL : MonoBehaviour
+    public class AnimationIDLE : MonoBehaviour
     {
         [SerializeField] private Vector3 _step;
         [SerializeField] private Vector3 _rotation;

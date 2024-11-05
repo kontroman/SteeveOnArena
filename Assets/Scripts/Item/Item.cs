@@ -1,5 +1,6 @@
 using UnityEngine;
 using Sirenix.OdinInspector;
+using Devotion.Item;
 
 namespace Devotion.Items
 {
@@ -15,6 +16,7 @@ namespace Devotion.Items
 
         [HideLabel, MinMaxSlider(0, 100, true)]
         [SerializeField] private Vector2 _minMaxSlider;
+        [SerializeField] private int _numberLayerGround = 3;
 
         public float LowerBound { get { return _minMaxSlider.x; } }
         public float UpperBound { get { return _minMaxSlider.y; } }

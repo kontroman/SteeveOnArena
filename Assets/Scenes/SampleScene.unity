@@ -400,6 +400,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &304069604 stripped
+SphereCollider:
+  m_CorrespondingSourceObject: {fileID: 8599182443116486423, guid: 88fcfd5835e1ca2458163526259dc930, type: 3}
+  m_PrefabInstance: {fileID: 1688730348}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &587647492
 GameObject:
   m_ObjectHideFlags: 0
@@ -1489,6 +1494,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Coin
       objectReference: {fileID: 0}
+    - target: {fileID: 2592509771744944299, guid: 88fcfd5835e1ca2458163526259dc930, type: 3}
+      propertyPath: _collider
+      value: 
+      objectReference: {fileID: 304069604}
     - target: {fileID: 4645563804841277903, guid: 88fcfd5835e1ca2458163526259dc930, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1527,6 +1536,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4645563804841277903, guid: 88fcfd5835e1ca2458163526259dc930, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8599182443116486423, guid: 88fcfd5835e1ca2458163526259dc930, type: 3}
+      propertyPath: m_IsTrigger
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -5129,6 +5142,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4960088571121057390}
   - component: {fileID: 287843514824869758}
+  - component: {fileID: 8980945278981337221}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -5136,6 +5150,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &8980945278981337221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8980945278981337220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ece92beb289d407418acb53842c78c34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &8992884948995204285
 Transform:
   m_ObjectHideFlags: 0
@@ -5247,9 +5273,9 @@ SceneRoots:
   - {fileID: 1902835300}
   - {fileID: 963194228}
   - {fileID: 4336661525476779843}
-  - {fileID: 1163839306}
   - {fileID: 8116718894625334539}
   - {fileID: 1387258623}
+  - {fileID: 1163839306}
   - {fileID: 2133883067}
   - {fileID: 65279416}
   - {fileID: 1001951800}

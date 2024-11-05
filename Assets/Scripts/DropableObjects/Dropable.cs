@@ -40,7 +40,6 @@ namespace Devotion.Drop
                 {
                     var obj = Instantiate(_drops[i].Prefab);
                     obj.transform.position = transform.position;
-
                     break;
                 }
             }
@@ -49,7 +48,6 @@ namespace Devotion.Drop
         // method allows to drop an item if the drop chance falls into several ranges
         private void DropMultipleItems()
         {
-            Debug.LogError("DropMultipleItems");
             for (int i = 0; i < _drops.Count; i++)
             {
                 if (_drops[i].LowerBound <= _currentChanceDrop && _currentChanceDrop <= _drops[i].UpperBound)
@@ -59,7 +57,7 @@ namespace Devotion.Drop
             }
 
             _currentChanceDrop = Random.Range(0, _currentDrops.Count + 1);
-            Debug.Log(_currentDrops.Count);
+
             for (int i = 0; i < _currentDrops.Count; i++)
             {
                 if (i == _currentChanceDrop)
