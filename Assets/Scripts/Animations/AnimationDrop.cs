@@ -46,9 +46,9 @@ namespace Devotion.Item
             {
                 if (_isGround == false)
                 {
-                    Debug.LogError("Collizion");
                     _isGround = true;
                     _animationIDEL.StartAnimation();
+                    GetComponent<Collider>().isTrigger = true;
                 }
             }
 

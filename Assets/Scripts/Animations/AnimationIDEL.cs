@@ -12,7 +12,6 @@ namespace Devotion.Item
 
         public void StartAnimation()
         {
-            Debug.Log("Start IDEL");
             transform.DOMove(transform.position + _step, _duration).SetLoops(_repeats, LoopType.Yoyo).SetEase(Ease.Linear);
             transform.DORotate(_rotation, _duration).SetLoops(_repeats, LoopType.Incremental).SetEase(Ease.Linear);
         }
