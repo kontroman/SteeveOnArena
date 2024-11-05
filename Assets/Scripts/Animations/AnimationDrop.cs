@@ -6,7 +6,7 @@ namespace Devotion.Item
 {
     public class AnimationDrop : MonoBehaviour
     {
-        [SerializeField] private AnimationIDEL _animationIDEL;
+        [SerializeField] private AnimationIDLE _animationIDEL;
         [SerializeField] private int _numberLayerGround = 3;
 
         [Header("Horizontal Forse")]
@@ -18,6 +18,7 @@ namespace Devotion.Item
         [SerializeField] private Vector2 _forseVertical;
 
         private bool _isGround = false;
+        private Collider _collider;
 
         private Rigidbody _rigidbody;
         private Vector3[] _directions = new Vector3[] {
@@ -25,7 +26,8 @@ namespace Devotion.Item
 
         private void Awake()
         {
-            _animationIDEL = GetComponent<AnimationIDEL>();
+            _collider = GetComponent<Collider>();
+            _animationIDEL = GetComponent<AnimationIDLE>();
             _rigidbody = GetComponent<Rigidbody>();
         }
 
@@ -47,14 +49,11 @@ namespace Devotion.Item
                 if (_isGround == false)
                 {
                     _isGround = true;
+                    _collider.isTrigger = true;
                     _animationIDEL.StartAnimation();
                     GetComponent<Collider>().isTrigger = true;
                 }
             }
-
         }
-
-
     }
-
 }

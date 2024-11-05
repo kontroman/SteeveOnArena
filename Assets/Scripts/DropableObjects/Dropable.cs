@@ -39,7 +39,6 @@ namespace Devotion.Drop
                 {
                     var obj = Instantiate(_drops[i].Prefab);
                     obj.transform.position = transform.position;
-
                     break;
                 }
             }
