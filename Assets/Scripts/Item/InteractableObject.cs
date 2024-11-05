@@ -4,10 +4,18 @@ using UnityEngine;
 
 namespace Devotion.Items
 {
+    [RequireComponent(typeof(BillboardCanvas))]
     public class InteractableObject : MonoBehaviour
     {
         [SerializeField] private BaseCommand _command;
         [SerializeField] private float _interactionRange = 3.0f;
+
+        private BillboardCanvas _canvas;
+
+        private void Awake()
+        {
+            _canvas = GetComponent<BillboardCanvas>();
+        }
 
         private void OnTriggerEnter(Collider other)
         {
@@ -23,23 +31,28 @@ namespace Devotion.Items
             {
                 GameRoot.Instance.GetManager<InteractionManager>().UnregisterObject(this);
 
-                HideInteractionPrompt();
+                //HideInteractionPrompt();
             }
+        }
+
+        private void OnDestroy()
+        {
+            GameRoot.Instance.GetManager<InteractionManager>().UnregisterObject(this);
         }
 
         public void ShowInteractionPrompt()
         {
-            Debug.Log("Press E to interact with " + gameObject.name);
+            _canvas.ShowUI();
         }
 
         public void HideInteractionPrompt()
         {
-            Debug.Log("Hide interaction prompt for " + gameObject.name);
+            _canvas.HideUI();
         }
 
         public void ExecuteCommand()
         {
-            _command?.Execute();
+            _command?.Execute(() => { Destroy(gameObject); });
         }
     }
 }

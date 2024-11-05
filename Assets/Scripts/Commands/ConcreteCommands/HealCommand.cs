@@ -1,5 +1,6 @@
 using UnityEngine;
-using Devotion.Controllers;
+using System.Threading.Tasks;
+using System;
 
 namespace Devotion.Commands
 {
@@ -8,7 +9,7 @@ namespace Devotion.Commands
     {
         [SerializeField] private int _healthIncreaseAmount;
 
-        public override void Execute()
+        public override async Task Execute(Action callback)
         {
             //TODO: make heal after creating health system
 

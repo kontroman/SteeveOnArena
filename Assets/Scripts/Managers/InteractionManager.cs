@@ -10,13 +10,14 @@ namespace Devotion.Managers
         private List<InteractableObject> _nearbyObjects = new List<InteractableObject>();
         private InteractableObject _currentInteractable;
 
+        public Transform CurrentTargetTransform { get { return _currentInteractable.gameObject.transform; } }
+
         private void Update()
         {
             UpdateClosestObject();
 
             if (_currentInteractable != null && Input.GetKeyDown(KeyCode.E))
                 _currentInteractable.ExecuteCommand();
-            
         }
 
         public void RegisterObject(InteractableObject interactable)

@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 namespace Devotion.PlayerSystem
@@ -65,6 +66,19 @@ namespace Devotion.PlayerSystem
         public void SetMovement(bool canMove)
         {
             _canMove = canMove;
+        }
+
+        public void RotatePlayerToTarget(Transform target)
+        {
+            float duration = 0.5f;
+
+            Vector3 direction = (target.position - transform.position).normalized;
+            direction.y = 0;
+
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+            Vector3 targetEulerAngles = new Vector3(0, targetRotation.eulerAngles.y, 0);
+
+            transform.DORotate(targetEulerAngles, duration, RotateMode.FastBeyond360);
         }
     }
 }

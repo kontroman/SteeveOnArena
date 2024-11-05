@@ -1,8 +1,10 @@
+using System;
+using System.Threading.Tasks;
+
 namespace Devotion.Commands
 {
     public interface ICommand
     {
-        void Execute();
-        void Execute(System.Action callback);
+        Task Execute(Action callback);
     }
 }
