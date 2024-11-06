@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Sword
   m_EditorClassIdentifier: 
   _name: Sword
-  _resource: {fileID: 0}
   _amountResources: 1
+  _prefab: {fileID: 7097826775940330933, guid: 34e6beba9f75d8f439c1ace3511c08b6, type: 3}
   _isAddInventory: 0
   command: {fileID: 11400000, guid: 9acb1d36dab9c654cae33423b5372b5b, type: 2}
+  _minMaxSlider: {x: 20, y: 50}

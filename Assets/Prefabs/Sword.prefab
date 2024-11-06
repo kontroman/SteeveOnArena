@@ -42,7 +42,7 @@ ParticleSystem:
   m_GameObject: {fileID: 4969812327864331539}
   serializedVersion: 8
   lengthInSec: 10
-  simulationSpeed: 1.42
+  simulationSpeed: 0.616
   stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
@@ -116,7 +116,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 3
+      scalar: 2.1
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -870,7 +870,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 3
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -987,7 +987,7 @@ ParticleSystem:
         m_Curve:
         - serializedVersion: 3
           time: 0
-          value: 0.4999977
+          value: 0.45945653
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -995,13 +995,22 @@ ParticleSystem:
           inWeight: 0.33333334
           outWeight: 0.33333334
         - serializedVersion: 3
-          time: 1
+          time: 0.50157976
           value: 1
-          inSlope: 1
-          outSlope: 1
+          inSlope: 0.10233289
+          outSlope: 0.10233289
           tangentMode: 0
           weightedMode: 0
           inWeight: 0.33333334
+          outWeight: 0.2457001
+        - serializedVersion: 3
+          time: 1
+          value: 0.4999999
+          inSlope: -0.27551007
+          outSlope: -0.27551007
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.29522726
           outWeight: 0.33333334
         m_PreInfinity: 2
         m_PostInfinity: 2
@@ -1309,7 +1318,7 @@ ParticleSystem:
       maxGradient:
         serializedVersion: 2
         key0: {r: 0, g: 0.75686276, b: 0.9607843, a: 0}
-        key1: {r: 0, g: 0.7567298, b: 0.9607843, a: 0.24313726}
+        key1: {r: 0, g: 0.7567298, b: 0.9607843, a: 1}
         key2: {r: 0.17220367, g: 0.9622642, b: 0, a: 1}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
@@ -1325,7 +1334,7 @@ ParticleSystem:
         ctime6: 0
         ctime7: 0
         atime0: 0
-        atime1: 19853
+        atime1: 19661
         atime2: 45875
         atime3: 65535
         atime4: 65535
@@ -4841,9 +4850,11 @@ GameObject:
   - component: {fileID: 5017791702394945552}
   - component: {fileID: 3543015886953574932}
   - component: {fileID: 873198578197101934}
+  - component: {fileID: 5230180469966035599}
   - component: {fileID: 8809575606026630856}
+  - component: {fileID: -2792516510980316751}
   m_Layer: 0
-  m_Name: Knife
+  m_Name: Sword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4879,7 +4890,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _item: {fileID: 11400000, guid: 94a791fc770d0434da8b2b659ad50574, type: 2}
-  _prefab: {fileID: 7097826775940330933}
 --- !u!136 &873198578197101934
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -4895,7 +4905,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -4903,6 +4913,33 @@ CapsuleCollider:
   m_Height: 0.42550048
   m_Direction: 1
   m_Center: {x: 0, y: 0.15, z: 0}
+--- !u!54 &5230180469966035599
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7097826775940330933}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 80
+  m_CollisionDetection: 1
 --- !u!114 &8809575606026630856
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4919,6 +4956,22 @@ MonoBehaviour:
   _rotation: {x: 0, y: 180, z: 0}
   _duration: 2.2
   _repeats: -1
+--- !u!114 &-2792516510980316751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7097826775940330933}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4a9aa5000121404fbbc9e608de2d565, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animationIDEL: {fileID: 8809575606026630856}
+  _numberLayerGround: 3
+  _forseHorizontal: {x: 150, y: 250}
+  _forseVertical: {x: 150, y: 200}
 --- !u!1001 &8650083488279489842
 PrefabInstance:
   m_ObjectHideFlags: 0
