@@ -6,6 +6,8 @@ namespace Devotion.Drop
 {
     public class Dropable : MonoBehaviour
     {
+        [SerializeField] private AudioClip _clip;
+
         [Header("List drops")]
         [SerializeField] private List<Items.Item> _drops;
 
@@ -40,6 +42,7 @@ namespace Devotion.Drop
                 {
                     var obj = Instantiate(_drops[i].Prefab);
                     obj.transform.position = transform.position;
+                    AudioSystem.Instance.PlayEffect(_clip);
                     break;
                 }
             }
@@ -56,7 +59,7 @@ namespace Devotion.Drop
                 }
             }
 
-            _currentChanceDrop = Random.Range(0, _currentDrops.Count + 1);
+            _currentChanceDrop = Random.Range(0, _currentDrops.Count);
 
             for (int i = 0; i < _currentDrops.Count; i++)
             {
@@ -64,7 +67,7 @@ namespace Devotion.Drop
                 {
                     var obj = Instantiate(_currentDrops[i].Prefab);
                     obj.transform.position = transform.position;
-
+                    AudioSystem.Instance.PlayEffect(_clip);
                     break;
                 }
             }
