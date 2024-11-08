@@ -33,7 +33,6 @@ namespace Devotion.Drop
                 DropMultipleItems();
         }
 
-        // only one item drops
         private void DropSingleItem()
         {
             for (int i = 0; i < _drops.Count; i++)
@@ -48,7 +47,6 @@ namespace Devotion.Drop
             }
         }
 
-        // method allows to drop an item if the drop chance falls into several ranges
         private void DropMultipleItems()
         {
             for (int i = 0; i < _drops.Count; i++)

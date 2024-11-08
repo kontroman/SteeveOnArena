@@ -51,6 +51,7 @@ namespace Devotion.Item
                     _isGround = true;
                     _collider.isTrigger = true;
                     _animationIDEL.StartAnimation();
+                    GetComponent<Collider>().isTrigger = true;
                 }
             }
         }
