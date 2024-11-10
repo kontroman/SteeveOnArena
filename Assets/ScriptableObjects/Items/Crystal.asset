@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Crystal
   _amountResources: 1
-  _prefab: {fileID: 1294500603521610, guid: 0d30773e781696e4595b61d41053704d, type: 3}
+  _prefab: {fileID: 1294500603521610, guid: 56896545e591d9540bddda965e49a406, type: 3}
   _isAddInventory: 1
   command: {fileID: 11400000, guid: 9acb1d36dab9c654cae33423b5372b5b, type: 2}
   _minMaxSlider: {x: 0, y: 100}
+  _numberLayerGround: 3

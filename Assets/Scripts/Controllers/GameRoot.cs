@@ -8,22 +8,12 @@ namespace Devotion.Controllers
     {
         public static GameRoot Instance { get; private set; }
 
+        [SerializeField] private List<BaseManager> _startManagers = new();
+
         private Dictionary<System.Type, BaseManager> _managers = new Dictionary<System.Type, BaseManager>();
-
-        public List<BaseManager> _managersList = new List<BaseManager>();
-
 
         private void Awake()
         {
-            foreach (var manager in _managersList)
-            {
-                if (manager != null)
-                {
-                    System.Type type = manager.GetType();
-                    LoadManager(manager, type);
-                }
-            }
-
             if (Instance == null)
             {
                 Instance = this;
@@ -32,6 +22,19 @@ namespace Devotion.Controllers
             else
             {
                 Destroy(gameObject);
+            }
+        }
+
+        private void Start()
+        {
+            foreach (var manager in _startManagers)
+            {
+                if (manager != null)
+                {
+                    System.Type type = manager.GetType();
+
+                    LoadManager(manager, type);
+                }
             }
         }
 
@@ -51,21 +54,22 @@ namespace Devotion.Controllers
             }
         }
 
-        private BaseManager LoadManager(BaseManager loadedManager, System.Type type)
+        private BaseManager LoadManager(BaseManager manager, System.Type type)
         {
-            if (loadedManager != null)
+            if (manager != null)
             {
-                var instantiatedManager = Instantiate(loadedManager);
+                var instantiatedManager = Instantiate(manager);
                 instantiatedManager.transform.parent = transform;
                 _managers[type] = instantiatedManager;
 
                 Debug.Log($"Created {type.Name} by request");
 
-                return instantiatedManager;
+                return manager;
             }
             else
             {
                 Debug.Log($"Manager {type.Name} not found in ManagersPrefabs folder");
+
                 return null;
             }
         }

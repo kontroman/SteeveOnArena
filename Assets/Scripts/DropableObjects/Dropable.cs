@@ -1,6 +1,8 @@
 using Devotion.Items;
 using System.Collections.Generic;
 using UnityEngine;
+using Devotion.Managers;
+using Devotion.Controllers;
 
 namespace Devotion.Drop
 {
@@ -39,6 +41,7 @@ namespace Devotion.Drop
                 {
                     var obj = Instantiate(_drops[i].Prefab);
                     obj.transform.position = transform.position;
+                    GameRoot.Instance.GetManager<AudioManager>().PlayEffect("DropResourse");
                     break;
                 }
             }
@@ -54,7 +57,7 @@ namespace Devotion.Drop
                 }
             }
 
-            _currentChanceDrop = Random.Range(0, _currentDrops.Count + 1);
+            _currentChanceDrop = Random.Range(0, _currentDrops.Count);
 
             for (int i = 0; i < _currentDrops.Count; i++)
             {
@@ -62,7 +65,7 @@ namespace Devotion.Drop
                 {
                     var obj = Instantiate(_currentDrops[i].Prefab);
                     obj.transform.position = transform.position;
-
+                    GameRoot.Instance.GetManager<AudioManager>().PlayEffect("DropResourse");
                     break;
                 }
             }
