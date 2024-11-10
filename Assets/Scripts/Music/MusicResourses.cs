@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 namespace Devotion.MusicResourses
 {
@@ -11,28 +12,18 @@ namespace Devotion.MusicResourses
         [Header("EffectClips")]
         [SerializeField] private List<Music> _effects = new List<Music>();
 
-        private Music _instanceElement;
-
         public AudioClip GetMusic(string name)
-        {            
-            foreach (var music in _music)
-            {
-                if (music.Name == name)
-                    _instanceElement = music;
-            }
+        {
+            var musicElement = _music.TakeWhile(element => element.Name == name).ToList();
 
-            return _instanceElement.Clip;
+            return musicElement[0].Clip;
         }
 
         public AudioClip GetEffect(string name)
         {
-            foreach (var effect in _effects)
-            {
-                if (effect.Name == name)
-                    _instanceElement = effect;
-            }
+            var effectElement = _effects.TakeWhile(element => element.Name == name).ToList();
 
-            return _instanceElement.Clip;
+            return effectElement[0].Clip;
         }
 
     }
