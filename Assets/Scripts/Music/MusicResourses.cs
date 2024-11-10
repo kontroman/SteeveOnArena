@@ -16,7 +16,7 @@ namespace Devotion.MusicResourses
         {
             var musicElement = _music.FirstOrDefault(element => element.Name == name);
 
-            return musicElement?.Clip;
+            return musicElement?.Clip;   
         }
 
         public AudioClip GetEffect(string name)
