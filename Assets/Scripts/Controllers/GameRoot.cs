@@ -10,8 +10,20 @@ namespace Devotion.Controllers
 
         private Dictionary<System.Type, BaseManager> _managers = new Dictionary<System.Type, BaseManager>();
 
+        public List<BaseManager> _managersList = new List<BaseManager>();
+
+
         private void Awake()
         {
+            foreach (var manager in _managersList)
+            {
+                if (manager != null)
+                {
+                    System.Type type = manager.GetType();
+                    LoadManager(manager, type);
+                }
+            }
+
             if (Instance == null)
             {
                 Instance = this;
@@ -35,22 +47,26 @@ namespace Devotion.Controllers
             {
                 T loadedManager = Resources.Load<T>("ManagersPrefabs/" + type.Name);
 
-                if (loadedManager != null)
-                {
-                    var instantiatedManager = Instantiate(loadedManager);
-                    instantiatedManager.transform.parent = transform;
-                    _managers[type] = instantiatedManager;
+                return LoadManager(loadedManager, type) as T;
+            }
+        }
 
-                    Debug.Log($"Created {type.Name} by request");
+        private BaseManager LoadManager(BaseManager loadedManager, System.Type type)
+        {
+            if (loadedManager != null)
+            {
+                var instantiatedManager = Instantiate(loadedManager);
+                instantiatedManager.transform.parent = transform;
+                _managers[type] = instantiatedManager;
 
-                    return loadedManager;
-                }
-                else
-                {
-                    Debug.Log($"Manager {type.Name} not found in ManagersPrefabs folder");
+                Debug.Log($"Created {type.Name} by request");
 
-                    return null;
-                }
+                return instantiatedManager;
+            }
+            else
+            {
+                Debug.Log($"Manager {type.Name} not found in ManagersPrefabs folder");
+                return null;
             }
         }
     }
