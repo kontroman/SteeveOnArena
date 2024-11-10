@@ -1,13 +1,13 @@
 using Devotion.Items;
 using System.Collections.Generic;
 using UnityEngine;
+using Devotion.Managers;
+using Devotion.Controllers;
 
 namespace Devotion.Drop
 {
     public class Dropable : MonoBehaviour
     {
-        [SerializeField] private AudioClip _clip;
-
         [Header("List drops")]
         [SerializeField] private List<Items.Item> _drops;
 
@@ -41,7 +41,7 @@ namespace Devotion.Drop
                 {
                     var obj = Instantiate(_drops[i].Prefab);
                     obj.transform.position = transform.position;
-                    AudioSystem.Instance.PlayEffect(_clip);
+                    GameRoot.Instance.GetManager<AudioManager>().PlayEffect("DropResourse");
                     break;
                 }
             }
@@ -65,7 +65,7 @@ namespace Devotion.Drop
                 {
                     var obj = Instantiate(_currentDrops[i].Prefab);
                     obj.transform.position = transform.position;
-                    AudioSystem.Instance.PlayEffect(_clip);
+                    GameRoot.Instance.GetManager<AudioManager>().PlayEffect("DropResourse");
                     break;
                 }
             }
