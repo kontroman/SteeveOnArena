@@ -14,16 +14,16 @@ namespace Devotion.MusicResourses
 
         public AudioClip GetMusic(string name)
         {
-            var musicElement = _music.TakeWhile(element => element.Name == name).ToList();
+            var musicElement = _music.FirstOrDefault(element => element.Name == name);
 
-            return musicElement[0].Clip;
+            return musicElement?.Clip;
         }
 
         public AudioClip GetEffect(string name)
         {
-            var effectElement = _effects.TakeWhile(element => element.Name == name).ToList();
+            var effectElement = _effects.FirstOrDefault(element => element.Name == name);
 
-            return effectElement[0].Clip;
+            return effectElement?.Clip;
         }
 
     }
