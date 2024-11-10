@@ -8,7 +8,7 @@ namespace Devotion.Controllers
     {
         public static GameRoot Instance { get; private set; }
 
-        [SerializeField] private List<BaseManager> _startManagers = new();
+        [SerializeField] private List<BaseManager> _startManagers = new List<BaseManager>;
 
         private Dictionary<System.Type, BaseManager> _managers = new Dictionary<System.Type, BaseManager>();
 
