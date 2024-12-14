@@ -16,6 +16,15 @@ namespace Devotion.Controllers
             _components = new List<Component>(GetComponents<Component>());
         }
 
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+            {
+                Debug.LogError("ASD");
+                GetComponentFromList<Animator>().SetBool("isAttacking", true);
+            }
+        }
+
         public T GetComponentFromList<T>() where T : Component
         {
             foreach (var component in _components)
