@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Devotion.Managers;
 using Devotion.Controllers;
+using Devotion.SoundManager;
 
 namespace Devotion.Drop
 {
@@ -41,7 +42,7 @@ namespace Devotion.Drop
                 {
                     var obj = Instantiate(_drops[i].Prefab);
                     obj.transform.position = transform.position;
-                    GameRoot.Instance.GetManager<AudioManager>().PlayEffect("DropResourse");
+                    GameRoot.Instance.GetManager<Managers.SoundManager>().PlayEffect(SoundTags.DropResourse);
                     break;
                 }
             }
@@ -65,7 +66,7 @@ namespace Devotion.Drop
                 {
                     var obj = Instantiate(_currentDrops[i].Prefab);
                     obj.transform.position = transform.position;
-                    GameRoot.Instance.GetManager<AudioManager>().PlayEffect("DropResourse");
+                    GameRoot.Instance.GetManager<Managers.SoundManager>().PlayEffect(SoundTags.DropResourse);
                     break;
                 }
             }
