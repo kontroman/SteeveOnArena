@@ -17,14 +17,16 @@ namespace Devotion.Managers
             UpdateClosestObject();
 
             if (_currentInteractable != null && Input.GetKeyDown(KeyCode.E))
+            {
+                UnregisterObject(_currentInteractable);
                 _currentInteractable.ExecuteCommand();
+            }
         }
 
         public void RegisterObject(InteractableObject interactable)
         {
             if (!_nearbyObjects.Contains(interactable))
                 _nearbyObjects.Add(interactable);
-
         }
 
         public void UnregisterObject(InteractableObject interactable)
@@ -35,7 +37,6 @@ namespace Devotion.Managers
 
         private void UpdateClosestObject()
         {
-
             float closestDistance = float.MaxValue;
 
             InteractableObject closest = null;
