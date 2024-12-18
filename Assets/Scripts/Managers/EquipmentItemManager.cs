@@ -1,4 +1,3 @@
-using Devotion.Managers;
 using UnityEngine;
 using System.Linq;
 using System.Collections.Generic;
@@ -20,22 +19,25 @@ namespace Devotion.Managers
 
         public void CreatEquipmentItem(Vector3 position, ItemTypes type, int level)
         {
+            _item = FindObject(GetEquipmentList(type), level);
+            var obj = Instantiate(_item.Prefab);
+            obj.transform.position = position;
+        }
+
+        private List<EquipmentItemConfig> GetEquipmentList(ItemTypes type)
+        {
             switch (type)
             {
                 case ItemTypes.Sword:
-                    _item = FindObject(_itemsConfig.Swords, level);
-                    break;
+                    return _itemsConfig.Swords;
 
                 case ItemTypes.Armor:
-                    _item = FindObject(_itemsConfig.Armor, level);
-                    break;
+                    return _itemsConfig.Armor;
 
                 default:
                     throw new ArgumentException(nameof(type));
             }
 
-            var obj = Instantiate(_item.Prefab);
-            obj.transform.position = position;
         }
 
         private EquipmentItemConfig FindObject(List<EquipmentItemConfig> items, int level)
