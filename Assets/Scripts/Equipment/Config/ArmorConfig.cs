@@ -7,7 +7,7 @@ namespace Devotion.Equipment
     {
         [SerializeField] private int _resist;
 
-        private ItemTypes _slot = ItemTypes.ArmorSlots;
+        private ItemTypes _slot = ItemTypes.Armor;
 
         public int Resist => _resist;
         public ItemTypes Slot => _slot;

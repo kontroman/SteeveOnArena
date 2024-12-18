@@ -1,4 +1,3 @@
-using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Devotion.Equipment
@@ -6,5 +5,6 @@ namespace Devotion.Equipment
     [CreateAssetMenu(fileName = "New Item", menuName = "Items/Create new coin", order = 51)]
     public class CoinConfig : EquipmentItemConfig
     {
+
     }
 }
