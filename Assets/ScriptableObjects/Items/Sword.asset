@@ -9,12 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d73819d383b3483428d0634f2b686fd6, type: 3}
+  m_Script: {fileID: 11500000, guid: e6fe6ea9c3db96742bf3800adc5cd266, type: 3}
   m_Name: Sword
   m_EditorClassIdentifier: 
-  _name: Sword
-  _amountResources: 1
+  _level: 0
+  _price: 15
   _prefab: {fileID: 7097826775940330933, guid: 34e6beba9f75d8f439c1ace3511c08b6, type: 3}
-  _isAddInventory: 0
-  command: {fileID: 11400000, guid: 9acb1d36dab9c654cae33423b5372b5b, type: 2}
-  _minMaxSlider: {x: 20, y: 50}
+  _icon: {fileID: 0}
+  _isAddInventory: 1
+  _minMaxSlider: {x: 1, y: 100}
+  _numberLayerGround: 3
+  command: {fileID: 11400000, guid: 782c2eb0a020bf344980ce7eab52e94b, type: 2}
+  _damage: 10

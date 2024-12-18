@@ -9,12 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d73819d383b3483428d0634f2b686fd6, type: 3}
+  m_Script: {fileID: 11500000, guid: 19efc1367bae0e741b636e6ac0ca78d5, type: 3}
   m_Name: Coin
   m_EditorClassIdentifier: 
-  _name: Coin
-  _amountResources: 1
+  _level: 0
+  _price: 10
   _prefab: {fileID: 553822994538010830, guid: 88fcfd5835e1ca2458163526259dc930, type: 3}
+  _icon: {fileID: 0}
   _isAddInventory: 1
-  command: {fileID: 11400000, guid: 9acb1d36dab9c654cae33423b5372b5b, type: 2}
-  _minMaxSlider: {x: 20, y: 50}
+  _minMaxSlider: {x: 0, y: 50}
+  _numberLayerGround: 3
+  command: {fileID: 11400000, guid: 782c2eb0a020bf344980ce7eab52e94b, type: 2}

@@ -5,7 +5,7 @@ namespace Devotion.Items
 {
     public class ItemView : MonoBehaviour
     {
-        [SerializeField] private Item _item;
+        [SerializeField] private Equipment.EquipmentItemConfig _item;
 
         private void OnTriggerEnter(Collider other)
         {
