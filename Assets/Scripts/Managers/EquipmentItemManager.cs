@@ -37,7 +37,6 @@ namespace Devotion.Managers
                 default:
                     throw new ArgumentException(nameof(type));
             }
-
         }
 
         private EquipmentItemConfig FindObject(List<EquipmentItemConfig> items, int level)
