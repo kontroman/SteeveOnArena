@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d73819d383b3483428d0634f2b686fd6, type: 3}
-  m_Name: Sword
+  m_Name: Crystal
   m_EditorClassIdentifier: 
-  _name: Sword
+  _name: Crystal
   _amountResources: 1
-  _prefab: {fileID: 7097826775940330933, guid: 34e6beba9f75d8f439c1ace3511c08b6, type: 3}
-  _isAddInventory: 0
+  _prefab: {fileID: 1294500603521610, guid: 56896545e591d9540bddda965e49a406, type: 3}
+  _isAddInventory: 1
   command: {fileID: 11400000, guid: 9acb1d36dab9c654cae33423b5372b5b, type: 2}
-  _minMaxSlider: {x: 20, y: 50}
+  _minMaxSlider: {x: 0, y: 100}
+  _numberLayerGround: 3
