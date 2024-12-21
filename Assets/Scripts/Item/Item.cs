@@ -1,10 +1,9 @@
 using UnityEngine;
 using Sirenix.OdinInspector;
-using Devotion.Item;
 
 namespace Devotion.Items
 {
-    [CreateAssetMenu(fileName = "New Item", menuName = "Item/Create new item", order = 51)]
+    //[CreateAssetMenu(fileName = "New Item", menuName = "Items/Create new item", order = 51)]
     public class Item : ScriptableObject
     {
         [SerializeField] private string _name;
@@ -18,8 +17,8 @@ namespace Devotion.Items
         [SerializeField] private Vector2 _minMaxSlider;
         [SerializeField] private int _numberLayerGround = 3;
 
-        public float LowerBound { get { return _minMaxSlider.x; } }
-        public float UpperBound { get { return _minMaxSlider.y; } }
+        public float LowerBoundChance { get { return _minMaxSlider.x; } }
+        public float UpperBoundChance { get { return _minMaxSlider.y; } }
         public string Name => _name;
         public GameObject Prefab => _prefab;
         public int AmountResources => _amountResources;
