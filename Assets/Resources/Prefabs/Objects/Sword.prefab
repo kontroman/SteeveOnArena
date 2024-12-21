@@ -4853,7 +4853,6 @@ GameObject:
   - component: {fileID: 5230180469966035599}
   - component: {fileID: 8809575606026630856}
   - component: {fileID: -2792516510980316751}
-  - component: {fileID: -1378516973371315152}
   m_Layer: 0
   m_Name: Sword
   m_TagString: Untagged
@@ -4890,7 +4889,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3aac348c836237429d6b7934baac5e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _item: {fileID: 11400000, guid: 85432fb22394e784b9a909cc36b78f27, type: 2}
+  _item: {fileID: 11400000, guid: 94a791fc770d0434da8b2b659ad50574, type: 2}
 --- !u!136 &873198578197101934
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -4973,23 +4972,6 @@ MonoBehaviour:
   _numberLayerGround: 3
   _forseHorizontal: {x: 150, y: 250}
   _forseVertical: {x: 150, y: 200}
---- !u!114 &-1378516973371315152
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7097826775940330933}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 060b4e348da8da44d8fd540b5e7931ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _lvl: 1
-  _icon: {fileID: 0}
-  _price: 10
-  _type: 0
-  _damage: 10
 --- !u!1001 &8650083488279489842
 PrefabInstance:
   m_ObjectHideFlags: 0

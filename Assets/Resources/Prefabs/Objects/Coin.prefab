@@ -104,7 +104,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -181,7 +181,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3aac348c836237429d6b7934baac5e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _item: {fileID: 11400000, guid: 8b2d88efa1544c243b56b02cc6b6cae4, type: 2}
+  _item: {fileID: 11400000, guid: d431e8f8ec350ea4fbe7a3a1526b7f18, type: 2}
 --- !u!1 &6540566873835010234
 GameObject:
   m_ObjectHideFlags: 0
