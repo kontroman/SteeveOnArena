@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+<<<<<<<< HEAD:Assets/ScriptableObjects/Items/Crystal.asset
+  m_Script: {fileID: 11500000, guid: d73819d383b3483428d0634f2b686fd6, type: 3}
+  m_Name: Crystal
+  m_EditorClassIdentifier: 
+  _name: Crystal
+  _amountResources: 1
+  _prefab: {fileID: 1294500603521610, guid: 56896545e591d9540bddda965e49a406, type: 3}
+  _isAddInventory: 1
+  command: {fileID: 11400000, guid: 9acb1d36dab9c654cae33423b5372b5b, type: 2}
+  _minMaxSlider: {x: 0, y: 100}
+  _numberLayerGround: 3
+========
+  m_Script: {fileID: 11500000, guid: 23b4dfe5a2c9bec418f415cbb49447a1, type: 3}
+  m_Name: Diamonds
+  m_EditorClassIdentifier: 
+  _name: Diuamonds
+  _prefab: {fileID: 1294500603521610, guid: 56896545e591d9540bddda965e49a406, type: 3}
+  _icon: {fileID: 0}
+  _usable: 0
+  _maxStackSize: 64
+>>>>>>>> sqWeeky:Assets/ScriptableObjects/Items/Diamonds.asset

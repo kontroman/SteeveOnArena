@@ -1,74 +1,54 @@
-using Devotion.Items;
 using System.Collections.Generic;
 using UnityEngine;
-using Devotion.Managers;
 using Devotion.Controllers;
+using Devotion.Items;
 
 namespace Devotion.Drop
 {
     public class Dropable : MonoBehaviour
     {
+        [System.Serializable]
+        public class DropEntry
+        {
+            public ItemConfig Item;
+
+            [Range(0, 100)] public float DropChance;
+            public int MinQuantity = 1;
+            public int MaxQuantity = 1;
+        }
+
         [Header("List drops")]
-        [SerializeField] private List<Items.Item> _drops;
+        [SerializeField] private List<DropEntry> _dropTable = new List<DropEntry>();
 
         [Header("Drop only one or more items")]
         [SerializeField] private bool _isOneDrop;
 
-        private int _maxChanceDrop = 101;
-        private int _minChanceDrop = 0;
-        private int _currentChanceDrop;
-        private List<Items.Item> _currentDrops;
-
-        private void Start()
-        {
-            _currentDrops = new List<Items.Item>();
-            _currentChanceDrop = Random.Range(_minChanceDrop, _maxChanceDrop);
-        }
-
         private void OnDestroy()
         {
-            if (_isOneDrop)
-                DropSingleItem();
-            else
-                DropMultipleItems();
+            DropItems();
         }
 
-        private void DropSingleItem()
+        public void DropItems()
         {
-            for (int i = 0; i < _drops.Count; i++)
+            foreach (var dropEntry in _dropTable)
             {
-                if (_drops[i].LowerBound <= _currentChanceDrop && _currentChanceDrop <= _drops[i].UpperBound)
+                if (RollChance(dropEntry.DropChance))
                 {
-                    var obj = Instantiate(_drops[i].Prefab);
-                    obj.transform.position = transform.position;
-                    GameRoot.Instance.GetManager<AudioManager>().PlayEffect("DropResourse");
-                    break;
+                    var cout = Random.Range(dropEntry.MinQuantity, dropEntry.MaxQuantity + 1);
+
+                    for (int i = 0; i < cout; i++)
+                    {
+                        var obj = Instantiate(dropEntry.Item.Prefab);
+                        obj.transform.position = transform.position;
+                        GameRoot.Instance.GetManager<Managers.SoundManager>().PlayEffect(SoundTags.DropResourse);
+                    }
                 }
             }
         }
 
-        private void DropMultipleItems()
+        private bool RollChance(float chance)
         {
-            for (int i = 0; i < _drops.Count; i++)
-            {
-                if (_drops[i].LowerBound <= _currentChanceDrop && _currentChanceDrop <= _drops[i].UpperBound)
-                {
-                    _currentDrops.Add(_drops[i]);
-                }
-            }
-
-            _currentChanceDrop = Random.Range(0, _currentDrops.Count);
-
-            for (int i = 0; i < _currentDrops.Count; i++)
-            {
-                if (i == _currentChanceDrop)
-                {
-                    var obj = Instantiate(_currentDrops[i].Prefab);
-                    obj.transform.position = transform.position;
-                    GameRoot.Instance.GetManager<AudioManager>().PlayEffect("DropResourse");
-                    break;
-                }
-            }
+            return Random.Range(0f, 100f) <= chance;
         }
     }
 }

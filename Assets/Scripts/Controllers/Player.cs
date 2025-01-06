@@ -20,7 +20,6 @@ namespace Devotion.Controllers
         {
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
-                Debug.LogError("ASD");
                 GetComponentFromList<Animator>().SetBool("isAttacking", true);
             }
         }
