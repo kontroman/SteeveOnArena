@@ -7,9 +7,24 @@ namespace Devotion.Items
     {
         [SerializeField] private ItemConfig _item;
 
+        private Item item;
+
+        private void Awake()
+        {
+            if (_item.Stackable)
+            {
+                item = new StackableItem(_item as StackableItemConfig, 1);
+            }
+            else
+            {
+                item = new EquipmentItem(_item as EquipmentItemConfig);
+            }
+            
+        }
+
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.TryGetComponent(out Inventory inventoryPlayer))
+            if (other.gameObject.CompareTag("Player"))
             {
                 if (_item.Usable)
                 {
@@ -17,14 +32,14 @@ namespace Devotion.Items
                 }
                 else
                 {
-                    AddInventory(inventoryPlayer);
+                    AddToInventory(item);
                 }
             }
         }
 
-        private void AddInventory(Inventory inventoryPlayer)
+        private void AddToInventory(Item item)
         {
-            //TODO: add to inventory
+            InventoryManager.Instance.AddItem(item);
 
             Destroy(this.gameObject);
         }

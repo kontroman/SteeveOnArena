@@ -13,12 +13,14 @@ namespace Devotion.Items
             CurrentStack = Mathf.Clamp(initialStack, 0, MaxStackSize);
         }
 
-        public bool AddToStack(int amount)
+        public void AddToStack(int amount)
         {
-            if (CurrentStack + amount > MaxStackSize) return false;
-
             CurrentStack += amount;
-            return true;
+        }
+
+        public bool CanStackWith(StackableItem other)
+        {
+            return other != null && other.Name == Name && CurrentStack < MaxStackSize;
         }
     }
 }

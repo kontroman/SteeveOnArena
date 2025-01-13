@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.Audio;
-using Devotion.MusicResourses;
+using Devotion.Basics;
 
 namespace Devotion.Managers
 {
@@ -20,7 +20,7 @@ namespace Devotion.Managers
 
         private void Start()
         {
-            PlayMusic("BackGround");
+            PlayMusic(Constants.AudioNames.BackgroundMusic);
         }
 
         public void PlayEffect(string name)

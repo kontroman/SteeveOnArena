@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Devotion.Controllers;
 using Devotion.Items;
+using Devotion.Managers;
+using Devotion.Basics;
 
 namespace Devotion.Drop
 {
@@ -40,7 +42,7 @@ namespace Devotion.Drop
                     {
                         var obj = Instantiate(dropEntry.Item.Prefab);
                         obj.transform.position = transform.position;
-                        GameRoot.Instance.GetManager<Managers.SoundManager>().PlayEffect(SoundTags.DropResourse);
+                        GameRoot.Instance.GetManager<AudioManager>().PlayEffect(Constants.AudioNames.DropResource);
                     }
                 }
             }
