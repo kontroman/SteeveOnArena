@@ -4810,7 +4810,6 @@ GameObject:
   m_Component:
   - component: {fileID: 665335345}
   - component: {fileID: 665335344}
-  - component: {fileID: 665335346}
   m_Layer: 0
   m_Name: GameRoot
   m_TagString: Untagged
@@ -4833,7 +4832,6 @@ MonoBehaviour:
   _startManagers:
   - {fileID: 8922024884557970335, guid: c1e80ec59527adb4498cb1b4ae6cb9f0, type: 3}
   - {fileID: 1963652386209797928, guid: 40b8192cc38402b42b125c2cab020397, type: 3}
-  - {fileID: 3765963414954707962, guid: b2241f23fb32cdd4c858b0c2e92fb423, type: 3}
 --- !u!4 &665335345
 Transform:
   m_ObjectHideFlags: 0
@@ -4848,22 +4846,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &665335346
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 665335343}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 893f2758f85b4294797f5ba83e68b19b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _player: {fileID: 8116718894625334539}
-  _followSpeed: 5
-  _rotationSpeed: 5
-  _smoothMoveTime: 1
 --- !u!1 &667289306
 GameObject:
   m_ObjectHideFlags: 0
