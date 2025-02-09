@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-using Devotion.Controllers;
+using Devotion.SDK.Controllers;
 using Devotion.Items;
 using Devotion.Managers;
 using Devotion.Basics;
