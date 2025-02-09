@@ -6,7 +6,6 @@ using UnityEngine;
 namespace Devotion.SDK.Markets.Confgs
 {
     //TODO: add social service
-
     [Serializable]
     public class RateAppConfig
     {
@@ -15,12 +14,17 @@ namespace Devotion.SDK.Markets.Confgs
 
         public int GetLevelOnSession(int sessionNumber)
         {
-            if (!_useRateApp) return -1;
+            if (!_useRateApp) return (int)RateAppResult.NotFound;
 
-            var rateConfig = _rateOnSessions.Find(item => item.SessionNumber == sessionNumber);
-            if (rateConfig.IsNullOrDead()) rateConfig = _rateOnSessions.Find(item => item.SessionNumber == -1);
+            var rateConfig = _rateOnSessions.Find(item => item.SessionNumber == sessionNumber)
+                            ?? _rateOnSessions.Find(item => item.SessionNumber == -1);
 
-            return rateConfig.IsNullOrDead() ? -1 : rateConfig.Level;
+            return rateConfig?.Level ?? (int)RateAppResult.NotFound;
         }
+    }
+
+    public enum RateAppResult
+    {
+        NotFound = -1
     }
 }
