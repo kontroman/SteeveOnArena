@@ -8,6 +8,9 @@ namespace Devotion.PlayerSystem
     {
         [SerializeField] private float _speed = 5f;
         [SerializeField] private float _rotationSpeed = 10f;
+        [SerializeField] private float _jumpHeight = 1.5f;
+        [SerializeField] private float _gravity = -20f; // Увеличенная скорость падения
+        [SerializeField] private float _jumpForce = 7f; // Увеличенная начальная сила прыжка
 
         public float MoveSpeed => _speed;
         public float RotationSpeed => _rotationSpeed;
@@ -16,6 +19,8 @@ namespace Devotion.PlayerSystem
         private bool _canMove = true;
 
         private Transform _cameraTransform;
+        private Vector3 _velocity;
+        private bool _isGrounded;
 
         private void Start()
         {
@@ -28,6 +33,7 @@ namespace Devotion.PlayerSystem
             if (_canMove)
             {
                 Move();
+                ApplyGravityAndJump();
             }
         }
 
@@ -61,6 +67,28 @@ namespace Devotion.PlayerSystem
             {
                 Controllers.Player.Instance.GetComponentFromList<Animator>().SetBool("isRunning", false);
             }
+        }
+
+        private void ApplyGravityAndJump()
+        {
+            _isGrounded = _characterController.isGrounded;
+
+            if (_isGrounded && _velocity.y < 0)
+            {
+                _velocity.y = -2f; // Оставаться на земле стабильно
+            }
+
+            // Прыжок
+            if (_isGrounded && Input.GetButtonDown("Jump"))
+            {
+                _velocity.y = _jumpForce; // Прямая установка силы прыжка
+            }
+
+            // Применение гравитации
+            _velocity.y += _gravity * Time.deltaTime;
+
+            // Движение вниз/вверх под действием гравитации
+            _characterController.Move(_velocity * Time.deltaTime);
         }
 
         public void SetMovement(bool canMove)
