@@ -1,4 +1,4 @@
-using Devotion.Controllers;
+using System.Collections;
 using UnityEngine;
 
 public class Attack : MonoBehaviour
@@ -7,16 +7,27 @@ public class Attack : MonoBehaviour
     [SerializeField] private Transform _attackPoint;
     [SerializeField] private float _attackRange;
     [SerializeField] private LayerMask _enemyLayer;
+    [SerializeField] private float _attackCooldown = 2f;
+
+    private bool _canAttack = true;
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent(out Health health))
+        if (_canAttack && other.TryGetComponent(out Health health))
         {
-            StartAction();
+            StartCoroutine(StartAction());
         }
     }
 
-    public void StartAction()
+    private IEnumerator StartAction()
+    {
+        _canAttack = false;
+        AttackOnCooldown();
+        yield return new WaitForSeconds(_attackCooldown);
+        _canAttack = true;
+    }
+
+    public void AttackOnCooldown()
     {
         Collider[] hitEnemies = Physics.OverlapCapsule(transform.position, _attackPoint.position, _attackRange, _enemyLayer);
 

@@ -2764,7 +2764,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1378570541512330630, guid: f78874112f197fb4887443e7a4b868fd, type: 3}
       propertyPath: _isOneDrop
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1378570541512330630, guid: f78874112f197fb4887443e7a4b868fd, type: 3}
       propertyPath: _drops.Array.size
@@ -18545,6 +18545,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 5
   _rotationSpeed: 10
+  _jumpHeight: 1.5
+  _gravity: -20
+  _jumpForce: 7
 --- !u!143 &3991660428547980796
 CharacterController:
   m_ObjectHideFlags: 0
@@ -20286,6 +20289,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 5
   _rotationSpeed: 10
+  _jumpHeight: 1.5
+  _gravity: -20
+  _jumpForce: 7
 --- !u!143 &8930550615766499252
 CharacterController:
   m_ObjectHideFlags: 0
