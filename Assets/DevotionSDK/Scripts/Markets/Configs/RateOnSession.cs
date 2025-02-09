@@ -6,10 +6,10 @@ namespace Devotion.SDK.Markets.Confgs
     [Serializable]
     public class RateOnSession
     {
-        [SerializeField] private int sessionNumber;
-        [SerializeField] private int level;
+        [SerializeField] private int _sessionNumber;
+        [SerializeField] private int _level;
 
-        public int SessionNumber => sessionNumber;
-        public int Level => level;
+        public int SessionNumber => _sessionNumber;
+        public int Level => _level;
     }
 }

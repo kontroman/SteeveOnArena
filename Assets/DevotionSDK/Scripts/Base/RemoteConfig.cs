@@ -8,9 +8,9 @@ namespace Devotion.SDK.Base
     [Serializable]
     public class RemoteConfig
     {
-        [SerializeField] private List<Markets.Markets> markets;
-        [SerializeField] private string remoteGameConfig;
+        [SerializeField] private List<Markets.Markets> _markets;
+        [SerializeField] private string _remoteGameConfig;
 
-        public List<Markets.Markets> Markets => markets;
+        public List<Markets.Markets> Markets => _markets;
     }
 }

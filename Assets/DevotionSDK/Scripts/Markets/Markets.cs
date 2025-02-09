@@ -8,12 +8,12 @@ namespace Devotion.SDK.Markets
     [Serializable]
     public class Markets
     {
-        [SerializeField] private MarketType marketType;
-        [SerializeField] private RemoteAdsSettings adsSettings;
-        [SerializeField] private RateAppConfig rateAppConfig;
+        [SerializeField] private MarketType _marketType;
+        [SerializeField] private RemoteAdsSettings _adsSettings;
+        [SerializeField] private RateAppConfig _rateAppConfig;
 
-        public MarketType Market => marketType;
-        public RemoteAdsSettings AdsSettings => adsSettings;
-        public RateAppConfig RateAppConfig => rateAppConfig;
+        public MarketType Market => _marketType;
+        public RemoteAdsSettings AdsSettings => _adsSettings;
+        public RateAppConfig RateAppConfig => _rateAppConfig;
     }
 }

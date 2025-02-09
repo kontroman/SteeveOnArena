@@ -7,11 +7,11 @@ namespace Devotion.SDK.Managers
 {
     public class UIManager : BaseManager
     {
-        [SerializeField] private List<BaseWindow> windows;
-        [SerializeField] private Canvas mainCanvas;
+        [SerializeField] private List<BaseWindow> _windows;
+        [SerializeField] private Canvas _mainCanvas;
 
-        private readonly List<BaseWindow> openedWindows = new List<BaseWindow>();
-        private readonly Dictionary<Type, BaseWindow> cachedWindows = new Dictionary<Type, BaseWindow>();
+        private readonly List<BaseWindow> _openedWindows = new List<BaseWindow>();
+        private readonly Dictionary<Type, BaseWindow> _cachedWindows = new Dictionary<Type, BaseWindow>();
 
         public void OpenWindow<T>() where T : BaseWindow
         {
@@ -19,10 +19,10 @@ namespace Devotion.SDK.Managers
 
             if (window == null) return;
 
-            if (!openedWindows.Contains(window))
+            if (!_openedWindows.Contains(window))
             {
                 window.gameObject.SetActive(true);
-                openedWindows.Add(window);
+                _openedWindows.Add(window);
             }
         }
 
@@ -30,21 +30,21 @@ namespace Devotion.SDK.Managers
         {
             BaseWindow window = GetWindowByType<T>();
 
-            if (window != null && openedWindows.Contains(window))
+            if (window != null && _openedWindows.Contains(window))
             {
                 window.gameObject.SetActive(false);
-                openedWindows.Remove(window);
+                _openedWindows.Remove(window);
             }
         }
 
         public void CloseAllWindows()
         {
-            foreach (BaseWindow window in openedWindows)
+            foreach (BaseWindow window in _openedWindows)
             {
                 window.gameObject.SetActive(false);
             }
 
-            openedWindows.Clear();
+            _openedWindows.Clear();
         }
 
         private T GetOrCreateWindow<T>() where T : BaseWindow
@@ -69,7 +69,7 @@ namespace Devotion.SDK.Managers
                 return null;
             }
 
-            GameObject windowInstance = Instantiate(prefab, mainCanvas.transform);
+            GameObject windowInstance = Instantiate(prefab, _mainCanvas.transform);
             T windowComponent = windowInstance.GetComponent<T>();
 
             if (windowComponent != null)
@@ -82,23 +82,23 @@ namespace Devotion.SDK.Managers
 
         private GameObject FindWindowPrefab<T>() where T : BaseWindow
         {
-            return windows.Find(w => w.GetType() == typeof(T))?.gameObject;
+            return _windows.Find(w => w.GetType() == typeof(T))?.gameObject;
         }
 
         protected T GetWindowByType<T>() where T : BaseWindow
         {
             Type type = typeof(T);
 
-            if (cachedWindows.ContainsKey(type))
+            if (_cachedWindows.ContainsKey(type))
             {
-                return (T)cachedWindows[type];
+                return (T)_cachedWindows[type];
             }
 
-            BaseWindow window = windows.Find(w => w.GetType() == type);
+            BaseWindow window = _windows.Find(w => w.GetType() == type);
 
             if (window != null)
             {
-                cachedWindows[type] = window;
+                _cachedWindows[type] = window;
             }
 
             return (T)window;
@@ -106,18 +106,18 @@ namespace Devotion.SDK.Managers
 
         public void RegisterWindow(BaseWindow window)
         {
-            if (window == null || windows.Contains(window)) return;
+            if (window == null || _windows.Contains(window)) return;
 
-            window.transform.SetParent(mainCanvas.transform, false);
-            windows.Add(window);
+            window.transform.SetParent(_mainCanvas.transform, false);
+            _windows.Add(window);
         }
 
         public void UnregisterWindow(BaseWindow window)
         {
-            if (window == null || !windows.Contains(window)) return;
+            if (window == null || !_windows.Contains(window)) return;
 
-            windows.Remove(window);
-            cachedWindows.Remove(window.GetType());
+            _windows.Remove(window);
+            _cachedWindows.Remove(window.GetType());
         }
     }
 }
