@@ -1,4 +1,4 @@
-using Devotion.SDK.Controllers;
+using Devotion.Controllers;
 using Devotion.Managers;
 using UnityEngine;
 

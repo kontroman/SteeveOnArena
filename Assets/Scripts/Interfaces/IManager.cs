@@ -1,4 +1,4 @@
-namespace Devotion.SDK.Interfaces
+namespace Devotion.Interfaces
 {
     public interface IManager
     {

@@ -1,6 +1,6 @@
 using UnityEngine;
 using DG.Tweening;
-using Devotion.SDK.Managers;
+using Devotion.Managers;
 
 namespace Devotion.Controllers
 {

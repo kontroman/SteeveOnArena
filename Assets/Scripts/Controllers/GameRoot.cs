@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
-using Devotion.SDK.Managers;
+using Devotion.Managers;
 
-namespace Devotion.SDK.Controllers
+namespace Devotion.Controllers
 {
     public class GameRoot : MonoBehaviour
     {
