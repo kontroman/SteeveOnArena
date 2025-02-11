@@ -1,7 +1,7 @@
-using Devotion.Interfaces;
+using Devotion.SDK.Interfaces;
 using UnityEngine;
 
-namespace Devotion.Managers
+namespace Devotion.SDK.Managers
 {
     public class BaseManager : MonoBehaviour, IManager
     {
