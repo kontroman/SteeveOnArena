@@ -20,7 +20,7 @@ namespace Devotion.Drop
         }
 
         [Header("List drops")]
-        [SerializeField] private List<DropEntry> _dropTable = new();
+        [SerializeField] private List<DropEntry> _dropTable = new List<DropEntry>();
 
         [Header("Drop only one or more items")]
         [SerializeField] private bool _isOneDrop;
@@ -34,32 +34,23 @@ namespace Devotion.Drop
         {
             foreach (var dropEntry in _dropTable)
             {
-                if (_isOneDrop)
+                if (RollChance(dropEntry.DropChance))
                 {
-                    CreatObject(dropEntry);
-                }
-                else
-                {
-                    if (RollChance(dropEntry.DropChance))
-                    {
-                        var cout = Random.Range(dropEntry.MinQuantity, dropEntry.MaxQuantity + 1);
+                    var cout = Random.Range(dropEntry.MinQuantity, dropEntry.MaxQuantity + 1);
 
-                        for (int i = 0; i < cout; i++)
-                        {
-                            CreatObject(dropEntry);
-                        }
+                    for (int i = 0; i < cout; i++)
+                    {
+                        var obj = Instantiate(dropEntry.Item.Prefab);
+                        obj.transform.position = transform.position;
+                        GameRoot.Instance.GetManager<AudioManager>().PlayEffect(Constants.AudioNames.DropResource);
                     }
                 }
             }
         }
 
-        private bool RollChance(float chance) => Random.Range(0f, 100f) <= chance;
-
-        private void CreatObject(DropEntry dropEntry)
+        private bool RollChance(float chance)
         {
-            var obj = Instantiate(dropEntry.Item.Prefab);
-            obj.transform.position = transform.position;
-            GameRoot.Instance.GetManager<AudioManager>().PlayEffect(Constants.AudioNames.DropResource);
+            return Random.Range(0f, 100f) <= chance;
         }
     }
 }
