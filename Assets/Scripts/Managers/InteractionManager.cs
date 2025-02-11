@@ -17,7 +17,10 @@ namespace Devotion.Managers
             UpdateClosestObject();
 
             if (_currentInteractable != null && Input.GetKeyDown(KeyCode.E))
+            {
+                _currentInteractable?.HideInteractionPrompt();
                 _currentInteractable.ExecuteCommand();
+            }    
         }
 
         public void RegisterObject(InteractableObject interactable)
