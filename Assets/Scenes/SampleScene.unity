@@ -5268,7 +5268,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 717142339}
-  m_LocalRotation: {x: 0.31870973, y: 0.4078733, z: -0.15446915, w: 0.8415479}
+  m_LocalRotation: {x: 0.31870973, y: 0.40787327, z: -0.15446915, w: 0.84154785}
   m_LocalPosition: {x: -12.28, y: 12.51, z: -7.11}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -7200,7 +7200,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.31870973, y: 0.4078733, z: -0.15446915, w: 0.8415479}
+  m_LocalRotation: {x: 0.31870973, y: 0.40787327, z: -0.15446915, w: 0.84154785}
   m_LocalPosition: {x: -12.28, y: 12.51, z: -6.93}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -16771,6 +16771,7 @@ MonoBehaviour:
   _rotationSpeed: 10
   _jumpHeight: 2
   _gravity: -9.81
+  _jumpForce: 7
 --- !u!143 &3991660428547980796
 CharacterController:
   m_ObjectHideFlags: 0
@@ -18616,7 +18617,8 @@ MonoBehaviour:
   _speed: 5
   _rotationSpeed: 10
   _jumpHeight: 2
-  _gravity: -9.81
+  _gravity: -14.81
+  _jumpForce: 7
 --- !u!143 &8930550615766499252
 CharacterController:
   m_ObjectHideFlags: 0
@@ -18662,10 +18664,10 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8930550615766499249}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2, y: 5.07, z: 1}
+  m_Size: {x: 3.2, y: 5.07, z: 2.8}
   m_Center: {x: 0, y: 2.5, z: 0}
 --- !u!114 &8930550615766499256
 MonoBehaviour:
