@@ -1,3 +1,4 @@
+using Devotion.Basics;
 using DG.Tweening;
 using UnityEngine;
 
@@ -6,15 +7,6 @@ namespace Devotion.PlayerSystem
     [RequireComponent(typeof(CharacterController))]
     public class PlayerMovement : MonoBehaviour
     {
-        [SerializeField] private float _speed = 5f;
-        [SerializeField] private float _rotationSpeed = 10f;
-        [SerializeField] private float _jumpHeight = 1.5f;
-        [SerializeField] private float _gravity = -20f; // Увеличенная скорость падения
-        [SerializeField] private float _jumpForce = 7f; // Увеличенная начальная сила прыжка
-
-        public float MoveSpeed => _speed;
-        public float RotationSpeed => _rotationSpeed;
-
         private CharacterController _characterController;
         private bool _canMove = true;
 
@@ -32,12 +24,17 @@ namespace Devotion.PlayerSystem
         {
             if (_canMove)
             {
-                Move();
+                Vector3 horizontalMove = GetHorizontalMovement();
                 ApplyGravityAndJump();
+
+                Vector3 totalMovement = horizontalMove * Constants.PlayerSettings.Speed + new Vector3(0, _velocity.y, 0);
+                _characterController.Move(totalMovement * Time.deltaTime);
+
+                RotatePlayer(horizontalMove);
             }
         }
 
-        private void Move()
+        private Vector3 GetHorizontalMovement()
         {
             float moveX = Input.GetAxis("Horizontal");
             float moveZ = Input.GetAxis("Vertical");
@@ -47,7 +44,6 @@ namespace Devotion.PlayerSystem
             if (moveDirection.magnitude > 0.1f)
             {
                 Controllers.Player.Instance.GetComponentFromList<Animator>().SetBool("isRunning", true);
-
                 moveDirection.Normalize();
 
                 Vector3 cameraForward = _cameraTransform.forward;
@@ -55,17 +51,12 @@ namespace Devotion.PlayerSystem
                 Quaternion cameraRotation = Quaternion.LookRotation(cameraForward);
                 moveDirection = cameraRotation * moveDirection;
 
-                _characterController.Move(moveDirection * MoveSpeed * Time.deltaTime);
-
-                if (moveDirection != Vector3.zero)
-                {
-                    Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
-                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, _rotationSpeed * Time.deltaTime);
-                }
+                return moveDirection;
             }
             else
             {
                 Controllers.Player.Instance.GetComponentFromList<Animator>().SetBool("isRunning", false);
+                return Vector3.zero;
             }
         }
 
@@ -73,22 +64,26 @@ namespace Devotion.PlayerSystem
         {
             _isGrounded = _characterController.isGrounded;
 
-            if (_isGrounded && _velocity.y < 0)
+            if (_isGrounded)
             {
-                _velocity.y = -2f; // Оставаться на земле стабильно
+                _velocity.y = -2f;
+
+                if (Input.GetButtonDown("Jump"))
+                {
+                    _velocity.y = Constants.PlayerSettings.JumpForce;
+                }
             }
 
-            // Прыжок
-            if (_isGrounded && Input.GetButtonDown("Jump"))
+            _velocity.y += Constants.PlayerSettings.Gravity * Time.deltaTime;
+        }
+
+        private void RotatePlayer(Vector3 moveDirection)
+        {
+            if (moveDirection != Vector3.zero)
             {
-                _velocity.y = _jumpForce; // Прямая установка силы прыжка
+                Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Constants.PlayerSettings.RotationSpeed * Time.deltaTime);
             }
-
-            // Применение гравитации
-            _velocity.y += _gravity * Time.deltaTime;
-
-            // Движение вниз/вверх под действием гравитации
-            _characterController.Move(_velocity * Time.deltaTime);
         }
 
         public void SetMovement(bool canMove)
