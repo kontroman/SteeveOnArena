@@ -1,4 +1,3 @@
-using Devotion.Controllers;
 using UnityEngine;
 
 public class Attack : MonoBehaviour
