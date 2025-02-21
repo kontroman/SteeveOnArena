@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Devotion.SDK.Markets.Confgs
+namespace Devotion.SDK.Confgs
 {
     [Serializable]
     public class RateOnSession

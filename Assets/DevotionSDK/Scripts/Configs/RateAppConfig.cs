@@ -1,9 +1,8 @@
-using Devotion.Helpers;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Devotion.SDK.Markets.Confgs
+namespace Devotion.SDK.Confgs
 {
     //TODO: add social service
     [Serializable]
