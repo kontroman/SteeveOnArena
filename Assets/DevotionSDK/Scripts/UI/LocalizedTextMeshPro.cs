@@ -9,7 +9,7 @@ namespace Devotion.SDK.UI
     public class LocalizedTextMeshPro : MonoBehaviour,
         IMessageSubscriber<Messages.Game.LanguageChanged>
     {
-        [SerializeField] private string localizationKey;
+        [SerializeField] private string _localizationKey;
 
         private TextMeshProUGUI _textMeshPro;
         private ILocalizationService _localizationService;
@@ -37,7 +37,7 @@ namespace Devotion.SDK.UI
 
         private void UpdateLocalizedText()
         {
-            _textMeshPro.text = _localizationService.GetLocalizedText(localizationKey);
+            _textMeshPro.text = _localizationService.GetLocalizedText(_localizationKey);
         }
 
         public void OnMessage(Messages.Game.LanguageChanged message)

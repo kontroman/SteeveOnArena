@@ -5,7 +5,7 @@ namespace Devotion.SDK.Services.Localization
     [Serializable]
     public class LocalizationItem
     {
-        public string key;
-        public string value;
+        public string Key;
+        public string Value;
     }
 }

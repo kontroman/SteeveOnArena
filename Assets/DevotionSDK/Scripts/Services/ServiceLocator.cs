@@ -5,16 +5,16 @@ namespace Devotion.SDK.Services
 {
     public static class ServiceLocator
     {
-        private static readonly Dictionary<Type, object> services = new Dictionary<Type, object>();
+        private static readonly Dictionary<Type, object> _services = new Dictionary<Type, object>();
 
         public static void Register<T>(T service)
         {
-            services[typeof(T)] = service;
+            _services[typeof(T)] = service;
         }
 
         public static T Resolve<T>()
         {
-            if (services.TryGetValue(typeof(T), out var service))
+            if (_services.TryGetValue(typeof(T), out var service))
             {
                 return (T)service;
             }
