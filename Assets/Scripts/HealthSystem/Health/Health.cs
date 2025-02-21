@@ -1,23 +1,24 @@
 using UnityEngine;
 using System;
-using Devotion.Controllers;
+using Devotion.Basics;
 
-public class Health : MonoBehaviour
+public class Health : MonoBehaviour, IProgressBar
 {
     [SerializeField] private float _currentHealth;
     [SerializeField] private float _maxHealth;
 
-    private int _minHealth = 0;
+    public event Action<float, float> OnHealthChanged;
 
-    public event Action<float,float> OnHealthChanged; // change on "message"
-
-    public float MaxHealth => _maxHealth;
-    public float CurrentHealth => _currentHealth;
+    public float MaxValue => _maxHealth;
+    public float CurrentValue => _currentHealth;
 
     private void Start()
     {
         OnHealthChanged?.Invoke(_currentHealth, _maxHealth);
     }
+
+    //TODO: ICommand TakeDamage
+    //TODO: ICommand Heal
 
     public void TakeDamage(float damage)
     {
@@ -43,5 +44,7 @@ public class Health : MonoBehaviour
     }
 
     private float DetermineValue(float currentValue)
-        => Mathf.Clamp(currentValue, _minHealth, _maxHealth);
+        => Mathf.Clamp(currentValue, Constants.PlayerSettings.MinHealth, _maxHealth);
+
+    
 }

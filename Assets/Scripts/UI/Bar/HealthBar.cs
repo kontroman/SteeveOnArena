@@ -1,6 +1,6 @@
 namespace Divotion.Game.UI
 {
-    public class HealthBar : Bar<Health>
+    public class HealthBar : AbstractBar<Health>
     {
         protected override void SubscribeToChange()
         {

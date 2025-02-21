@@ -8,13 +8,17 @@ namespace Divotion.Game.UI
 
         private void Update()
         {
-            LookAt();
+            LookAt(GetTransform());
         }
 
-        private void LookAt()
+        private Transform GetTransform() => transform;
+
+        private void LookAt(Transform transform)
         {
-            if (_mainCamera != null)
-                transform.LookAt(transform.position + _mainCamera.transform.forward);
+            if (_mainCamera == null)
+                return;
+
+            transform.LookAt(transform.position + _mainCamera.transform.forward);
         }
     }
 }
