@@ -1,5 +1,5 @@
 using Devotion.SDK.Enums;
-using Devotion.SDK.Markets.Confgs;
+using Devotion.SDK.Confgs;
 using System;
 using UnityEngine;
 
