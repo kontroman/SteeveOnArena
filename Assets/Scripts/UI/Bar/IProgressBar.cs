@@ -1,5 +1,8 @@
-public interface IProgressBar
+namespace Divotion.Game.UI
 {
-    float MaxValue { get; }
-    float CurrentValue { get; }
+    public interface IProgressBar
+    {
+        float MaxValue { get; }
+        float CurrentValue { get; }
+    }
 }
