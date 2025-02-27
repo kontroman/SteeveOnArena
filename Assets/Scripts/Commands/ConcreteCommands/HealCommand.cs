@@ -19,7 +19,7 @@ namespace Devotion.Commands
 
         public override async Task Execute(Component component)
         {
-            if (component.TryGetComponent(out Health health))
+            if (component is Health health)
                 health.ChangeValue(_healthIncreaseAmount);
         }
     }
