@@ -3,7 +3,6 @@ using UnityEngine;
 
 namespace Devotion.Controllers
 {
-    //
     public class Player : MonoBehaviour
     {
         private List<Component> _components;
