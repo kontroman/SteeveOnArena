@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Threading.Tasks;
 using System;
+using Divotion.Game.Health;
 
 namespace Devotion.Commands
 {
@@ -14,6 +15,12 @@ namespace Devotion.Commands
             //TODO: make heal after creating health system
 
             Debug.Log($"Executing command to increase health by {_healthIncreaseAmount}");
+        }
+
+        public override async Task Execute(Component component)
+        {
+            if (component.TryGetComponent(out Health health))
+                health.ChangeValue(_healthIncreaseAmount);
         }
     }
 }

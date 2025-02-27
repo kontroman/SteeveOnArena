@@ -47,7 +47,7 @@ namespace Divotion.Game.UI
         {
             while (!Mathf.Approximately(_fillImage.fillAmount, targetValue))
             {
-                _fillImage.fillAmount = Mathf.Lerp(_fillImage.fillAmount, targetValue, Constants.UISettings.SpeedAnimation * Time.deltaTime);
+                _fillImage.fillAmount = Mathf.Lerp(_fillImage.fillAmount, targetValue, Constants.UISettings.SpeedFillProgressBar * Time.deltaTime);
                 yield return null;
             }
         }

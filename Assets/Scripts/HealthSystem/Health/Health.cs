@@ -2,49 +2,38 @@ using UnityEngine;
 using System;
 using Devotion.Basics;
 
-public class Health : MonoBehaviour, IProgressBar
+namespace Divotion.Game.Health
 {
-    [SerializeField] private float _currentHealth;
-    [SerializeField] private float _maxHealth;
-
-    public event Action<float, float> OnHealthChanged;
-
-    public float MaxValue => _maxHealth;
-    public float CurrentValue => _currentHealth;
-
-    private void Start()
+    public class Health : MonoBehaviour, IProgressBar
     {
-        OnHealthChanged?.Invoke(_currentHealth, _maxHealth);
-    }
+        [SerializeField] private float _currentHealth;
+        [SerializeField] private float _maxHealth;
 
-    //TODO: ICommand TakeDamage
-    //TODO: ICommand Heal
+        public event Action<float, float> OnHealthChanged;
 
-    public void TakeDamage(float damage)
-    {
-        if (damage > 0)
-            _currentHealth -= damage;
+        public float MaxValue => _maxHealth;
+        public float CurrentValue => _currentHealth;
 
-        _currentHealth = DetermineValue(_currentHealth);
-        OnHealthChanged?.Invoke(_currentHealth, _maxHealth);
-
-        if (_currentHealth <= 0)
+        private void Start()
         {
-            Destroy(gameObject);
+            OnHealthChanged?.Invoke(_currentHealth, _maxHealth);
         }
+
+        public void ChangeValue(float value)
+        {
+            _currentHealth += value;
+            _currentHealth = DetermineValue(_currentHealth);
+
+            if (_currentHealth >= _maxHealth)
+                _currentHealth = _maxHealth;
+
+            OnHealthChanged?.Invoke(_currentHealth, _maxHealth);
+
+            if (_currentHealth <= 0)
+                Destroy(gameObject);
+        }
+
+        private float DetermineValue(float currentValue)
+            => Mathf.Clamp(currentValue, Constants.PlayerSettings.MinHealth, _maxHealth);
     }
-
-    public void Heal(float extraHealth)
-    {
-        if (extraHealth > 0)
-            _currentHealth += extraHealth;
-
-        _currentHealth = DetermineValue(_currentHealth);
-        OnHealthChanged?.Invoke(_currentHealth, _maxHealth);
-    }
-
-    private float DetermineValue(float currentValue)
-        => Mathf.Clamp(currentValue, Constants.PlayerSettings.MinHealth, _maxHealth);
-
-    
 }

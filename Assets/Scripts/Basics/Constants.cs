@@ -20,7 +20,7 @@ namespace Devotion.Basics
 
         public static class UISettings
         {
-            public static float SpeedAnimation = 10f;
+            public static float SpeedFillProgressBar = 10f;
         }
     }
 }
