@@ -1,7 +1,4 @@
-using Devotion.AI;
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Devotion.AI
@@ -44,7 +41,7 @@ namespace Devotion.AI
             while (_isAttack)
             {
                 yield return new WaitForSeconds(_attackSpeed);
-                //print("тычка " + temp);
+                //TODO: добавить вызов нанесения урона
             }
         }
 

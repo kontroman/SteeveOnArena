@@ -584,9 +584,9 @@ GameObject:
   - component: {fileID: 4753998675413258437}
   - component: {fileID: 6770106084080381418}
   - component: {fileID: 2621681142427238442}
-  - component: {fileID: -2464015188232584627}
+  - component: {fileID: -2898143398856248523}
   m_Layer: 0
-  m_Name: Zombie
+  m_Name: Skeleton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -676,7 +676,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea8ee677b8dc656478b76a13a7367e5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &-2464015188232584627
+--- !u!114 &-2898143398856248523
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -685,7 +685,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4379526534478428056}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b1602e9d9d73c0843a5a052cd01fa6a5, type: 3}
+  m_Script: {fileID: 11500000, guid: 3f1e67970cf37f1449138cc907f40f2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &5072941760849075544

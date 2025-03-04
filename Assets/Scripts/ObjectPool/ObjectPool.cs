@@ -1,7 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
+using Devotion.SDK.GenericSingleton;
+using Devotion.SDK.Controllers;
 
 namespace Devotion.ObjectPools
 {
@@ -12,44 +12,47 @@ namespace Devotion.ObjectPools
         [SerializeField] private GameObject _objectPrefab;
         private ObjectPool<GameObject> _pool;
 
-        private void Start()
-        {
-            var pool = new ObjectPool(_objectPrefab, 10, 20);
-
-            pool.GetObj(pool.CreateObject());
-        }
-
-        public ObjectPool(GameObject prefab, int defaultSize, int maxSize)
+        public void Init(GameObject prefab, MobPoolsPreset preset)
         {
             _objectPrefab = prefab;
-            _pool = new ObjectPool<GameObject>(createFunc: CreateObject,
-                                               actionOnGet: GetObj,
-                                               actionOnRelease: Release,
-                                               actionOnDestroy: Remove,
+            _pool = new ObjectPool<GameObject>(createFunc: () => OnCreateObject(prefab),
+                                               actionOnGet: (mob) => OnGetObj(mob),
+                                               actionOnRelease: (mob) => OnRelease(mob),
+                                               actionOnDestroy: (mob) => OnRemove(mob),
                                                false,
-                                               defaultCapacity: defaultSize,
-                                               maxSize: maxSize
+                                               defaultCapacity: preset.DefaultPoolSize,
+                                               maxSize: preset.MaxPoolSize
             );
         }
+        
+        public GameObject GetFromPool()
+        {
+            return _pool.Get();
+        }
 
-        private GameObject CreateObject()
+        public void Release(GameObject gameObject)
+        {
+            _pool.Release(gameObject);
+        }
+
+        private GameObject OnCreateObject(GameObject mob)
         {
             var obj = Instantiate(_objectPrefab);
             obj.SetActive(false);
             return obj;
         }
 
-        public void GetObj(GameObject obj)
+        private void OnGetObj(GameObject obj)
         {
             obj?.SetActive(true);
         }
 
-        public void Release(GameObject obj)
+        private void OnRelease(GameObject obj)
         {
             obj?.SetActive(false);
         }
 
-        public void Remove(GameObject obj)
+        private void OnRemove(GameObject obj)
         {
             Destroy(gameObject);
         }

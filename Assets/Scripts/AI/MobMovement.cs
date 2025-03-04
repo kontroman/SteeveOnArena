@@ -1,16 +1,13 @@
 using Devotion.Controllers;
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace Devotion.AI
 {
+    //NOTE: пока что дистанция осстановки регулируется через навмеш агента.
     public class MobMovement : MonoBehaviour
     {
         private Transform _playerTransform;
-        private bool _isMove = true;
         private NavMeshAgent _agent;
 
         public void SetPlayerTransform(Transform playerTransform) => _playerTransform = playerTransform;
@@ -23,13 +20,11 @@ namespace Devotion.AI
 
         private void Update()
         {
-            if (_isMove && _playerTransform)
+            if ( _playerTransform)
+            {
+                _playerTransform = Player.Instance.GetComponentFromList<Transform>();
                 _agent.SetDestination(_playerTransform.position);
-        }
-
-        public void Move()
-        {
-            _isMove = true;
+            }
         }
 
         public float DistanceToPlayer()
