@@ -1,13 +1,20 @@
-using Devotion.Commands;
 using System;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public abstract class BaseCommand : ScriptableObject, ICommand
+namespace Devotion.Commands
 {
-    public virtual async Task Execute(Action callback)
+    public abstract class BaseCommand : ScriptableObject, ICommand
     {
-        await Task.Run(() => Execute(callback));
-        //callback?.Invoke();
+        public virtual async Task Execute(Action callback)
+        {
+            await Task.Run(() => Execute(callback));
+            //callback?.Invoke();
+        }
+
+        public virtual async Task Execute(Component component)
+        {
+            await Task.Run(() => Execute(component));
+        }
     }
 }

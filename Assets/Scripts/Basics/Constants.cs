@@ -15,6 +15,12 @@ namespace Devotion.Basics
             public static float JumpHeight = 1.5f;
             public static float Gravity = -20f;
             public static float JumpForce = 7f;
+            public static float MinHealth = 0f;
+        }
+
+        public static class UISettings
+        {
+            public static float SpeedFillProgressBar = 10f;
         }
     }
 }
