@@ -1,4 +1,4 @@
-using Devotion.Interfaces;
+using Devotion.TriggersActions;
 using System.Collections.Generic;
 using UnityEngine;
 
