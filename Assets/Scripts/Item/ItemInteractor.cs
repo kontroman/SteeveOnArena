@@ -1,4 +1,3 @@
-using Devotion.Controllers;
 using UnityEngine;
 
 namespace Devotion.Items
@@ -22,18 +21,15 @@ namespace Devotion.Items
             
         }
 
-        private void OnTriggerEnter(Collider other)
+        public void Interact()
         {
-            if (other.gameObject.CompareTag("Player"))
+            if (_item.Usable)
             {
-                if (_item.Usable)
-                {
-                    _item.Command.Execute(() => { Destroy(gameObject); });
-                }
-                else
-                {
-                    AddToInventory(item);
-                }
+                _item.Command.Execute(() => { Destroy(gameObject); });
+            }
+            else
+            {
+                AddToInventory(item);
             }
         }
 
