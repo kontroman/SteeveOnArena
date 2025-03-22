@@ -3105,6 +3105,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1995786815}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &407378168 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8602299480994262813, guid: 6d5b39388d059964a83a94a6c2e1b37b, type: 3}
+  m_PrefabInstance: {fileID: 904715229099249836}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &411897277
 GameObject:
   m_ObjectHideFlags: 0
@@ -16225,6 +16230,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 8602299480994262810, guid: 6d5b39388d059964a83a94a6c2e1b37b, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8602299480994262810, guid: 6d5b39388d059964a83a94a6c2e1b37b, type: 3}
       propertyPath: m_IsTrigger
       value: 0
       objectReference: {fileID: 0}
@@ -16272,10 +16281,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8602299480994262810, guid: 6d5b39388d059964a83a94a6c2e1b37b, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8602299480994262813, guid: 6d5b39388d059964a83a94a6c2e1b37b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8116718894625334547}
+    - targetCorrespondingSourceObject: {fileID: 8602299480994262813, guid: 6d5b39388d059964a83a94a6c2e1b37b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8116718894625334548}
   m_SourcePrefab: {fileID: 100100000, guid: 6d5b39388d059964a83a94a6c2e1b37b, type: 3}
 --- !u!1 &1011673921522167980
 GameObject:
@@ -17805,6 +17821,44 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8947053089102296487, guid: 6d5b39388d059964a83a94a6c2e1b37b, type: 3}
   m_PrefabInstance: {fileID: 904715229099249836}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8116718894625334547
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 407378168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94189bef58a86ec49979e688ceadcb56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tagActions:
+  - tag: PickUpObject
+    action: {fileID: 11400000, guid: e58beab10c93d1c45bd4ea6a4c80b9d7, type: 2}
+--- !u!136 &8116718894625334548
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 407378168}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 2.3
+  m_Height: 7.24
+  m_Direction: 1
+  m_Center: {x: 0, y: 2.67, z: 0}
 --- !u!1 &8117446388732684586
 GameObject:
   m_ObjectHideFlags: 0
