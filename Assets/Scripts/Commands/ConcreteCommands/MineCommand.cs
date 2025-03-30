@@ -14,11 +14,14 @@ namespace Devotion.Commands
         public override async Task Execute(Action callback)
         {
             PlayerMovement pm = Player.Instance.GetComponentFromList<PlayerMovement>();
+            PlayerAttack patc = Player.Instance.GetComponentFromList <PlayerAttack>();
+            RotationController rc = Player.Instance.GetComponentFromList<RotationController>();
             Transform ore = GameRoot.Instance.GetManager<InteractionManager>().CurrentTargetTransform;
             Animator pa = Player.Instance.GetComponentFromList<Animator>();
 
             pm.SetMovement(false);
-            pm.RotatePlayerToTarget(ore);
+            patc.SetComponentEnable(false);
+            rc.RotatePlayerToTarget(ore);
 
             pa.SetBool("isRunning", false);
             pa.SetTrigger("Mining");
@@ -27,7 +30,7 @@ namespace Devotion.Commands
 
             pm.SetMovement(true);
             pa.ResetTrigger("Mining");
-
+            patc.SetComponentEnable(true);
             callback?.Invoke();
         }
     }

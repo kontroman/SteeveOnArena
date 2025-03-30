@@ -1,11 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using Devotion.Structs;
 
 namespace Devotion.Interfaces
 {
-    public class IDamagable : MonoBehaviour
+    public interface IDamageable
     {
-
+        void TakeDamage(DamageData damageData);
     }
 }

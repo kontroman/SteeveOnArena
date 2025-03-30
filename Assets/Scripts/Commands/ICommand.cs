@@ -8,5 +8,6 @@ namespace Devotion.Commands
     {
         Task Execute(Action callback);
         Task Execute(Component component);
+        Task Execute(object data);
     }
 }

@@ -16,5 +16,10 @@ namespace Devotion.Commands
         {
             await Task.Run(() => Execute(component));
         }
+
+        public Task Execute(object data)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

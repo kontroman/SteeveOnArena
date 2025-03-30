@@ -1,4 +1,5 @@
 using Devotion.Basics;
+using Devotion.Controllers;
 using DG.Tweening;
 using UnityEngine;
 
@@ -79,29 +80,19 @@ namespace Devotion.PlayerSystem
 
         private void RotatePlayer(Vector3 moveDirection)
         {
-            if (moveDirection != Vector3.zero)
+            if (moveDirection != Vector3.zero && !Player.Instance.GetComponentFromList<RotationController>().IsRotating())
             {
-                Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Constants.PlayerSettings.RotationSpeed * Time.deltaTime);
+                Player.Instance.GetComponentFromList<RotationController>().RotateToDirection(
+                    moveDirection,
+                    priority: 1,
+                    duration: 0.2f
+                );
             }
         }
 
         public void SetMovement(bool canMove)
         {
             _canMove = canMove;
-        }
-
-        public void RotatePlayerToTarget(Transform target)
-        {
-            float duration = 0.5f;
-
-            Vector3 direction = (target.position - transform.position).normalized;
-            direction.y = 0;
-
-            Quaternion targetRotation = Quaternion.LookRotation(direction);
-            Vector3 targetEulerAngles = new Vector3(0, targetRotation.eulerAngles.y, 0);
-
-            transform.DORotate(targetEulerAngles, duration, RotateMode.FastBeyond360);
         }
     }
 }

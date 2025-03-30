@@ -6,6 +6,12 @@ namespace Divotion.Game.UI
     {
         [SerializeField] private Camera _mainCamera;
 
+        private void Awake()
+        {
+            if(!_mainCamera)
+                _mainCamera = Camera.main;
+        }
+
         private void Update()
         {
             LookAt(GetTransform());
