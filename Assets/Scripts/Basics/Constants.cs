@@ -22,5 +22,10 @@ namespace Devotion.Basics
         {
             public static float SpeedFillProgressBar = 10f;
         }
+
+        public static class GameTags
+        {
+            public static string MainCanvas = "MainCanvas";
+        }
     }
 }

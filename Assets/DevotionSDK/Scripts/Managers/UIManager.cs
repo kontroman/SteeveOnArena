@@ -1,3 +1,4 @@
+using Devotion.Basics;
 using Devotion.SDK.Base;
 using System;
 using System.Collections.Generic;
@@ -13,17 +14,22 @@ namespace Devotion.SDK.Managers
         private readonly List<BaseWindow> _openedWindows = new List<BaseWindow>();
         private readonly Dictionary<Type, BaseWindow> _cachedWindows = new Dictionary<Type, BaseWindow>();
 
-        public void OpenWindow<T>() where T : BaseWindow
+        public BaseWindow OpenWindow<T>() where T : BaseWindow
         {
+            if (_mainCanvas == null)
+                _mainCanvas = GameObject.FindGameObjectWithTag(Constants.GameTags.MainCanvas).GetComponent<Canvas>(); ;
+
             BaseWindow window = GetOrCreateWindow<T>();
 
-            if (window == null) return;
+            if (window == null) return null;
 
             if (!_openedWindows.Contains(window))
             {
                 window.gameObject.SetActive(true);
                 _openedWindows.Add(window);
             }
+
+            return window;
         }
 
         public void CloseWindow<T>() where T : BaseWindow
@@ -96,12 +102,14 @@ namespace Devotion.SDK.Managers
 
             BaseWindow window = _windows.Find(w => w.GetType() == type);
 
+            var newWindow = Instantiate(window, _mainCanvas.transform);
+
             if (window != null)
             {
-                _cachedWindows[type] = window;
+                _cachedWindows[type] = newWindow;
             }
 
-            return (T)window;
+            return (T)newWindow;
         }
 
         public void RegisterWindow(BaseWindow window)

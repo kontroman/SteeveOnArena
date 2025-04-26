@@ -1,7 +1,9 @@
+using System;
 using UnityEngine;
 
 namespace Devotion.Items
 {
+    [Serializable]
     public class Item
     {
         public string Name { get; }

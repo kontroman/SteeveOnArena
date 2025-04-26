@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4530d68457c32d5408518bd0fd12c505, type: 3}
   m_Name: WoodSwordAttack
   m_EditorClassIdentifier: 
-  baseDamage: 25
-  radius: 4.5
-  angle: 120
-  cooldown: 0.5
-  animationDelay: 0.1
-  attackableLayers:
+  BaseDamage: 35
+  Radius: 2.5
+  Angle: 120
+  Cooldown: 0.3
+  AnimationDelay: 0.1
+  AttackableLayers:
     serializedVersion: 2
     m_Bits: 256
-  impactVFX: {fileID: 0}
-  impactSound: {fileID: 0}
+  ImpactVFX: {fileID: 0}
+  ImpactSound: {fileID: 0}
