@@ -44,10 +44,8 @@ Shader "Custom/WaterShaderV2_Fixed" {
             v2f vert (appdata v) {
                 v2f o;
                 
-                // Просто передаем вершины без смещения
                 o.vertex = UnityObjectToClipPos(v.vertex);
                 
-                // Считаем базовые UV
                 o.uvWave = TRANSFORM_TEX(v.uv, _MainTex);
                 o.uvShape = TRANSFORM_TEX(v.uv, _ShapeTex);
 
@@ -55,17 +53,14 @@ Shader "Custom/WaterShaderV2_Fixed" {
             }
 
             fixed4 frag (v2f i) : SV_Target {
-                // Смещаем UV, создавая эффект волн
                 float2 displacedUV = i.uvWave;
 
                 displacedUV.x += _Time.x * _Speed * 0.1;
                 displacedUV.y += sin((i.uvWave.x + _Time.y * _Speed) * _Frequency) * _Amplitude;
 
-                // Основной цвет воды
                 fixed4 waveTex = tex2D(_MainTex, displacedUV);
                 fixed4 waterColor = _Color * waveTex;
 
-                // Мягкие края через shape texture
                 fixed4 shape = tex2D(_ShapeTex, i.uvShape);
                 float shapeAlpha = smoothstep(0.5 - _EdgeBlend, 0.5 + _EdgeBlend, shape.a);
 
