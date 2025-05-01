@@ -8,7 +8,7 @@ namespace Devotion.Buildings
     {
         public bool TryBuilding(BuildingConfig config)
         {
-            Instantiate(config.GetCurrentLevel().ModelPrefab, config.BuildingPlace.transform.position, Quaternion.identity);
+            Instantiate(config.GetCurrentLevel().ModelPrefab, config.BuildingPlace.transform.position, config.BuildingRotation);
 
             config.BuildingPlace.gameObject.GetComponent<Collider>().enabled = false;
 

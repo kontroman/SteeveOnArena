@@ -84,11 +84,14 @@ namespace Devotion.PlayerSystem
 
         private void DetectHits()
         {
-            Collider[] hits = Physics.OverlapSphere(transform.position, _config.Radius, _config.AttackableLayers);
+            Vector3 offset = -transform.forward * 0.5f;
+            Vector3 attackOrigin = transform.position + offset;
+
+            Collider[] hits = Physics.OverlapSphere(attackOrigin, _config.Radius, _config.AttackableLayers);
 
             foreach (Collider hit in hits)
             {
-                Vector3 directionToTarget = hit.transform.position - transform.position;
+                Vector3 directionToTarget = hit.transform.position - attackOrigin;
                 float angle = Vector3.Angle(transform.forward, directionToTarget);
 
                 if (angle <= _config.Angle / 2)
@@ -103,6 +106,29 @@ namespace Devotion.PlayerSystem
                 }
             }
         }
+
+        private void OnDrawGizmosSelected()
+        {
+            if (_config == null) return;
+
+            Vector3 offset = -transform.forward * 0.5f;
+            Vector3 attackOrigin = transform.position + offset;
+
+            Gizmos.color = new Color(1, 0, 0, 0.3f);
+            Gizmos.DrawWireSphere(attackOrigin, _config.Radius);
+
+            Vector3 forward = transform.forward * _config.Radius;
+            Quaternion leftRayRotation = Quaternion.AngleAxis(-_config.Angle / 2, Vector3.up);
+            Quaternion rightRayRotation = Quaternion.AngleAxis(_config.Angle / 2, Vector3.up);
+
+            Vector3 leftRayDirection = leftRayRotation * forward;
+            Vector3 rightRayDirection = rightRayRotation * forward;
+
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawRay(attackOrigin, leftRayDirection);
+            Gizmos.DrawRay(attackOrigin, rightRayDirection);
+        }
+
 
         public void SetComponentEnable(bool value)
         {
