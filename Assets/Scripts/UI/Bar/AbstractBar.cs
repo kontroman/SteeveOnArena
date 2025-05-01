@@ -1,9 +1,9 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-using Devotion.Basics;
+using MineArena.Basics;
 
-namespace Divotion.Game.UI
+namespace MineArena.Game.UI
 {
     public abstract class AbstractBar<T> : MonoBehaviour where T : IProgressBar
     {

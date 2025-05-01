@@ -1,9 +1,8 @@
-using Devotion.Basics;
-using Devotion.Controllers;
-using DG.Tweening;
+using MineArena.Basics;
+using MineArena.Controllers;
 using UnityEngine;
 
-namespace Devotion.PlayerSystem
+namespace MineArena.PlayerSystem
 {
     [RequireComponent(typeof(CharacterController))]
     public class PlayerMovement : MonoBehaviour

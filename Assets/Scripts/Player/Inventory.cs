@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
-using Devotion.Items;
-using Devotion.Resourse;
+using MineArena.Items;
+using MineArena.Resourse;
 
-namespace Devotion.Controllers
+namespace MineArena.Controllers
 {
     public class Inventory : MonoBehaviour
     {

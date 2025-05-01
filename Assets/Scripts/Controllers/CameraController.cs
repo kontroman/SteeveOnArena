@@ -2,7 +2,7 @@ using UnityEngine;
 using DG.Tweening;
 using Devotion.SDK.Managers;
 
-namespace Devotion.Controllers
+namespace MineArena.Controllers
 {
     public class CameraController : BaseManager
     {

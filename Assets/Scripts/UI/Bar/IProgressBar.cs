@@ -1,4 +1,4 @@
-namespace Divotion.Game.UI
+namespace MineArena.Game.UI
 {
     public interface IProgressBar
     {

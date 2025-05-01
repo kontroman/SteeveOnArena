@@ -1,7 +1,7 @@
-using Devotion.Interfaces;
+using MineArena.Interfaces;
 using UnityEngine;
 
-namespace Devotion.TriggersActions
+namespace MineArena.TriggersActions
 {
     public abstract class TriggerAction : ScriptableObject, ITriggerAction
     {

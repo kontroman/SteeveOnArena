@@ -1,4 +1,4 @@
-using Devotion.Basics;
+using MineArena.Basics;
 using Devotion.SDK.Base;
 using System;
 using System.Collections.Generic;

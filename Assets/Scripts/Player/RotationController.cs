@@ -1,7 +1,7 @@
 using DG.Tweening;
 using UnityEngine;
 
-namespace Devotion.PlayerSystem
+namespace MineArena.PlayerSystem
 {
     public class RotationController : MonoBehaviour
     {

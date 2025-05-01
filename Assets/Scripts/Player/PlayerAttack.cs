@@ -1,16 +1,16 @@
 using UnityEngine;
 using System.Collections;
-using Devotion.Interfaces;
-using Devotion.Structs;
-using Devotion.Commands;
+using MineArena.Interfaces;
+using MineArena.Structs;
+using MineArena.Commands;
 using Devotion.SDK.Helpers;
-using Devotion.Managers;
+using MineArena.Managers;
 using Devotion.SDK.Controllers;
-using Devotion.Messages.MessageService;
-using Devotion.Messages;
-using Devotion.Controllers;
+using MineArena.Messages.MessageService;
+using MineArena.Messages;
+using MineArena.Controllers;
 
-namespace Devotion.PlayerSystem
+namespace MineArena.PlayerSystem
 {
     [RequireComponent(typeof(Animator))]
     public class PlayerAttack : MonoBehaviour,

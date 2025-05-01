@@ -1,6 +1,7 @@
+using MineArena.Managers;
 using UnityEngine;
 
-namespace Devotion.Items
+namespace MineArena.Items
 {
     public class ItemInteractor : MonoBehaviour
     {

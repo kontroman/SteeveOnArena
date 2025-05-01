@@ -1,8 +1,8 @@
-using Devotion.Messages.MessageService;
-using Devotion.PlayerSystem;
+using MineArena.Messages.MessageService;
+using MineArena.PlayerSystem;
 using UnityEngine;
 
-namespace Devotion.Messages
+namespace MineArena.Messages
 {
     public static partial class Game
     {

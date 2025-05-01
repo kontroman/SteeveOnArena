@@ -1,6 +1,6 @@
-using Devotion.Interfaces;
+using MineArena.Interfaces;
 
-namespace Devotion.Structs
+namespace MineArena.Structs
 {
     public struct DamageData
     {

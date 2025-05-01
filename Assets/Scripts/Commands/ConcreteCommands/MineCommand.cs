@@ -1,12 +1,12 @@
 using UnityEngine;
-using Devotion.Controllers;
+using MineArena.Controllers;
 using Devotion.SDK.Controllers;
-using Devotion.PlayerSystem;
-using Devotion.Managers;
+using MineArena.PlayerSystem;
+using MineArena.Managers;
 using System;
 using System.Threading.Tasks;
 
-namespace Devotion.Commands
+namespace MineArena.Commands
 {
     [CreateAssetMenu(fileName = "New UseItemCommand", menuName = "Commands/MineCommand")]
     public class MineCommand : BaseCommand

@@ -1,6 +1,6 @@
-using Devotion.Structs;
+using MineArena.Structs;
 
-namespace Devotion.Interfaces
+namespace MineArena.Interfaces
 {
     public interface IDamageable
     {

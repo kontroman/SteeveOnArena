@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-namespace Devotion.UI
+namespace MineArena.UI
 {
     public class InventoryCellDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
     {

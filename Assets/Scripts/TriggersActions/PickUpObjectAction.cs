@@ -1,8 +1,7 @@
-using Devotion.Interfaces;
-using Devotion.Items;
+using MineArena.Items;
 using UnityEngine;
 
-namespace Devotion.TriggersActions
+namespace MineArena.TriggersActions
 {
     [CreateAssetMenu(fileName = "PickUpObjectAction", menuName = "Trigger Actions/Pick Up Object")]
     public class PickUpObjectAction : TriggerAction

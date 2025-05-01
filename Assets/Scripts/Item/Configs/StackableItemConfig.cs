@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Devotion.Items
+namespace MineArena.Items
 {
     [CreateAssetMenu(fileName = "New Stackable Item", menuName = "Items/Create New Stackable Item", order = 51)]
     public class StackableItemConfig : ItemConfig

@@ -1,7 +1,7 @@
 using DG.Tweening;
 using UnityEngine;
 
-namespace Devotion.Item
+namespace MineArena.Items
 {
     public class AnimationIDLE : MonoBehaviour
     {

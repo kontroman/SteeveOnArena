@@ -1,6 +1,6 @@
-namespace Divotion.Game.UI
+namespace MineArena.Game.UI
 {
-    public class HealthBar : AbstractBar<Divotion.Game.Health.Health>
+    public class HealthBar : AbstractBar<Health.Health>
     {
         protected override void SubscribeToChange()
         {

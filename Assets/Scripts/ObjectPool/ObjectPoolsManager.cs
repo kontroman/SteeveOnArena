@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Devotion.SDK.GenericSingleton;
-using Devotion.AI;
+using MineArena.AI;
 using System;
 
-namespace Devotion.ObjectPools
+namespace MineArena.ObjectPools
 {
     public class ObjectPoolsManager : Singleton<ObjectPoolsManager>
     {

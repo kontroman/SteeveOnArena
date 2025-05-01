@@ -2,7 +2,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Devotion.Item
+namespace MineArena.Items
 {
     public class AnimationDrop : MonoBehaviour
     {
@@ -26,6 +26,8 @@ namespace Devotion.Item
 
         private void Awake()
         {
+            //TODO: make it serializeField and remove GetComopnent
+
             _collider = GetComponent<Collider>();
             _animationIDEL = GetComponent<AnimationIDLE>();
             _rigidbody = GetComponent<Rigidbody>();

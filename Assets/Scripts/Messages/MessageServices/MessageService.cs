@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System;
-using Devotion.Helpers;
+using MineArena.Helpers;
 
-namespace Devotion.Messages.MessageService
+namespace MineArena.Messages.MessageService
 {
     public class MessageService : IDisposable
     {

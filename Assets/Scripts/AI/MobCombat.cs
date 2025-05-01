@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace Devotion.AI
+namespace MineArena.AI
 {
     public class MobCombat : MonoBehaviour
     {

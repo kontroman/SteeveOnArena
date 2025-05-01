@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Divotion.Game.UI
+namespace MineArena.Game.UI
 {
     public class BillboarbBar : MonoBehaviour
     {

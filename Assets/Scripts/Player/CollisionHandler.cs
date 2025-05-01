@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Devotion.SDK.Helpers.ContainersHelper;
 
-namespace Devotion.PlayerSystem
+namespace MineArena.PlayerSystem
 {
     public class CollisionHandler : MonoBehaviour
     {

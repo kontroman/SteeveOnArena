@@ -1,9 +1,9 @@
 using UnityEngine;
 using System;
-using Devotion.Basics;
-using Divotion.Game.UI;
+using MineArena.Basics;
+using MineArena.Game.UI;
 
-namespace Divotion.Game.Health
+namespace MineArena.Game.Health
 {
     public class Health : MonoBehaviour, IProgressBar
     {

@@ -2,7 +2,7 @@ using System;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace Devotion.Commands
+namespace MineArena.Commands
 {
     public abstract class BaseCommand : ScriptableObject, ICommand
     {

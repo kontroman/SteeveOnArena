@@ -1,9 +1,9 @@
 using TMPro;
 using UnityEngine;
 using Devotion.SDK.Services;
-using Devotion.Messages.MessageService;
+using MineArena.Messages.MessageService;
 
-namespace Devotion.SDK.UI
+namespace MineArena.SDK.UI
 {
     [RequireComponent(typeof(TextMeshProUGUI))]
     public class LocalizedTextMeshPro : MonoBehaviour,

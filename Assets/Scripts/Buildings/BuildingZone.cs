@@ -1,9 +1,9 @@
 using Devotion.SDK.Controllers;
 using Devotion.SDK.Managers;
-using Devotion.Windows;
+using MineArena.Windows;
 using UnityEngine;
 
-namespace Devotion.Buildings
+namespace MineArena.Buildings
 {
     public class BuildingZone : MonoBehaviour
     {

@@ -1,8 +1,8 @@
-using Devotion.AI;
+using MineArena.AI;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Devotion.ObjectPools
+namespace MineArena.ObjectPools
 {
     public class MobPoolsPreset : MonoBehaviour
     {

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Devotion.PlayerSystem
+namespace MineArena.PlayerSystem
 {
     public class SwordSystem : MonoBehaviour
     {

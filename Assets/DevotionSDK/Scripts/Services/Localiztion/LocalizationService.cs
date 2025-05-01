@@ -69,7 +69,7 @@ namespace Devotion.SDK.Services.Localization
             CurrentLanguage = language;
             LoadLocalizationData(language);
 
-            Messages.Game.LanguageChanged.Publish(language);
+            MineArena.Messages.Game.LanguageChanged.Publish(language);
         }
     }
 }

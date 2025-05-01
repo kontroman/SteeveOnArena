@@ -1,4 +1,4 @@
-namespace Devotion.AI
+namespace MineArena.AI
 {
     public class Skeleton : Mob
     {

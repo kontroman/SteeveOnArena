@@ -1,4 +1,4 @@
-using Devotion.TriggersActions;
+using MineArena.TriggersActions;
 using System.Collections.Generic;
 using UnityEngine;
 

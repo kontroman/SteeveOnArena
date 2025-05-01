@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Devotion.Items
+namespace MineArena.Items
 {
     public enum ArmorSlot
     {

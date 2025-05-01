@@ -1,9 +1,9 @@
+using MineArena.Items;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 
-namespace Devotion.Items
+namespace MineArena.Managers
 {
     public class InventoryManager
     {

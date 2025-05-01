@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Devotion.PlayerSystem
+namespace MineArena.PlayerSystem
 {
     [CreateAssetMenu(menuName = "Combat/Attack Config")]
     public class AttackConfig : ScriptableObject

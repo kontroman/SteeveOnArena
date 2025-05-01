@@ -1,10 +1,10 @@
-using Devotion.Controllers;
-using Devotion.Items;
+using MineArena.Items;
 using Devotion.SDK.Managers;
 using System.Collections.Generic;
 using UnityEngine;
+using MineArena.Controllers;
 
-namespace Devotion.Managers
+namespace MineArena.Managers
 {
     public class InteractionManager : BaseManager
     {

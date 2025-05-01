@@ -1,10 +1,7 @@
-using Devotion.Helpers;
-using Devotion.Messages.MessageService;
-using System.Collections;
+using MineArena.Helpers;
 using System.Collections.Generic;
-using UnityEngine;
 
-namespace Devotion.Messages.MessageService
+namespace MineArena.Messages.MessageService
 {
     public abstract class BaseMessage<T> : IMessage
             where T : BaseMessage<T>, IMessage, new()

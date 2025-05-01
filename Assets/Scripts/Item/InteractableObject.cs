@@ -1,9 +1,9 @@
 using Devotion.SDK.Controllers;
-using Devotion.Managers;
+using MineArena.Managers;
 using UnityEngine;
-using Devotion.Commands;
+using MineArena.Commands;
 
-namespace Devotion.Items
+namespace MineArena.Items
 {
     [RequireComponent(typeof(BillboardCanvas))]
     public class InteractableObject : MonoBehaviour

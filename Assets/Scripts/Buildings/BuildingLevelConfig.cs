@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System;
 using UnityEngine;
-using Devotion.Items;
+using MineArena.Items;
 
-namespace Devotion.Buildings
+namespace MineArena.Buildings
 {
     [Serializable]
     public class BuildingLevelConfig

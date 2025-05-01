@@ -1,9 +1,9 @@
 using UnityEngine;
 using System.Threading.Tasks;
 using System;
-using Divotion.Game.Health;
+using MineArena.Game.Health;
 
-namespace Devotion.Commands
+namespace MineArena.Commands
 {
     [CreateAssetMenu(fileName = "New UseItemCommand", menuName = "Commands/HealCommand")]
     public class HealCommand : BaseCommand

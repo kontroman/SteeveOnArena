@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Devotion.MusicResourses
+namespace MineArena.MusicResourses
 {
     [Serializable]
     public class Music

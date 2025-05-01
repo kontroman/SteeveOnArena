@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-namespace Devotion.MusicResourses
+namespace MineArena.MusicResourses
 {
     public class MusicResourses : MonoBehaviour
     {

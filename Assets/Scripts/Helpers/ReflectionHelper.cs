@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
-namespace Devotion.Helpers
+namespace MineArena.Helpers
 {
     public static class ReflectionHelper
     {

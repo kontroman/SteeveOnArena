@@ -1,8 +1,8 @@
-using Devotion.Controllers;
+using MineArena.Controllers;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace Devotion.AI
+namespace MineArena.AI
 {
     //NOTE: пока что дистанция осстановки регулируется через навмеш агента.
     public class MobMovement : MonoBehaviour

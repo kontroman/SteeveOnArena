@@ -1,4 +1,4 @@
-namespace Devotion.Items
+namespace MineArena.Items
 {
     public class Sword : EquipmentItem
     {

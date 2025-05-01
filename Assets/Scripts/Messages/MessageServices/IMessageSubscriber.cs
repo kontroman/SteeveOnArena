@@ -1,4 +1,4 @@
-namespace Devotion.Messages.MessageService
+namespace MineArena.Messages.MessageService
 {
     public interface IMessageSubscriber
     {

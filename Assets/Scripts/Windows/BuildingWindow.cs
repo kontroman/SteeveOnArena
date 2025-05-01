@@ -1,12 +1,13 @@
-using Devotion.Buildings;
+using MineArena.Buildings;
 using Devotion.SDK.Base;
 using Devotion.SDK.Controllers;
 using Devotion.SDK.Managers;
-using Devotion.Windows.Elements;
+using MineArena.Windows.Elements;
 using TMPro;
 using UnityEngine;
+using MineArena.Managers;
 
-namespace Devotion.Windows
+namespace MineArena.Windows
 {
     public class BuildingWindow : BaseWindow
     {

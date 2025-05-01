@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Devotion.Buildings
+namespace MineArena.Buildings
 {
     [CreateAssetMenu(fileName = "BuildingConfig", menuName = "Configs/BuildingConfig")]
     public class BuildingConfig : ScriptableObject

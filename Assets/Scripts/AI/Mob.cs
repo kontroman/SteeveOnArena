@@ -1,11 +1,11 @@
 using UnityEngine;
-using Devotion.ObjectPools;
-using Devotion.Controllers;
-using Devotion.Interfaces;
-using Devotion.Structs;
-using Divotion.Game.Health;
+using MineArena.ObjectPools;
+using MineArena.Controllers;
+using MineArena.Interfaces;
+using MineArena.Structs;
+using MineArena.Game.Health;
 
-namespace Devotion.AI
+namespace MineArena.AI
 { 
     public class Mob : MonoBehaviour, IDamageable
     {
@@ -16,6 +16,8 @@ namespace Devotion.AI
 
         public void Start()
         {
+            //TODO: make it serializeField and remove GetComponent
+
             _playerTransform = Player.Instance.GetComponentFromList<Transform>();
             _mobMovement = GetComponent<MobMovement>();
             _mobCombat = GetComponent<MobCombat>();

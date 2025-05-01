@@ -2,7 +2,7 @@ using System;
 using System.Runtime.CompilerServices;
 using Object = UnityEngine.Object;
 
-namespace Devotion.Helpers
+namespace MineArena.Helpers
 {
     public static class ObjectExtensions
     {

@@ -1,9 +1,7 @@
 using UnityEngine;
 using UnityEngine.Pool;
-using Devotion.SDK.GenericSingleton;
-using Devotion.SDK.Controllers;
 
-namespace Devotion.ObjectPools
+namespace MineArena.ObjectPools
 {
     public class ObjectPool : MonoBehaviour
     {

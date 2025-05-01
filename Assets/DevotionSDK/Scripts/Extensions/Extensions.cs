@@ -1,4 +1,4 @@
-using Devotion.Helpers;
+using MineArena.Helpers;
 using System;
 
 namespace Devotion.SDK.Extensions

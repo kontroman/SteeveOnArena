@@ -1,7 +1,7 @@
-using Devotion.Commands;
+using MineArena.Commands;
 using UnityEngine;
 
-namespace Devotion.Items
+namespace MineArena.Items
 {
     public abstract class ItemConfig : ScriptableObject
     {

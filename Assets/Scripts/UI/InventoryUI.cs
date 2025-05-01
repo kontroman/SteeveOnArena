@@ -1,8 +1,8 @@
-using Devotion.Items;
+using MineArena.Managers;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Devotion.UI
+namespace MineArena.UI
 {
     public class InventoryUI : MonoBehaviour
     {

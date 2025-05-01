@@ -1,4 +1,4 @@
-using Devotion.Controllers;
+using MineArena.Controllers;
 using UnityEngine;
 
 public class DestroyObj : MonoBehaviour

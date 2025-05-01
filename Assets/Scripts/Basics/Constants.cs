@@ -1,4 +1,4 @@
-namespace Devotion.Basics
+namespace MineArena.Basics
 {
     public static class Constants
     {

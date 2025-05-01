@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Devotion.Controllers
+namespace MineArena.Controllers
 {
     public class Player : MonoBehaviour
     {

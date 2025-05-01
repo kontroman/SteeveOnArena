@@ -1,9 +1,9 @@
-using Devotion.Items;
+using MineArena.Items;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Devotion.UI
+namespace MineArena.UI
 {
     public class InventoryCellUI : MonoBehaviour
     {

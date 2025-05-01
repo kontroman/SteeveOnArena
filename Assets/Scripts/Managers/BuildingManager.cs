@@ -1,8 +1,8 @@
-using Devotion.Buildings;
+using MineArena.Buildings;
 using Devotion.SDK.Managers;
 using UnityEngine;
 
-namespace Devotion.Buildings
+namespace MineArena.Managers
 {
     public class BuildingManager : BaseManager
     {

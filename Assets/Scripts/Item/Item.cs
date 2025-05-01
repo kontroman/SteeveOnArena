@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Devotion.Items
+namespace MineArena.Items
 {
     [Serializable]
     public class Item

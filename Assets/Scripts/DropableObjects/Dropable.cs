@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Devotion.SDK.Controllers;
-using Devotion.Items;
-using Devotion.Managers;
-using Devotion.Basics;
+using MineArena.Items;
+using MineArena.Managers;
+using MineArena.Basics;
 
-namespace Devotion.Drop
+namespace MineArena.Drop
 {
     public class Dropable : MonoBehaviour
     {

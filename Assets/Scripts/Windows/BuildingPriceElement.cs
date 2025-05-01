@@ -1,10 +1,10 @@
-using Devotion.Buildings;
-using Devotion.Items;
+using MineArena.Buildings;
+using MineArena.Items;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Devotion.Windows.Elements
+namespace MineArena.Windows.Elements
 {
     public class BuildingPriceElement : MonoBehaviour
     {

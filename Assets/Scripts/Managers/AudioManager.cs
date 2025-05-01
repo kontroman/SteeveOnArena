@@ -1,9 +1,10 @@
 using UnityEngine;
 using UnityEngine.Audio;
-using Devotion.Basics;
+using MineArena.Basics;
 using Devotion.SDK.Managers;
+using MineArena.MusicResourses;
 
-namespace Devotion.Managers
+namespace MineArena.Managers
 {
     public class AudioManager : BaseManager
     {

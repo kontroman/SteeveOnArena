@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using System.Threading.Tasks;
 
-namespace Devotion.Commands
+namespace MineArena.Commands
 {
     public interface ICommand
     {

@@ -1,9 +1,9 @@
-using Devotion.Structs;
+using MineArena.Structs;
 using System;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace Devotion.Commands
+namespace MineArena.Commands
 {
     public class DamageCommand : ScriptableObject, ICommand
     {

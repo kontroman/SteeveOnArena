@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Devotion.Interfaces
+namespace MineArena.Interfaces
 {
     public interface ITriggerAction
     {
