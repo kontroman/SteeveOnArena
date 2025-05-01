@@ -17,12 +17,14 @@ namespace MineArena.Windows
         [SerializeField] private BuildingPriceElement _pricePrefab;
 
         private BuildingConfig _buildingConfig;
+        private Transform _buildingPlace;
 
-        public void InitializeBuilding(BuildingConfig config)
+        public void InitializeBuilding(BuildingConfig config, Transform buildingPlace)
         {
             ClearSavedData();
 
             _buildingConfig = config;
+            _buildingPlace = buildingPlace;
 
             _buildingName.text = config.BuildingName;
 
@@ -54,7 +56,7 @@ namespace MineArena.Windows
 
         public void OnTryBuildClick()
         {
-            if (GameRoot.Instance.GetManager<BuildingManager>().TryBuilding(_buildingConfig))
+            if (GameRoot.Instance.GetManager<BuildingManager>().TryBuilding(_buildingConfig, _buildingPlace))
             {
                 OnCloseClick();
             }

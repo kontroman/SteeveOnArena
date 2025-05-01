@@ -6,11 +6,11 @@ namespace MineArena.Managers
 {
     public class BuildingManager : BaseManager
     {
-        public bool TryBuilding(BuildingConfig config)
+        public bool TryBuilding(BuildingConfig config, Transform buildingPlace)
         {
-            Instantiate(config.GetCurrentLevel().ModelPrefab, config.BuildingPlace.transform.position, config.BuildingRotation);
+            Instantiate(config.GetCurrentLevel().ModelPrefab, buildingPlace.position, config.BuildingRotation);
 
-            config.BuildingPlace.gameObject.GetComponent<Collider>().enabled = false;
+            buildingPlace.gameObject.GetComponent<Collider>().enabled = false;
 
             return true;
         }

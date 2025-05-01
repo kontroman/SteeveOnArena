@@ -15,7 +15,7 @@ namespace MineArena.Buildings
             {
                 BuildingWindow window = (BuildingWindow)GameRoot.Instance.GetManager<UIManager>().OpenWindow<BuildingWindow>();
 
-                window.InitializeBuilding(config);
+                window.InitializeBuilding(config, this.transform);
             }           
         }
 
