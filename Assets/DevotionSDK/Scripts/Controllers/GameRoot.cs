@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Devotion.SDK.Managers;
+using MineArena.Structs;
 
 namespace Devotion.SDK.Controllers
 {
@@ -8,9 +9,15 @@ namespace Devotion.SDK.Controllers
     {
         public static GameRoot Instance { get; private set; }
 
+        [SerializeField] private GameConfig gameConfig;
+
         [SerializeField] private List<BaseManager> _startManagers = new List<BaseManager>();
 
         private Dictionary<System.Type, BaseManager> _managers = new Dictionary<System.Type, BaseManager>();
+
+        public static GameConfig GameConfig => Instance.gameConfig;
+
+        public static UIManager UIManager => Instance.GetManager<UIManager>();
 
         private void Awake()
         {

@@ -2,6 +2,7 @@ using Devotion.SDK.Controllers;
 using MineArena.Managers;
 using UnityEngine;
 using MineArena.Commands;
+using Devotion.SDK.Helpers;
 
 namespace MineArena.Items
 {
@@ -20,7 +21,7 @@ namespace MineArena.Items
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("Player"))
+            if (other.IsPlayer())
             {
                 GameRoot.Instance.GetManager<InteractionManager>().RegisterObject(this);
             }
@@ -28,7 +29,7 @@ namespace MineArena.Items
 
         private void OnTriggerExit(Collider other)
         {
-            if (other.CompareTag("Player"))
+            if (other.IsPlayer())
             {
                 GameRoot.Instance.GetManager<InteractionManager>().UnregisterObject(this);
 

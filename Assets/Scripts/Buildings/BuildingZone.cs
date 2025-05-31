@@ -1,4 +1,5 @@
 using Devotion.SDK.Controllers;
+using Devotion.SDK.Helpers;
 using Devotion.SDK.Managers;
 using MineArena.Windows;
 using UnityEngine;
@@ -11,9 +12,9 @@ namespace MineArena.Buildings
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("Player"))
+            if (other.IsPlayer())
             {
-                BuildingWindow window = (BuildingWindow)GameRoot.Instance.GetManager<UIManager>().OpenWindow<BuildingWindow>();
+                BuildingWindow window = (BuildingWindow)GameRoot.UIManager.OpenWindow<BuildingWindow>();
 
                 window.InitializeBuilding(config, this.transform);
             }           
@@ -21,9 +22,9 @@ namespace MineArena.Buildings
 
         private void OnTriggerExit(Collider other)
         {
-            if (other.CompareTag("Player"))
+            if (other.IsPlayer())
             {
-                GameRoot.Instance.GetManager<UIManager>().CloseWindow<BuildingWindow>();
+                GameRoot.UIManager.CloseWindow<BuildingWindow>();
             }
         }
     }

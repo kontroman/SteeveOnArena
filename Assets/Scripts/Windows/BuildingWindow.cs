@@ -64,7 +64,7 @@ namespace MineArena.Windows
         
         public void OnCloseClick()
         {
-            GameRoot.Instance.GetManager<UIManager>().CloseWindow<BuildingWindow>();
+            GameRoot.UIManager.CloseWindow<BuildingWindow>();
         }
     }
 }

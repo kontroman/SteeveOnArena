@@ -26,6 +26,7 @@ namespace MineArena.Basics
         public static class GameTags
         {
             public static string MainCanvas = "MainCanvas";
+            public static string Player = "Player";
         }
     }
 }
