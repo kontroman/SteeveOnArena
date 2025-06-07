@@ -1,17 +1,14 @@
+using System.Collections;
 using System.Collections.Generic;
 using Devotion.SDK.Controllers;
+using MineArena.Basics;
 using UnityEngine;
 
-namespace UI.FortuneWheel
+namespace MineArena.UI.FortuneWheel
 {
     public class Wheel : MonoBehaviour
     {
-        private const int MaxNumberTurns = 10;
-        private const int MinNumberTurns = 5;
-        private const float MinValueTimer = 3.0f;
-        private const float MaxValueTimer = 5.0f;
-
-        [SerializeField] private List<WheelPrize> _items = new();
+        [SerializeField] private List<WheelPrize> _items;
         [SerializeField] private WheelConstructor _constructor;
         [SerializeField] private Transform _wheelContainer;
         [SerializeField] private AnimationCurve _curve;
@@ -30,11 +27,6 @@ namespace UI.FortuneWheel
             _constructor.Create(_wheelContainer, _items);
         }
 
-        private void Update()
-        {
-            StartWheelRotation();
-        }
-
         public void TernWheel()
         {
             if (_isStarted)
@@ -45,31 +37,38 @@ namespace UI.FortuneWheel
 
             _isStarted = true;
             _startAngle = _wheelContainer.localEulerAngles.z;
+
             int totalSlots = _items.Count;
             _randomRewardIndex = Random.Range(0, totalSlots);
-            int rotationCount = Random.Range(MinNumberTurns, MaxNumberTurns);
+
+            int rotationCount =
+                Random.Range(Constants.FortuneWheel.MinNumberTurns, Constants.FortuneWheel.MaxNumberTurns);
             _endAngle = -(rotationCount * 360 + _randomRewardIndex * 360 / totalSlots);
+
             _currentRotationTime = 0.0f;
-            _maxRotationTime = Random.Range(MinValueTimer, MaxValueTimer);
+            _maxRotationTime = Random.Range(Constants.FortuneWheel.MinValueTimer,
+                Constants.FortuneWheel.MaxValueTimer);
+
+            StartCoroutine(StartWheelRotation());
         }
 
-        private void StartWheelRotation()
+        private IEnumerator StartWheelRotation()
         {
-            if (!_isStarted)
-                return;
-
-            float t = _currentRotationTime / _maxRotationTime;
-            t = _curve.Evaluate(t);
-            float angle = Mathf.Lerp(_startAngle, _endAngle, t);
-            _wheelContainer.eulerAngles = new Vector3(0, 0, angle);
-
-            if (angle <= _endAngle)
+            while (_currentRotationTime < _maxRotationTime)
             {
-                _isStarted = false;
-                ShowResult(_randomRewardIndex);
-            }
+                float t = _currentRotationTime / _maxRotationTime;
+                t = _curve.Evaluate(t);
+                
+                float angle = Mathf.Lerp(_startAngle, _endAngle, t);
+                _wheelContainer.eulerAngles = new Vector3(0, 0, angle);
 
-            _currentRotationTime += Time.deltaTime;
+                _currentRotationTime += Time.deltaTime;
+                yield return null;
+            }
+            
+            _wheelContainer.eulerAngles = new Vector3(0, 0, _endAngle);
+            _isStarted = false;
+            ShowResult(_randomRewardIndex);
         }
 
         private void ShowResult(int randomRewardIndex)
@@ -82,10 +81,8 @@ namespace UI.FortuneWheel
 
         private void CreatListPrizeItems()
         {
-            for (int i = 0; i < GameRoot.GameConfig.Prizes.Count; i++)
-            {
-                _items.Add(GameRoot.GameConfig.Prizes[i]);
-            }
+            foreach (var t in GameRoot.GameConfig.Prizes)
+                _items.Add(t);
         }
     }
 }

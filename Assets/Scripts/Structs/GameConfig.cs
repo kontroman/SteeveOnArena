@@ -1,6 +1,6 @@
 using MineArena.Levels;
 using System.Collections.Generic;
-using UI.FortuneWheel;
+using MineArena.UI.FortuneWheel;
 using UnityEngine;
 
 namespace MineArena.Structs
