@@ -120,7 +120,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5992255338963826913}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4206247176245032299}
+        m_TargetAssemblyTypeName: MineArena.Windows.SelectLevelWindow, Assembly-CSharp
+        m_MethodName: OnSelectLevelButtonClicked
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1072008667207409632
 GameObject:
   m_ObjectHideFlags: 0
@@ -316,7 +328,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 500619378030417553}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4206247176245032299}
+        m_TargetAssemblyTypeName: MineArena.Windows.SelectLevelWindow, Assembly-CSharp
+        m_MethodName: OnSelectLevelButtonClicked
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 4
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1702275130360392547
 GameObject:
   m_ObjectHideFlags: 0
@@ -569,7 +593,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 956113675856820397}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4206247176245032299}
+        m_TargetAssemblyTypeName: MineArena.Windows.SelectLevelWindow, Assembly-CSharp
+        m_MethodName: OnSelectLevelButtonClicked
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4614603925812449858
 GameObject:
   m_ObjectHideFlags: 0
@@ -852,6 +888,7 @@ MonoBehaviour:
   - {fileID: 8675170735819947071}
   - {fileID: 1942955627876531736}
   - {fileID: 7929728145483489519}
+  LevelInfoPrefab: {fileID: 2251485198323370607, guid: fbe4132280beb984fae4a214d4c15768, type: 3}
 --- !u!1 &6565655103624920613
 GameObject:
   m_ObjectHideFlags: 0
@@ -1047,7 +1084,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3173945798963988654}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4206247176245032299}
+        m_TargetAssemblyTypeName: MineArena.Windows.SelectLevelWindow, Assembly-CSharp
+        m_MethodName: OnSelectLevelButtonClicked
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7099354982305668046
 GameObject:
   m_ObjectHideFlags: 0
@@ -1167,7 +1216,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7788569017372450940}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4206247176245032299}
+        m_TargetAssemblyTypeName: MineArena.Windows.SelectLevelWindow, Assembly-CSharp
+        m_MethodName: OnSelectLevelButtonClicked
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7912628978923352744
 GameObject:
   m_ObjectHideFlags: 0
