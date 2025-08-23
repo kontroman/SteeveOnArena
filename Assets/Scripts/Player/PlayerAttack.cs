@@ -75,7 +75,7 @@ namespace MineArena.PlayerSystem
             //TODO: create VFXManager
             //TODO: change animation to Attack;
 
-            GameRoot.Instance.GetManager<AudioManager>().PlayEffect("AttackSound");
+            GameRoot.GetManager<AudioManager>().PlayEffect("AttackSound");
 
             yield return new WaitForSeconds(_config.AnimationDelay);
 

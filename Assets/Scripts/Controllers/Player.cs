@@ -14,6 +14,8 @@ namespace MineArena.Controllers
             Instance = this;
 
             _components = new List<Component>(GetComponents<Component>());
+
+            DontDestroyOnLoad(this);
         }
 
         private void Update()

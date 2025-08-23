@@ -1,4 +1,9 @@
+using Devotion.SDK.Async;
+using Devotion.SDK.Controllers;
+using MineArena.Basics;
 using MineArena.Levels;
+using MineArena.Managers;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -46,7 +51,19 @@ namespace MineArena.Windows.SelectLevel
 
         private void StartLevel()
         {
+            GameRoot.UIManager.CloseAllWindows();
 
+            LoadingWindow loadingWindow = (LoadingWindow)GameRoot.UIManager.OpenWindow<LoadingWindow>();
+
+            loadingWindow.SetProgressValue(0.3f)
+                .Then(() => GameRoot.GetManager<UnitySceneLoader>()
+                .LoadSceneAsync(Constants.SceneNames.GameplayScene))
+                //.Then(() => GameRoot.GameConfig.);
+                .Then(() => WeatherManager.Instance.ApplyLevelPreset(_config.WeatherPreset))
+                .Then(() => loadingWindow.SetProgressValue(0.4f))
+                //.Then(() => GameRoot.LevelController)
+                .Then(() => loadingWindow.SetProgressValue(1f))
+                .Finally(() => GameRoot.UIManager.CloseWindow<LoadingWindow>());
         }
     }
 }

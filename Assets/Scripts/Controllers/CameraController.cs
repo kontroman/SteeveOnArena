@@ -15,6 +15,11 @@ namespace MineArena.Controllers
         private bool _isFollowing = true;
         private bool _isMovingToTarget = false;
 
+        private void Awake()
+        {
+            DontDestroyOnLoad(this);
+        }
+
         public new void InitManager()
         {
             _mainCamera = Camera.main;

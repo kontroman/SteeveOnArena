@@ -19,6 +19,8 @@ namespace Devotion.SDK.Managers
             if (_mainCanvas == null)
                 _mainCanvas = GameObject.FindGameObjectWithTag(Constants.GameTags.MainCanvas).GetComponent<Canvas>(); ;
 
+            DontDestroyOnLoad(_mainCanvas.gameObject);
+
             BaseWindow window = GetOrCreateWindow<T>();
 
             if (window == null) return null;

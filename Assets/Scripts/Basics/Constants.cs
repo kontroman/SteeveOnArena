@@ -28,5 +28,11 @@ namespace MineArena.Basics
             public static string MainCanvas = "MainCanvas";
             public static string Player = "Player";
         }
+
+        public static class SceneNames
+        {
+            public static string PlayerBaseScene = "SampleScene";
+            public static string GameplayScene = "GameplayScene";
+        }
     }
 }
