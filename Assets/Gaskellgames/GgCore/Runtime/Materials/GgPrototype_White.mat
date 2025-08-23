@@ -8,7 +8,9 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: GgPrototype_White
-  m_Shader: {fileID: 4800000, guid: 80724172963c125498cd4c540827657d, type: 3}
+  m_Shader: {fileID: 4800000, guid: 659f1e376f3eb6b449d2adf5b7b03a5d, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _SCALEINDEPENDENTUV_ON
   m_InvalidKeywords: []
@@ -18,6 +20,7 @@ Material:
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:

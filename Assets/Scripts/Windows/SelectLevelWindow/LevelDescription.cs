@@ -1,6 +1,12 @@
+using Devotion.SDK.Async;
+using Devotion.SDK.Controllers;
+using MineArena.Basics;
 using MineArena.Levels;
+using MineArena.Managers;
+using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace MineArena.Windows.SelectLevel
 {
@@ -8,19 +14,56 @@ namespace MineArena.Windows.SelectLevel
     {
         [SerializeField] private TextMeshProUGUI difficultyText;
 
+        [SerializeField] private Button startButton;
+
         [SerializeField] private Transform availableTransform;
         [SerializeField] private Transform rewardTransform;
 
-        private LevelConfig config;
+        [SerializeField] private GameObject resourcePrefab;
+
+        private LevelConfig _config;
 
         public void Initialize(LevelConfig config)
         {
-            this.config = config;
+            this._config = config;
+
+            SetupUI();
         }
 
         private void SetupUI()
         {
+            difficultyText.text = _config.Difficulty.ToString();
 
+            foreach (var item in _config.AvailableResources)
+            {
+                var resource = Instantiate(resourcePrefab, availableTransform).GetComponent<Image>();
+                resource.sprite = item.Icon;
+            }
+
+            foreach (var item in _config.RewardResources)
+            {
+                var resource = Instantiate(resourcePrefab, rewardTransform).GetComponent<Image>();
+                resource.sprite = item.Icon;
+            }
+
+            startButton.onClick.AddListener(StartLevel);
+        }
+
+        private void StartLevel()
+        {
+            GameRoot.UIManager.CloseAllWindows();
+
+            LoadingWindow loadingWindow = (LoadingWindow)GameRoot.UIManager.OpenWindow<LoadingWindow>();
+
+            loadingWindow.SetProgressValue(0.3f)
+                .Then(() => GameRoot.GetManager<UnitySceneLoader>()
+                .LoadSceneAsync(Constants.SceneNames.GameplayScene))
+                //.Then(() => GameRoot.GameConfig.);
+                .Then(() => WeatherManager.Instance.ApplyLevelPreset(_config.WeatherPreset))
+                .Then(() => loadingWindow.SetProgressValue(0.4f))
+                //.Then(() => GameRoot.LevelController)
+                .Then(() => loadingWindow.SetProgressValue(1f))
+                .Finally(() => GameRoot.UIManager.CloseWindow<LoadingWindow>());
         }
     }
 }

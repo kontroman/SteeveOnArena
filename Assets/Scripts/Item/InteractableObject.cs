@@ -23,7 +23,7 @@ namespace MineArena.Items
         {
             if (other.IsPlayer())
             {
-                GameRoot.Instance.GetManager<InteractionManager>().RegisterObject(this);
+                GameRoot.GetManager<InteractionManager>().RegisterObject(this);
             }
         }
 
@@ -31,7 +31,7 @@ namespace MineArena.Items
         {
             if (other.IsPlayer())
             {
-                GameRoot.Instance.GetManager<InteractionManager>().UnregisterObject(this);
+                GameRoot.GetManager<InteractionManager>().UnregisterObject(this);
 
                 //HideInteractionPrompt();
             }
@@ -39,7 +39,7 @@ namespace MineArena.Items
 
         private void OnDestroy()
         {
-            GameRoot.Instance.GetManager<InteractionManager>().UnregisterObject(this);
+            GameRoot.GetManager<InteractionManager>().UnregisterObject(this);
         }
 
         public void ShowInteractionPrompt()

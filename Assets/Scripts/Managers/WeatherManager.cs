@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
+using Devotion.SDK.Interfaces;
+using Devotion.SDK.Async;
 
 [System.Serializable]
 public class WeatherPreset
@@ -48,7 +50,7 @@ namespace MineArena.Managers
 
         private int currentPresetIndex = 0;
         private Coroutine autoCycleCoroutine;
-        private WeatherPreset lastAppliedPreset; // ƒл€ отслеживани€ изменений
+        private WeatherPreset lastAppliedPreset;
 
         void Awake()
         {
@@ -69,12 +71,20 @@ namespace MineArena.Managers
             ApplyPreset(presets[currentPresetIndex]);
             lastAppliedPreset = CreateDeepCopy(presets[currentPresetIndex]);
 
+            SceneManager.sceneLoaded += OnSceneLoaded;
+
             if (autoCycleEnabled) ToggleAutoCycle(true);
+        }
+
+        private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        {
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+
+            ApplyPreset(presets[currentPresetIndex]);
         }
 
         void Update()
         {
-            // ≈сли текущий пресет был изменен в инспекторе, примен€ем изменени€
             if (currentPresetIndex >= 0 && currentPresetIndex < presets.Count)
             {
                 if (!PresetEquals(lastAppliedPreset, presets[currentPresetIndex]))
@@ -85,7 +95,7 @@ namespace MineArena.Managers
             }
         }
 
-        // —оздаем глубокую копию пресета дл€ сравнени€
+
         private WeatherPreset CreateDeepCopy(WeatherPreset original)
         {
             return new WeatherPreset()
@@ -105,7 +115,6 @@ namespace MineArena.Managers
             };
         }
 
-        // —равниваем два пресета
         private bool PresetEquals(WeatherPreset a, WeatherPreset b)
         {
             if (a == null || b == null) return false;
@@ -122,6 +131,12 @@ namespace MineArena.Managers
                    a.ambientLight == b.ambientLight &&
                    Mathf.Approximately(a.ambientIntensity, b.ambientIntensity) &&
                    Mathf.Approximately(a.rainIntensity, b.rainIntensity);
+        }
+
+        public IPromise ApplyLevelPreset(WeatherPreset preset)
+        {
+            ApplyPreset(preset);
+            return Promise.ResolveAndReturn();
         }
 
         public void ApplyPreset(WeatherPreset preset)
@@ -143,6 +158,9 @@ namespace MineArena.Managers
             RenderSettings.ambientLight = preset.ambientLight;
             RenderSettings.ambientIntensity = preset.ambientIntensity;
 
+            if(!presets.Contains(preset))
+                presets.Add(preset);
+
             if (rainParticles != null)
             {
                 if (preset.enableRain && !rainParticles.isPlaying)
@@ -158,6 +176,7 @@ namespace MineArena.Managers
         public void SwitchToPreset(string presetName)
         {
             WeatherPreset preset = presets.Find(p => p.presetName == presetName);
+
             if (preset != null)
             {
                 currentPresetIndex = presets.IndexOf(preset);

@@ -16,7 +16,7 @@ namespace MineArena.Commands
             PlayerMovement pm = Player.Instance.GetComponentFromList<PlayerMovement>();
             PlayerAttack patc = Player.Instance.GetComponentFromList <PlayerAttack>();
             RotationController rc = Player.Instance.GetComponentFromList<RotationController>();
-            Transform ore = GameRoot.Instance.GetManager<InteractionManager>().CurrentTargetTransform;
+            Transform ore = GameRoot.GetManager<InteractionManager>().CurrentTargetTransform;
             Animator pa = Player.Instance.GetComponentFromList<Animator>();
 
             pm.SetMovement(false);

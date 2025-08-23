@@ -56,7 +56,7 @@ namespace MineArena.Windows
 
         public void OnTryBuildClick()
         {
-            if (GameRoot.Instance.GetManager<BuildingManager>().TryBuilding(_buildingConfig, _buildingPlace))
+            if (GameRoot.GetManager<BuildingManager>().TryBuilding(_buildingConfig, _buildingPlace))
             {
                 OnCloseClick();
             }

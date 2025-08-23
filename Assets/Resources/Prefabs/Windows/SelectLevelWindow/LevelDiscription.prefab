@@ -354,8 +354,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 298.13, y: 0.00048828125}
-  m_SizeDelta: {x: -596.25, y: 0.0009}
+  m_AnchoredPosition: {x: 298.1275, y: 1100}
+  m_SizeDelta: {x: -596.255, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1264993093221701352
 MonoBehaviour:
@@ -370,8 +370,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   difficultyText: {fileID: 8223216104682344327}
+  startButton: {fileID: 7193219597600913933}
   availableTransform: {fileID: 9133427247874054597}
   rewardTransform: {fileID: 8187264275332572011}
+  resourcePrefab: {fileID: 8796072753323894975, guid: 11de7a5109b18404fb21b7e98bcacbe9, type: 3}
 --- !u!1 &3194888219549439894
 GameObject:
   m_ObjectHideFlags: 0

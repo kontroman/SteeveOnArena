@@ -42,7 +42,7 @@ namespace MineArena.Drop
                     {
                         var obj = Instantiate(dropEntry.Item.Prefab);
                         obj.transform.position = transform.position;
-                        GameRoot.Instance.GetManager<AudioManager>().PlayEffect(Constants.AudioNames.DropResource);
+                        GameRoot.GetManager<AudioManager>().PlayEffect(Constants.AudioNames.DropResource);
                     }
                 }
             }

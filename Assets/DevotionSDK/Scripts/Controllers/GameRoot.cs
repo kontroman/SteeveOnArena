@@ -9,15 +9,13 @@ namespace Devotion.SDK.Controllers
     {
         public static GameRoot Instance { get; private set; }
 
-        [SerializeField] private GameConfig gameConfig;
-
+        [SerializeField] private GameConfig gameConfig; 
         [SerializeField] private List<BaseManager> _startManagers = new List<BaseManager>();
 
         private Dictionary<System.Type, BaseManager> _managers = new Dictionary<System.Type, BaseManager>();
 
         public static GameConfig GameConfig => Instance.gameConfig;
-
-        public static UIManager UIManager => Instance.GetManager<UIManager>();
+        public static UIManager UIManager => GetManager<UIManager>();
 
         private void Awake()
         {
@@ -45,11 +43,11 @@ namespace Devotion.SDK.Controllers
             }
         }
 
-        public T GetManager<T>() where T : BaseManager
+        public static T GetManager<T>() where T : BaseManager
         {
             System.Type type = typeof(T);
 
-            if (_managers.TryGetValue(type, out BaseManager manager))
+            if (Instance._managers.TryGetValue(type, out BaseManager manager))
             {
                 return manager as T;
             }
@@ -61,13 +59,13 @@ namespace Devotion.SDK.Controllers
             }
         }
 
-        private BaseManager LoadManager(BaseManager manager, System.Type type)
+        private static BaseManager LoadManager(BaseManager manager, System.Type type)
         {
             if (manager != null)
             {
                 var instantiatedManager = Instantiate(manager);
-                instantiatedManager.transform.parent = transform;
-                _managers[type] = instantiatedManager;
+                instantiatedManager.transform.parent = Instance.transform;
+                Instance._managers[type] = instantiatedManager;
 
                 Debug.Log($"Created {type.Name} by request");
 
