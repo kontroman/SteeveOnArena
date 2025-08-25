@@ -2,10 +2,12 @@ using UnityEngine;
 using System;
 using MineArena.Basics;
 using MineArena.Game.UI;
+using MineArena.Interfaces;
+using MineArena.Structs;
 
 namespace MineArena.Game.Health
 {
-    public class Health : MonoBehaviour, IProgressBar
+    public class Health : MonoBehaviour, IProgressBar, IDamageable
     {
         [SerializeField] private float _currentHealth;
         [SerializeField] private float _maxHealth;
@@ -36,5 +38,10 @@ namespace MineArena.Game.Health
 
         private float DetermineValue(float currentValue)
             => Mathf.Clamp(currentValue, Constants.PlayerSettings.MinHealth, _maxHealth);
+
+        public void TakeDamage(DamageData damageData)
+        {
+            ChangeValue(-damageData.Damage);
+        }
     }
 }
