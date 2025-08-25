@@ -1,4 +1,5 @@
 using MineArena.Controllers;
+using Sirenix.Config;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -30,6 +31,16 @@ namespace MineArena.AI
         public float DistanceToPlayer()
         {
             return _agent.remainingDistance;
+        }
+
+        public void Stop()
+        {
+            _agent.isStopped = true;
+        }
+
+        public void Move()
+        {
+            _agent.isStopped = false;
         }
     }
 }

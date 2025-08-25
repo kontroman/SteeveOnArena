@@ -4,15 +4,15 @@ using MineArena.Controllers;
 using MineArena.Interfaces;
 using MineArena.Structs;
 using MineArena.Game.Health;
+using System.Windows.Input;
 
 namespace MineArena.AI
 { 
-    public class Mob : MonoBehaviour, IDamageable
+    public class Mob : MonoBehaviour
     {
         private MobMovement _mobMovement;
         private MobCombat _mobCombat;
         private Transform _playerTransform;
-        private Health _mobHealth;
 
         public void Start()
         {
@@ -21,17 +21,6 @@ namespace MineArena.AI
             _playerTransform = Player.Instance.GetComponentFromList<Transform>();
             _mobMovement = GetComponent<MobMovement>();
             _mobCombat = GetComponent<MobCombat>();
-            _mobHealth = GetComponent<Health>();
-        }
-
-        public void Kill()
-        {
-            ObjectPoolsManager.Instance.Release(gameObject);
-        }
-
-        public void TakeDamage(DamageData damageData)
-        {
-            _mobHealth.ChangeValue(-damageData.Damage);
         }
     }
 }
