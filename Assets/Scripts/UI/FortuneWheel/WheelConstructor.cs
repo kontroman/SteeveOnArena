@@ -22,13 +22,14 @@ namespace MineArena.UI.FortuneWheel
 
             for (int i = 0; i < sectorCount; i++)
             {
-                ItemPrize data = items[i];
+                ItemPrize itemPrize = items[i];
+                itemPrize.Construct();
                 //data.Amount = (int)Random.Range(_dropChance.x, _dropChance.y);
                 GameObject sectorUI = Instantiate(_sectorUIPrefab, wheelContainer);
                 RectTransform rectTransformSector = sectorUI.GetComponent<RectTransform>();
 
                 SetTransformSector(rectTransformSector, angleStep, i);
-                SettingSector(sectorUI, data);
+                SettingSector(sectorUI, itemPrize);
             }
         }
 

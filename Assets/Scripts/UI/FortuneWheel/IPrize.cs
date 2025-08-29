@@ -6,5 +6,6 @@ namespace MineArena.UI.FortuneWheel
     {
         Item Item { get; }
         void GiveTo();
+        void Construct();
     }
 }

@@ -78,7 +78,6 @@ namespace MineArena.UI.FortuneWheel
 
             _constructor.SettingSector(_winPanel, _items[randomRewardIndex]);
 
-            _items[randomRewardIndex].Construct();
             _items[randomRewardIndex].GiveTo();
         }
 
