@@ -9,9 +9,9 @@ namespace MineArena.Structs
     public class GameConfig : ScriptableObject
     {
         [SerializeField] private List<LevelConfig> levels;
-        [SerializeField] private List<WheelPrize> _prizes;
+        [SerializeField] private List<ItemPrize> _prizes;
 
         public List<LevelConfig> Levels { get { return levels; } }
-        public List<WheelPrize> Prizes { get { return _prizes; } }
+        public List<ItemPrize> Prizes { get { return _prizes; } }
     }
 }

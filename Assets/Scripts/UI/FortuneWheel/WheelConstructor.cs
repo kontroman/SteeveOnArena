@@ -10,20 +10,19 @@ namespace MineArena.UI.FortuneWheel
     public class WheelConstructor : MonoBehaviour
     {
         [SerializeField] private GameObject _sectorUIPrefab;
-        [SerializeField] private float _radius = 360f;
+        [SerializeField] private float _radius = 240f;
 
-        [Header("Drop Chance")] 
-        [HideLabel, MinMaxSlider(10, 100, true)] 
-        [SerializeField] private Vector2 _dropChance;
+        [Header("Drop Chance")] [HideLabel, MinMaxSlider(10, 100, true)] [SerializeField]
+        private Vector2 _dropChance;
 
-        public void Create(Transform wheelContainer, List<WheelPrize> items)
+        public void Create(Transform wheelContainer, List<ItemPrize> items)
         {
             int sectorCount = items.Count;
             float angleStep = 360f / sectorCount;
 
             for (int i = 0; i < sectorCount; i++)
             {
-                WheelPrize data = items[i];
+                ItemPrize data = items[i];
                 //data.Amount = (int)Random.Range(_dropChance.x, _dropChance.y);
                 GameObject sectorUI = Instantiate(_sectorUIPrefab, wheelContainer);
                 RectTransform rectTransformSector = sectorUI.GetComponent<RectTransform>();
@@ -33,7 +32,7 @@ namespace MineArena.UI.FortuneWheel
             }
         }
 
-        public void SettingSector(GameObject sector, WheelPrize data)
+        public void SettingSector(GameObject sector, ItemPrize data)
         {
             Transform itemIcon = sector.transform.Find(Constants.FortuneWheel.ItemIcon);
             Transform itemText = sector.transform.Find(Constants.FortuneWheel.ItemText);
@@ -43,11 +42,10 @@ namespace MineArena.UI.FortuneWheel
             TMP_Text label = itemText?.GetComponent<TMP_Text>();
             TMP_Text amount = itemAmount?.GetComponent<TMP_Text>();
 
-            if (icon) icon.sprite = data.ItemIcon;
-            if (label) label.text = data.SectorName;
+            if (icon) icon.sprite = data.Icon;
+            if (label) label.text = data.Name;
             if (amount) amount.text = data.Amount.ToString();
         }
-
 
         private void SetTransformSector(RectTransform sectorRT, float angleStep, int i)
         {

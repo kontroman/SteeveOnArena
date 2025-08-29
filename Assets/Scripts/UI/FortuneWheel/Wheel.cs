@@ -8,7 +8,7 @@ namespace MineArena.UI.FortuneWheel
 {
     public class Wheel : MonoBehaviour
     {
-        [SerializeField] private List<WheelPrize> _items;
+        [SerializeField] private List<ItemPrize> _items;
         [SerializeField] private WheelConstructor _constructor;
         [SerializeField] private Transform _wheelContainer;
         [SerializeField] private AnimationCurve _curve;
@@ -58,14 +58,14 @@ namespace MineArena.UI.FortuneWheel
             {
                 float t = _currentRotationTime / _maxRotationTime;
                 t = _curve.Evaluate(t);
-                
+
                 float angle = Mathf.Lerp(_startAngle, _endAngle, t);
                 _wheelContainer.eulerAngles = new Vector3(0, 0, angle);
 
                 _currentRotationTime += Time.deltaTime;
                 yield return null;
             }
-            
+
             _wheelContainer.eulerAngles = new Vector3(0, 0, _endAngle);
             _isStarted = false;
             ShowResult(_randomRewardIndex);
@@ -77,6 +77,9 @@ namespace MineArena.UI.FortuneWheel
                 _winPanel.SetActive(true);
 
             _constructor.SettingSector(_winPanel, _items[randomRewardIndex]);
+
+            _items[randomRewardIndex].Construct();
+            _items[randomRewardIndex].GiveTo();
         }
 
         private void CreatListPrizeItems()
