@@ -680,6 +680,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea8ee677b8dc656478b76a13a7367e5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _attackRange: 2
+  _attackDelay: 1
+  _damage: 10
+  _isRanged: 0
 --- !u!114 &-2464015188232584627
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -692,6 +696,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1602e9d9d73c0843a5a052cd01fa6a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _mobCombat: {fileID: 2621681142427238442}
+  _mobMovement: {fileID: 4753998675413258437}
 --- !u!136 &-7741224508704996015
 CapsuleCollider:
   m_ObjectHideFlags: 0

@@ -696,6 +696,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f1e67970cf37f1449138cc907f40f2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _mobCombat: {fileID: 2621681142427238442}
+  _mobMovement: {fileID: 4753998675413258437}
 --- !u!136 &5224871153900424040
 CapsuleCollider:
   m_ObjectHideFlags: 0
