@@ -2,6 +2,18 @@ namespace MineArena.Basics
 {
     public static class Constants
     {
+        public static class FortuneWheel
+        {
+            public static int MaxNumberTurns = 10;
+            public static int MinNumberTurns = 5;
+            public static float MinValueTimer = 3.0f;
+            public static float MaxValueTimer = 5.0f;
+            public static string ItemIcon = "ItemIcon";
+            public static string ItemText = "ItemText";
+            public static string ItemAmount = "ItemAmount";
+            public static float AngelDeviation = 90f;
+        }
+
         public static class AudioNames
         {
             public const string BackgroundMusic = "BackGround";

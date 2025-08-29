@@ -1,3 +1,4 @@
+using Devotion.SDK.Controllers;
 using MineArena.Managers;
 using UnityEngine;
 
@@ -36,7 +37,7 @@ namespace MineArena.Items
 
         private void AddToInventory(Item item)
         {
-            InventoryManager.Instance.AddItem(item);
+            GameRoot.GetManager<InventoryManager>().AddItem(item);
 
             Destroy(this.gameObject);
         }
