@@ -60,6 +60,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Dark2
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ef2463fd75df38d43a7f50171702fc42, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -67,6 +71,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ef2463fd75df38d43a7f50171702fc42, type: 3}
       insertIndex: -1
       addedObject: {fileID: -3698700001244309746}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ef2463fd75df38d43a7f50171702fc42, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -1395558013760340134}
   m_SourcePrefab: {fileID: 100100000, guid: ef2463fd75df38d43a7f50171702fc42, type: 3}
 --- !u!1 &3354410436172019863 stripped
 GameObject:
@@ -95,3 +102,19 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 6672935260105512716, guid: ef2463fd75df38d43a7f50171702fc42, type: 3}
+--- !u!114 &-1395558013760340134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3354410436172019863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8fd98d710ae78a42921b855d7ce74ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Renderers: []
+  Position: {x: 0, y: 0, z: 0}
+  Materials: []
+  InitialAlpha: 0

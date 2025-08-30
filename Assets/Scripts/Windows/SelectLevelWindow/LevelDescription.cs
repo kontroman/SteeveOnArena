@@ -1,6 +1,7 @@
 using Devotion.SDK.Async;
 using Devotion.SDK.Controllers;
 using MineArena.Basics;
+using MineArena.Controllers;
 using MineArena.Levels;
 using MineArena.Managers;
 using System.Collections;
@@ -55,12 +56,16 @@ namespace MineArena.Windows.SelectLevel
 
             LoadingWindow loadingWindow = (LoadingWindow)GameRoot.UIManager.OpenWindow<LoadingWindow>();
 
+            //TODO: может цепочку вызовать делать в LevelController? 
+
             loadingWindow.SetProgressValue(0.3f)
-                .Then(() => GameRoot.GetManager<UnitySceneLoader>()
-                .LoadSceneAsync(Constants.SceneNames.GameplayScene))
+                .Then(() => GameRoot.GetManager<UnitySceneLoader>().LoadSceneAsync(Constants.SceneNames.GameplayScene))
                 //.Then(() => GameRoot.GameConfig.);
+                .Then(() => FindObjectOfType<LevelController>().InitLevel(_config))
+                .Then(() => loadingWindow.SetProgressValue(0.8f))
+                .Then(() => FindObjectOfType<LevelController>().GenerateLevel())
                 .Then(() => WeatherManager.Instance.ApplyLevelPreset(_config.WeatherPreset))
-                .Then(() => loadingWindow.SetProgressValue(0.4f))
+                .Then(() => loadingWindow.SetProgressValue(0.9f))
                 //.Then(() => GameRoot.LevelController)
                 .Then(() => loadingWindow.SetProgressValue(1f))
                 .Finally(() => GameRoot.UIManager.CloseWindow<LoadingWindow>());

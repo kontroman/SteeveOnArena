@@ -3,6 +3,7 @@ using MineArena.Managers;
 using UnityEngine;
 using MineArena.Commands;
 using Devotion.SDK.Helpers;
+using static UnityEngine.UIElements.UxmlAttributeDescription;
 
 namespace MineArena.Items
 {
@@ -11,6 +12,10 @@ namespace MineArena.Items
     {
         [SerializeField] private BaseCommand _command;
         [SerializeField] private float _interactionRange = 3.0f;
+
+        [SerializeField] private bool _destroyOnEnd = true;
+
+        private bool _used;
 
         private BillboardCanvas _canvas;
 
@@ -21,7 +26,7 @@ namespace MineArena.Items
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.IsPlayer())
+            if (other.IsPlayer() && !_used)
             {
                 GameRoot.GetManager<InteractionManager>().RegisterObject(this);
             }
@@ -54,7 +59,16 @@ namespace MineArena.Items
 
         public void ExecuteCommand()
         {
-            _command?.Execute(() => { Destroy(gameObject); });
+            _used = true;
+
+            _command?.Execute(() =>
+            {
+                GameRoot.GetManager<InteractionManager>().UnregisterObject(this);
+                HideInteractionPrompt();
+
+                if(_destroyOnEnd)
+                    Destroy(gameObject);
+            });
         }
     }
 }

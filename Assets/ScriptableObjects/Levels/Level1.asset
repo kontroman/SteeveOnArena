@@ -20,4 +20,18 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 06a34491da5160b46b608c14b1f430c3, type: 2}
   rewardResources:
   - {fileID: 11400000, guid: 06a34491da5160b46b608c14b1f430c3, type: 2}
-  levelPrefab: {fileID: 0}
+  levelPrefab: {fileID: 7254456583851850223, guid: 71f5d1dff02b6054eb2254b654e556fe, type: 3}
+  levelPrefabRotation: {x: 0.00000003090862, y: -0.70710677, z: -0.70710677, w: -0.00000003090862}
+  weatherPreset:
+    presetName: Sunday
+    enableRain: 0
+    sunRotation: {x: 47, y: -113, z: -277}
+    sunIntensity: 0.91
+    sunColor: {r: 1, g: 1, b: 1, a: 1}
+    skyboxMaterial: {fileID: 0}
+    fogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    fogDensity: 0.01
+    fogEnabled: 0
+    ambientLight: {r: 0.2, g: 0.2, b: 0.2, a: 1}
+    ambientIntensity: 1
+    rainIntensity: 0.5
