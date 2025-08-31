@@ -35,6 +35,12 @@ namespace MineArena.Basics
             public static float SpeedFillProgressBar = 10f;
         }
 
+        public static class UIKeys
+        {
+            public static string DefaultTitle = "DefaultTitle";
+            public static string PrizeKey = "GotPrize";
+        }
+
         public static class GameTags
         {
             public static string MainCanvas = "MainCanvas";

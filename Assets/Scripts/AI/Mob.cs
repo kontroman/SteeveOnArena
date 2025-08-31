@@ -1,10 +1,5 @@
 using UnityEngine;
-using MineArena.ObjectPools;
 using MineArena.Controllers;
-using MineArena.Interfaces;
-using MineArena.Structs;
-using MineArena.Game.Health;
-using System.Windows.Input;
 
 namespace MineArena.AI
 { 
@@ -21,6 +16,16 @@ namespace MineArena.AI
             _playerTransform = Player.Instance.GetComponentFromList<Transform>();
             _mobMovement = GetComponent<MobMovement>();
             _mobCombat = GetComponent<MobCombat>();
+        }
+
+        public void MakeFreeze()
+        {
+
+        }
+
+        public void MakeUnfreeze()
+        {
+
         }
     }
 }

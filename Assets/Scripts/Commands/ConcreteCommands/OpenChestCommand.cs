@@ -1,5 +1,6 @@
 using Devotion.SDK.Controllers;
 using MineArena.Controllers;
+using MineArena.InteractableObjects;
 using MineArena.Managers;
 using MineArena.PlayerSystem;
 using System;
@@ -36,6 +37,9 @@ namespace MineArena.Commands
             pa.ResetTrigger("ChestOpening");
             patc.SetComponentEnable(true);
             callback?.Invoke();
+
+            var prize = chest.GetComponent<WorldChest>().Prize;
+            Messages.GameMessages.WorldChestOpened.Publish(prize);
         }
     }
 }
