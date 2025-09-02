@@ -17,7 +17,7 @@ namespace MineArena.Commands
             await Task.Run(() => Execute(component));
         }
 
-        public Task Execute(object data)
+        public virtual async Task Execute(object data)
         {
             throw new NotImplementedException();
         }
