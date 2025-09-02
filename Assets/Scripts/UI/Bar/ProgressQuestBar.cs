@@ -1,0 +1,29 @@
+﻿using TMPro;
+using UI.Quests;
+using UnityEngine;
+
+namespace MineArena.Game.UI
+{
+    public class ProgressQuestBar : AbstractBar<Quest>
+    {
+        [SerializeField] private TextMeshProUGUI _textBar;
+
+        public override void UpdateBar(float currentValue, float maxValue)
+        {
+            base.UpdateBar(currentValue, maxValue);
+            _textBar.text = currentValue + " / " + maxValue;
+        }
+
+        protected override void SubscribeToChange()
+        {
+            if (TargetSystem != null)
+                TargetSystem.OnValueChanged += UpdateBar;
+        }
+
+        private void OnDestroy()
+        {
+            if (TargetSystem != null)
+                TargetSystem.OnValueChanged += UpdateBar;
+        }
+    }
+}
