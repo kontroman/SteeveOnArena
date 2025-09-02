@@ -1,5 +1,6 @@
 using MineArena.Messages.MessageService;
 using MineArena.PlayerSystem;
+using MineArena.UI.FortuneWheel;
 using UnityEngine;
 
 namespace MineArena.Messages
@@ -25,6 +26,10 @@ namespace MineArena.Messages
     public static partial class GameMessages
     {
         public sealed class NewSwordEquiped : BaseMessage<NewSwordEquiped, AttackConfig>
+        {
+        }
+
+        public sealed class WorldChestOpened : BaseMessage<WorldChestOpened, ItemPrize>
         {
         }
     }

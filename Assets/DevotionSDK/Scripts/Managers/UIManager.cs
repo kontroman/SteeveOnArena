@@ -34,6 +34,11 @@ namespace Devotion.SDK.Managers
             return window;
         }
 
+        public BaseWindow ShowWindow<T>() where T : BaseWindow
+        {
+            return OpenWindow<T>();
+        }
+
         public void CloseWindow<T>() where T : BaseWindow
         {
             BaseWindow window = GetWindowByType<T>();

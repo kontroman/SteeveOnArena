@@ -3,7 +3,6 @@ using MineArena.Managers;
 using UnityEngine;
 using MineArena.Commands;
 using Devotion.SDK.Helpers;
-using static UnityEngine.UIElements.UxmlAttributeDescription;
 
 namespace MineArena.Items
 {

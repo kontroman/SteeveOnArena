@@ -10109,6 +10109,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d6338fffd4b09d343a574c0e135fcb31, type: 3}
       insertIndex: -1
       addedObject: {fileID: 586955888}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d6338fffd4b09d343a574c0e135fcb31, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 586955889}
   m_SourcePrefab: {fileID: 100100000, guid: d6338fffd4b09d343a574c0e135fcb31, type: 3}
 --- !u!1 &586955882 stripped
 GameObject:
@@ -10205,6 +10208,23 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 6, y: 6, z: 6}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &586955889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 586955882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcf247d4cef3691418c8b2d7f7b301b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _chestId: forestChest
+  _prize:
+    _itemConfig: {fileID: 11400000, guid: 0ed2fa501a44c2243a2b52eb7877b148, type: 2}
+    distributionType: 0
+    _amountInStack: 33
 --- !u!1 &588310046
 GameObject:
   m_ObjectHideFlags: 0
@@ -37818,8 +37838,28 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6526254815579831699, guid: 1e08410d1858a204e80b054b0e1ad7d3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6526254816110922686}
   m_SourcePrefab: {fileID: 100100000, guid: 1e08410d1858a204e80b054b0e1ad7d3, type: 3}
+--- !u!1 &6526254816110922685 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6526254815579831699, guid: 1e08410d1858a204e80b054b0e1ad7d3, type: 3}
+  m_PrefabInstance: {fileID: 6526254816110922684}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6526254816110922686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6526254816110922685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60aac0b9995374649b06211674b7d68f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &8116718894625334539 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8947053089102296487, guid: 6d5b39388d059964a83a94a6c2e1b37b, type: 3}
