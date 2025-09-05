@@ -16,30 +16,54 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c48aafc7f49862e47bc06a04f78ce9b5, type: 2}
   - {fileID: 11400000, guid: 1975e39fe2066e84fa40b2667e22479a, type: 2}
   _prizes:
-  - _itemConfig: {fileID: 11400000, guid: 0ed2fa501a44c2243a2b52eb7877b148, type: 2}
+  - _itemConfig: {fileID: 0}
     distributionType: 0
     _amountInStack: 20
-  - _itemConfig: {fileID: 11400000, guid: 06a34491da5160b46b608c14b1f430c3, type: 2}
+  - _itemConfig: {fileID: 0}
     distributionType: 0
     _amountInStack: 500
-  - _itemConfig: {fileID: 11400000, guid: 06a34491da5160b46b608c14b1f430c3, type: 2}
+  - _itemConfig: {fileID: 0}
     distributionType: 0
     _amountInStack: 30
-  - _itemConfig: {fileID: 11400000, guid: 0ed2fa501a44c2243a2b52eb7877b148, type: 2}
+  - _itemConfig: {fileID: 0}
     distributionType: 0
     _amountInStack: -3
-  - _itemConfig: {fileID: 11400000, guid: 06a34491da5160b46b608c14b1f430c3, type: 2}
+  - _itemConfig: {fileID: 0}
     distributionType: 0
     _amountInStack: 100
-  - _itemConfig: {fileID: 11400000, guid: 0ed2fa501a44c2243a2b52eb7877b148, type: 2}
+  - _itemConfig: {fileID: 0}
     distributionType: 0
     _amountInStack: 50
   _dataQuests:
-  - _itemConfig: {fileID: 11400000, guid: 0ed2fa501a44c2243a2b52eb7877b148, type: 2}
-    _amountInStack: 20
-    _textTask: Collect 10 wood
-    _maxValueOnTask: 10
-  - _itemConfig: {fileID: 11400000, guid: 06a34491da5160b46b608c14b1f430c3, type: 2}
-    _amountInStack: 20
+  - _itemPrize:
+      _itemConfig: {fileID: 11400000, guid: 06a34491da5160b46b608c14b1f430c3, type: 2}
+      distributionType: 0
+      _amountInStack: 10
+    _itemNeedToGet: {fileID: 11400000, guid: 06a34491da5160b46b608c14b1f430c3, type: 2}
+    _mob: {fileID: 0}
     _textTask: Collect 5 wood
     _maxValueOnTask: 5
+  - _itemPrize:
+      _itemConfig: {fileID: 11400000, guid: 0ed2fa501a44c2243a2b52eb7877b148, type: 2}
+      distributionType: 0
+      _amountInStack: 20
+    _itemNeedToGet: {fileID: 11400000, guid: 06a34491da5160b46b608c14b1f430c3, type: 2}
+    _mob: {fileID: 0}
+    _textTask: Collect 10 wood
+    _maxValueOnTask: 10
+  - _itemPrize:
+      _itemConfig: {fileID: 11400000, guid: 0ed2fa501a44c2243a2b52eb7877b148, type: 2}
+      distributionType: 0
+      _amountInStack: 10
+    _itemNeedToGet: {fileID: 11400000, guid: 0ed2fa501a44c2243a2b52eb7877b148, type: 2}
+    _mob: {fileID: 0}
+    _textTask: Collect 1 diamont
+    _maxValueOnTask: 1
+  - _itemPrize:
+      _itemConfig: {fileID: 11400000, guid: 0ed2fa501a44c2243a2b52eb7877b148, type: 2}
+      distributionType: 0
+      _amountInStack: 20
+    _itemNeedToGet: {fileID: 0}
+    _mob: {fileID: -2464015188232584627, guid: 2525b1b90595d4f40b5bacb14f9041aa, type: 3}
+    _textTask: Kill 1 zombie
+    _maxValueOnTask: 1

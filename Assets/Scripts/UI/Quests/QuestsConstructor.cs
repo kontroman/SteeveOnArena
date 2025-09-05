@@ -9,48 +9,40 @@ namespace UI.Quests
 {
     public class QuestsConstructor : MonoBehaviour
     {
-        [SerializeField] private RectTransform _content;
         [SerializeField] private GameObject _questPrefab;
+        [SerializeField] private Transform _content;
 
-        private readonly List<DataQuest> _quests = new();
-
-        private void Start()
+        private readonly List<Quest> _quests = new();
+        
+        public List<Quest> CreateQuests()
         {
-            CreatListPrizeItems();
-            ConstructQuest();
-        }
-
-        private void ConstructQuest()
-        {
-            foreach (DataQuest quest in _quests)
+            foreach (DataQuest dataQuest in GameRoot.GameConfig.DataQuests)
             {
-                GameObject questItem = Instantiate(_questPrefab, _content);
-                SettingSector(questItem, quest);
+                GameObject questSector = Instantiate(_questPrefab, _content);
+
+                SettingQuestSector(questSector, dataQuest);
+
+                Quest quest = questSector.GetComponent<Quest>();
+                quest.Construct(dataQuest.MaxValueOnTask, dataQuest.ItemPrize, dataQuest.ItemNeedToGet);
+                _quests.Add(quest);
             }
+
+            return _quests;
         }
 
-        private void SettingSector(GameObject questItem, DataQuest data)
+        private void SettingQuestSector(GameObject questSector, DataQuest data)
         {
-            Transform iconPrize = questItem.transform.Find(Constants.Quest.IconPrize);
-            Transform taskQuest = questItem.transform.Find(Constants.Quest.TaskContent);
-            Transform dropAmount = questItem.transform.Find(Constants.Quest.DropAmount);
+            Transform iconPrize = questSector.transform.Find(Constants.Quest.IconPrize);
+            Transform taskQuest = questSector.transform.Find(Constants.Quest.TaskContent);
+            Transform dropAmount = questSector.transform.Find(Constants.Quest.DropAmount);
 
             Image icon = iconPrize?.GetComponent<Image>();
             TMP_Text textContent = taskQuest?.GetComponent<TMP_Text>();
             TMP_Text amount = dropAmount?.GetComponent<TMP_Text>();
 
-            if (icon) icon.sprite = data.ItemConfig.Icon;
+            if (icon) icon.sprite = data.ItemPrize.Icon;
             if (textContent) textContent.text = data.TextTask;
             if (amount) amount.text = data.Amount.ToString();
-
-            Quest quest = questItem.GetComponent<Quest>();
-            quest.Construct(data.MaxValueOnTask);
-        }
-
-        private void CreatListPrizeItems()
-        {
-            foreach (var t in GameRoot.GameConfig.DataQuests)
-                _quests.Add(t);
         }
     }
 }

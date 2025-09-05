@@ -20,11 +20,12 @@ namespace MineArena.Items
             {
                 item = new EquipmentItem(_item as EquipmentItemConfig);
             }
-            
         }
 
         public void Interact()
         {
+            Messages.QuestMessages.ItemTaken.Publish((_item, 1)); // test
+           
             if (_item.Usable)
             {
                 _item.Command.Execute(() => { Destroy(gameObject); });

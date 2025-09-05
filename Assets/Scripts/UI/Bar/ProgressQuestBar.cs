@@ -10,6 +10,9 @@ namespace MineArena.Game.UI
 
         public override void UpdateBar(float currentValue, float maxValue)
         {
+            if (currentValue >= maxValue)
+                currentValue = maxValue;
+
             base.UpdateBar(currentValue, maxValue);
             _textBar.text = currentValue + " / " + maxValue;
         }

@@ -19,7 +19,8 @@ namespace MineArena.Basics
             public static string DropAmount = "DropAmount";
             public static string IconPrize = "IconPrize";
             public static string TaskContent = "TaskContent";
-            public static string QuestItem = "QuestItem";
+            public static string QuestItem = "Item";
+            public static string QuestMessageComplete = "Complete";
         }
 
         public static class AudioNames

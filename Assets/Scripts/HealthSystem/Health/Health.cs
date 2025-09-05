@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using MineArena.AI;
 using MineArena.Basics;
 using MineArena.Game.UI;
 using MineArena.Interfaces;
@@ -32,7 +33,7 @@ namespace MineArena.Game.Health
 
             OnHealthChanged?.Invoke(_currentHealth, _maxHealth);
 
-            if (_currentHealth <= 0)
+            if (_currentHealth <= 0) 
                 Destroy(gameObject);
         }
 
