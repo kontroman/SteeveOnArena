@@ -13,7 +13,7 @@ namespace UI.Quests
         [SerializeField] private Transform _content;
 
         private readonly List<Quest> _quests = new();
-        
+
         public List<Quest> CreateQuests()
         {
             foreach (DataQuest dataQuest in GameRoot.GameConfig.DataQuests)
@@ -35,13 +35,16 @@ namespace UI.Quests
             Transform iconPrize = questSector.transform.Find(Constants.Quest.IconPrize);
             Transform taskQuest = questSector.transform.Find(Constants.Quest.TaskContent);
             Transform dropAmount = questSector.transform.Find(Constants.Quest.DropAmount);
+            Transform componentNameQuest = questSector.transform.Find(Constants.Quest.QuestName);
 
             Image icon = iconPrize?.GetComponent<Image>();
             TMP_Text textContent = taskQuest?.GetComponent<TMP_Text>();
+            TMP_Text nameQuest = componentNameQuest?.GetComponent<TMP_Text>();
             TMP_Text amount = dropAmount?.GetComponent<TMP_Text>();
 
             if (icon) icon.sprite = data.ItemPrize.Icon;
             if (textContent) textContent.text = data.TextTask;
+            if (nameQuest) nameQuest.text = data.NameQuest;
             if (amount) amount.text = data.Amount.ToString();
         }
     }

@@ -15,6 +15,7 @@ namespace UI.Quests
         [SerializeField] private Button _button;
         [SerializeField] private ProgressQuestBar _progressBar;
         [SerializeField] private TextMeshProUGUI _completeText;
+        [SerializeField] private TextMeshProUGUI _name;
 
         private readonly float _initialValue = 0;
         private ItemPrize _itemPrize;

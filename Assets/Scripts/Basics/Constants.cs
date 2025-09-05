@@ -20,6 +20,7 @@ namespace MineArena.Basics
             public static string IconPrize = "IconPrize";
             public static string TaskContent = "TaskContent";
             public static string QuestItem = "Item";
+            public static string QuestName= "QuestName";
             public static string QuestMessageComplete = "Complete";
         }
 
