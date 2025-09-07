@@ -12,26 +12,30 @@ namespace UI.Quests
     {
         [SerializeField] private QuestsConstructor _questsConstructor;
 
-        private List<Quest> _listActiveQuests = new();
+        private readonly List<Quest> _listActiveQuests = new();
+        private List<QuestVisualizer> _listQuestVisualizers = new();
 
-        public void Awake() => 
-            _listActiveQuests = _questsConstructor.CreateQuests();
+        public void Start()
+        {
+            _listQuestVisualizers = _questsConstructor.QuestVisualizers(_listActiveQuests);
+        }
 
-        public void OnMessage(QuestMessages.QuestCompleted message) => 
+        public void OnMessage(QuestMessages.QuestCompleted message) =>
             _listActiveQuests.Remove(message.Model);
 
-        public void Close() => 
+        public void Close() =>
             GameRoot.UIManager.CloseWindow<WindowQuests>();
 
         private void OnEnable()
         {
-            QuestMessages.OpenWindowQuests.Publish(_listActiveQuests);
+            
+            QuestMessages.OpenWindowQuests.Publish(_listQuestVisualizers);
             MessageService.Subscribe(this);
         }
 
         private void OnDisable()
         {
-            QuestMessages.CloseWindowQuests.Publish(_listActiveQuests);
+            QuestMessages.CloseWindowQuests.Publish();
             MessageService.Unsubscribe(this);
         }
 

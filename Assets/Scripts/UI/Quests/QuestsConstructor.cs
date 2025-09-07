@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Devotion.SDK.Controllers;
 using MineArena.Basics;
 using TMPro;
 using UnityEngine;
@@ -12,19 +11,19 @@ namespace UI.Quests
         [SerializeField] private GameObject _questPrefab;
         [SerializeField] private Transform _content;
 
-        private readonly List<Quest> _quests = new();
+        private readonly List<QuestVisualizer> _quests = new();
 
-        public List<Quest> CreateQuests()
+        public List<QuestVisualizer> QuestVisualizers(List<Quest> quests)
         {
-            foreach (DataQuest dataQuest in GameRoot.GameConfig.DataQuests)
+            foreach (var quest in quests)
             {
                 GameObject questSector = Instantiate(_questPrefab, _content);
-
-                SettingQuestSector(questSector, dataQuest);
-
-                Quest quest = questSector.GetComponent<Quest>();
-                quest.Construct(dataQuest.MaxValueOnTask, dataQuest.ItemPrize, dataQuest.ItemNeedToGet);
-                _quests.Add(quest);
+                
+                SettingQuestSector(questSector, quest.Data);
+                
+                QuestVisualizer questVisualizer = questSector.GetComponent<QuestVisualizer>();
+                questVisualizer.Construct(quest);
+                _quests.Add(questVisualizer);
             }
 
             return _quests;

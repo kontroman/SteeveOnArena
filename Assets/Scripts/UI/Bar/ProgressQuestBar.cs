@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace MineArena.Game.UI
 {
-    public class ProgressQuestBar : AbstractBar<Quest>
+    public class ProgressQuestBar : AbstractBar<QuestVisualizer>
     {
         [SerializeField] private TextMeshProUGUI _textBar;
 

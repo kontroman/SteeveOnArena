@@ -73,6 +73,18 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: Devotion.SDK.UI.PlayingWindow, Assembly-CSharp
       objectReference: {fileID: 0}
+    - target: {fileID: 3679671550570971689, guid: e79ac7a9ec3ce464c9c79608c171febe, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 34
+      objectReference: {fileID: 0}
+    - target: {fileID: 3679671550570971689, guid: e79ac7a9ec3ce464c9c79608c171febe, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 33
+      objectReference: {fileID: 0}
+    - target: {fileID: 3720920006498530527, guid: e79ac7a9ec3ce464c9c79608c171febe, type: 3}
+      propertyPath: m_text
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 4278357323767230635, guid: e79ac7a9ec3ce464c9c79608c171febe, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

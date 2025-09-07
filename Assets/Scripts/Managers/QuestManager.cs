@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Devotion.SDK.Controllers;
 using Devotion.SDK.Managers;
 using MineArena.Items;
@@ -11,56 +12,45 @@ public class QuestManager : BaseManager,
     IMessageSubscriber<QuestMessages.OpenWindowQuests>,
     IMessageSubscriber<QuestMessages.CloseWindowQuests>
 {
-    private readonly Dictionary<ItemConfig, int> _dictionary = new(); 
+    private readonly Dictionary<ItemConfig, int> _dictionary = new();
     private List<Quest> _quests = new();
+    private List<QuestVisualizer> _questVisualizers = new();
 
     private readonly int _initialValue = 0;
     private bool _windowQuestActive;
 
-    private void Start() =>
-        FillDictionary();
-
-    public void OnMessage(QuestMessages.OpenWindowQuests listQuests)
+    private void Start()
     {
-        _windowQuestActive = true;
-        _quests = listQuests.Model;
-
-        UpdateQuestData();
-    }
-
-    public void OnMessage(QuestMessages.CloseWindowQuests listQuests)
-    {
-        _quests = listQuests.Model;
-        _windowQuestActive = false;
+        CreatQuests();
     }
 
     public void OnMessage(QuestMessages.ItemTaken message)
     {
-        AddCurrentValue(message);
+        foreach (var quest in _quests.Where(quest => quest.Data.ItemTarget == message.Model.Item1))
+            quest.ChangeCurrentValue(message.Model.Item2);
     }
 
-    private void AddCurrentValue(QuestMessages.ItemTaken itemConfig)
+    public void OnMessage(QuestMessages.OpenWindowQuests listQuestVisualizers)
     {
-        if (_dictionary.ContainsKey(itemConfig.Model.Item1))
-            _dictionary[itemConfig.Model.Item1] += itemConfig.Model.Item2;
-
-        if (_windowQuestActive)
-            UpdateQuestData();
-    }
-
-    private void UpdateQuestData()
-    {
-        foreach (var quest in _quests)
+        _windowQuestActive =  true;
+        
+        for (int i = 0; i < _quests.Count && i < listQuestVisualizers.Model.Count; i++)
         {
-            if (_dictionary.ContainsKey(quest.ItemPrize.ItemConfig))
-                quest.ChangeCurrentValue(_dictionary[quest.ItemTarget]);
+            foreach (var quest in _quests.Where(quest => quest == listQuestVisualizers.Model[i].MyQuest))
+                listQuestVisualizers.Model[i].MyQuest.ChangeCurrentValue(quest.CurrentValueProgress);
         }
     }
 
-    private void FillDictionary()
+    public void OnMessage(QuestMessages.CloseWindowQuests listQuests)
     {
-        foreach (var dataQuest in GameRoot.GameConfig.DataQuests)
-            _dictionary.TryAdd(dataQuest.ItemNeedToGet, _initialValue);
+        _windowQuestActive = false;
+    }
+
+
+    private void CreatQuests()
+    {
+        foreach (DataQuest dataQuest in GameRoot.GameConfig.DataQuests)
+            _quests.Add(new(dataQuest));
     }
 
     private void OnEnable() =>

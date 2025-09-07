@@ -43,11 +43,16 @@ namespace MineArena.Messages
         {
         }
 
-        public sealed class OpenWindowQuests : BaseMessage<OpenWindowQuests, List<Quest>>
+        public sealed class PrizeTake : BaseMessage<PrizeTake>
         {
         }
 
-        public sealed class CloseWindowQuests : BaseMessage<CloseWindowQuests, List<Quest>>
+
+        public sealed class OpenWindowQuests : BaseMessage<OpenWindowQuests, List<QuestVisualizer>>
+        {
+        }
+
+        public sealed class CloseWindowQuests : BaseMessage<CloseWindowQuests>
         {
         }
 
