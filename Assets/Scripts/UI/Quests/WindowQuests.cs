@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Devotion.SDK.Base;
 using Devotion.SDK.Controllers;
+using Managers;
 using MineArena.Messages;
 using MineArena.Messages.MessageService;
 using UnityEngine;
@@ -8,36 +9,49 @@ using UnityEngine;
 namespace UI.Quests
 {
     public class WindowQuests : BaseWindow,
-        IMessageSubscriber<QuestMessages.QuestCompleted>
+        IMessageSubscriber<QuestMessages.ItemTaken>
     {
         [SerializeField] private QuestsConstructor _questsConstructor;
 
-        private readonly List<Quest> _listActiveQuests = new();
-        private List<QuestVisualizer> _listQuestVisualizers = new();
+        private List<Quest> _activeQuests = new();
+        private List<QuestVisualizer> _questVisualizers = new();
 
-        public void Start()
+        private void Awake()
         {
-            _listQuestVisualizers = _questsConstructor.QuestVisualizers(_listActiveQuests);
+            _activeQuests = GameRoot.GetManager<QuestManager>().GiveQuests();
+            _questVisualizers = _questsConstructor.QuestVisualizers(_activeQuests);
         }
-
-        public void OnMessage(QuestMessages.QuestCompleted message) =>
-            _listActiveQuests.Remove(message.Model);
 
         public void Close() =>
             GameRoot.UIManager.CloseWindow<WindowQuests>();
 
+        public void OnMessage(QuestMessages.ItemTaken message)
+        {
+            UpdateProgressValue();
+        }
+
+        private void UpdateProgressValue()
+        {
+            _activeQuests = GameRoot.GetManager<QuestManager>().GiveQuests();
+
+            foreach (var visualizer in _questVisualizers)
+            {
+                foreach (var quest in _activeQuests)
+                {
+                    if (quest == visualizer.MyQuest)
+                        visualizer.ChangeCurrentValue();
+                }
+            }
+        }
+
         private void OnEnable()
         {
-            
-            QuestMessages.OpenWindowQuests.Publish(_listQuestVisualizers);
+            UpdateProgressValue();
             MessageService.Subscribe(this);
         }
 
-        private void OnDisable()
-        {
-            QuestMessages.CloseWindowQuests.Publish();
+        private void OnDisable() =>
             MessageService.Unsubscribe(this);
-        }
 
         private void OnDestroy() =>
             MessageService.Unsubscribe(this);

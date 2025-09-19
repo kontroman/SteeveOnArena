@@ -1,64 +1,69 @@
 using System.Collections.Generic;
-using System.Linq;
 using Devotion.SDK.Controllers;
 using Devotion.SDK.Managers;
-using MineArena.Items;
 using MineArena.Messages;
 using MineArena.Messages.MessageService;
 using UI.Quests;
 
-public class QuestManager : BaseManager,
-    IMessageSubscriber<QuestMessages.ItemTaken>,
-    IMessageSubscriber<QuestMessages.OpenWindowQuests>,
-    IMessageSubscriber<QuestMessages.CloseWindowQuests>
+namespace Managers
 {
-    private readonly Dictionary<ItemConfig, int> _dictionary = new();
-    private List<Quest> _quests = new();
-    private List<QuestVisualizer> _questVisualizers = new();
-
-    private readonly int _initialValue = 0;
-    private bool _windowQuestActive;
-
-    private void Start()
+    public class QuestManager : BaseManager,
+        IMessageSubscriber<QuestMessages.ItemTaken>,
+        IMessageSubscriber<QuestMessages.QuestCompleted>
     {
-        CreatQuests();
-    }
+        private readonly List<Quest> _quests = new();
 
-    public void OnMessage(QuestMessages.ItemTaken message)
-    {
-        foreach (var quest in _quests.Where(quest => quest.Data.ItemTarget == message.Model.Item1))
-            quest.ChangeCurrentValue(message.Model.Item2);
-    }
+        private int _valueTakePrizeQuests;
 
-    public void OnMessage(QuestMessages.OpenWindowQuests listQuestVisualizers)
-    {
-        _windowQuestActive =  true;
-        
-        for (int i = 0; i < _quests.Count && i < listQuestVisualizers.Model.Count; i++)
+        private void Start() =>
+            CreatQuests();
+
+        public List<Quest> GiveQuests() =>
+            _quests;
+
+        public void OnMessage(QuestMessages.ItemTaken message)
         {
-            foreach (var quest in _quests.Where(quest => quest == listQuestVisualizers.Model[i].MyQuest))
-                listQuestVisualizers.Model[i].MyQuest.ChangeCurrentValue(quest.CurrentValueProgress);
+            foreach (var quest in _quests)
+            {
+                if (quest.Data.ItemTarget == message.Model.Item1)
+                    quest.ChangeCurrentValue(message.Model.Item2);
+            }
+
+            CheckPrizeTaking();
         }
+
+        public void OnMessage(QuestMessages.QuestCompleted message)
+        {
+            _quests.Remove(message.Model);
+            CheckPrizeTaking();
+        }
+
+        private void CheckPrizeTaking()
+        {
+            _valueTakePrizeQuests = 0;
+
+            foreach (Quest quest in _quests)
+            {
+                if (quest.CanTakePrize)
+                    _valueTakePrizeQuests++;
+            }
+
+            QuestMessages.PrizeTake.Publish(_valueTakePrizeQuests);
+        }
+
+        private void CreatQuests()
+        {
+            foreach (DataQuest dataQuest in GameRoot.GameConfig.DataQuests)
+                _quests.Add(new(dataQuest));
+        }
+
+        private void OnEnable() =>
+            MessageService.Subscribe(this);
+
+        private void OnDisable() =>
+            MessageService.Unsubscribe(this);
+
+        private void OnDestroy() =>
+            MessageService.Unsubscribe(this);
     }
-
-    public void OnMessage(QuestMessages.CloseWindowQuests listQuests)
-    {
-        _windowQuestActive = false;
-    }
-
-
-    private void CreatQuests()
-    {
-        foreach (DataQuest dataQuest in GameRoot.GameConfig.DataQuests)
-            _quests.Add(new(dataQuest));
-    }
-
-    private void OnEnable() =>
-        MessageService.Subscribe(this);
-
-    private void OnDisable() =>
-        MessageService.Unsubscribe(this);
-
-    private void OnDestroy() =>
-        MessageService.Unsubscribe(this);
 }
