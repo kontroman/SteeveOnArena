@@ -50,5 +50,9 @@ namespace MineArena.Messages
         public sealed class QuestCompleted : BaseMessage<QuestCompleted, Quest>
         {
         }
+
+        public sealed class QuestBegun : BaseMessage<QuestBegun, Quest>
+        {
+        }
     }
 }

@@ -19,7 +19,6 @@ namespace UI.Quests
 
         public float CurrentValueProgress => _currentValueProgress;
         public float MaxValueProgress => _maxValueProgress;
-        public ItemPrize ItemPrize => _itemPrize;
         public bool IsCompleted => _isCompleted;
         public bool CanTakePrize => _canTakePrize;
         public DataQuest Data { get; private set; }
@@ -39,8 +38,14 @@ namespace UI.Quests
         {
             _currentValueProgress += value;
 
-            if (_currentValueProgress >= _maxValueProgress) 
+            if (Mathf.Approximately(_currentValueProgress, 1))
+                QuestMessages.QuestBegun.Publish(this);
+
+            if (Mathf.Approximately(_currentValueProgress, _maxValueProgress))
+            {
                 _canTakePrize = true;
+                QuestMessages.PrizeTake.Publish();
+            }
         }
 
         public void TransferPrize()
@@ -49,8 +54,5 @@ namespace UI.Quests
             QuestMessages.QuestCompleted.Publish(this);
             _itemPrize.GiveTo();
         }
-
-        public void TakePrize(bool b) =>
-            _canTakePrize = b;
     }
 }

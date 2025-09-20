@@ -1,5 +1,3 @@
-using Devotion.SDK.Controllers;
-using Managers;
 using MineArena.Messages;
 using MineArena.Messages.MessageService;
 using TMPro;
@@ -8,7 +6,8 @@ using UnityEngine;
 namespace UI.Quests
 {
     public class QuestButton : MonoBehaviour,
-        IMessageSubscriber<QuestMessages.PrizeTake>
+        IMessageSubscriber<QuestMessages.PrizeTake>,
+        IMessageSubscriber<QuestMessages.QuestCompleted>
     {
         [SerializeField] private TextMeshProUGUI _text;
 
@@ -16,14 +15,22 @@ namespace UI.Quests
 
         private void Start()
         {
-            _valueQuestWithPrize = 0;
-            _text.text = _valueQuestWithPrize.ToString();
+            SetValue(0);
         }
 
         public void OnMessage(QuestMessages.PrizeTake message)
         {
-            Debug.Log(_valueQuestWithPrize);
-            _valueQuestWithPrize = message.Model;
+            SetValue(1);
+        }
+
+        public void OnMessage(QuestMessages.QuestCompleted message)
+        {
+            SetValue(-1);
+        }
+
+        private void SetValue(int value)
+        {
+            _valueQuestWithPrize += value;
             _text.text = _valueQuestWithPrize.ToString();
         }
 

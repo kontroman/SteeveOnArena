@@ -28,27 +28,11 @@ namespace Managers
                 if (quest.Data.ItemTarget == message.Model.Item1)
                     quest.ChangeCurrentValue(message.Model.Item2);
             }
-
-            CheckPrizeTaking();
         }
 
         public void OnMessage(QuestMessages.QuestCompleted message)
         {
             _quests.Remove(message.Model);
-            CheckPrizeTaking();
-        }
-
-        private void CheckPrizeTaking()
-        {
-            _valueTakePrizeQuests = 0;
-
-            foreach (Quest quest in _quests)
-            {
-                if (quest.CanTakePrize)
-                    _valueTakePrizeQuests++;
-            }
-
-            QuestMessages.PrizeTake.Publish(_valueTakePrizeQuests);
         }
 
         private void CreatQuests()

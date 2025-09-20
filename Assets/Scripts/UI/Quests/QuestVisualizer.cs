@@ -43,7 +43,6 @@ namespace UI.Quests
             }
             else
             {
-                _quest.TakePrize(true);
                 _progressBar.gameObject.SetActive(false);
                 _button.gameObject.SetActive(true);
             }
