@@ -1,9 +1,11 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
+using DG.Tweening;
 using MineArena.Game.UI;
 using MineArena.Messages;
 using MineArena.Messages.MessageService;
 using TMPro;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace UI.Quests
@@ -15,16 +17,20 @@ namespace UI.Quests
     {
         [SerializeField] private TextMeshProUGUI _nameQuest;
         [SerializeField] private ProgressQuestBar _progressBarQuest;
-        [SerializeField] private float _timer;
-        [SerializeField] private float _speed;
+        [SerializeField] private float _duration = 0.5f;
+        [SerializeField] private float _timer = 0.7f;
 
-        private readonly Vector3[] _positions = new Vector3[2];
-        private readonly float _minDistance = 1f;
-        private int _spot;
+        private readonly Queue<QuestMessages.QuestBegun> _messageQueue = new();
 
-        private List<Quest> _quests = new();
-        private Coroutine _coroutine;
+        // private bool _isProcessing = false;
+        private Coroutine _processingCoroutine;
         private RectTransform _rectTransform;
+        private Quest _quest;
+
+        private bool _isAnimating;
+        //private readonly Queue<Quest> _queueQuests = new();
+
+        public event Action<float, float> OnValueChanged;
 
         public float MaxValue { get; private set; }
         public float CurrentValue { get; private set; }
@@ -34,20 +40,60 @@ namespace UI.Quests
             _rectTransform = GetComponent<RectTransform>();
         }
 
-        private void Start()
-        {
-            _positions[0] = _rectTransform.position + new Vector3(0, -100, 0);
-            _positions[1] = _rectTransform.position;
-        }
-
         public void OnMessage(QuestMessages.QuestBegun message)
         {
+            _messageQueue.Enqueue(message);
+    
+            if (!_isAnimating)
+            {
+                ProcessQueue();
+            }
+        }
+
+        private async void ProcessQueue()
+        {
+            _isAnimating = true;
+    
+            while (_messageQueue.Count != 0)
+            {
+                var mes = _messageQueue.Dequeue();
+                Construct(mes);
+                await ShowAnimation();
+            }
+    
+            _isAnimating = false;
+        }
+
+
+        private void Construct(QuestMessages.QuestBegun message)
+        {
             MaxValue = message.Model.MaxValueProgress;
+            Debug.Log(MaxValue);
+            Debug.Log(CurrentValue);
             CurrentValue = message.Model.CurrentValueProgress;
             _nameQuest.text = message.Model.Data.NameQuest;
-            _spot = 0;
-            _coroutine = StartCoroutine(ShowInformation());
+            OnValueChanged?.Invoke(CurrentValue, MaxValue);
         }
+
+        private async Task ShowAnimation()
+        {
+            var sequence = DOTween.Sequence()
+                .Append(transform.DOMove(_rectTransform.position + new Vector3(0, -100, 0), _duration)
+                    .SetEase(Ease.Linear))
+                .AppendInterval(_timer)
+                .Append(transform.DOMove(_rectTransform.position, _duration).SetEase(Ease.Linear));
+
+            await sequence.AsyncWaitForCompletion();
+        }
+
+        private void OnEnable() =>
+            MessageService.Subscribe(this);
+
+        private void OnDisable() =>
+            MessageService.Unsubscribe(this);
+
+        private void OnDestroy() =>
+            MessageService.Unsubscribe(this);
 
         public void OnMessage(QuestMessages.ItemTaken message)
         {
@@ -67,35 +113,5 @@ namespace UI.Quests
             //     }
             // }
         }
-
-        private IEnumerator ShowInformation()
-        {
-            var waitForSeconds = new WaitForSeconds(_timer);
-
-            while (Vector3.Distance(_rectTransform.position, _positions[_spot]) > _minDistance)
-            {
-                _rectTransform.position = Vector3.MoveTowards(_rectTransform.position, _positions[_spot],
-                    _speed * Time.deltaTime);
-                yield return null;
-            }
-
-            _spot++;
-
-            yield return waitForSeconds;
-
-            if (_spot == _positions.Length)
-                StopCoroutine(_coroutine);
-            else
-                StartCoroutine(ShowInformation());
-        }
-
-        private void OnEnable() =>
-            MessageService.Subscribe(this);
-
-        private void OnDisable() =>
-            MessageService.Unsubscribe(this);
-
-        private void OnDestroy() =>
-            MessageService.Unsubscribe(this);
     }
 }

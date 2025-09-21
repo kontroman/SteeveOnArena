@@ -39,7 +39,10 @@ namespace UI.Quests
             _currentValueProgress += value;
 
             if (Mathf.Approximately(_currentValueProgress, 1))
+            {
+                //Debug.Log(1);
                 QuestMessages.QuestBegun.Publish(this);
+            }
 
             if (Mathf.Approximately(_currentValueProgress, _maxValueProgress))
             {

@@ -4,6 +4,7 @@ using Devotion.SDK.Managers;
 using MineArena.Messages;
 using MineArena.Messages.MessageService;
 using UI.Quests;
+using UnityEngine;
 
 namespace Managers
 {
@@ -26,7 +27,14 @@ namespace Managers
             foreach (var quest in _quests)
             {
                 if (quest.Data.ItemTarget == message.Model.Item1)
+                {
                     quest.ChangeCurrentValue(message.Model.Item2);
+
+                    // if (Mathf.Approximately(quest.CurrentValueProgress, 1))
+                    // {
+                    //     QuestMessages.QuestBegun.Publish(quest);
+                    // }
+                }
             }
         }
 
