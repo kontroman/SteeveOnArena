@@ -11,22 +11,20 @@ namespace UI.Quests
     {
         [SerializeField] private TextMeshProUGUI _text;
 
+        private readonly int _startValue = 0;
+        private readonly int _addValue = 1;
+        private readonly int _subtractValue = -1;
+        
         private int _valueQuestWithPrize;
 
-        private void Start()
-        {
-            SetValue(0);
-        }
+        private void Start() => 
+            SetValue(_startValue);
 
-        public void OnMessage(QuestMessages.PrizeTake message)
-        {
-            SetValue(1);
-        }
+        public void OnMessage(QuestMessages.PrizeTake message) =>
+            SetValue(_addValue);
 
-        public void OnMessage(QuestMessages.QuestCompleted message)
-        {
-            SetValue(-1);
-        }
+        public void OnMessage(QuestMessages.QuestCompleted message) =>
+            SetValue(_subtractValue);
 
         private void SetValue(int value)
         {

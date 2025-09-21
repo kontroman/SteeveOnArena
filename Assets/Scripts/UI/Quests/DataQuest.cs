@@ -1,7 +1,6 @@
 using MineArena.Items;
 using MineArena.UI.FortuneWheel;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace UI.Quests
 {

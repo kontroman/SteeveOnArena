@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Devotion.SDK.Base;
 using Devotion.SDK.Controllers;
 using Managers;
@@ -25,10 +26,8 @@ namespace UI.Quests
         public void Close() =>
             GameRoot.UIManager.CloseWindow<WindowQuests>();
 
-        public void OnMessage(QuestMessages.ItemTaken message)
-        {
+        public void OnMessage(QuestMessages.ItemTaken message) =>
             UpdateProgressValue();
-        }
 
         private void UpdateProgressValue()
         {
@@ -37,10 +36,8 @@ namespace UI.Quests
             foreach (var visualizer in _questVisualizers)
             {
                 foreach (var quest in _activeQuests)
-                {
                     if (quest == visualizer.MyQuest)
                         visualizer.ChangeCurrentValue();
-                }
             }
         }
 

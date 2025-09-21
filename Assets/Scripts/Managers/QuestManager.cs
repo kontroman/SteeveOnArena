@@ -4,7 +4,6 @@ using Devotion.SDK.Managers;
 using MineArena.Messages;
 using MineArena.Messages.MessageService;
 using UI.Quests;
-using UnityEngine;
 
 namespace Managers
 {
@@ -13,8 +12,6 @@ namespace Managers
         IMessageSubscriber<QuestMessages.QuestCompleted>
     {
         private readonly List<Quest> _quests = new();
-
-        private int _valueTakePrizeQuests;
 
         private void Start() =>
             CreatQuests();
@@ -26,22 +23,13 @@ namespace Managers
         {
             foreach (var quest in _quests)
             {
-                if (quest.Data.ItemTarget == message.Model.Item1)
-                {
+                if (quest.Data.ItemTarget == message.Model.Item1) 
                     quest.ChangeCurrentValue(message.Model.Item2);
-
-                    // if (Mathf.Approximately(quest.CurrentValueProgress, 1))
-                    // {
-                    //     QuestMessages.QuestBegun.Publish(quest);
-                    // }
-                }
             }
         }
 
-        public void OnMessage(QuestMessages.QuestCompleted message)
-        {
+        public void OnMessage(QuestMessages.QuestCompleted message) => 
             _quests.Remove(message.Model);
-        }
 
         private void CreatQuests()
         {
