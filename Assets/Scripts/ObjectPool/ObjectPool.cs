@@ -10,7 +10,7 @@ namespace MineArena.ObjectPools
         [SerializeField] private GameObject _objectPrefab;
         private ObjectPool<GameObject> _pool;
 
-        public void Init(GameObject prefab, MobPoolsPreset preset)
+        public void Init(GameObject prefab, ObjectPoolPreset preset)
         {
             _objectPrefab = prefab;
             _pool = new ObjectPool<GameObject>(createFunc: () => OnCreateObject(prefab),

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44694304, g: 0.49633282, b: 0.5730514, a: 1}
+  m_IndirectSpecularColor: {r: 0.44955623, g: 0.49962687, b: 0.57567215, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -21331,7 +21331,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2081905581}
-  - component: {fileID: 2081905580}
+  - component: {fileID: 2081905582}
+  - component: {fileID: 2081905583}
   m_Layer: 0
   m_Name: preset
   m_TagString: Untagged
@@ -21339,23 +21340,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2081905580
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2081905579}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35ff742b1e9704a4390aa681e3b20b1f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MaxPoolSize: 50
-  DefaultPoolSize: 10
-  Preset:
-  - {fileID: 4379526534478428056, guid: 2525b1b90595d4f40b5bacb14f9041aa, type: 3}
-  - {fileID: 4379526534478428056, guid: 9fa4dd150916b094d96136f6b6a96931, type: 3}
 --- !u!4 &2081905581
 Transform:
   m_ObjectHideFlags: 0
@@ -21371,6 +21355,32 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2081905582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2081905579}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35ff742b1e9704a4390aa681e3b20b1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _poolPreset: {fileID: 11400000, guid: 583dca78beb09974692554f6f166354e, type: 2}
+--- !u!114 &2081905583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2081905579}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f08d75552af66740878d48d53f2cad7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _poolPreset: {fileID: 11400000, guid: e334bbba91dc6254d9ed2a0108c8687d, type: 2}
 --- !u!1 &2084347529
 GameObject:
   m_ObjectHideFlags: 0

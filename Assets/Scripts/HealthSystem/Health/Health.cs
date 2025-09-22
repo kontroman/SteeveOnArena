@@ -4,13 +4,15 @@ using MineArena.Basics;
 using MineArena.Game.UI;
 using MineArena.Interfaces;
 using MineArena.Structs;
+using Unity.IO.LowLevel.Unsafe;
 
 namespace MineArena.Game.Health
 {
     public class Health : MonoBehaviour, IProgressBar, IDamageable
     {
         [SerializeField] private float _currentHealth;
-        [SerializeField] private float _maxHealth;
+        
+        [SerializeField] protected float _maxHealth;
 
         public event Action<float, float> OnHealthChanged;
 
@@ -33,7 +35,7 @@ namespace MineArena.Game.Health
             OnHealthChanged?.Invoke(_currentHealth, _maxHealth);
 
             if (_currentHealth <= 0)
-                Destroy(gameObject);
+                Die();
         }
 
         private float DetermineValue(float currentValue)
@@ -42,6 +44,11 @@ namespace MineArena.Game.Health
         public void TakeDamage(DamageData damageData)
         {
             ChangeValue(-damageData.Damage);
+        }
+
+        protected virtual void Die()
+        {
+            Destroy(gameObject);
         }
     }
 }

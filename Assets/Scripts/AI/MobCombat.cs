@@ -9,14 +9,13 @@ using UnityEngine.Rendering;
 
 namespace MineArena.AI
 {
-    public class MobCombat : MonoBehaviour
+    public class MobCombat : MonoBehaviour, IMobComponent
     {
         [SerializeField] private float _attackRange = 2f;
         [SerializeField] private float _attackDelay = 1f;
         [SerializeField] private float _damage = 10f;
         [SerializeField] private float _rotationSpeed = 50f;
         [SerializeField] private bool _isRanged = false;
-
         [SerializeField] private GameObject _projectilePrefab;
         [SerializeField] private Transform _firePoint;
 
@@ -100,11 +99,13 @@ namespace MineArena.AI
             }
         }
 
-        public void SetParameters(float damage, float attackSpeed, float attackRange)
+        public void SetParameters(MobPreset preset)
         {
-            _attackRange = attackRange;
-            _attackDelay = attackSpeed;
-            _damage = damage;
+            _damage = preset.Damage;
+            _attackRange = preset.AttackRange;
+            _attackDelay = preset.AttackDelay;
+            _rotationSpeed = preset.RotationSpeed;
+            _projectilePrefab = preset.Projectile;
         }
     }
 }

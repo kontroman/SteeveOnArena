@@ -13,10 +13,20 @@ namespace MineArena.AI
 
         [SerializeField] private MobCombat _mobCombat;
         [SerializeField] private MobMovement _mobMovement;
+        [SerializeField] private MobHealth _mobHealth;
+        [SerializeField] private MobPreset _preset;
 
         public void Start()
         {
             _playerTransform = Player.Instance.GetComponentFromList<Transform>();
+            SetPresetParameters(_preset);
+        }
+
+        public void SetPresetParameters(MobPreset preset)
+        {
+            _mobCombat.SetParameters(preset);
+            _mobMovement.SetParameters(preset);
+            _mobHealth.SetParameters(preset);
         }
     }
 }

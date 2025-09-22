@@ -1,4 +1,5 @@
 using MineArena.Controllers;
+using MineArena.Interfaces;
 using Sirenix.Config;
 using UnityEngine;
 using UnityEngine.AI;
@@ -6,7 +7,7 @@ using UnityEngine.AI;
 namespace MineArena.AI
 {
     //NOTE: пока что дистанция осстановки регулируется через навмеш агента.
-    public class MobMovement : MonoBehaviour
+    public class MobMovement : MonoBehaviour, IMobComponent
     {
         private Transform _playerTransform;
         private NavMeshAgent _agent;
@@ -41,6 +42,12 @@ namespace MineArena.AI
         public void Move()
         {
             _agent.isStopped = false;
+        }
+
+        public void SetParameters(MobPreset preset)
+        {
+            _agent.speed = preset.Speed;
+            _agent.stoppingDistance = preset.AttackRange;
         }
     }
 }
