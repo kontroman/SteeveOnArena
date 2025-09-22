@@ -24,8 +24,10 @@ namespace MineArena.Buildings
     {
         [SerializeField] private StackableItemConfig _resource;
         [SerializeField] private int _amount;
+        [SerializeField] private bool _blockStyleIcon;
 
         public StackableItemConfig Resource => _resource;
         public int Amount => _amount;
+        public bool BlockStyleIcon => _blockStyleIcon;
     }
 }

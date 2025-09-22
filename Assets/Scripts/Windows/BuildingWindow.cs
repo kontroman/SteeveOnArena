@@ -6,6 +6,8 @@ using MineArena.Windows.Elements;
 using TMPro;
 using UnityEngine;
 using MineArena.Managers;
+using Devotion.SDK.Helpers;
+using MineArena.UI;
 
 namespace MineArena.Windows
 {
@@ -58,13 +60,19 @@ namespace MineArena.Windows
         {
             if (GameRoot.GetManager<BuildingManager>().TryBuilding(_buildingConfig, _buildingPlace))
             {
-                OnCloseClick();
+                CloseWindow();
             }
         }
-        
-        public void OnCloseClick()
+
+        public override void CloseWindow()
         {
-            GameRoot.UIManager.CloseWindow<BuildingWindow>();
+            this.CloseWindow<BuildingWindow>();
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+                CloseWindow();
         }
     }
 }

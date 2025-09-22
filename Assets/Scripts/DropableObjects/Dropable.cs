@@ -25,11 +25,6 @@ namespace MineArena.Drop
         [Header("Drop only one or more items")]
         [SerializeField] private bool _isOneDrop;
 
-        private void OnDestroy()
-        {
-            DropItems();
-        }
-
         public void DropItems()
         {
             foreach (var dropEntry in _dropTable)

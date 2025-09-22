@@ -75,7 +75,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -225,3 +225,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _resourceIcon: {fileID: 2316047979126307498}
   _amountText: {fileID: 2509129676536765580}
+  _iconPrefab: {fileID: 1840061424377608187, guid: 431b66e1e2718d54b9e42a395300faa9, type: 3}

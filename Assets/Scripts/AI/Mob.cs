@@ -17,15 +17,5 @@ namespace MineArena.AI
             _mobMovement = GetComponent<MobMovement>();
             _mobCombat = GetComponent<MobCombat>();
         }
-
-        public void MakeFreeze()
-        {
-
-        }
-
-        public void MakeUnfreeze()
-        {
-
-        }
     }
 }

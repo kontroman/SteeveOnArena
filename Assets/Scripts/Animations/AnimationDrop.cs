@@ -10,11 +10,11 @@ namespace MineArena.Items
         [SerializeField] private int _numberLayerGround = 3;
 
         [Header("Horizontal Forse")]
-        [HideLabel, MinMaxSlider(150, 250, true)]
+        [HideLabel, MinMaxSlider(20, 125, true)]
         [SerializeField] private Vector2 _forseHorizontal;
 
         [Header("Vertical Forse")]
-        [HideLabel, MinMaxSlider(150, 200, true)]
+        [HideLabel, MinMaxSlider(20, 125, true)]
         [SerializeField] private Vector2 _forseVertical;
 
         private bool _isGround = false;

@@ -3,6 +3,7 @@ using MineArena.Managers;
 using UnityEngine;
 using MineArena.Commands;
 using Devotion.SDK.Helpers;
+using MineArena.Drop;
 
 namespace MineArena.Items
 {
@@ -18,9 +19,12 @@ namespace MineArena.Items
 
         private BillboardCanvas _canvas;
 
+        private Dropable _dropable;
+
         private void Awake()
         {
             _canvas = GetComponent<BillboardCanvas>();
+            _dropable = GetComponent<Dropable>();
         }
 
         private void OnTriggerEnter(Collider other)
@@ -65,8 +69,11 @@ namespace MineArena.Items
                 GameRoot.GetManager<InteractionManager>().UnregisterObject(this);
                 HideInteractionPrompt();
 
-                if(_destroyOnEnd)
+                if (_destroyOnEnd)
+                {
+                    _dropable.DropItems();
                     Destroy(gameObject);
+                }
             });
         }
     }

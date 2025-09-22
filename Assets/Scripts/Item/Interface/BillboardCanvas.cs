@@ -4,6 +4,9 @@ namespace MineArena.Items
 {
     public class BillboardCanvas : MonoBehaviour
     {
+        [SerializeField] private Vector3 _posOffset;
+        [SerializeField] private Vector3 _sizeOffset;
+
         private Camera _mainCamera;
         private GameObject _canvas;
 
@@ -12,6 +15,9 @@ namespace MineArena.Items
             _mainCamera = Camera.main;
             _canvas = Instantiate(Resources.Load<GameObject>("Prefabs/Camera/BillboardCanvas"), transform);
             _canvas.GetComponent<Canvas>().worldCamera = _mainCamera;
+
+            _canvas.transform.localPosition = _canvas.transform.localPosition + _posOffset;
+            _canvas.transform.localScale = _canvas.transform.localScale + _sizeOffset;
         }
 
         private void Update()

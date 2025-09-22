@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Devotion.SDK.Interfaces;
 using Devotion.SDK.Async;
+using VFXTools;
 
 [System.Serializable]
 public class WeatherPreset
@@ -38,7 +39,7 @@ namespace MineArena.Managers
 
         [Header("References")]
         [SerializeField] private Light directionalLight;
-        [SerializeField] private ParticleSystem rainParticles;
+        [SerializeField] private VFXController rainParticles;
 
         [Header("Presets")]
         [SerializeField] private List<WeatherPreset> presets = new List<WeatherPreset>();
@@ -163,13 +164,10 @@ namespace MineArena.Managers
 
             if (rainParticles != null)
             {
-                if (preset.enableRain && !rainParticles.isPlaying)
-                    rainParticles.Play();
-                else if (!preset.enableRain && rainParticles.isPlaying)
-                    rainParticles.Stop();
-
-                var emission = rainParticles.emission;
-                emission.rateOverTime = preset.rainIntensity * 1000f;
+                if (preset.enableRain)
+                    rainParticles.gameObject.SetActive(true);
+                else if (!preset.enableRain )
+                    rainParticles.gameObject.SetActive(false);
             }
         }
 
