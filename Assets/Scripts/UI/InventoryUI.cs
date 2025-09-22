@@ -1,5 +1,6 @@
 using MineArena.Managers;
 using System.Collections.Generic;
+using Devotion.SDK.Controllers;
 using UnityEngine;
 
 namespace MineArena.UI
@@ -11,20 +12,20 @@ namespace MineArena.UI
 
         private void OnEnable()
         {
-            InventoryManager.Instance.InventoryUpdated += UpdateUI;
+            GameRoot.GetManager<InventoryManager>().InventoryUpdated += UpdateUI;
             UpdateUI();
         }
 
         private void OnDisable()
         {
-            InventoryManager.Instance.InventoryUpdated -= UpdateUI;
+            GameRoot.GetManager<InventoryManager>().InventoryUpdated -= UpdateUI;
         }
 
         private void UpdateUI()
         {
             ClearCells();
 
-            var items = InventoryManager.Instance.Items;
+            var items = GameRoot.GetManager<InventoryManager>().Items;
 
             for (int i = 0; i < items.Count; i++)
             {

@@ -20,8 +20,6 @@ namespace MineArena.Windows
 
         private void Start()
         {
-            Debug.Log("Это ненужная хуйня");
-
             for (int i = 0; i < buttons.Count; i++)
             {
                 if (i < GameRoot.GameConfig.Levels.Count)
@@ -35,8 +33,6 @@ namespace MineArena.Windows
 
         private void ShowLevelDetails(int level)
         {
-            Debug.Log("Это нужная хуйня");
-
             if (currentSelectedLevel == level) return;
 
             currentSelectedLevel = level;

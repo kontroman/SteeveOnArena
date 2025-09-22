@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Devotion.SDK.Managers;
 using MineArena.Structs;
+using Devotion.SDK.UI;
 
 namespace Devotion.SDK.Controllers
 {
@@ -41,6 +42,9 @@ namespace Devotion.SDK.Controllers
                     LoadManager(manager, type);
                 }
             }
+
+            Debug.LogError("[TODO]: IPromise game initialization");
+            UIManager.ShowWindow<PlayingWindow>();
         }
 
         public static T GetManager<T>() where T : BaseManager

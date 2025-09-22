@@ -13,6 +13,7 @@ namespace MineArena.Levels
         [SerializeField] private List<StackableItemConfig> availableResources;
         [SerializeField] private List<StackableItemConfig> rewardResources;
         [SerializeField] private GameObject levelPrefab;
+        [SerializeField] private Quaternion levelPrefabRotation;
         [SerializeField] private WeatherPreset weatherPreset;
 
         public Sprite LevelIcon {  get { return levelIcon; } }
@@ -21,6 +22,7 @@ namespace MineArena.Levels
         public List<StackableItemConfig> AvailableResources { get { return availableResources; } }
         public List<StackableItemConfig> RewardResources { get { return rewardResources; } }
         public GameObject LevelPrefab { get { return levelPrefab; } }
+        public Quaternion LevelPrefabRotation { get { return levelPrefabRotation; } }
         public WeatherPreset WeatherPreset { get { return weatherPreset; } }
     }
 }

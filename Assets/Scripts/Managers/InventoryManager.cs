@@ -2,14 +2,13 @@ using MineArena.Items;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Devotion.SDK.Managers;
 
 namespace MineArena.Managers
 {
-    public class InventoryManager
+    public class InventoryManager: BaseManager
     {
-        public static InventoryManager Instance { get; } = new InventoryManager();
-
-        private readonly List<Item> _items = new List<Item>();
+       private readonly List<Item> _items = new List<Item>();
 
         public event Action InventoryUpdated;
 
