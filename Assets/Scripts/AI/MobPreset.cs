@@ -12,6 +12,7 @@ namespace MineArena.AI
         [Header("Mian Settings")]
         public string Name;
         public Sprite Icon;
+        public MobTypes MobType;
 
         [Header("Combat Settings")]
         public float Damage;
@@ -27,7 +28,8 @@ namespace MineArena.AI
         [Header("Health Settings")]
         public float MaxHealth;
 
-        [System.Serializable]
+        //DOTO: Добавить систему дропа в конфиг 
+        /*[System.Serializable]
         public class DropEntry
         {
             public ItemConfig Item;
@@ -42,6 +44,6 @@ namespace MineArena.AI
         [SerializeField] private List<DropEntry> _dropTable = new List<DropEntry>();
 
         [Header("Drop only one or more items")]
-        [SerializeField] private bool _isOneDrop;
+        [SerializeField] private bool _isOneDrop;*/
     }
 }

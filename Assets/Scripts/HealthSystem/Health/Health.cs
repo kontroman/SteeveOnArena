@@ -10,7 +10,7 @@ namespace MineArena.Game.Health
 {
     public class Health : MonoBehaviour, IProgressBar, IDamageable
     {
-        [SerializeField] private float _currentHealth;
+        [SerializeField] protected float _currentHealth;
         
         [SerializeField] protected float _maxHealth;
 

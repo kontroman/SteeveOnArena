@@ -1,4 +1,5 @@
 using MineArena.Commands;
+using MineArena.ObjectPools;
 using MineArena.Structs;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace MineArena
     {
         [Header("Projectile Settings")]
         [SerializeField] private float speed = 10f;
-        [SerializeField] private float destroyDelay = 0.1f;
+        [SerializeField] private float destroyDelay = 10f;
 
         private Transform _target;
         private DamageData _damageData;
@@ -24,6 +25,8 @@ namespace MineArena
         {
             _damageData = damageData;
             _target = target;
+            transform.LookAt(_target);
+            Invoke(nameof(ReturnToPool), destroyDelay);
         }
 
         private void Update()
@@ -39,9 +42,15 @@ namespace MineArena
 
         private void OnHit()
         {
+            CancelInvoke(nameof(ReturnToPool));
             var damageCommand = ScriptableObject.CreateInstance<DamageCommand>();
             damageCommand.Execute(_damageData);
-            Destroy(gameObject);
+            ReturnToPool();
+        }
+
+        private void ReturnToPool()
+        {
+            ObjectPoolsManager.Instance.Release<Projectile>(gameObject);
         }
     }
 }

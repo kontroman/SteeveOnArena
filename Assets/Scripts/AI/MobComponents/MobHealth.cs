@@ -12,11 +12,13 @@ namespace MineArena.AI
         public void SetParameters(MobPreset preset)
         {
             _maxHealth = preset.MaxHealth;
+            _currentHealth = _maxHealth;
         }
 
         protected override void Die()
         {
-            ObjectPoolsManager.Instance.Release(gameObject);
+            ObjectPoolsManager.Instance.Release<Mob>(gameObject);
+            _currentHealth = _maxHealth;
         }
     }
 }

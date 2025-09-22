@@ -8,7 +8,6 @@ namespace MineArena.ObjectPools
         public void Start()
         {
             ObjectPoolsManager.Instance.InitPool<Projectile>(_poolPreset);
-            ObjectPoolsManager.Instance.Get<Arrow, Projectile>();
         }
     }
 }

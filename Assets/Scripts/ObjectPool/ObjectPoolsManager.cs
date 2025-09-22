@@ -15,7 +15,8 @@ namespace MineArena.ObjectPools
         {
             _preset = preset;
             var prefabList = _preset.Preset;
-            _pools = new Dictionary<Type, ObjectPool>();
+            
+            _pools ??= new Dictionary<Type, ObjectPool>();
 
             foreach (var prefab in prefabList)
             {
@@ -60,10 +61,10 @@ namespace MineArena.ObjectPools
             return null;
         }
 
-        public void Release(GameObject gameObject)
+        public void Release<T>(GameObject gameObject) where T : Component
         {
-            var mobComponent = gameObject.GetComponent<Mob>();
-            Type type = mobComponent.GetType();
+            var component = gameObject.GetComponent<T>();
+            Type type = component.GetType();
 
             if (_pools.TryGetValue(type, out ObjectPool pool))
             {

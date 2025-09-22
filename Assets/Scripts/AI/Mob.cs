@@ -10,6 +10,7 @@ namespace MineArena.AI
     public class Mob : MonoBehaviour
     {
         private Transform _playerTransform;
+        private MobTypes _type;
 
         [SerializeField] private MobCombat _mobCombat;
         [SerializeField] private MobMovement _mobMovement;
@@ -24,6 +25,7 @@ namespace MineArena.AI
 
         public void SetPresetParameters(MobPreset preset)
         {
+            _type = _preset.MobType;
             _mobCombat.SetParameters(preset);
             _mobMovement.SetParameters(preset);
             _mobHealth.SetParameters(preset);

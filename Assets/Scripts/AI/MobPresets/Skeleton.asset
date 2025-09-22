@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Skeleton
   Icon: {fileID: 0}
+  MobType: 1
   Damage: 10
   AttackDelay: 1
   IsRangeAttack: 1
@@ -22,5 +23,3 @@ MonoBehaviour:
   Speed: 5
   RotationSpeed: 5
   MaxHealth: 100
-  _dropTable: []
-  _isOneDrop: 0

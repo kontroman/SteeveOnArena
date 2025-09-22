@@ -34,9 +34,8 @@ namespace MineArena.Commands
         {
             if (projectilePrefab == null || firePoint == null) return;
 
-            //GameObject projectile = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
             GameObject projectile = ObjectPoolsManager.Instance.Get<Arrow, Projectile>();
-           // projectile.transform.position = firePoint.position;
+            projectile.transform.position = firePoint.position;
 
             // Передаём цель или направление в снаряд
             Projectile projectileScript = projectile.GetComponent<Projectile>();
