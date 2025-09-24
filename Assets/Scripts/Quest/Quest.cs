@@ -1,23 +1,24 @@
 ﻿using MineArena.Items;
 using MineArena.Messages;
 using MineArena.UI.FortuneWheel;
-using UnityEngine;
 
-namespace UI.Quests
+namespace Quest
 {
     public class Quest
     {
-        private readonly float _initialValue = 0;
-        private readonly float _maxValueProgress;
+        private readonly int _initialValue = 0;
+        private readonly int _maxValueProgress;
         private readonly ItemPrize _itemPrize;
 
-        private float _currentValueProgress;
+        private int _currentValueProgress;
         private bool _isCompleted;
         private ItemConfig _itemTarget;
+        private bool _canTakePrize;
 
-        public float CurrentValueProgress => _currentValueProgress;
-        public float MaxValueProgress => _maxValueProgress;
+        public int CurrentValueProgress => _currentValueProgress;
+        public int MaxValueProgress => _maxValueProgress;
         public bool IsCompleted => _isCompleted;
+        public bool CanTakePrize => _canTakePrize;
         public DataQuest Data { get; private set; }
 
         public Quest(DataQuest data)
@@ -28,17 +29,21 @@ namespace UI.Quests
             _itemPrize = data.ItemPrize;
             _itemPrize.Construct();
             _isCompleted = false;
+            _canTakePrize = false;
         }
 
-        public void ChangeCurrentValue(float value)
+        public void ChangeCurrentValue(int value)
         {
             _currentValueProgress += value;
 
-            if (Mathf.Approximately(_currentValueProgress, 1))
+            if (_currentValueProgress == 1)
                 QuestMessages.QuestBegun.Publish(this);
 
-            if (Mathf.Approximately(_currentValueProgress, _maxValueProgress))
+            if (_currentValueProgress == _maxValueProgress)
+            {
+                _canTakePrize = true;
                 QuestMessages.PrizeTake.Publish();
+            }
         }
 
         public void TransferPrize()

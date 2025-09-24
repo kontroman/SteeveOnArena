@@ -1,6 +1,6 @@
 using Devotion.SDK.Base;
 using Devotion.SDK.Controllers;
-using UI.Quests;
+using UI.Quest;
 
 namespace Devotion.SDK.UI
 {

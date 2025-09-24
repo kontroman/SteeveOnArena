@@ -1,14 +1,15 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using DG.Tweening;
+using MineArena.Basics;
 using MineArena.Game.UI;
 using MineArena.Messages;
 using MineArena.Messages.MessageService;
 using TMPro;
-using System.Threading.Tasks;
 using UnityEngine;
 
-namespace UI.Quests
+namespace UI.Quest
 {
     public class QuestPopup : MonoBehaviour,
         IProgressBar,
@@ -16,13 +17,11 @@ namespace UI.Quests
     {
         [SerializeField] private TextMeshProUGUI _nameQuest;
         [SerializeField] private ProgressPopupQuestBar _progressBarQuest;
-        [SerializeField] private float _duration = 0.5f;
-        [SerializeField] private float _timer = 0.7f;
-
-        private readonly Queue<Quest> _messageQueue = new();
+        
+        private readonly Queue<global::Quest.Quest> _messageQueue = new();
 
         private RectTransform _rectTransform;
-        private Quest _quest;
+        private global::Quest.Quest _quest;
         private bool _isAnimating;
 
         public event Action<float, float> OnValueChanged;
@@ -55,7 +54,7 @@ namespace UI.Quests
             _isAnimating = false;
         }
 
-        private void Construct(Quest message)
+        private void Construct(global::Quest.Quest message)
         {
             MaxValue = message.MaxValueProgress;
             CurrentValue = message.CurrentValueProgress;
@@ -66,10 +65,10 @@ namespace UI.Quests
         private async Task ShowAnimation()
         {
             var sequence = DOTween.Sequence()
-                .Append(transform.DOMove(_rectTransform.position + new Vector3(0, -100, 0), _duration)
+                .Append(transform.DOMove(_rectTransform.position + new Vector3(0, -100, 0), Constants.QuestPopup.Duration)
                     .SetEase(Ease.Linear))
-                .AppendInterval(_timer)
-                .Append(transform.DOMove(_rectTransform.position, _duration).SetEase(Ease.Linear));
+                .AppendInterval(Constants.QuestPopup.Timer)
+                .Append(transform.DOMove(_rectTransform.position, Constants.QuestPopup.Duration).SetEase(Ease.Linear));
 
             await sequence.AsyncWaitForCompletion();
         }

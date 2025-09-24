@@ -2,7 +2,7 @@ using MineArena.Items;
 using MineArena.UI.FortuneWheel;
 using UnityEngine;
 
-namespace UI.Quests
+namespace Quest
 {
     [System.Serializable]
     public class DataQuest

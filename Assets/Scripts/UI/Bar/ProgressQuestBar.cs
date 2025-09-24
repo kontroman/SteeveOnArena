@@ -1,5 +1,5 @@
 ﻿using TMPro;
-using UI.Quests;
+using UI.Quest;
 using UnityEngine;
 
 namespace MineArena.Game.UI

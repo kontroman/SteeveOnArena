@@ -1,11 +1,10 @@
 ﻿using System;
-using MineArena.Basics;
 using MineArena.Game.UI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI.Quests
+namespace UI.Quest
 {
     public class QuestVisualizer : MonoBehaviour, IProgressBar
     {
@@ -15,15 +14,18 @@ namespace UI.Quests
         [SerializeField] private TextMeshProUGUI _name;
         [SerializeField] private TextMeshProUGUI _task;
 
-        private Quest _quest;
+        private const string QuestMessageComplete = "Complete";
+
+        private global::Quest.Quest _quest;
+        private bool _questCompleted;
 
         public event Action<float, float> OnValueChanged;
 
         public float MaxValue { get; private set; }
         public float CurrentValue { get; private set; }
-        public Quest MyQuest => _quest;
+        public global::Quest.Quest MyQuest => _quest;
 
-        public void Construct(Quest quest)
+        public void Construct(global::Quest.Quest quest)
         {
             _quest = quest;
             MaxValue = quest.MaxValueProgress;
@@ -31,20 +33,22 @@ namespace UI.Quests
             _task.text = quest.Data.TextTask;
             _button.gameObject.SetActive(false);
             _completeText.gameObject.SetActive(false);
+            _questCompleted = false;
         }
 
         public void ChangeCurrentValue()
         {
             CurrentValue = _quest.CurrentValueProgress;
-            
+
             if (CurrentValue < MaxValue)
             {
                 OnValueChanged?.Invoke(CurrentValue, MaxValue);
             }
-            else
+            else if (_questCompleted == false)
             {
                 _progressBar.gameObject.SetActive(false);
                 _button.gameObject.SetActive(true);
+                _questCompleted = true;
             }
         }
 
@@ -53,7 +57,7 @@ namespace UI.Quests
             _button.gameObject.SetActive(false);
             _quest.TransferPrize();
             _completeText.gameObject.SetActive(true);
-            _completeText.text = Constants.Quest.QuestMessageComplete;
+            _completeText.text = QuestMessageComplete;
         }
     }
 }

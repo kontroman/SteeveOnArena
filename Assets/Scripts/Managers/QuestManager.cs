@@ -3,33 +3,29 @@ using Devotion.SDK.Controllers;
 using Devotion.SDK.Managers;
 using MineArena.Messages;
 using MineArena.Messages.MessageService;
-using UI.Quests;
+using Quest;
 
 namespace Managers
 {
     public class QuestManager : BaseManager,
-        IMessageSubscriber<QuestMessages.ItemTaken>,
-        IMessageSubscriber<QuestMessages.QuestCompleted>
+        IMessageSubscriber<QuestMessages.ItemTaken>
     {
-        private readonly List<Quest> _quests = new();
+        private List<Quest.Quest> _quests = new();
 
         private void Start() =>
             CreatQuests();
 
-        public List<Quest> GiveQuests() =>
+        public List<Quest.Quest> GetQuests() =>
             _quests;
 
         public void OnMessage(QuestMessages.ItemTaken message)
         {
             foreach (var quest in _quests)
             {
-                if (quest.Data.ItemTarget == message.Model.Item1) 
+                if (quest.Data.ItemTarget == message.Model.Item1 && !quest.CanTakePrize)
                     quest.ChangeCurrentValue(message.Model.Item2);
             }
         }
-
-        public void OnMessage(QuestMessages.QuestCompleted message) => 
-            _quests.Remove(message.Model);
 
         private void CreatQuests()
         {
@@ -41,9 +37,6 @@ namespace Managers
             MessageService.Subscribe(this);
 
         private void OnDisable() =>
-            MessageService.Unsubscribe(this);
-
-        private void OnDestroy() =>
             MessageService.Unsubscribe(this);
     }
 }

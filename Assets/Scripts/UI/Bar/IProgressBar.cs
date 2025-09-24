@@ -1,3 +1,5 @@
+using System;
+
 namespace MineArena.Game.UI
 {
     public interface IProgressBar

@@ -3,7 +3,6 @@ using MineArena.Items;
 using MineArena.Messages.MessageService;
 using MineArena.PlayerSystem;
 using MineArena.UI.FortuneWheel;
-using UI.Quests;
 using UnityEngine;
 
 namespace MineArena.Messages
@@ -47,11 +46,11 @@ namespace MineArena.Messages
         {
         }
 
-        public sealed class QuestCompleted : BaseMessage<QuestCompleted, Quest>
+        public sealed class QuestCompleted : BaseMessage<QuestCompleted, Quest.Quest>
         {
         }
 
-        public sealed class QuestBegun : BaseMessage<QuestBegun, Quest>
+        public sealed class QuestBegun : BaseMessage<QuestBegun, Quest.Quest>
         {
         }
     }

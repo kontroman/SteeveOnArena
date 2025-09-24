@@ -41,7 +41,7 @@ MonoBehaviour:
       _amountInStack: 10
     _itemTarget: {fileID: 11400000, guid: 06a34491da5160b46b608c14b1f430c3, type: 2}
     _nameQuest: "\u041D\u0430\u0447\u0430\u043B\u043E \u043D\u0430\u0447\u0430\u043B"
-    _textTask: Collect 5 wood
+    _textTask: Collect 2 wood
     _maxValueOnTask: 2
   - _itemPrize:
       _itemConfig: {fileID: 11400000, guid: 0ed2fa501a44c2243a2b52eb7877b148, type: 2}
@@ -49,8 +49,8 @@ MonoBehaviour:
       _amountInStack: 20
     _itemTarget: {fileID: 11400000, guid: 06a34491da5160b46b608c14b1f430c3, type: 2}
     _nameQuest: "\u0421\u0442\u0440\u043E\u0438\u0442\u0435\u043B\u044C"
-    _textTask: Collect 10 wood
-    _maxValueOnTask: 7
+    _textTask: Collect 5 wood
+    _maxValueOnTask: 5
   - _itemPrize:
       _itemConfig: {fileID: 11400000, guid: 0ed2fa501a44c2243a2b52eb7877b148, type: 2}
       distributionType: 0

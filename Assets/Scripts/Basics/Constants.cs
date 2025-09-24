@@ -13,15 +13,11 @@ namespace MineArena.Basics
             public static string ItemAmount = "ItemAmount";
             public static float AngelDeviation = 90f;
         }
-        
-        public static class Quest
+
+        public static class QuestPopup
         {
-            public static string DropAmount = "DropAmount";
-            public static string IconPrize = "IconPrize";
-            public static string TaskContent = "TaskContent";
-            public static string QuestItem = "Item";
-            public static string QuestName= "QuestName";
-            public static string QuestMessageComplete = "Complete";
+            public static float Duration = 0.5f;
+            public static float Timer = 0.7f;
         }
 
         public static class AudioNames

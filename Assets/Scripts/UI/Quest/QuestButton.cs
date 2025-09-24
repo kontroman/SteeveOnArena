@@ -3,7 +3,7 @@ using MineArena.Messages.MessageService;
 using TMPro;
 using UnityEngine;
 
-namespace UI.Quests
+namespace UI.Quest
 {
     public class QuestButton : MonoBehaviour,
         IMessageSubscriber<QuestMessages.PrizeTake>,
