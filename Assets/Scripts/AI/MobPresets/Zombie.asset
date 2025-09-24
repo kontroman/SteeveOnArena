@@ -14,13 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Zombie
   Icon: {fileID: 0}
+  MobType: 0
   Damage: 10
-  AttackDelay: 1
+  AttackDelay: 2
   IsRangeAttack: 0
   AttackRange: 1
   Projectile: {fileID: 0}
-  Speed: 5
+  Speed: 3
   RotationSpeed: 3
   MaxHealth: 100
-  _dropTable: []
-  _isOneDrop: 0
