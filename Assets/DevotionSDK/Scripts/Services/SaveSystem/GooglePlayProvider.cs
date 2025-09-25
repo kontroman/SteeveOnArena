@@ -4,12 +4,12 @@ namespace Devotion.SDK.Services.SaveSystem
 {
     public class GooglePlayProvider : ISaveProvider
     {
-        public IPromise<string> Load()
+        public IPromise<string> Load(string key)
         {
             throw new System.NotImplementedException();
         }
 
-        public IPromise Save(string data)
+        public IPromise Save(string key, string data)
         {
             throw new System.NotImplementedException();
         }

@@ -6,17 +6,16 @@ namespace Devotion.SDK.Services.SaveSystem
 {
     public class YandexSaveProvider : ISaveProvider
     {
-        public IPromise<string> Load()
+        public IPromise<string> Load(string key)
         {
-            var promise = new Promise<string>();
-            var loadedData = PlayerPrefs.GetString("SaveData");
-            promise.Resolve(loadedData);
-            return promise;
+            var storedData = PlayerPrefs.GetString(key, string.Empty);
+            return Promise<string>.ResolveAndReturn(storedData);
         }
 
-        public IPromise Save(string data)
+        public IPromise Save(string key, string data)
         {
-            PlayerPrefs.SetString("SaveData", data);
+            PlayerPrefs.SetString(key, data ?? string.Empty);
+            PlayerPrefs.Save();
             return Promise.ResolveAndReturn();
         }
     }

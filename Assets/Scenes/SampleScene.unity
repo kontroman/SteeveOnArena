@@ -36491,9 +36491,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35ff742b1e9704a4390aa681e3b20b1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxPoolSize: 50
-  DefaultPoolSize: 10
-  Preset: []
+  _poolPreset: {fileID: 11400000, guid: 583dca78beb09974692554f6f166354e, type: 2}
 --- !u!4 &2081905581
 Transform:
   m_ObjectHideFlags: 0

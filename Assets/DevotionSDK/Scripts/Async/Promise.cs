@@ -95,6 +95,27 @@ namespace Devotion.SDK.Async
             _rejected = null;
             _finally = null;
         }
+
+        public IPromise Then(IPromise promise)
+        {
+            var chained = new Promise();
+
+            Then(() =>
+            {
+                try
+                {
+                    promise.Then(() => chained.Resolve())
+                           .Catch(ex => chained.Reject(ex));
+                }
+                catch (Exception ex)
+                {
+                    chained.Reject(ex);
+                }
+            });
+
+            Catch(ex => chained.Reject(ex));
+            return chained;
+        }
     }
 
     public class Promise<T> : IPromise<T>
@@ -182,6 +203,27 @@ namespace Devotion.SDK.Async
             _resolved = null;
             _rejected = null;
             _finally = null;
+        }
+
+        public IPromise<T> Then(IPromise<T> promise)
+        {
+            var chained = new Promise<T>();
+
+            Then(value =>
+            {
+                try
+                {
+                    promise.Then(result => chained.Resolve(result))
+                           .Catch(ex => chained.Reject(ex));
+                }
+                catch (Exception ex)
+                {
+                    chained.Reject(ex);
+                }
+            });
+
+            Catch(ex => chained.Reject(ex));
+            return chained;
         }
     }
 }

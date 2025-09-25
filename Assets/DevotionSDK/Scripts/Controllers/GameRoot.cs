@@ -4,6 +4,8 @@ using Devotion.SDK.Managers;
 using MineArena.Structs;
 using Devotion.SDK.UI;
 using Devotion.SDK.Services.SaveSystem.Progress;
+using Devotion.SDK.Services.SaveSystem;
+using Devotion.SDK.Services.Localization;
 
 namespace Devotion.SDK.Controllers
 {
@@ -13,13 +15,14 @@ namespace Devotion.SDK.Controllers
 
         [SerializeField] private GameConfig gameConfig; 
         [SerializeField] private List<BaseManager> _startManagers = new List<BaseManager>();
+        [SerializeField] private List<BaseService> _services = new List<BaseService>();
         [SerializeField] private PlayerProgress playerProgress;
 
         private Dictionary<System.Type, BaseManager> _managers = new Dictionary<System.Type, BaseManager>();
 
         public static GameConfig GameConfig => Instance.gameConfig;
         public static UIManager UIManager => GetManager<UIManager>();
-        public static PlayerProgress PlayerProgress => PlayerProgress;
+        public PlayerProgress PlayerProgress => playerProgress;
 
         private void Awake()
         {
@@ -36,6 +39,11 @@ namespace Devotion.SDK.Controllers
 
         private void Start()
         {
+            SaveService.Instance.Initialize().
+                Then(LocalizationService.Instance.Initialize()).
+                Then(() => Debug.Log("Services Initialization Completed")
+                );
+
             foreach (var manager in _startManagers)
             {
                 if (manager != null)
@@ -46,7 +54,6 @@ namespace Devotion.SDK.Controllers
                 }
             }
 
-            Debug.LogError("[TODO]: IPromise game initialization");
             UIManager.ShowWindow<PlayingWindow>();
         }
 
