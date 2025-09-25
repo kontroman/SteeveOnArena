@@ -16,21 +16,46 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c48aafc7f49862e47bc06a04f78ce9b5, type: 2}
   - {fileID: 11400000, guid: 1975e39fe2066e84fa40b2667e22479a, type: 2}
   _prizes:
-  - _itemConfig: {fileID: 11400000, guid: 0ed2fa501a44c2243a2b52eb7877b148, type: 2}
+  - _itemConfig: {fileID: 0}
     distributionType: 0
     _amountInStack: 20
-  - _itemConfig: {fileID: 11400000, guid: 06a34491da5160b46b608c14b1f430c3, type: 2}
+  - _itemConfig: {fileID: 0}
     distributionType: 0
     _amountInStack: 500
-  - _itemConfig: {fileID: 11400000, guid: 06a34491da5160b46b608c14b1f430c3, type: 2}
+  - _itemConfig: {fileID: 0}
     distributionType: 0
     _amountInStack: 30
-  - _itemConfig: {fileID: 11400000, guid: 0ed2fa501a44c2243a2b52eb7877b148, type: 2}
+  - _itemConfig: {fileID: 0}
     distributionType: 0
     _amountInStack: -3
-  - _itemConfig: {fileID: 11400000, guid: 06a34491da5160b46b608c14b1f430c3, type: 2}
+  - _itemConfig: {fileID: 0}
     distributionType: 0
     _amountInStack: 100
-  - _itemConfig: {fileID: 11400000, guid: 0ed2fa501a44c2243a2b52eb7877b148, type: 2}
+  - _itemConfig: {fileID: 0}
     distributionType: 0
     _amountInStack: 50
+  _dataQuests:
+  - _itemPrize:
+      _itemConfig: {fileID: 11400000, guid: 06a34491da5160b46b608c14b1f430c3, type: 2}
+      distributionType: 0
+      _amountInStack: 10
+    _itemTarget: {fileID: 11400000, guid: 06a34491da5160b46b608c14b1f430c3, type: 2}
+    _nameQuest: "\u041D\u0430\u0447\u0430\u043B\u043E \u043D\u0430\u0447\u0430\u043B"
+    _textTask: Collect 2 wood
+    _maxValueOnTask: 2
+  - _itemPrize:
+      _itemConfig: {fileID: 11400000, guid: 0ed2fa501a44c2243a2b52eb7877b148, type: 2}
+      distributionType: 0
+      _amountInStack: 20
+    _itemTarget: {fileID: 11400000, guid: 06a34491da5160b46b608c14b1f430c3, type: 2}
+    _nameQuest: "\u0421\u0442\u0440\u043E\u0438\u0442\u0435\u043B\u044C"
+    _textTask: Collect 5 wood
+    _maxValueOnTask: 5
+  - _itemPrize:
+      _itemConfig: {fileID: 11400000, guid: 0ed2fa501a44c2243a2b52eb7877b148, type: 2}
+      distributionType: 0
+      _amountInStack: 10
+    _itemTarget: {fileID: 11400000, guid: 0ed2fa501a44c2243a2b52eb7877b148, type: 2}
+    _nameQuest: "\u0412 \u043F\u043E\u0438\u0441\u043A\u0430\u0445 \u0440\u0435\u0434\u043A\u043E\u0433\u043E"
+    _textTask: Collect 1 diamont
+    _maxValueOnTask: 1

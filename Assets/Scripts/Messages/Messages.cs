@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using MineArena.Items;
 using MineArena.Messages.MessageService;
 using MineArena.PlayerSystem;
 using MineArena.UI.FortuneWheel;
@@ -7,7 +9,7 @@ namespace MineArena.Messages
 {
     public static partial class Game
     {
-        public sealed class GameStarted: BaseMessage<GameStarted, string>
+        public sealed class GameStarted : BaseMessage<GameStarted, string>
         {
         }
 
@@ -30,6 +32,25 @@ namespace MineArena.Messages
         }
 
         public sealed class WorldChestOpened : BaseMessage<WorldChestOpened, ItemPrize>
+        {
+        }
+    }
+
+    public static partial class QuestMessages
+    {
+        public sealed class ItemTaken : BaseMessage<ItemTaken, (ItemConfig, int)>
+        {
+        }
+
+        public sealed class PrizeTake : BaseMessage<PrizeTake, int>
+        {
+        }
+
+        public sealed class QuestCompleted : BaseMessage<QuestCompleted, Quest.Quest>
+        {
+        }
+
+        public sealed class QuestBegun : BaseMessage<QuestBegun, Quest.Quest>
         {
         }
     }
