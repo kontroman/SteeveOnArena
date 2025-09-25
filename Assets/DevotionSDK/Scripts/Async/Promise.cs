@@ -72,6 +72,13 @@ namespace Devotion.SDK.Async
             return promise;
         }
 
+        public static IPromise RejectAndReturn(Exception ex)
+        {
+            var promise = new Promise();
+            promise.Reject(ex);
+            return promise;
+        }
+
         public void Reject(Exception ex)
         {
             if (_state != PromiseState.Pending) return;

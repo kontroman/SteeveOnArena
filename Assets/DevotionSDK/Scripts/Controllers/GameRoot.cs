@@ -3,6 +3,7 @@ using UnityEngine;
 using Devotion.SDK.Managers;
 using MineArena.Structs;
 using Devotion.SDK.UI;
+using Devotion.SDK.Services.SaveSystem.Progress;
 
 namespace Devotion.SDK.Controllers
 {
@@ -12,11 +13,13 @@ namespace Devotion.SDK.Controllers
 
         [SerializeField] private GameConfig gameConfig; 
         [SerializeField] private List<BaseManager> _startManagers = new List<BaseManager>();
+        [SerializeField] private PlayerProgress playerProgress;
 
         private Dictionary<System.Type, BaseManager> _managers = new Dictionary<System.Type, BaseManager>();
 
         public static GameConfig GameConfig => Instance.gameConfig;
         public static UIManager UIManager => GetManager<UIManager>();
+        public static PlayerProgress PlayerProgress => PlayerProgress;
 
         private void Awake()
         {
