@@ -17,7 +17,7 @@ namespace MineArena.Basics
         public static class QuestPopup
         {
             public static float Duration = 0.5f;
-            public static float Timer = 0.7f;
+            public static float Timer = 1f;
         }
 
         public static class AudioNames

@@ -1,8 +1,9 @@
 ﻿using MineArena.Items;
 using MineArena.Messages;
 using MineArena.UI.FortuneWheel;
+using Structs;
 
-namespace Quest
+namespace Quests
 {
     public class Quest
     {
@@ -42,7 +43,7 @@ namespace Quest
             if (_currentValueProgress == _maxValueProgress)
             {
                 _canTakePrize = true;
-                QuestMessages.PrizeTake.Publish();
+                QuestMessages.PrizeTake.Publish(this);
             }
         }
 

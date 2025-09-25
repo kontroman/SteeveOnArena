@@ -1,10 +1,11 @@
 ﻿using System;
 using MineArena.Game.UI;
+using Quests;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI.Quest
+namespace UI.UIQuest
 {
     public class QuestVisualizer : MonoBehaviour, IProgressBar
     {
@@ -16,16 +17,16 @@ namespace UI.Quest
 
         private const string QuestMessageComplete = "Complete";
 
-        private global::Quest.Quest _quest;
+        private Quest _quest;
         private bool _questCompleted;
 
         public event Action<float, float> OnValueChanged;
 
         public float MaxValue { get; private set; }
         public float CurrentValue { get; private set; }
-        public global::Quest.Quest MyQuest => _quest;
+        public Quest MyQuest => _quest;
 
-        public void Construct(global::Quest.Quest quest)
+        public void Construct(Quest quest)
         {
             _quest = quest;
             MaxValue = quest.MaxValueProgress;

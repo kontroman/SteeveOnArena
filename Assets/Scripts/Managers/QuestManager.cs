@@ -3,19 +3,20 @@ using Devotion.SDK.Controllers;
 using Devotion.SDK.Managers;
 using MineArena.Messages;
 using MineArena.Messages.MessageService;
-using Quest;
+using Quests;
+using Structs;
 
 namespace Managers
 {
     public class QuestManager : BaseManager,
         IMessageSubscriber<QuestMessages.ItemTaken>
     {
-        private List<Quest.Quest> _quests = new();
+        private List<Quest> _quests = new();
 
         private void Start() =>
             CreatQuests();
 
-        public List<Quest.Quest> GetQuests() =>
+        public List<Quest> GetQuests() =>
             _quests;
 
         public void OnMessage(QuestMessages.ItemTaken message)

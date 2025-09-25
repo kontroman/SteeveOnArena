@@ -1,4 +1,4 @@
-﻿using Quest;
+﻿using Structs;
 using UnityEngine;
 
 namespace UI.Sector

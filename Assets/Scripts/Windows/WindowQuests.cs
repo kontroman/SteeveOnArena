@@ -4,17 +4,18 @@ using Devotion.SDK.Controllers;
 using Managers;
 using MineArena.Messages;
 using MineArena.Messages.MessageService;
-using Quest;
+using Quests;
+using UI.UIQuest;
 using UnityEngine;
 
-namespace UI.Quest
+namespace Windows
 {
     public class WindowQuests : BaseWindow,
         IMessageSubscriber<QuestMessages.ItemTaken>
     {
         [SerializeField] private QuestsConstructor _questsConstructor;
 
-        private List<global::Quest.Quest> _activeQuests = new();
+        private List<Quest> _activeQuests = new();
         private List<QuestVisualizer> _questVisualizers = new();
 
         private void Awake()
@@ -27,7 +28,7 @@ namespace UI.Quest
             GameRoot.UIManager.CloseWindow<WindowQuests>();
 
         public void OnMessage(QuestMessages.ItemTaken message) =>
-            UpdateProgressValue(); // сделать другое сообщение "обновить данные"
+            UpdateProgressValue(); 
 
         private void UpdateProgressValue()
         {

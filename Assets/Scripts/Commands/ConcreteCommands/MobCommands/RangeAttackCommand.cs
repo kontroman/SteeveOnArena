@@ -9,7 +9,7 @@ using MineArena.ObjectPools;
 
 namespace MineArena.Commands
 {
-    //TODO: реализовать генерацию снарядов через ObjectPool
+    //TODO: пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ ObjectPool
     public class RangeAttackCommand : BaseCommand
     {
         private Transform firePoint;
@@ -37,7 +37,7 @@ namespace MineArena.Commands
             GameObject projectile = ObjectPoolsManager.Instance.Get<Arrow, Projectile>();
             projectile.transform.position = firePoint.position;
 
-            // Передаём цель или направление в снаряд
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
             Projectile projectileScript = projectile.GetComponent<Projectile>();
             if (projectileScript != null)
             {

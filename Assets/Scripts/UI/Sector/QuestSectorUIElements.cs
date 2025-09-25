@@ -1,5 +1,5 @@
 ﻿using MineArena.Basics;
-using Quest;
+using Structs;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

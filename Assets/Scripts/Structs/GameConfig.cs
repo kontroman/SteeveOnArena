@@ -1,7 +1,7 @@
 using MineArena.Levels;
 using System.Collections.Generic;
 using MineArena.UI.FortuneWheel;
-using Quest;
+using Structs;
 using UnityEngine;
 using UnityEngine.Serialization;
 

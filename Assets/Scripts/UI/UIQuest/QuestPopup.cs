@@ -6,22 +6,28 @@ using MineArena.Basics;
 using MineArena.Game.UI;
 using MineArena.Messages;
 using MineArena.Messages.MessageService;
+using Quests;
 using TMPro;
 using UnityEngine;
 
-namespace UI.Quest
+
+namespace UI.UIQuest
 {
     public class QuestPopup : MonoBehaviour,
         IProgressBar,
-        IMessageSubscriber<QuestMessages.QuestBegun>
+        IMessageSubscriber<QuestMessages.QuestBegun>,
+        IMessageSubscriber<QuestMessages.PrizeTake>
     {
         [SerializeField] private TextMeshProUGUI _nameQuest;
+        [SerializeField] private TextMeshProUGUI _messageTakePrize;
         [SerializeField] private ProgressPopupQuestBar _progressBarQuest;
-        
-        private readonly Queue<global::Quest.Quest> _messageQueue = new();
+
+        private const string TextMessageTakePrize = "The quest is complete. Collect your reward.";
+
+        private readonly Queue<Quest> _messageQueue = new();
 
         private RectTransform _rectTransform;
-        private global::Quest.Quest _quest;
+        private Quest _quest;
         private bool _isAnimating;
 
         public event Action<float, float> OnValueChanged;
@@ -32,9 +38,19 @@ namespace UI.Quest
         private void Awake() =>
             _rectTransform = GetComponent<RectTransform>();
 
+        public void OnMessage(QuestMessages.PrizeTake message)
+        {
+            Activation(message.Model);
+        }
+
         public void OnMessage(QuestMessages.QuestBegun message)
         {
-            _messageQueue.Enqueue(message.Model);
+            Activation(message.Model);
+        }
+
+        private void Activation(Quest quest)
+        {
+            _messageQueue.Enqueue(quest);
 
             if (!_isAnimating)
                 ProcessQueue();
@@ -46,26 +62,42 @@ namespace UI.Quest
 
             while (_messageQueue.Count != 0)
             {
-                var mes = _messageQueue.Dequeue();
-                Construct(mes);
+                Quest quest = _messageQueue.Dequeue();
+                
+                if (!quest.CanTakePrize)
+                    ConstructProgress(quest);
+                else
+                    ConstructCompletion(quest);
+
                 await ShowAnimation();
             }
 
             _isAnimating = false;
         }
 
-        private void Construct(global::Quest.Quest message)
+        private void ConstructCompletion(Quest quest)
         {
-            MaxValue = message.MaxValueProgress;
-            CurrentValue = message.CurrentValueProgress;
-            _nameQuest.text = message.Data.NameQuest;
+            _progressBarQuest.gameObject.SetActive(false);
+            _messageTakePrize.gameObject.SetActive(true);
+            _nameQuest.text = quest.Data.NameQuest;
+            _messageTakePrize.text = TextMessageTakePrize;
+        }
+
+        private void ConstructProgress(Quest quest)
+        {
+            _messageTakePrize.gameObject.SetActive(false);
+            _progressBarQuest.gameObject.SetActive(true);
+            MaxValue = quest.MaxValueProgress;
+            CurrentValue = quest.CurrentValueProgress;
+            _nameQuest.text = quest.Data.NameQuest;
             OnValueChanged?.Invoke(CurrentValue, MaxValue);
         }
 
         private async Task ShowAnimation()
         {
             var sequence = DOTween.Sequence()
-                .Append(transform.DOMove(_rectTransform.position + new Vector3(0, -100, 0), Constants.QuestPopup.Duration)
+                .Append(transform
+                    .DOMove(_rectTransform.position + new Vector3(0, -100, 0), Constants.QuestPopup.Duration)
                     .SetEase(Ease.Linear))
                 .AppendInterval(Constants.QuestPopup.Timer)
                 .Append(transform.DOMove(_rectTransform.position, Constants.QuestPopup.Duration).SetEase(Ease.Linear));
@@ -77,9 +109,6 @@ namespace UI.Quest
             MessageService.Subscribe(this);
 
         private void OnDisable() =>
-            MessageService.Unsubscribe(this);
-
-        private void OnDestroy() =>
             MessageService.Unsubscribe(this);
     }
 }

@@ -1,9 +1,10 @@
 using System.Collections.Generic;
-using UI.Quest;
+using Structs;
 using UI.Sector;
+using UI.UIQuest;
 using UnityEngine;
 
-namespace Quest
+namespace Quests
 {
     public class QuestsConstructor : MonoBehaviour
     {

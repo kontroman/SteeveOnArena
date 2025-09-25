@@ -1,6 +1,6 @@
 using MineArena.Game.UI;
 using TMPro;
-using UI.Quest;
+using UI.UIQuest;
 using UnityEngine;
 
 public class ProgressPopupQuestBar : AbstractBar<QuestPopup>
