@@ -22,7 +22,7 @@ namespace Devotion.SDK.Controllers
 
         public static GameConfig GameConfig => Instance.gameConfig;
         public static UIManager UIManager => GetManager<UIManager>();
-        public PlayerProgress PlayerProgress => playerProgress;
+        public static PlayerProgress PlayerProgress => Instance.playerProgress;
 
         private void Awake()
         {
@@ -50,7 +50,8 @@ namespace Devotion.SDK.Controllers
                 {
                     System.Type type = manager.GetType();
 
-                    LoadManager(manager, type);
+                    var loadedManager = LoadManager(manager, type);
+                    loadedManager.InitManager();
                 }
             }
 

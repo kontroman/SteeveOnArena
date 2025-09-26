@@ -3,12 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Devotion.SDK.Managers;
+using Devotion.SDK.Controllers;
+using UnityEngine;
 
 namespace MineArena.Managers
 {
     public class InventoryManager: BaseManager
     {
-       private readonly List<Item> _items = new List<Item>();
+        private readonly List<Item> _items = new List<Item>();
 
         public event Action InventoryUpdated;
 
@@ -16,7 +18,34 @@ namespace MineArena.Managers
 
         public IReadOnlyList<Item> Items => _items;
 
-        public void AddItem(Item item)
+        public override void InitManager()
+        {
+            _items.Clear();
+
+            var savedResources = GameRoot.PlayerProgress.InventoryProgress.SavedResources;
+
+            foreach (var kvp in savedResources)
+            {
+                var itemId = kvp.Key;
+                var amount = kvp.Value;
+
+                var config = GameRoot.GameConfig.ItemDatabase.GetStackableItemConfig(itemId);
+
+                if (config == null)
+                {
+                    UnityEngine.Debug.LogWarning($"[InventoryManager] Не найден конфиг для предмета с id: {itemId}");
+                    continue;
+                }
+
+                var newItem = new StackableItem(config, amount);
+
+                _items.Add(newItem);
+            }
+
+            InventoryUpdated?.Invoke();
+        }
+
+        public void AddItem(Item item, int amount = 1)
         {
             if (item is StackableItem stackableItem)
             {
@@ -26,9 +55,12 @@ namespace MineArena.Managers
 
                 if (existingItem != null)
                 {
-                    existingItem.AddToStack(1);
+                    existingItem.AddToStack(amount);
+
+                    GameRoot.PlayerProgress.InventoryProgress.AddResource(item.Name, amount);
 
                     InventoryUpdated?.Invoke();
+
                     UnityEngine.Debug.Log($"Item added to inventory: {item.Name}");
 
                     return;
@@ -36,6 +68,9 @@ namespace MineArena.Managers
             }
 
             _items.Add(item);
+
+            GameRoot.PlayerProgress.InventoryProgress.AddResource(item.Name, amount);
+
             UnityEngine.Debug.Log($"Item added to inventory: {item.Name}");
 
             InventoryUpdated?.Invoke();
