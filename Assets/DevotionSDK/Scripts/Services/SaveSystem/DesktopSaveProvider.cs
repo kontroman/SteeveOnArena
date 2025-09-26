@@ -59,6 +59,37 @@ namespace Devotion.SDK.Services.SaveSystem
             return promise;
         }
 
+        public static void DeleteSave(string key)
+        {
+            try
+            {
+                var path = GetSavePath(key);
+                if (File.Exists(path))
+                {
+                    File.Delete(path);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[SaveSystem] Failed to delete data for key {key}: {ex}");
+            }
+        }
+
+        public static void DeleteAllSaves()
+        {
+            try
+            {
+                if (Directory.Exists(RootFolder))
+                {
+                    Directory.Delete(RootFolder, true);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[SaveSystem] Failed to delete save directory: {ex}");
+            }
+        }
+
         private static string GetSavePath(string key)
         {
             var fileName = $"{key}{FileExtension}";

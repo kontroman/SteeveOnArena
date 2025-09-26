@@ -15925,6 +15925,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   config: {fileID: 11400000, guid: 6321ded4dba81854589f823ed490e731, type: 2}
+  signObject: {fileID: 1476286615}
 --- !u!65 &954355765
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -24349,6 +24350,11 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 3.0000494, z: 16.8}
   m_Center: {x: -3, y: -1.0000081, z: -1.1180835e-19}
+--- !u!1 &1476286615 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: a8bf357b2745aa3458801a9da463322b, type: 3}
+  m_PrefabInstance: {fileID: 435260166}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1476695405
 GameObject:
   m_ObjectHideFlags: 0

@@ -72,6 +72,22 @@ namespace Devotion.SDK.Services.SaveSystem
             return _platformProvider.Save(Constants.PlayerSaveKey, serialized);
         }
 
+        public static void ClearAllSavedData()
+        {
+            if (PlayerPrefs.HasKey(Constants.PlayerSaveKey))
+            {
+                PlayerPrefs.DeleteKey(Constants.PlayerSaveKey);
+            }
+
+#if DEVOTION_CRAZYGAMES || DEVOTION_GOOGLEPLAY
+            Debug.LogWarning("[SaveService] ClearAllSavedData is not implemented for the current save provider.");
+#elif DEVOTION_YANDEX
+            Debug.LogWarning("[SaveService] ClearAllSavedData is not implemented for the current save provider.");
+#else
+            DesktopSaveProvider.DeleteAllSaves();
+#endif
+        }
+
         public void OnMessage(Messages.Player.SavePlayerProgress message)
         {
             Save().Catch(ex =>
