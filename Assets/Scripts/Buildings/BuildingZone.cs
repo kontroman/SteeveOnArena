@@ -9,6 +9,7 @@ namespace MineArena.Buildings
     public class BuildingZone : MonoBehaviour
     {
         [SerializeField] private BuildingConfig config;
+        [SerializeField] private GameObject signObject;
 
         private void OnTriggerEnter(Collider other)
         {
@@ -26,6 +27,11 @@ namespace MineArena.Buildings
             {
                 GameRoot.UIManager.CloseWindow<BuildingWindow>();
             }
+        }
+
+        public void DestroySign()
+        {
+            Destroy(signObject);
         }
     }
 }

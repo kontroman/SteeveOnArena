@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _buildingName: "\u041A\u0443\u0437\u043D\u0438\u0446\u0430"
   _levels:
-  - _level: 0
+  - _level: 1
     _requiredResources:
     - _resource: {fileID: 11400000, guid: 10c265e30aa9be34685985507820bbb4, type: 2}
       _amount: 5
       _blockStyleIcon: 1
-    - _resource: {fileID: 11400000, guid: 06a34491da5160b46b608c14b1f430c3, type: 2}
+    - _resource: {fileID: 11400000, guid: 8d4377309a1b81045ba99f7bb848ff29, type: 2}
       _amount: 20
       _blockStyleIcon: 1
     - _resource: {fileID: 11400000, guid: 2341848530a95b34794be486a7bc64c3, type: 2}

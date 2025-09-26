@@ -21859,6 +21859,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 616686840001476275, guid: cbfc4609802435e469abad930689a627, type: 3}
+      propertyPath: _dropTable.Array.data[0].Item
+      value: 
+      objectReference: {fileID: 11400000, guid: 4d4666ba7dbbefa47b57dbff0b891f42, type: 2}
     - target: {fileID: 3463520448723750411, guid: cbfc4609802435e469abad930689a627, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3
@@ -36482,7 +36486,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2081905580
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38094,7 +38098,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 37c1c702e4124a04b835f01cd0e80b68, type: 2}
     - target: {fileID: 6526254815579831692, guid: 1e08410d1858a204e80b054b0e1ad7d3, type: 3}
       propertyPath: _startManagers.Array.size
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6526254815579831692, guid: 1e08410d1858a204e80b054b0e1ad7d3, type: 3}
       propertyPath: _startManagers.Array.data[3]
@@ -38104,6 +38108,10 @@ PrefabInstance:
       propertyPath: _startManagers.Array.data[4]
       value: 
       objectReference: {fileID: -6777431545192659923, guid: 68194cdf3134b3d40b77d62405c33035, type: 3}
+    - target: {fileID: 6526254815579831692, guid: 1e08410d1858a204e80b054b0e1ad7d3, type: 3}
+      propertyPath: _startManagers.Array.data[5]
+      value: 
+      objectReference: {fileID: 5849200307932309850, guid: 0d9aaadd57664c0438b8605f97ce22e6, type: 3}
     - target: {fileID: 6526254815579831693, guid: 1e08410d1858a204e80b054b0e1ad7d3, type: 3}
       propertyPath: m_RootOrder
       value: 4

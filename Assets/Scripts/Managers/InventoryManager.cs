@@ -33,7 +33,7 @@ namespace MineArena.Managers
 
                 if (config == null)
                 {
-                    UnityEngine.Debug.LogWarning($"[InventoryManager] Не найден конфиг для предмета с id: {itemId}");
+                    UnityEngine.Debug.LogWarning($"[InventoryManager] item config not found id: {itemId}");
                     continue;
                 }
 

@@ -62,6 +62,7 @@ namespace Devotion.SDK.Services.SaveSystem
         public IPromise Save()
         {
             var progress = EnsurePlayerProgress();
+
             if (progress == null)
             {
                 return Promise.RejectAndReturn(new Exception("GameRoot is not initialized."));
