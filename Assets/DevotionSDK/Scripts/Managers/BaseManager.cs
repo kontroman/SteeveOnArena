@@ -5,9 +5,9 @@ namespace Devotion.SDK.Managers
 {
     public class BaseManager : MonoBehaviour, IManager
     {
-        public void InitManager()
+        public virtual void InitManager()
         {
-            throw new System.NotImplementedException();
+            return;
         }
     }
 }

@@ -72,6 +72,13 @@ namespace Devotion.SDK.Async
             return promise;
         }
 
+        public static IPromise RejectAndReturn(Exception ex)
+        {
+            var promise = new Promise();
+            promise.Reject(ex);
+            return promise;
+        }
+
         public void Reject(Exception ex)
         {
             if (_state != PromiseState.Pending) return;
@@ -87,6 +94,27 @@ namespace Devotion.SDK.Async
             _resolved = null;
             _rejected = null;
             _finally = null;
+        }
+
+        public IPromise Then(IPromise promise)
+        {
+            var chained = new Promise();
+
+            Then(() =>
+            {
+                try
+                {
+                    promise.Then(() => chained.Resolve())
+                           .Catch(ex => chained.Reject(ex));
+                }
+                catch (Exception ex)
+                {
+                    chained.Reject(ex);
+                }
+            });
+
+            Catch(ex => chained.Reject(ex));
+            return chained;
         }
     }
 
@@ -175,6 +203,27 @@ namespace Devotion.SDK.Async
             _resolved = null;
             _rejected = null;
             _finally = null;
+        }
+
+        public IPromise<T> Then(IPromise<T> promise)
+        {
+            var chained = new Promise<T>();
+
+            Then(value =>
+            {
+                try
+                {
+                    promise.Then(result => chained.Resolve(result))
+                           .Catch(ex => chained.Reject(ex));
+                }
+                catch (Exception ex)
+                {
+                    chained.Reject(ex);
+                }
+            });
+
+            Catch(ex => chained.Reject(ex));
+            return chained;
         }
     }
 }

@@ -16,25 +16,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c48aafc7f49862e47bc06a04f78ce9b5, type: 2}
   - {fileID: 11400000, guid: 1975e39fe2066e84fa40b2667e22479a, type: 2}
   _prizes:
-  - _itemConfig: {fileID: 0}
-    distributionType: 0
-    _amountInStack: 20
-  - _itemConfig: {fileID: 0}
-    distributionType: 0
-    _amountInStack: 500
-  - _itemConfig: {fileID: 0}
-    distributionType: 0
-    _amountInStack: 30
-  - _itemConfig: {fileID: 0}
-    distributionType: 0
-    _amountInStack: -3
-  - _itemConfig: {fileID: 0}
-    distributionType: 0
-    _amountInStack: 100
-  - _itemConfig: {fileID: 0}
-    distributionType: 0
-    _amountInStack: 50
-  _dataQuests:
+
+    _dataQuests:
   - _itemPrize:
       _itemConfig: {fileID: 11400000, guid: 98e242358589138418dedc712af4722b, type: 2}
       distributionType: 0
@@ -59,3 +42,26 @@ MonoBehaviour:
     _nameQuest: "\u0412 \u043F\u043E\u0438\u0441\u043A\u0430\u0445 \u0440\u0435\u0434\u043A\u043E\u0433\u043E"
     _textTask: Collect 1 iron ore
     _maxValueOnTask: 1
+
+  - _itemConfig: {fileID: 11400000, guid: 8d4377309a1b81045ba99f7bb848ff29, type: 2}
+    distributionType: 0
+    _amountInStack: 20
+  - _itemConfig: {fileID: 11400000, guid: d0f7104ea4203814b9fefc4223ad1a63, type: 2}
+    distributionType: 0
+    _amountInStack: 500
+  - _itemConfig: {fileID: 11400000, guid: 82ac6cc2aac71aa468bb4bcb0fc1738c, type: 2}
+    distributionType: 0
+    _amountInStack: 30
+  - _itemConfig: {fileID: 11400000, guid: 501e28faeabb676418a62d09f9eb6cb9, type: 2}
+    distributionType: 0
+    _amountInStack: -3
+  - _itemConfig: {fileID: 11400000, guid: 2341848530a95b34794be486a7bc64c3, type: 2}
+    distributionType: 0
+    _amountInStack: 100
+  - _itemConfig: {fileID: 11400000, guid: 810f71e127406e14eba2fe7f69697606, type: 2}
+    distributionType: 0
+    _amountInStack: 50
+  localizationConfig: {fileID: 11400000, guid: 1ea6a81e3921a1740bd34a6c4435b870, type: 2}
+  itemDatabase: {fileID: 11400000, guid: 613dcb0f0f8ad3b4e900c16847fb622e, type: 2}
+  buildingsDatabase: {fileID: 11400000, guid: 2bef7509768102a459fb5ec5e4a7ac16, type: 2}
+

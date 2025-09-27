@@ -7,6 +7,7 @@ namespace Devotion.SDK.Interfaces
     public interface IPromise
     {
         IPromise Then(Action onResolved);
+        IPromise Then(IPromise promise);
         IPromise Then(Func<IPromise> onResolved);
         IPromise Catch(Action<Exception> onRejected);
         IPromise Finally(Action onFinally);
@@ -19,6 +20,7 @@ namespace Devotion.SDK.Interfaces
     public interface IPromise<T>
     {
         IPromise<T> Then(Action<T> onResolved);
+        IPromise<T> Then(IPromise<T> promise);
         IPromise Then(Func<T, IPromise> onResolved);
         IPromise<T> Catch(Action<Exception> onRejected);
         IPromise<T> Finally(Action onFinally);

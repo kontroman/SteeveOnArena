@@ -1,33 +1,33 @@
 using System.Collections.Generic;
 using System;
-using UnityEngine;
 using System.IO;
+using Devotion.SDK.Async;
 using Devotion.SDK.Confgs;
+using UnityEngine;
+using Devotion.SDK.Interfaces;
+using MineArena.Helpers;
+using Devotion.SDK.Controllers;
 
 namespace Devotion.SDK.Services.Localization
 {
     public class LocalizationService : BaseService, ILocalizationService
     {
+        private static LocalizationService _instance;
+        public static LocalizationService Instance => _instance.IsNullOrDead() ? _instance = new LocalizationService() : _instance;
+
         public SystemLanguage CurrentLanguage { get; private set; }
 
-        [SerializeField] private LocalizationConfig _config;
+        private LocalizationConfig _config;
 
         private Dictionary<string, string> _localizationDictionary = new Dictionary<string, string>();
 
-        private void Awake()
+        public override IPromise Initialize()
         {
             ServiceLocator.Register<ILocalizationService>(this);
-
-            DontDestroyOnLoad(gameObject);
-
-            Initialize();
-        }
-
-        public override void Initialize()
-        {
+            _config = GameRoot.GameConfig.LocalizationConfig;
             CurrentLanguage = Application.systemLanguage;
-
             LoadLocalizationData(CurrentLanguage);
+            return Promise.ResolveAndReturn();
         }
 
         private void LoadLocalizationData(SystemLanguage language)
