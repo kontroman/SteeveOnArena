@@ -1,3 +1,4 @@
+using MineArena.Buildings;
 using MineArena.Items;
 using System;
 using System.Collections.Generic;
@@ -8,9 +9,9 @@ using UnityEngine;
 
 namespace MineArena.Managers
 {
-    public class InventoryManager: BaseManager
+    public class InventoryManager : BaseManager
     {
-        private readonly List<Item> _items = new List<Item>();
+        private readonly List<Item> _items = new();
 
         public event Action InventoryUpdated;
 
@@ -33,7 +34,7 @@ namespace MineArena.Managers
 
                 if (config == null)
                 {
-                    UnityEngine.Debug.LogWarning($"[InventoryManager] item config not found id: {itemId}");
+                    Debug.LogError($"[InventoryManager] item config not found id: {itemId}");
                     continue;
                 }
 
@@ -61,7 +62,7 @@ namespace MineArena.Managers
 
                     InventoryUpdated?.Invoke();
 
-                    UnityEngine.Debug.Log($"Item added to inventory: {item.Name}");
+                    Debug.Log($"Item added to inventory: {item.Name}");
 
                     return;
                 }
@@ -71,7 +72,7 @@ namespace MineArena.Managers
 
             GameRoot.PlayerProgress.InventoryProgress.AddResource(item.Name, amount);
 
-            UnityEngine.Debug.Log($"Item added to inventory: {item.Name}");
+            Debug.Log($"Item added to inventory: {item.Name}");
 
             InventoryUpdated?.Invoke();
         }
@@ -80,15 +81,128 @@ namespace MineArena.Managers
         {
             if (_items.Remove(item))
             {
-                UnityEngine.Debug.Log($"Item removed from inventory: {item.Name}");
+                Debug.Log($"Item removed from inventory: {item.Name}");
                 InventoryUpdated?.Invoke();
             }
         }
 
-        //TODO: use BuildingConfig price to see if we have enough resources
-        public bool CanAfford()
+        public bool HasResources(IReadOnlyList<ResourceRequired> requiredResources)
         {
+            if (requiredResources == null || requiredResources.Count == 0)
+                return true;
+
+            foreach (var requirement in requiredResources)
+            {
+                if (requirement.Amount <= 0)
+                    continue;
+
+                var resourceConfig = requirement.Resource;
+                if (resourceConfig == null)
+                    continue;
+
+                var available = GetTotalForCategory(resourceConfig.ResourceCategory);
+                if (available < requirement.Amount)
+                    return false;
+            }
+
             return true;
+        }
+
+        public bool TryConsumeResources(IReadOnlyList<ResourceRequired> requiredResources)
+        {
+            if (requiredResources == null || requiredResources.Count == 0)
+                return true;
+
+            var pendingRemoval = new Dictionary<StackableItem, int>();
+
+            foreach (var requirement in requiredResources)
+            {
+                if (requirement.Amount <= 0)
+                    continue;
+
+                var resourceConfig = requirement.Resource;
+                if (resourceConfig == null)
+                    continue;
+
+                var category = resourceConfig.ResourceCategory;
+                if (string.IsNullOrWhiteSpace(category))
+                    return false;
+
+                var amountLeft = requirement.Amount;
+
+                foreach (var stackable in _items.OfType<StackableItem>())
+                {
+                    if (!CategoryEquals(stackable.ResourceCategory, category))
+                        continue;
+
+                    var alreadyQueued = pendingRemoval.TryGetValue(stackable, out var queuedAmount) ? queuedAmount : 0;
+                    var available = stackable.CurrentStack - alreadyQueued;
+
+                    if (available <= 0)
+                        continue;
+
+                    var toTake = Mathf.Min(available, amountLeft);
+
+                    if (toTake <= 0)
+                        continue;
+
+                    pendingRemoval[stackable] = alreadyQueued + toTake;
+                    amountLeft -= toTake;
+
+                    if (amountLeft <= 0)
+                        break;
+                }
+
+                if (amountLeft > 0)
+                    return false;
+            }
+
+            if (pendingRemoval.Count == 0)
+                return true;
+
+            foreach (var entry in pendingRemoval)
+            {
+                var stackable = entry.Key;
+                var amount = entry.Value;
+
+                if (amount <= 0)
+                    continue;
+
+                stackable.RemoveFromStack(amount);
+                GameRoot.PlayerProgress.InventoryProgress.RemoveResource(stackable.Name, amount);
+
+                if (stackable.CurrentStack <= 0)
+                    _items.Remove(stackable);
+            }
+
+            InventoryUpdated?.Invoke();
+            return true;
+        }
+
+        public bool CanAfford(IReadOnlyList<ResourceRequired> requiredResources)
+        {
+            return HasResources(requiredResources);
+        }
+
+        private int GetTotalForCategory(string category)
+        {
+            if (string.IsNullOrWhiteSpace(category))
+                return 0;
+
+            var total = 0;
+
+            foreach (var stackable in _items.OfType<StackableItem>())
+            {
+                if (CategoryEquals(stackable.ResourceCategory, category))
+                    total += stackable.CurrentStack;
+            }
+
+            return total;
+        }
+
+        private static bool CategoryEquals(string left, string right)
+        {
+            return string.Equals(left, right, StringComparison.OrdinalIgnoreCase);
         }
     }
 }

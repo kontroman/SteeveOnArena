@@ -16,6 +16,9 @@ namespace MineArena.Windows.Elements
 
         public void Setup(ResourceRequired config)
         {
+            _amountText.gameObject.SetActive(true);
+            _resourceIcon.SetAlpha(1);
+
             if (config.BlockStyleIcon)
             {
                 ResourceIcon icon = Instantiate(_iconPrefab, transform);
@@ -30,7 +33,7 @@ namespace MineArena.Windows.Elements
             _amountText.text = config.Amount.ToString();
         }
 
-        public void Setup(EquipmentItemConfig item)
+        public void Setup(ItemConfig item)
         {
             _resourceIcon.sprite = item.Icon;
             _amountText.gameObject.SetActive(false);
