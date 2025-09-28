@@ -33,10 +33,26 @@ namespace MineArena.Windows.Elements
             _amountText.text = config.Amount.ToString();
         }
 
-        public void Setup(ItemConfig item)
+        public void Setup(ItemConfig item, int amount = 0)
         {
+            if (item.BlockStyleIcon)
+            {
+                ResourceIcon icon = Instantiate(_iconPrefab, transform);
+                icon.SetResource((StackableItemConfig)item);
+                icon.transform.localPosition = Vector3.zero;
+                _resourceIcon.SetAlpha(0);
+                _amountText.text = amount.ToString();
+
+                if (amount == 0)
+                    _amountText.gameObject.SetActive(false);
+
+                return;
+            }
+
             _resourceIcon.sprite = item.Icon;
-            _amountText.gameObject.SetActive(false);
+                
+            if(amount == 0)
+                _amountText.gameObject.SetActive(false);
         }
     }
 }
