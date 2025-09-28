@@ -4,7 +4,8 @@ using MineArena.Basics;
 using MineArena.Game.UI;
 using MineArena.Interfaces;
 using MineArena.Structs;
-using Unity.IO.LowLevel.Unsafe;
+using Devotion.SDK.Controllers;
+using MineArena.Controllers;
 
 namespace MineArena.Game.Health
 {
@@ -43,6 +44,14 @@ namespace MineArena.Game.Health
 
         public void TakeDamage(DamageData damageData)
         {
+#if UNITY_EDITOR || DEVOTION_GODMODE
+            var config = GameRoot.GameConfig;
+            if (config != null && config.GodModeInvulnerability)
+            {
+                if (gameObject == Player.Instance.gameObject)
+                    return;
+            }
+#endif
             ChangeValue(-damageData.Damage);
         }
 

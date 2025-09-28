@@ -11,6 +11,7 @@ namespace MineArena.Items
         [SerializeField] private bool _usable;
         [SerializeField] private bool _stackable;
         [SerializeField] private ICommand _command;
+        [SerializeField] private bool _blockStyleIcon;
 
         public string Name => _name;
         public GameObject Prefab => _prefab;
@@ -18,5 +19,6 @@ namespace MineArena.Items
         public bool Usable => _usable;
         public bool Stackable => _stackable;
         public ICommand Command => _command;
+        public bool BlockStyleIcon => _blockStyleIcon;
     }
 }

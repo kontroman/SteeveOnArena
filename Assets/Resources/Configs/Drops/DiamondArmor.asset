@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Diamond Armor
   _prefab: {fileID: 0}
-  _icon: {fileID: 21300000, guid: 71776d7d8cacde048ba48aa48a1910ec, type: 3}
+  _icon: {fileID: 0}
   _usable: 0
   _stackable: 0
+  _blockStyleIcon: 0
   _price: 10
   _resist: 5
   _slot: 1

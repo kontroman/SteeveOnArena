@@ -17,25 +17,20 @@ MonoBehaviour:
   - _level: 1
     _requiredResources:
     - _resource: {fileID: 11400000, guid: 2341848530a95b34794be486a7bc64c3, type: 2}
-      _amount: 5
-      _blockStyleIcon: 1
+      _amount: 1
     - _resource: {fileID: 11400000, guid: 4d4666ba7dbbefa47b57dbff0b891f42, type: 2}
-      _amount: 10
-      _blockStyleIcon: 1
+      _amount: 1
     _unlocks:
     - {fileID: 11400000, guid: 48d1784c248929f4881cb36f19b829ac, type: 2}
     _modelPrefab: {fileID: 2902774175253448638, guid: 043044fcf795b354e9868156195dc8db, type: 3}
   - _level: 2
     _requiredResources:
     - _resource: {fileID: 11400000, guid: 2341848530a95b34794be486a7bc64c3, type: 2}
-      _amount: 10
-      _blockStyleIcon: 1
-    - _resource: {fileID: 11400000, guid: 98e242358589138418dedc712af4722b, type: 2}
-      _amount: 5
-      _blockStyleIcon: 1
+      _amount: 1
+    - _resource: {fileID: 11400000, guid: 4d4666ba7dbbefa47b57dbff0b891f42, type: 2}
+      _amount: 1
     - _resource: {fileID: 11400000, guid: 810f71e127406e14eba2fe7f69697606, type: 2}
-      _amount: 5
-      _blockStyleIcon: 1
+      _amount: 51
     _unlocks:
     - {fileID: 0}
     _modelPrefab: {fileID: 1128548665359036015, guid: 4fc7e586b50e2824f9db3bf7e08998c4, type: 3}

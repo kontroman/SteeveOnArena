@@ -1,5 +1,7 @@
+using Devotion.SDK.Controllers;
 using MineArena.Messages;
 using MineArena.Messages.MessageService;
+using MineArena.UI;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -26,6 +28,9 @@ namespace MineArena.Controllers
             {
                 GetComponentFromList<Animator>().SetBool("isAttacking", true);
             }
+
+            if(Input.GetKeyDown(KeyCode.I)) 
+                GameRoot.UIManager.OpenWindow<InventoryWindow>();
         }
 
         public T GetComponentFromList<T>() where T : Component

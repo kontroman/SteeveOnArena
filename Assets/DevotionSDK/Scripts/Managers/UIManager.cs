@@ -17,7 +17,7 @@ namespace Devotion.SDK.Managers
         public BaseWindow OpenWindow<T>() where T : BaseWindow
         {
             if (_mainCanvas == null)
-                _mainCanvas = GameObject.FindGameObjectWithTag(Constants.GameTags.MainCanvas).GetComponent<Canvas>(); ;
+                _mainCanvas = GameObject.FindGameObjectWithTag(Constants.GameTags.MainCanvas).GetComponent<Canvas>();
 
             DontDestroyOnLoad(_mainCanvas.gameObject);
 
@@ -41,12 +41,14 @@ namespace Devotion.SDK.Managers
 
         public void CloseWindow<T>() where T : BaseWindow
         {
-            BaseWindow window = GetWindowByType<T>();
-
-            if (window != null && _openedWindows.Contains(window))
+            for (int i = 0; i < _openedWindows.Count; i++)
             {
-                window.gameObject.SetActive(false);
-                _openedWindows.Remove(window);
+                if (_openedWindows[i] is T window)
+                {
+                    window.gameObject.SetActive(false);
+                    _openedWindows.RemoveAt(i);
+                    return;
+                }
             }
         }
 
@@ -54,7 +56,8 @@ namespace Devotion.SDK.Managers
         {
             foreach (BaseWindow window in _openedWindows)
             {
-                window.gameObject.SetActive(false);
+                if (window != null)
+                    window.gameObject.SetActive(false);
             }
 
             _openedWindows.Clear();
@@ -87,6 +90,7 @@ namespace Devotion.SDK.Managers
 
             if (windowComponent != null)
             {
+                windowComponent.gameObject.SetActive(false);
                 RegisterWindow(windowComponent);
             }
 
@@ -102,19 +106,21 @@ namespace Devotion.SDK.Managers
         {
             Type type = typeof(T);
 
-            if (_cachedWindows.ContainsKey(type))
+            if (_cachedWindows.TryGetValue(type, out BaseWindow cachedWindow))
             {
-                return (T)_cachedWindows[type];
+                return (T)cachedWindow;
             }
 
-            BaseWindow window = _windows.Find(w => w.GetType() == type);
-
-            var newWindow = Instantiate(window, _mainCanvas.transform);
-
-            if (window != null)
+            BaseWindow windowPrefab = _windows.Find(w => w.GetType() == type);
+            if (windowPrefab == null)
             {
-                _cachedWindows[type] = newWindow;
+                Debug.LogError($"Window of type '{type}' not found.");
+                return null;
             }
+
+            var newWindow = Instantiate(windowPrefab, _mainCanvas.transform);
+            newWindow.gameObject.SetActive(false);
+            _cachedWindows[type] = newWindow;
 
             return (T)newWindow;
         }
@@ -125,6 +131,7 @@ namespace Devotion.SDK.Managers
 
             window.transform.SetParent(_mainCanvas.transform, false);
             _windows.Add(window);
+            _cachedWindows[window.GetType()] = window;
         }
 
         public void UnregisterWindow(BaseWindow window)

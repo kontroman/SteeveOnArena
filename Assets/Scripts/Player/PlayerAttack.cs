@@ -98,8 +98,17 @@ namespace MineArena.PlayerSystem
                 {
                     if (hit.TryGetComponent<IDamageable>(out IDamageable damageable))
                     {
+                        var damageToDeal = _config.BaseDamage;
+
+#if UNITY_EDITOR || DEVOTION_GODMODE
+                        var config = GameRoot.GameConfig;
+                        if (config != null && config.GodModeOneHitKill)
+                        {
+                            damageToDeal = 9999999f;
+                        }
+#endif
                         _damageCommand.Execute(new DamageData(
-                            _config.BaseDamage,
+                            damageToDeal,
                             damageable
                         ));
                     }

@@ -8,6 +8,8 @@ namespace MineArena.Items
     {
         [SerializeField] private List<ItemConfig> allItems;
 
+        public IReadOnlyList<ItemConfig> AllItems => allItems;
+
         private Dictionary<string, ItemConfig> _itemsById;
 
         public void Initialize()
@@ -41,7 +43,7 @@ namespace MineArena.Items
 
         public StackableItemConfig GetStackableItemConfig(string id)
         {
-            return GetItemConfig(id) as StackableItemConfig;
+            return allItems.Find(x => x.Name == id) as StackableItemConfig;
         }
     }
 }

@@ -2,10 +2,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using Devotion.SDK.Managers;
 using MineArena.Structs;
+using MineArena.Windows;
 using Devotion.SDK.UI;
 using Devotion.SDK.Services.SaveSystem.Progress;
 using Devotion.SDK.Services.SaveSystem;
 using Devotion.SDK.Services.Localization;
+using System;
 
 namespace Devotion.SDK.Controllers
 {
@@ -39,6 +41,11 @@ namespace Devotion.SDK.Controllers
 
         private void Start()
         {
+            if (gameConfig != null)
+            {
+                gameConfig.GodModeChanged += HandleGodModeChanged;
+            }
+
             SaveService.Instance.Initialize().
                 Then(LocalizationService.Instance.Initialize()).
                 Then(() => Debug.Log("Services Initialization Completed")
@@ -56,6 +63,11 @@ namespace Devotion.SDK.Controllers
             }
 
             UIManager.ShowWindow<PlayingWindow>();
+
+            if (gameConfig != null)
+            {
+                HandleGodModeChanged(gameConfig.GodMode);
+            }
         }
 
         public static T GetManager<T>() where T : BaseManager
@@ -74,6 +86,26 @@ namespace Devotion.SDK.Controllers
             }
         }
 
+        private void OnDestroy()
+        {
+            if (Instance == this && gameConfig != null)
+            {
+                gameConfig.GodModeChanged -= HandleGodModeChanged;
+            }
+        }
+
+
+        private void HandleGodModeChanged(bool isEnabled)
+        {
+            if (isEnabled)
+            {
+                UIManager.ShowWindow<GodModeWindow>();
+            }
+            else
+            {
+                UIManager.CloseWindow<GodModeWindow>();
+            }
+        }
         private static BaseManager LoadManager(BaseManager manager, System.Type type)
         {
             if (manager != null)
@@ -84,7 +116,7 @@ namespace Devotion.SDK.Controllers
 
                 Debug.Log($"Created {type.Name} by request");
 
-                return manager;
+                return instantiatedManager;
             }
             else
             {

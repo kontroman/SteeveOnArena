@@ -77,10 +77,41 @@ namespace MineArena.Managers
             InventoryUpdated?.Invoke();
         }
 
-        public void RemoveItem(Item item)
+        public void RemoveItem(Item item, int amount = 1)
         {
+            if (item == null)
+                return;
+
+            if (item is StackableItem stackable)
+            {
+                if (amount <= 0)
+                    amount = 1;
+
+                var toRemove = Mathf.Min(amount, stackable.CurrentStack);
+
+                if (toRemove <= 0)
+                    return;
+
+                stackable.RemoveFromStack(toRemove);
+                GameRoot.PlayerProgress.InventoryProgress.RemoveResource(stackable.Name, toRemove);
+
+                if (stackable.CurrentStack <= 0)
+                {
+                    _items.Remove(stackable);
+                    Debug.Log($"Item removed from inventory: {item.Name}");
+                }
+                else
+                {
+                    Debug.Log($"Reduced stack for item: {item.Name} by {toRemove}");
+                }
+
+                InventoryUpdated?.Invoke();
+                return;
+            }
+
             if (_items.Remove(item))
             {
+                GameRoot.PlayerProgress.InventoryProgress.RemoveResource(item.Name, amount);
                 Debug.Log($"Item removed from inventory: {item.Name}");
                 InventoryUpdated?.Invoke();
             }

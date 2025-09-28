@@ -19,7 +19,7 @@ namespace MineArena.Windows.Elements
             _amountText.gameObject.SetActive(true);
             _resourceIcon.SetAlpha(1);
 
-            if (config.BlockStyleIcon)
+            if (config.Resource.BlockStyleIcon)
             {
                 ResourceIcon icon = Instantiate(_iconPrefab, transform);
                 icon.SetResource(config.Resource);
