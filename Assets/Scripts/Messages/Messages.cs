@@ -39,7 +39,7 @@ namespace MineArena.Messages
 
     public static partial class QuestMessages
     {
-        public sealed class ItemTaken : BaseMessage<ItemTaken, (ItemConfig, int)>
+        public sealed class QuestTargetTaken : BaseMessage<QuestTargetTaken, (IQuestTarget, int)>
         {
         }
 

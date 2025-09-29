@@ -1,9 +1,10 @@
 using MineArena.Commands;
+using Quests;
 using UnityEngine;
 
 namespace MineArena.Items
 {
-    public abstract class ItemConfig : ScriptableObject
+    public abstract class ItemConfig : ScriptableObject, IQuestTarget
     {
         [SerializeField] private string _name;
         [SerializeField] private GameObject _prefab;

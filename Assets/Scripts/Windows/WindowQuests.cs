@@ -11,7 +11,7 @@ using UnityEngine;
 namespace Windows
 {
     public class WindowQuests : BaseWindow,
-        IMessageSubscriber<QuestMessages.ItemTaken>
+        IMessageSubscriber<QuestMessages.QuestTargetTaken>
     {
         [SerializeField] private QuestsConstructor _questsConstructor;
 
@@ -27,7 +27,7 @@ namespace Windows
         public void Close() =>
             GameRoot.UIManager.CloseWindow<WindowQuests>();
 
-        public void OnMessage(QuestMessages.ItemTaken message) =>
+        public void OnMessage(QuestMessages.QuestTargetTaken message) =>
             UpdateProgressValue(); 
 
         private void UpdateProgressValue()

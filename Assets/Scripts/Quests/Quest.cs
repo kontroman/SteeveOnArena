@@ -1,5 +1,4 @@
-﻿using MineArena.Items;
-using MineArena.Messages;
+﻿using MineArena.Messages;
 using MineArena.UI.FortuneWheel;
 using Structs;
 
@@ -13,7 +12,7 @@ namespace Quests
 
         private int _currentValueProgress;
         private bool _isCompleted;
-        private ItemConfig _itemTarget;
+        private IQuestTarget _itemTarget;
         private bool _canTakePrize;
 
         public int CurrentValueProgress => _currentValueProgress;

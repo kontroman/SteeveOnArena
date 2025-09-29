@@ -9,7 +9,7 @@ using Structs;
 namespace Managers
 {
     public class QuestManager : BaseManager,
-        IMessageSubscriber<QuestMessages.ItemTaken>
+        IMessageSubscriber<QuestMessages.QuestTargetTaken>
     {
         private List<Quest> _quests = new();
 
@@ -19,7 +19,7 @@ namespace Managers
         public List<Quest> GetQuests() =>
             _quests;
 
-        public void OnMessage(QuestMessages.ItemTaken message)
+        public void OnMessage(QuestMessages.QuestTargetTaken message)
         {
             foreach (var quest in _quests)
             {

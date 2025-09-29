@@ -1,3 +1,4 @@
+using Quests;
 using UnityEngine;
 
 namespace MineArena.Items
