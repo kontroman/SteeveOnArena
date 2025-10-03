@@ -7,7 +7,9 @@ namespace MineArena.Items
     public class StackableItemConfig : ItemConfig
     {
         [SerializeField] private int _maxStackSize;
+        [SerializeField] private string _resourceCategory;
 
         public int MaxStackSize => _maxStackSize;
+        public string ResourceCategory => string.IsNullOrWhiteSpace(_resourceCategory) ? Name : _resourceCategory;
     }
 }

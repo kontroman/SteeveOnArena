@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23b4dfe5a2c9bec418f415cbb49447a1, type: 3}
   m_Name: WoodBirch
   m_EditorClassIdentifier: 
-  _name: Wood
+  _name: WoodBirch
   _prefab: {fileID: 1294500603521610, guid: 03043b7672e7495488f02f2bcbe311d5, type: 3}
-  _icon: {fileID: 21300000, guid: e048de7ce84658343830848494d14e41, type: 3}
+  _icon: {fileID: 21300000, guid: ce8140b7709ce284d8eb2920895e15ec, type: 3}
   _usable: 0
   _stackable: 1
+  _blockStyleIcon: 1
   _maxStackSize: 64
+  _resourceCategory: Wood

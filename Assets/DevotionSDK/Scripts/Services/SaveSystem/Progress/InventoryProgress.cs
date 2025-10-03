@@ -23,5 +23,21 @@ namespace Devotion.SDK.Services.SaveSystem.Progress
             Debug.LogError("[TODO]: remove autosave");
             Save();
         }
+
+        public void RemoveResource(string id, int amount = 1)
+        {
+            if (!savedResources.TryGetValue(id, out int currentAmount))
+                return;
+
+            int newAmount = Mathf.Max(0, currentAmount - amount);
+
+            if (newAmount <= 0)
+                savedResources.Remove(id);
+            else
+                savedResources[id] = newAmount;
+
+            Debug.LogError("[TODO]: remove autosave");
+            Save();
+        }
     }
 }

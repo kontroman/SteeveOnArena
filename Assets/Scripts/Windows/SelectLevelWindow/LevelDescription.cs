@@ -1,9 +1,11 @@
 using Devotion.SDK.Async;
 using Devotion.SDK.Controllers;
 using MineArena.Basics;
+using MineArena.Buildings;
 using MineArena.Controllers;
 using MineArena.Levels;
 using MineArena.Managers;
+using MineArena.Windows.Elements;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -37,14 +39,14 @@ namespace MineArena.Windows.SelectLevel
 
             foreach (var item in _config.AvailableResources)
             {
-                var resource = Instantiate(resourcePrefab, availableTransform).GetComponent<Image>();
-                resource.sprite = item.Icon;
+                var resource = Instantiate(resourcePrefab, availableTransform).GetComponent<BuildingPriceElement>();
+                resource.Setup(item);
             }
 
             foreach (var item in _config.RewardResources)
             {
-                var resource = Instantiate(resourcePrefab, rewardTransform).GetComponent<Image>();
-                resource.sprite = item.Icon;
+                var resource = Instantiate(resourcePrefab, rewardTransform).GetComponent<BuildingPriceElement>();
+                resource.Setup(item.Item, item.Amount);
             }
 
             startButton.onClick.AddListener(StartLevel);

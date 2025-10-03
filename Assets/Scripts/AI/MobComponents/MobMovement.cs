@@ -1,6 +1,5 @@
 using MineArena.Controllers;
 using MineArena.Interfaces;
-using Sirenix.Config;
 using UnityEngine;
 using UnityEngine.AI;
 
