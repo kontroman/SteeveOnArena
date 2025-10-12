@@ -2,13 +2,13 @@ using MineArena.Items;
 using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
-using Quests;
+using Achievements;
 using UnityEngine;
 
 namespace MineArena.AI
 {
     [CreateAssetMenu(fileName = "New MobPreset", menuName = "MobPreset")]
-    public class MobPreset : ScriptableObject, IQuestTarget
+    public class MobPreset : ScriptableObject, IAchievementTarget
     {
         [Header("Mian Settings")]
         public string Name;

@@ -6,6 +6,6 @@ namespace Devotion.SDK.UI
 {
     public class PlayingWindow : BaseWindow
     {
-        public void OnAchievmentButtonClick() => GameRoot.UIManager.ShowWindow<WindowQuests>();
+        public void OnAchievmentButtonClick() => GameRoot.UIManager.ShowWindow<WindowAchievements>();
     }
 }

@@ -1,9 +1,9 @@
 using MineArena.Game.UI;
 using TMPro;
-using UI.UIQuest;
+using UI.UIAchievement;
 using UnityEngine;
 
-public class ProgressPopupQuestBar : AbstractBar<QuestPopup>
+public class ProgressPopupQuestBar : AbstractBar<AchievementPopup>
 {
     [SerializeField] private TextMeshProUGUI _textBar;
 

@@ -26,7 +26,7 @@ namespace UI.Sector
             _amount = GetComponentFromPath<TMP_Text>(questSector, DropAmount);
         }
 
-        public void Configure(DataQuest data)
+        public void Configure(DataAchievement data)
         {
             SetIcon(data.ItemPrize?.Icon);
             SetTextContent(data.TextTask);

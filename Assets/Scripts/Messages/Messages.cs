@@ -1,9 +1,9 @@
 using System.Collections.Generic;
+using Achievements;
 using MineArena.Items;
 using MineArena.Messages.MessageService;
 using MineArena.PlayerSystem;
 using MineArena.UI.FortuneWheel;
-using Quests;
 using UnityEngine;
 
 namespace MineArena.Messages
@@ -37,21 +37,21 @@ namespace MineArena.Messages
         }
     }
 
-    public static partial class QuestMessages
+    public static partial class AchievementMessages
     {
-        public sealed class QuestTargetTaken : BaseMessage<QuestTargetTaken, (IQuestTarget, int)>
+        public sealed class AchievementTargetTaken : BaseMessage<AchievementTargetTaken, (IAchievementTarget, int)>
         {
         }
 
-        public sealed class PrizeTake : BaseMessage<PrizeTake, Quest>
+        public sealed class PrizeTake : BaseMessage<PrizeTake, Achievement>
         {
         }
 
-        public sealed class QuestCompleted : BaseMessage<QuestCompleted, Quest>
+        public sealed class AchievementCompleted : BaseMessage<AchievementCompleted, Achievement>
         {
         }
 
-        public sealed class QuestBegun : BaseMessage<QuestBegun, Quest>
+        public sealed class AchievementBegun : BaseMessage<AchievementBegun, Achievement>
         {
         }
     }

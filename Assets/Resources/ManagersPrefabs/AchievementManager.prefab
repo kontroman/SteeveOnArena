@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5031827440109186388}
   - component: {fileID: 255469746676732382}
   m_Layer: 0
-  m_Name: QuestManager
+  m_Name: AchievementManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,4 +44,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cb426920a92ab542b20b0527580178e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _window: {fileID: 3901580431527455001, guid: 9e4ff2d03d24cea45a179e63a1f72374, type: 3}

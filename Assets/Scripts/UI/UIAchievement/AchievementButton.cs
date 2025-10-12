@@ -3,11 +3,11 @@ using MineArena.Messages.MessageService;
 using TMPro;
 using UnityEngine;
 
-namespace UI.UIQuest
+namespace UI.UIAchievement
 {
-    public class QuestButton : MonoBehaviour,
-        IMessageSubscriber<QuestMessages.PrizeTake>,
-        IMessageSubscriber<QuestMessages.QuestCompleted>
+    public class AchievementButton : MonoBehaviour,
+        IMessageSubscriber<AchievementMessages.PrizeTake>,
+        IMessageSubscriber<AchievementMessages.AchievementCompleted>
     {
         [SerializeField] private TextMeshProUGUI _text;
 
@@ -20,10 +20,10 @@ namespace UI.UIQuest
         private void Start() => 
             SetValue(_startValue);
 
-        public void OnMessage(QuestMessages.PrizeTake message) =>
+        public void OnMessage(AchievementMessages.PrizeTake message) =>
             SetValue(_addValue);
 
-        public void OnMessage(QuestMessages.QuestCompleted message) =>
+        public void OnMessage(AchievementMessages.AchievementCompleted message) =>
             SetValue(_subtractValue);
 
         private void SetValue(int value)

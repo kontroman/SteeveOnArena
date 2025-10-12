@@ -5,6 +5,6 @@ namespace UI.Sector
 {
     public interface ISectorBuilder
     {
-        void Build(GameObject questSector, DataQuest data);
+        void Build(GameObject questSector, DataAchievement data);
     }
 }

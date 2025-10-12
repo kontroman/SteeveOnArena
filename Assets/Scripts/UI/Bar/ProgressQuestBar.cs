@@ -1,10 +1,10 @@
 ﻿using TMPro;
-using UI.UIQuest;
+using UI.UIAchievement;
 using UnityEngine;
 
 namespace MineArena.Game.UI
 {
-    public class ProgressQuestBar : AbstractBar<QuestVisualizer>
+    public class ProgressQuestBar : AbstractBar<AchievementVisualizer>
     {
         [SerializeField] private TextMeshProUGUI _textBar;
 

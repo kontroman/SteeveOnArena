@@ -1,22 +1,21 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Achievements;
 using DG.Tweening;
 using MineArena.Basics;
 using MineArena.Game.UI;
 using MineArena.Messages;
 using MineArena.Messages.MessageService;
-using Quests;
 using TMPro;
 using UnityEngine;
 
-
-namespace UI.UIQuest
+namespace UI.UIAchievement
 {
-    public class QuestPopup : MonoBehaviour,
+    public class AchievementPopup : MonoBehaviour,
         IProgressBar,
-        IMessageSubscriber<QuestMessages.QuestBegun>,
-        IMessageSubscriber<QuestMessages.PrizeTake>
+        IMessageSubscriber<AchievementMessages.AchievementBegun>,
+        IMessageSubscriber<AchievementMessages.PrizeTake>
     {
         [SerializeField] private TextMeshProUGUI _nameQuest;
         [SerializeField] private TextMeshProUGUI _messageTakePrize;
@@ -24,10 +23,10 @@ namespace UI.UIQuest
 
         private const string TextMessageTakePrize = "The quest is complete. Collect your reward.";
 
-        private readonly Queue<Quest> _messageQueue = new();
+        private readonly Queue<Achievement> _messageQueue = new();
 
         private RectTransform _rectTransform;
-        private Quest _quest;
+        private Achievement _achievement;
         private bool _isAnimating;
 
         public event Action<float, float> OnValueChanged;
@@ -38,19 +37,19 @@ namespace UI.UIQuest
         private void Awake() =>
             _rectTransform = GetComponent<RectTransform>();
 
-        public void OnMessage(QuestMessages.PrizeTake message)
+        public void OnMessage(AchievementMessages.PrizeTake message)
         {
             Activation(message.Model);
         }
 
-        public void OnMessage(QuestMessages.QuestBegun message)
+        public void OnMessage(AchievementMessages.AchievementBegun message)
         {
             Activation(message.Model);
         }
 
-        private void Activation(Quest quest)
+        private void Activation(Achievement achievement)
         {
-            _messageQueue.Enqueue(quest);
+            _messageQueue.Enqueue(achievement);
 
             if (!_isAnimating)
                 ProcessQueue();
@@ -62,12 +61,12 @@ namespace UI.UIQuest
 
             while (_messageQueue.Count != 0)
             {
-                Quest quest = _messageQueue.Dequeue();
+                Achievement achievement = _messageQueue.Dequeue();
                 
-                if (!quest.CanTakePrize)
-                    ConstructProgress(quest);
+                if (!achievement.CanTakePrize)
+                    ConstructProgress(achievement);
                 else
-                    ConstructCompletion(quest);
+                    ConstructCompletion(achievement);
 
                 await ShowAnimation();
             }
@@ -75,21 +74,21 @@ namespace UI.UIQuest
             _isAnimating = false;
         }
 
-        private void ConstructCompletion(Quest quest)
+        private void ConstructCompletion(Achievement achievement)
         {
             _progressBarQuest.gameObject.SetActive(false);
             _messageTakePrize.gameObject.SetActive(true);
-            _nameQuest.text = quest.Data.NameQuest;
+            _nameQuest.text = achievement.Data.NameQuest;
             _messageTakePrize.text = TextMessageTakePrize;
         }
 
-        private void ConstructProgress(Quest quest)
+        private void ConstructProgress(Achievement achievement)
         {
             _messageTakePrize.gameObject.SetActive(false);
             _progressBarQuest.gameObject.SetActive(true);
-            MaxValue = quest.MaxValueProgress;
-            CurrentValue = quest.CurrentValueProgress;
-            _nameQuest.text = quest.Data.NameQuest;
+            MaxValue = achievement.MaxValueProgress;
+            CurrentValue = achievement.CurrentValueProgress;
+            _nameQuest.text = achievement.Data.NameQuest;
             OnValueChanged?.Invoke(CurrentValue, MaxValue);
         }
 

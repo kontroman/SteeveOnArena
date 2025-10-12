@@ -24,7 +24,7 @@ namespace MineArena.Items
 
         public void Interact()
         {
-            Messages.QuestMessages.QuestTargetTaken.Publish((_item, 1)); // test
+            Messages.AchievementMessages.AchievementTargetTaken.Publish((_item, 1)); // test
 
             if (_item.Usable)
             {

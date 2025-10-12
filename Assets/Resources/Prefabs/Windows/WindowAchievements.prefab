@@ -584,7 +584,7 @@ GameObject:
   - component: {fileID: 3901580431527455001}
   - component: {fileID: 8621294384797707253}
   m_Layer: 5
-  m_Name: WindowQuests
+  m_Name: WindowAchievements
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -632,7 +632,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 548111af4cfe4df9ae657168ffe2099e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _questsConstructor: {fileID: 8621294384797707253}
+  _achievementsConstructor: {fileID: 8621294384797707253}
 --- !u!114 &8621294384797707253
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -2,9 +2,9 @@
 using MineArena.UI.FortuneWheel;
 using Structs;
 
-namespace Quests
+namespace Achievements
 {
-    public class Quest
+    public class Achievement
     {
         private readonly int _initialValue = 0;
         private readonly int _maxValueProgress;
@@ -12,18 +12,21 @@ namespace Quests
 
         private int _currentValueProgress;
         private bool _isCompleted;
-        private IQuestTarget _itemTarget;
+        private IAchievementTarget _itemTarget;
         private bool _canTakePrize;
+        private readonly int _id;
 
+        public int ID => _id;
         public int CurrentValueProgress => _currentValueProgress;
         public int MaxValueProgress => _maxValueProgress;
         public bool IsCompleted => _isCompleted;
         public bool CanTakePrize => _canTakePrize;
-        public DataQuest Data { get; private set; }
+        public DataAchievement Data { get; private set; }
 
-        public Quest(DataQuest data)
+        public Achievement(DataAchievement data, int id)
         {
             Data = data;
+            _id = id;
             _currentValueProgress = _initialValue;
             _maxValueProgress = data.MaxValueOnTask;
             _itemPrize = data.ItemPrize;
@@ -37,19 +40,19 @@ namespace Quests
             _currentValueProgress += value;
 
             if (_currentValueProgress == 1)
-                QuestMessages.QuestBegun.Publish(this);
+                AchievementMessages.AchievementBegun.Publish(this);
 
             if (_currentValueProgress == _maxValueProgress)
             {
                 _canTakePrize = true;
-                QuestMessages.PrizeTake.Publish(this);
+                AchievementMessages.PrizeTake.Publish(this);
             }
         }
 
         public void TransferPrize()
         {
             _isCompleted = true;
-            QuestMessages.QuestCompleted.Publish(this);
+            AchievementMessages.AchievementCompleted.Publish(this);
             _itemPrize.GiveTo();
         }
     }

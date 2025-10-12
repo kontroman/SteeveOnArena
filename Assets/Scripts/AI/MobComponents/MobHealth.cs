@@ -24,7 +24,7 @@ namespace MineArena.AI
             ObjectPoolsManager.Instance.Release<Mob>(gameObject);
             _currentHealth = _maxHealth;
             
-            QuestMessages.QuestTargetTaken.Publish((_preset,1)); // test quest
+            AchievementMessages.AchievementTargetTaken.Publish((_preset,1)); // test quest
         }
     }
 }

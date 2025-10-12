@@ -5,7 +5,7 @@ namespace UI.Sector
 {
     public class SectorBuilder : ISectorBuilder 
     {
-        public void Build(GameObject questSector, DataQuest data)
+        public void Build(GameObject questSector, DataAchievement data)
         {
             var uiElements = new QuestSectorUIElements(questSector);
             uiElements.Configure(data);

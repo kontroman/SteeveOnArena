@@ -1,11 +1,11 @@
+using Achievements;
 using MineArena.UI.FortuneWheel;
-using Quests;
 using UnityEngine;
 
 namespace Structs
 {
     [System.Serializable]
-    public class DataQuest
+    public class DataAchievement
     {
         [SerializeField] private ItemPrize _itemPrize;
         [SerializeField] private ScriptableObject  _itemTarget;
@@ -14,7 +14,7 @@ namespace Structs
         [SerializeField] private int _maxValueOnTask;
 
         public ItemPrize ItemPrize => _itemPrize;
-        public IQuestTarget ItemTarget => _itemTarget as IQuestTarget;
+        public IAchievementTarget ItemTarget => _itemTarget as IAchievementTarget;
         public int Amount => _itemPrize.Amount;
         public string NameQuest => _nameQuest;
         public string TextTask => _textTask;
