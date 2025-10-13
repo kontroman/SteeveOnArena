@@ -1,54 +1,46 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Achievements;
-using UnityEngine;
 
 namespace Devotion.SDK.Services.SaveSystem.Progress
 {
     [Serializable]
     public class AchievementProgress : BaseProgress
     {
-        public List<Achievement> AchievementsDataSave= new();
-
-        public AchievementProgress () { }
-        
-        // public List<Achievement> GetAchievements() =>
-        //     AchievementsDataSave;
+        public List<AchievementSaveData> AchievementsDataSave = new();
 
         public void AddAchievement(Achievement achievement)
         {
-            
-            AchievementsDataSave.Add(achievement);
-            Debug.LogError(AchievementsDataSave.Count); 
+            AchievementsDataSave.Add(new AchievementSaveData(achievement.ID, achievement.CurrentValueProgress,
+                achievement.IsCompleted, achievement.CanTakePrize));
         }
 
-        public void SaveProgressQuests(Achievement achievementSave)
+        public void SaveProgress(Achievement achievement)
         {
-            for (var i = 0; i < AchievementsDataSave.Count; i++)
+            foreach (var dataSave in AchievementsDataSave.Where(dataSave => dataSave.AchievementId == achievement.ID))
             {
-                if (AchievementsDataSave[i].ID == achievementSave.ID)
-                {
-                    AchievementsDataSave.Add(achievementSave);
-                    AchievementsDataSave.Remove(AchievementsDataSave[i]);
-                }
+                dataSave.CurrentValue = achievement.CurrentValueProgress;
+                dataSave.CanTakePrize = achievement.CanTakePrize;
+                dataSave.IsCompleted = achievement.IsCompleted;
             }
         }
     }
+}
 
-    // [Serializable]
-    // public class QuestSaveData
-    // {
-    //     public string questId;
-    //     public int currentValue;
-    //     public bool isCompleted;
-    //     public bool canTakePrize;
-    //
-    //     public QuestSaveData(string id, int value, bool completed, bool canTakePrize)
-    //     {
-    //         questId = id;
-    //         currentValue = value;
-    //         isCompleted = completed;
-    //         this.canTakePrize = canTakePrize;
-    //     }
-    // }
+[Serializable]
+public class AchievementSaveData
+{
+    public int AchievementId;
+    public int CurrentValue;
+    public bool IsCompleted;
+    public bool CanTakePrize;
+
+    public AchievementSaveData(int id, int value, bool completed, bool canTakePrize)
+    {
+        AchievementId = id;
+        CurrentValue = value;
+        IsCompleted = completed;
+        CanTakePrize = canTakePrize;
+    }
 }

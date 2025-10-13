@@ -1,42 +1,58 @@
 using System.Collections.Generic;
+using System.Linq;
 using Achievements;
 using Devotion.SDK.Controllers;
 using Devotion.SDK.Managers;
 using MineArena.Messages;
 using MineArena.Messages.MessageService;
-using UnityEngine;
 
 namespace Managers
 {
     public class AchievementManager : BaseManager,
-        IMessageSubscriber<AchievementMessages.AchievementTargetTaken>
+        IMessageSubscriber<AchievementMessages.AchievementTargetTaken>,
+        IMessageSubscriber<AchievementMessages.AchievementCompleted>
     {
+        private List<Achievement> _achievements = new();
+
         private void Start() =>
             CreatQuests();
 
         public List<Achievement> GetQuests() =>
-            GameRoot.PlayerProgress.AchievementProgress.AchievementsDataSave;
+            _achievements;
 
         public void OnMessage(AchievementMessages.AchievementTargetTaken message)
         {
-            foreach (var achievement in GameRoot.PlayerProgress.AchievementProgress.AchievementsDataSave)
+            foreach (var achievement in _achievements)
             {
                 if (achievement.Data.ItemTarget == message.Model.Item1 && !achievement.CanTakePrize)
+                {
                     achievement.ChangeCurrentValue(message.Model.Item2);
+                    GameRoot.PlayerProgress.AchievementProgress.SaveProgress(achievement);
+                }
             }
         }
 
+        public void OnMessage(AchievementMessages.AchievementCompleted message) =>
+            GameRoot.PlayerProgress.AchievementProgress.SaveProgress(message.Model);
+
         private void CreatQuests()
         {
+            for (var i = 0; i < GameRoot.GameConfig.DataAchievements.Count; i++)
+                _achievements.Add(new Achievement(GameRoot.GameConfig.DataAchievements[i], i));
+
             if (GameRoot.PlayerProgress.AchievementProgress.AchievementsDataSave.Count == 0)
             {
-                for (var i = 0; i < GameRoot.GameConfig.DataAchievements.Count; i++)
-                    GameRoot.PlayerProgress.AchievementProgress.AddAchievement(
-                        new Achievement(GameRoot.GameConfig.DataAchievements[i], i));
+                foreach (Achievement achievement in _achievements)
+                    GameRoot.PlayerProgress.AchievementProgress.AddAchievement(achievement);
             }
             else
             {
-                Debug.LogError(GameRoot.PlayerProgress.AchievementProgress.AchievementsDataSave.Count);
+                foreach (AchievementSaveData data in GameRoot.PlayerProgress.AchievementProgress.AchievementsDataSave)
+                {
+                    foreach (var achievement in
+                             _achievements.Where(achievement => achievement.ID == data.AchievementId))
+                        achievement.LoadData(data);
+                }
             }
         }
 

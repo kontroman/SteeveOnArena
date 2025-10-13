@@ -1,3 +1,5 @@
+using System.Linq;
+using Devotion.SDK.Controllers;
 using MineArena.Messages;
 using MineArena.Messages.MessageService;
 using TMPro;
@@ -11,14 +13,18 @@ namespace UI.UIAchievement
     {
         [SerializeField] private TextMeshProUGUI _text;
 
-        private readonly int _startValue = 0;
         private readonly int _addValue = 1;
         private readonly int _subtractValue = -1;
-        
-        private int _valueQuestWithPrize;
 
-        private void Start() => 
+        private int _startValue;
+        private int _valueAchievementWithPrize;
+
+        private void Start()
+        {
+            _startValue = 0;
+            LoadData();
             SetValue(_startValue);
+        }
 
         public void OnMessage(AchievementMessages.PrizeTake message) =>
             SetValue(_addValue);
@@ -26,19 +32,23 @@ namespace UI.UIAchievement
         public void OnMessage(AchievementMessages.AchievementCompleted message) =>
             SetValue(_subtractValue);
 
+        private void LoadData()
+        {
+            foreach (var data in GameRoot.PlayerProgress.AchievementProgress.AchievementsDataSave.Where(data =>
+                         data.CanTakePrize && !data.IsCompleted))
+                _startValue++;
+        }
+
         private void SetValue(int value)
         {
-            _valueQuestWithPrize += value;
-            _text.text = _valueQuestWithPrize.ToString();
+            _valueAchievementWithPrize += value;
+            _text.text = _valueAchievementWithPrize.ToString();
         }
 
         private void OnEnable() =>
             MessageService.Subscribe(this);
 
         private void OnDisable() =>
-            MessageService.Unsubscribe(this);
-
-        private void OnDestroy() =>
             MessageService.Unsubscribe(this);
     }
 }

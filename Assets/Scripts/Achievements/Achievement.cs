@@ -55,5 +55,12 @@ namespace Achievements
             AchievementMessages.AchievementCompleted.Publish(this);
             _itemPrize.GiveTo();
         }
+
+        public void LoadData(AchievementSaveData data)
+        {
+            _currentValueProgress = data.CurrentValue;
+            _isCompleted = data.IsCompleted;
+            _canTakePrize = data.CanTakePrize;
+        }
     }
 }

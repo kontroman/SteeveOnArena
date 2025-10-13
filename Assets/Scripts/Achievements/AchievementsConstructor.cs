@@ -14,14 +14,14 @@ namespace Achievements
         private readonly List<AchievementVisualizer> _achievements = new();
         private ISectorBuilder _builder;
 
-        public List<AchievementVisualizer> CreateQuestVisualizers(List<Achievement> quests)
+        public List<AchievementVisualizer> CreateQuestVisualizers(List<Achievement> achievements)
         {
             _builder = new SectorBuilder();
 
-            foreach (var quest in quests)
+            foreach (var achievement in achievements)
             {
-                var questVisualizer = CreateQuestVisualizer(quest);
-                _achievements.Add(questVisualizer);
+                var achievementVisualizer = CreateQuestVisualizer(achievement);
+                _achievements.Add(achievementVisualizer);
             }
 
             return _achievements;

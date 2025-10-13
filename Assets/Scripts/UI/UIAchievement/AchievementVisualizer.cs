@@ -15,10 +15,11 @@ namespace UI.UIAchievement
         [SerializeField] private TextMeshProUGUI _name;
         [SerializeField] private TextMeshProUGUI _task;
 
-        private const string QuestMessageComplete = "Complete";
+        private const string AchievementMessageComplete = "Complete";
 
         private Achievement _achievement;
-        private bool _questCompleted;
+        private bool _achievementCompleted;
+        private bool _onClickButton;
 
         public event Action<float, float> OnValueChanged;
 
@@ -34,7 +35,9 @@ namespace UI.UIAchievement
             _task.text = achievement.Data.TextTask;
             _button.gameObject.SetActive(false);
             _completeText.gameObject.SetActive(false);
-            _questCompleted = false;
+            _achievementCompleted = achievement.IsCompleted;
+            Debug.Log($"{_achievement.ID} - {_achievementCompleted}");
+            _completeText.text = AchievementMessageComplete;
         }
 
         public void ChangeCurrentValue()
@@ -45,20 +48,49 @@ namespace UI.UIAchievement
             {
                 OnValueChanged?.Invoke(CurrentValue, MaxValue);
             }
-            else if (_questCompleted == false)
+
+            if (_achievement.CanTakePrize && !_achievement.IsCompleted)
             {
-                _progressBar.gameObject.SetActive(false);
-                _button.gameObject.SetActive(true);
-                _questCompleted = true;
+                ShowButtonGetPrize();
             }
+
+            if (_achievement.CanTakePrize && _achievement.IsCompleted)
+            {
+                ShowTextCompleted();
+            }
+
+            // else
+            //     switch (_onClickButton)
+            //     {
+            //         case false:
+            //             ShowButtonGetPrize();
+            //             break;
+            //         case true:
+            //             ShowTextCompleted();
+            //             break;
+            //     }
         }
 
         public void ShowMessageCompleted()
         {
             _button.gameObject.SetActive(false);
             _achievement.TransferPrize();
+            _onClickButton = true;
             _completeText.gameObject.SetActive(true);
-            _completeText.text = QuestMessageComplete;
+        }
+
+        private void ShowTextCompleted()
+        {
+            _button.gameObject.SetActive(false);
+            _progressBar.gameObject.SetActive(false);
+            _completeText.gameObject.SetActive(true);
+        }
+
+        private void ShowButtonGetPrize()
+        {
+            _progressBar.gameObject.SetActive(false);
+            _button.gameObject.SetActive(true);
+            _achievementCompleted = true;
         }
     }
 }
