@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1005910159395363167}
-  m_IndirectSpecularColor: {r: 0.44694304, g: 0.49633282, b: 0.5730514, a: 1}
+  m_IndirectSpecularColor: {r: 0.44955623, g: 0.49962687, b: 0.57567215, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3218,6 +3218,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8279297909661572096, guid: 48b585253b307c741b037b74a460311a, type: 3}
   m_PrefabInstance: {fileID: 310192923}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &310794845 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4096851887106896663, guid: 1e08410d1858a204e80b054b0e1ad7d3, type: 3}
+  m_PrefabInstance: {fileID: 6526254816110922684}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8189c7a9462d26342b342e74806cfad3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &312039374
 GameObject:
   m_ObjectHideFlags: 0
@@ -27370,11 +27381,15 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 37c1c702e4124a04b835f01cd0e80b68, type: 2}
     - target: {fileID: 6526254815579831692, guid: 1e08410d1858a204e80b054b0e1ad7d3, type: 3}
       propertyPath: _services.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6526254815579831692, guid: 1e08410d1858a204e80b054b0e1ad7d3, type: 3}
+      propertyPath: _services.Array.data[0]
+      value: 
+      objectReference: {fileID: 310794845}
+    - target: {fileID: 6526254815579831692, guid: 1e08410d1858a204e80b054b0e1ad7d3, type: 3}
       propertyPath: _startManagers.Array.size
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6526254815579831692, guid: 1e08410d1858a204e80b054b0e1ad7d3, type: 3}
       propertyPath: _startManagers.Array.data[3]
@@ -27388,6 +27403,10 @@ PrefabInstance:
       propertyPath: _startManagers.Array.data[5]
       value: 
       objectReference: {fileID: 5849200307932309850, guid: 0d9aaadd57664c0438b8605f97ce22e6, type: 3}
+    - target: {fileID: 6526254815579831692, guid: 1e08410d1858a204e80b054b0e1ad7d3, type: 3}
+      propertyPath: _startManagers.Array.data[6]
+      value: 
+      objectReference: {fileID: 255469746676732382, guid: 8d12035525ce690479c7c4f1601a0321, type: 3}
     - target: {fileID: 6526254815579831693, guid: 1e08410d1858a204e80b054b0e1ad7d3, type: 3}
       propertyPath: m_RootOrder
       value: 4

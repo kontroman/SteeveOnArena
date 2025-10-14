@@ -24,13 +24,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6526254815579831699}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2309563542886318964}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6526254815579831692
 MonoBehaviour:
@@ -44,10 +45,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fc0919d6040e484db927739e9ad6f61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameConfig: {fileID: 11400000, guid: 37c1c702e4124a04b835f01cd0e80b68, type: 2}
   _startManagers:
   - {fileID: 8922024884557970335, guid: c1e80ec59527adb4498cb1b4ae6cb9f0, type: 3}
   - {fileID: 1963652386209797928, guid: 40b8192cc38402b42b125c2cab020397, type: 3}
   - {fileID: 9089740889718316634, guid: e60832eaffb0a7848ab86d2136355650, type: 3}
+  _services: []
+  playerProgress:
+    _id: 
+    inventoryProgress:
+      savedResources:
+        keys: []
+        values: 
+    buildingsProgress:
+      savedBuilding:
+        keys: []
+        values: []
 --- !u!1 &9062756250836769262
 GameObject:
   m_ObjectHideFlags: 0
@@ -72,12 +85,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9062756250836769262}
+  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6526254815579831693}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4096851887106896663
 MonoBehaviour:
@@ -91,4 +105,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8189c7a9462d26342b342e74806cfad3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _config: {fileID: 11400000, guid: 1ea6a81e3921a1740bd34a6c4435b870, type: 2}

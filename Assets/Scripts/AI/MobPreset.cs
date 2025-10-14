@@ -2,12 +2,13 @@ using MineArena.Items;
 using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
+using Achievements;
 using UnityEngine;
 
 namespace MineArena.AI
 {
     [CreateAssetMenu(fileName = "New MobPreset", menuName = "MobPreset")]
-    public class MobPreset : ScriptableObject
+    public class MobPreset : ScriptableObject, IAchievementTarget
     {
         [Header("Mian Settings")]
         public string Name;
@@ -28,7 +29,7 @@ namespace MineArena.AI
         [Header("Health Settings")]
         public float MaxHealth;
 
-        //DOTO: Добавить систему дропа в конфиг 
+        //DOTO: пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ 
         /*[System.Serializable]
         public class DropEntry
         {

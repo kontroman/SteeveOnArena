@@ -24,7 +24,6 @@ namespace MineArena.UI.FortuneWheel
             {
                 ItemPrize itemPrize = items[i];
                 itemPrize.Construct();
-                //data.Amount = (int)Random.Range(_dropChance.x, _dropChance.y);
                 GameObject sectorUI = Instantiate(_sectorUIPrefab, wheelContainer);
                 RectTransform rectTransformSector = sectorUI.GetComponent<RectTransform>();
 

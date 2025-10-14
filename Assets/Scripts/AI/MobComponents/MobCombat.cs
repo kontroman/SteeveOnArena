@@ -88,9 +88,9 @@ namespace MineArena.AI
         private void FollowTheTarget()
         {
             Vector3 direction = _playerTransform.position - transform.position;
-            direction.y = 0; // Только горизонтальный поворот
+            direction.y = 0; // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
-            if (direction.sqrMagnitude > 0.01f) // Защита от ошибки при нулевом векторе
+            if (direction.sqrMagnitude > 0.01f) // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             {
                 Quaternion targetRotation = Quaternion.LookRotation(direction);
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, _rotationSpeed * Time.deltaTime);

@@ -14,6 +14,12 @@ namespace MineArena.Basics
             public static float AngelDeviation = 90f;
         }
 
+        public static class QuestPopup
+        {
+            public static float Duration = 0.5f;
+            public static float Timer = 1f;
+        }
+
         public static class AudioNames
         {
             public const string BackgroundMusic = "BackGround";

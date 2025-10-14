@@ -58,7 +58,7 @@ namespace MineArena.Windows.SelectLevel
 
             LoadingWindow loadingWindow = (LoadingWindow)GameRoot.UIManager.OpenWindow<LoadingWindow>();
 
-            //TODO: может цепочку вызовать делать в LevelController? 
+            //TODO: пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ LevelController? 
 
             loadingWindow.SetProgressValue(0.3f)
                 .Then(() => GameRoot.GetManager<UnitySceneLoader>().LoadSceneAsync(Constants.SceneNames.GameplayScene))

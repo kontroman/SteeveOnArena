@@ -1,9 +1,10 @@
+using Achievements;
 using MineArena.Commands;
 using UnityEngine;
 
 namespace MineArena.Items
 {
-    public abstract class ItemConfig : ScriptableObject
+    public abstract class ItemConfig : ScriptableObject, IAchievementTarget
     {
         [SerializeField] private string _name;
         [SerializeField] private GameObject _prefab;

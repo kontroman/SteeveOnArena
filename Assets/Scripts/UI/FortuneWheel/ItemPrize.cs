@@ -13,6 +13,7 @@ namespace MineArena.UI.FortuneWheel
 
         private Item _item;
 
+        public ItemConfig ItemConfig => _itemConfig;
         public string Name => _itemConfig != null ? _itemConfig.Name : "Empty";
         public Sprite Icon => _itemConfig != null ? _itemConfig.Icon : null;
         public int Amount => _amountInStack < 0 ? 1 : _amountInStack;
