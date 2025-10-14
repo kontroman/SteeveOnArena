@@ -1,4 +1,3 @@
-using System.Linq;
 using Devotion.SDK.Controllers;
 using MineArena.Messages;
 using MineArena.Messages.MessageService;
@@ -34,9 +33,11 @@ namespace UI.UIAchievement
 
         private void LoadData()
         {
-            foreach (var data in GameRoot.PlayerProgress.AchievementProgress.AchievementsDataSave.Where(data =>
-                         data.CanTakePrize && !data.IsCompleted))
-                _startValue++;
+            foreach (var (key,data) in GameRoot.PlayerProgress.AchievementProgress.Achievements)
+            {
+                if (data.CanTakePrize && !data.IsCompleted) 
+                    _startValue++;
+            }
         }
 
         private void SetValue(int value)

@@ -18,8 +18,6 @@ namespace UI.UIAchievement
         private const string AchievementMessageComplete = "Complete";
 
         private Achievement _achievement;
-        private bool _achievementCompleted;
-        private bool _onClickButton;
 
         public event Action<float, float> OnValueChanged;
 
@@ -35,8 +33,6 @@ namespace UI.UIAchievement
             _task.text = achievement.Data.TextTask;
             _button.gameObject.SetActive(false);
             _completeText.gameObject.SetActive(false);
-            _achievementCompleted = achievement.IsCompleted;
-            Debug.Log($"{_achievement.ID} - {_achievementCompleted}");
             _completeText.text = AchievementMessageComplete;
         }
 
@@ -45,37 +41,19 @@ namespace UI.UIAchievement
             CurrentValue = _achievement.CurrentValueProgress;
 
             if (CurrentValue < MaxValue)
-            {
                 OnValueChanged?.Invoke(CurrentValue, MaxValue);
-            }
 
             if (_achievement.CanTakePrize && !_achievement.IsCompleted)
-            {
                 ShowButtonGetPrize();
-            }
 
             if (_achievement.CanTakePrize && _achievement.IsCompleted)
-            {
                 ShowTextCompleted();
-            }
-
-            // else
-            //     switch (_onClickButton)
-            //     {
-            //         case false:
-            //             ShowButtonGetPrize();
-            //             break;
-            //         case true:
-            //             ShowTextCompleted();
-            //             break;
-            //     }
         }
 
         public void ShowMessageCompleted()
         {
             _button.gameObject.SetActive(false);
             _achievement.TransferPrize();
-            _onClickButton = true;
             _completeText.gameObject.SetActive(true);
         }
 
@@ -90,7 +68,6 @@ namespace UI.UIAchievement
         {
             _progressBar.gameObject.SetActive(false);
             _button.gameObject.SetActive(true);
-            _achievementCompleted = true;
         }
     }
 }
