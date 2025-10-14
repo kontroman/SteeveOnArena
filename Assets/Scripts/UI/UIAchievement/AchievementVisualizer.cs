@@ -18,6 +18,8 @@ namespace UI.UIAchievement
         private const string AchievementMessageComplete = "Complete";
 
         private Achievement _achievement;
+        private bool _achievementCompleted;
+        private bool _onClickButton;
 
         public event Action<float, float> OnValueChanged;
 
@@ -33,20 +35,21 @@ namespace UI.UIAchievement
             _task.text = achievement.Data.TextTask;
             _button.gameObject.SetActive(false);
             _completeText.gameObject.SetActive(false);
-            _completeText.text = AchievementMessageComplete;
+            _achievementCompleted = achievement.IsCompleted;
+           _completeText.text = AchievementMessageComplete;
         }
 
         public void ChangeCurrentValue()
         {
             CurrentValue = _achievement.CurrentValueProgress;
 
-            if (CurrentValue < MaxValue)
+            if (CurrentValue < MaxValue) 
                 OnValueChanged?.Invoke(CurrentValue, MaxValue);
 
-            if (_achievement.CanTakePrize && !_achievement.IsCompleted)
+            if (_achievement.CanTakePrize && !_achievement.IsCompleted) 
                 ShowButtonGetPrize();
 
-            if (_achievement.CanTakePrize && _achievement.IsCompleted)
+            if (_achievement.CanTakePrize && _achievement.IsCompleted) 
                 ShowTextCompleted();
         }
 
@@ -54,6 +57,7 @@ namespace UI.UIAchievement
         {
             _button.gameObject.SetActive(false);
             _achievement.TransferPrize();
+            _onClickButton = true;
             _completeText.gameObject.SetActive(true);
         }
 
@@ -68,6 +72,7 @@ namespace UI.UIAchievement
         {
             _progressBar.gameObject.SetActive(false);
             _button.gameObject.SetActive(true);
+            _achievementCompleted = true;
         }
     }
 }

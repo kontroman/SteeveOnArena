@@ -38,10 +38,10 @@ namespace Managers
         {
             for (var i = 0; i < GameRoot.GameConfig.DataAchievements.Count; i++)
             {
-                var achievement = new Achievement(GameRoot.GameConfig.DataAchievements[i], i);
+                Achievement achievement = new Achievement(GameRoot.GameConfig.DataAchievements[i], i);
                 _achievements.Add(achievement);
 
-                if (GameRoot.PlayerProgress.AchievementProgress.Achievements.Count == 0)
+                if (GameRoot.PlayerProgress.AchievementProgress.Achievements.Count < GameRoot.GameConfig.DataAchievements.Count)
                 {
                     GameRoot.PlayerProgress.AchievementProgress.AddAchievement(achievement);
                 }

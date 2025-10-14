@@ -1,5 +1,7 @@
 using System;
 using Achievements;
+using UnityEditor;
+using UnityEngine;
 using static Devotion.SDK.Helpers.ContainersHelper;
 
 namespace Devotion.SDK.Services.SaveSystem.Progress
@@ -17,12 +19,12 @@ namespace Devotion.SDK.Services.SaveSystem.Progress
 
         public void SaveProgress(Achievement achievement)
         {
-            if (!Achievements.TryGetValue(achievement.ID, out AchievementSaveData dataSave)) 
-                return;
-            
-            dataSave.CurrentValue = achievement.CurrentValueProgress;
-            dataSave.CanTakePrize = achievement.CanTakePrize;
-            dataSave.IsCompleted = achievement.IsCompleted;
+            if (Achievements.ContainsKey(achievement.ID))
+            {
+                Achievements[achievement.ID].CurrentValue = achievement.CurrentValueProgress;
+                Achievements[achievement.ID].CanTakePrize = achievement.CanTakePrize;
+                Achievements[achievement.ID].IsCompleted = achievement.IsCompleted;
+            }
         }
     }
 }
