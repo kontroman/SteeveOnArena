@@ -7,16 +7,24 @@ namespace Devotion.SDK.Services.Localization
     public class LocalizationData
     {
         public List<LocalizationItem> _items = new List<LocalizationItem>();
+        public List<LocalizationItem> items = new List<LocalizationItem>();
 
         public Dictionary<string, string> ToDictionary()
         {
             Dictionary<string, string> dictionary = new Dictionary<string, string>();
+            var source = items != null && items.Count > 0 ? items : _items;
 
-            if (_items != null)
+            if (source != null)
             {
-                foreach (var item in _items)
+                foreach (var item in source)
                 {
-                    dictionary[item.Key] = item.Value;
+                    var key = item?.ResolveKey();
+                    if (string.IsNullOrEmpty(key))
+                    {
+                        continue;
+                    }
+
+                    dictionary[key] = item.ResolveValue() ?? string.Empty;
                 }
             }
 

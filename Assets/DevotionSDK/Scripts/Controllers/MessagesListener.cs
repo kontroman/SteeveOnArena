@@ -1,3 +1,4 @@
+using Devotion.SDK.Services.Localization;
 using MineArena.Messages;
 using MineArena.Messages.MessageService;
 using MineArena.Windows.InfoPopup;
@@ -18,6 +19,12 @@ namespace Devotion.SDK.Controllers
         private void OnDisable()
         {
             MessageService.Unsubscribe(this);
+        }
+
+        private IEnumerator Start()
+        {
+            yield return new WaitForSeconds(2);
+            Debug.LogError(LocalizationService.GetLocalizedText("Title"));
         }
 
         public void OnMessage(GameMessages.WorldChestOpened message)

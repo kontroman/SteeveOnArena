@@ -47,7 +47,7 @@ namespace Devotion.SDK.Controllers
             }
 
             SaveService.Instance.Initialize().
-                Then(LocalizationService.Instance.Initialize()).
+                Then(LocalizationService.Initialize(gameConfig.LocalizationConfig)).
                 Then(() => Debug.Log("Services Initialization Completed")
                 );
 
