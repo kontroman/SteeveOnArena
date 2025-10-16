@@ -7,5 +7,11 @@ namespace Devotion.SDK.Services.Localization
     {
         public string Key;
         public string Value;
+
+        public string key;
+        public string value;
+
+        public string ResolveKey() => !string.IsNullOrEmpty(Key) ? Key : key;
+        public string ResolveValue() => !string.IsNullOrEmpty(Value) ? Value : value;
     }
 }

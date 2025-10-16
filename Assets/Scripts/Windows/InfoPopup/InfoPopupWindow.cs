@@ -1,6 +1,5 @@
 using Devotion.SDK.Base;
 using Devotion.SDK.Controllers;
-using Devotion.SDK.Services;
 using Devotion.SDK.Services.Localization;
 using MineArena.Basics;
 using MineArena.UI.FortuneWheel;
@@ -21,9 +20,7 @@ namespace MineArena.Windows.InfoPopup
 
         public void Setup(ItemPrize prize)
         {
-            var localizationService = ServiceLocator.Resolve<ILocalizationService>();
-
-            _titleText.text = localizationService.GetLocalizedText(Constants.UIKeys.PrizeKey);
+            _titleText.text = LocalizationService.GetLocalizedText(Constants.UIKeys.PrizeKey);
 
             _iconImage.sprite = prize.Icon;
 

@@ -1,6 +1,6 @@
 using TMPro;
 using UnityEngine;
-using Devotion.SDK.Services;
+using Devotion.SDK.Services.Localization;
 using MineArena.Messages.MessageService;
 
 namespace MineArena.SDK.UI
@@ -12,12 +12,10 @@ namespace MineArena.SDK.UI
         [SerializeField] private string _localizationKey;
 
         private TextMeshProUGUI _textMeshPro;
-        private ILocalizationService _localizationService;
 
         private void Awake()
         {
             _textMeshPro = GetComponent<TextMeshProUGUI>();
-            _localizationService = ServiceLocator.Resolve<ILocalizationService>();
         }
 
         private void Start()
@@ -37,7 +35,7 @@ namespace MineArena.SDK.UI
 
         private void UpdateLocalizedText()
         {
-            _textMeshPro.text = _localizationService.GetLocalizedText(_localizationKey);
+            _textMeshPro.text = LocalizationService.GetLocalizedText(_localizationKey);
         }
 
         public void OnMessage(Messages.Game.LanguageChanged message)
