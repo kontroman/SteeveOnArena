@@ -1074,6 +1074,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sectorUIPrefab: {fileID: 7860662773585135321, guid: 59fb5790d4b87eb4fbeee3d2016f0aca, type: 3}
   _radius: 240
+  _dropChance: {x: 10, y: 50}
 --- !u!1 &8143369937044436188
 GameObject:
   m_ObjectHideFlags: 0

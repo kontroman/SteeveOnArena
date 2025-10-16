@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Achievements;
+using Devotion.SDK.Services.Localization;
 using DG.Tweening;
 using MineArena.Basics;
 using MineArena.Game.UI;
@@ -21,7 +22,7 @@ namespace UI.UIAchievement
         [SerializeField] private TextMeshProUGUI _messageTakePrize;
         [SerializeField] private ProgressPopupQuestBar _progressBarQuest;
 
-        private const string TextMessageTakePrize = "The quest is complete. Collect your reward.";
+        private const string TextMessageTakePrizeKey = "takePrize";
 
         private readonly Queue<Achievement> _messageQueue = new();
 
@@ -62,7 +63,7 @@ namespace UI.UIAchievement
             while (_messageQueue.Count != 0)
             {
                 Achievement achievement = _messageQueue.Dequeue();
-                
+
                 if (!achievement.CanTakePrize)
                     ConstructProgress(achievement);
                 else
@@ -78,8 +79,8 @@ namespace UI.UIAchievement
         {
             _progressBarQuest.gameObject.SetActive(false);
             _messageTakePrize.gameObject.SetActive(true);
-            _nameQuest.text = achievement.Data.NameQuest;
-            _messageTakePrize.text = TextMessageTakePrize;
+            _nameQuest.text = LocalizationService.GetLocalizedText(achievement.Data.NameAchievementKey);
+            _messageTakePrize.text = LocalizationService.GetLocalizedText(TextMessageTakePrizeKey);
         }
 
         private void ConstructProgress(Achievement achievement)
@@ -88,7 +89,7 @@ namespace UI.UIAchievement
             _progressBarQuest.gameObject.SetActive(true);
             MaxValue = achievement.MaxValueProgress;
             CurrentValue = achievement.CurrentValueProgress;
-            _nameQuest.text = achievement.Data.NameQuest;
+            _nameQuest.text = LocalizationService.GetLocalizedText(achievement.Data.NameAchievementKey);
             OnValueChanged?.Invoke(CurrentValue, MaxValue);
         }
 
