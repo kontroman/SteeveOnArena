@@ -18,8 +18,8 @@ namespace UI.UIAchievement
         [SerializeField] private TextMeshProUGUI _task;
         [SerializeField] private TextMeshProUGUI _buttonText;
 
-        private const string AchievementMessageComplete = "completed";
-        private const string ButtonTextKey = "achievementButtonGet";
+        private const string AchievementMessageComplete = "Completed";
+        private const string ButtonTextKey = "[Achievement]ButtonGet";
 
         private Achievement _achievement;
 

@@ -37,32 +37,32 @@ MonoBehaviour:
       distributionType: 0
       _amountInStack: 5
     _itemTarget: {fileID: 11400000, guid: 8d4377309a1b81045ba99f7bb848ff29, type: 2}
-    _nameAchievementKey: achievementName_1
-    _textTaskKey: achievement_extractOre
+    _nameAchievementKey: '[Achievement]Name_1'
+    _textTaskKey: '[Achievement]ExtractOre'
     _maxValueOnTask: 2
   - _itemPrize:
       _itemConfig: {fileID: 11400000, guid: b00bcf18baae3cd448bfe86f83366dca, type: 2}
       distributionType: 0
       _amountInStack: 3
     _itemTarget: {fileID: 11400000, guid: 2341848530a95b34794be486a7bc64c3, type: 2}
-    _nameAchievementKey: achievementName_2
-    _textTaskKey: achievement_extractOre
+    _nameAchievementKey: '[Achievement]Name_2'
+    _textTaskKey: '[Achievement]ExtractOre'
     _maxValueOnTask: 3
   - _itemPrize:
       _itemConfig: {fileID: 11400000, guid: 82ac6cc2aac71aa468bb4bcb0fc1738c, type: 2}
       distributionType: 0
       _amountInStack: 2
     _itemTarget: {fileID: 11400000, guid: b00bcf18baae3cd448bfe86f83366dca, type: 2}
-    _nameAchievementKey: achievementName_3
-    _textTaskKey: achievement_extractOre
+    _nameAchievementKey: '[Achievement]Name_3'
+    _textTaskKey: '[Achievement]ExtractOre'
     _maxValueOnTask: 1
   - _itemPrize:
       _itemConfig: {fileID: 11400000, guid: 48d1784c248929f4881cb36f19b829ac, type: 2}
       distributionType: 0
       _amountInStack: 1
     _itemTarget: {fileID: 11400000, guid: 501e28faeabb676418a62d09f9eb6cb9, type: 2}
-    _nameAchievementKey: achievementName_4
-    _textTaskKey: achievement_extractOre
+    _nameAchievementKey: '[Achievement]Name_4'
+    _textTaskKey: '[Achievement]ExtractOre'
     _maxValueOnTask: 2
   localizationConfig: {fileID: 11400000, guid: 1ea6a81e3921a1740bd34a6c4435b870, type: 2}
   itemDatabase: {fileID: 11400000, guid: 613dcb0f0f8ad3b4e900c16847fb622e, type: 2}
