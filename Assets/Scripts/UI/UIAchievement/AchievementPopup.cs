@@ -22,7 +22,7 @@ namespace UI.UIAchievement
         [SerializeField] private TextMeshProUGUI _messageTakePrize;
         [SerializeField] private ProgressPopupQuestBar _progressBarQuest;
 
-        private const string TextMessageTakePrizeKey = "[Achievement]TakePrize";
+       
 
         private readonly Queue<Achievement> _messageQueue = new();
 
@@ -80,7 +80,7 @@ namespace UI.UIAchievement
             _progressBarQuest.gameObject.SetActive(false);
             _messageTakePrize.gameObject.SetActive(true);
             _nameQuest.text = LocalizationService.GetLocalizedText(achievement.Data.NameAchievementKey);
-            _messageTakePrize.text = LocalizationService.GetLocalizedText(TextMessageTakePrizeKey);
+            _messageTakePrize.text = LocalizationService.GetLocalizedText(Constants.AchievementKey.TextMessageTakePrizeKey);
         }
 
         private void ConstructProgress(Achievement achievement)

@@ -1,6 +1,6 @@
-using System;
 using Devotion.SDK.Controllers;
 using Devotion.SDK.Services.Localization;
+using MineArena.Basics;
 using MineArena.Messages;
 using MineArena.Messages.MessageService;
 using TMPro;
@@ -14,7 +14,7 @@ namespace UI.UIAchievement
     {
         [SerializeField] private TextMeshProUGUI _text;
         [SerializeField] private TextMeshProUGUI _name;
-        [SerializeField] private string _nameKye;
+        
 
         private readonly int _addValue = 1;
         private readonly int _subtractValue = -1;
@@ -24,7 +24,7 @@ namespace UI.UIAchievement
 
         private void Awake()
         {
-            _name.text = LocalizationService.GetLocalizedText(_nameKye);
+            _name.text = LocalizationService.GetLocalizedText(Constants.AchievementKey.WindowNameKey);
         }
 
         private void Start()

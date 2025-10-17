@@ -1,6 +1,7 @@
 ﻿using System;
 using Achievements;
 using Devotion.SDK.Services.Localization;
+using MineArena.Basics;
 using MineArena.Game.UI;
 using MineArena.Items;
 using TMPro;
@@ -18,8 +19,6 @@ namespace UI.UIAchievement
         [SerializeField] private TextMeshProUGUI _task;
         [SerializeField] private TextMeshProUGUI _buttonText;
 
-        private const string AchievementMessageComplete = "Completed";
-        private const string ButtonTextKey = "[Achievement]ButtonGet";
 
         private Achievement _achievement;
 
@@ -38,8 +37,8 @@ namespace UI.UIAchievement
                 achievement.Data.MaxValueOnTask, achievement.Data.ItemTarget.Name);
             _button.gameObject.SetActive(false);
             _completeText.gameObject.SetActive(false);
-            _completeText.text = LocalizationService.GetLocalizedText(AchievementMessageComplete);
-            _buttonText.text = LocalizationService.GetLocalizedText(ButtonTextKey);
+            _completeText.text = LocalizationService.GetLocalizedText(Constants.AchievementKey.MessageCompleteKey);
+            _buttonText.text = LocalizationService.GetLocalizedText(Constants.AchievementKey.ButtonTextKey);
         }
 
         public void ChangeCurrentValue()
