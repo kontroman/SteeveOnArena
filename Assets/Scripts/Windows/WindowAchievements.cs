@@ -2,9 +2,12 @@
 using Achievements;
 using Devotion.SDK.Base;
 using Devotion.SDK.Controllers;
+using Devotion.SDK.Services.Localization;
 using Managers;
+using MineArena.Basics;
 using MineArena.Messages;
 using MineArena.Messages.MessageService;
+using TMPro;
 using UI.UIAchievement;
 using UnityEngine;
 
@@ -14,6 +17,8 @@ namespace Windows
         IMessageSubscriber<AchievementMessages.AchievementTargetTaken>
     {
         [SerializeField] private AchievementsConstructor _achievementsConstructor;
+        [SerializeField] private TextMeshProUGUI _name;
+        
 
         private List<Achievement> _activeAchievements = new();
         private List<AchievementVisualizer> _achievementVisualizers = new();
@@ -22,6 +27,7 @@ namespace Windows
         {
             _activeAchievements = GameRoot.GetManager<AchievementManager>().GetQuests();
             _achievementVisualizers = _achievementsConstructor.CreateQuestVisualizers(_activeAchievements);
+            _name.text = LocalizationService.GetLocalizedText(Constants.AchievementKey.WindowNameKey);
         }
 
         public void Close() =>

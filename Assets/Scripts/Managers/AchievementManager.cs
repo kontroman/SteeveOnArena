@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using Achievements;
 using Devotion.SDK.Controllers;
 using Devotion.SDK.Managers;
@@ -15,7 +14,7 @@ namespace Managers
         private List<Achievement> _achievements = new();
 
         private void Start() =>
-            CreatQuests();
+            CreateQuests();
 
         public List<Achievement> GetQuests() =>
             _achievements;
@@ -35,23 +34,20 @@ namespace Managers
         public void OnMessage(AchievementMessages.AchievementCompleted message) =>
             GameRoot.PlayerProgress.AchievementProgress.SaveProgress(message.Model);
 
-        private void CreatQuests()
+        private void CreateQuests()
         {
             for (var i = 0; i < GameRoot.GameConfig.DataAchievements.Count; i++)
-                _achievements.Add(new Achievement(GameRoot.GameConfig.DataAchievements[i], i));
+            {
+                Achievement achievement = new Achievement(GameRoot.GameConfig.DataAchievements[i], i);
+                _achievements.Add(achievement);
 
-            if (GameRoot.PlayerProgress.AchievementProgress.AchievementsDataSave.Count == 0)
-            {
-                foreach (Achievement achievement in _achievements)
-                    GameRoot.PlayerProgress.AchievementProgress.AddAchievement(achievement);
-            }
-            else
-            {
-                foreach (AchievementSaveData data in GameRoot.PlayerProgress.AchievementProgress.AchievementsDataSave)
+                if (GameRoot.PlayerProgress.AchievementProgress.Achievements.Count < GameRoot.GameConfig.DataAchievements.Count)
                 {
-                    foreach (var achievement in
-                             _achievements.Where(achievement => achievement.ID == data.AchievementId))
-                        achievement.LoadData(data);
+                    GameRoot.PlayerProgress.AchievementProgress.AddAchievement(achievement);
+                }
+                else if (GameRoot.PlayerProgress.AchievementProgress.Achievements.TryGetValue(achievement.ID, out var data))
+                {
+                    achievement.LoadData(data);
                 }
             }
         }

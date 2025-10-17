@@ -1,28 +1,27 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using Achievements;
+using static Devotion.SDK.Helpers.ContainersHelper;
 
 namespace Devotion.SDK.Services.SaveSystem.Progress
 {
     [Serializable]
     public class AchievementProgress : BaseProgress
     {
-        public List<AchievementSaveData> AchievementsDataSave = new();
+        public SerializableDictionary<int, AchievementSaveData> Achievements = new();
 
         public void AddAchievement(Achievement achievement)
         {
-            AchievementsDataSave.Add(new AchievementSaveData(achievement.ID, achievement.CurrentValueProgress,
+            Achievements.Add(achievement.ID, new AchievementSaveData(achievement.ID, achievement.CurrentValueProgress,
                 achievement.IsCompleted, achievement.CanTakePrize));
         }
 
         public void SaveProgress(Achievement achievement)
         {
-            foreach (var dataSave in AchievementsDataSave.Where(dataSave => dataSave.AchievementId == achievement.ID))
+            if (Achievements.ContainsKey(achievement.ID))
             {
-                dataSave.CurrentValue = achievement.CurrentValueProgress;
-                dataSave.CanTakePrize = achievement.CanTakePrize;
-                dataSave.IsCompleted = achievement.IsCompleted;
+                Achievements[achievement.ID].CurrentValue = achievement.CurrentValueProgress;
+                Achievements[achievement.ID].CanTakePrize = achievement.CanTakePrize;
+                Achievements[achievement.ID].IsCompleted = achievement.IsCompleted;
             }
         }
     }

@@ -1,6 +1,9 @@
 ﻿using System;
 using Achievements;
+using Devotion.SDK.Services.Localization;
+using MineArena.Basics;
 using MineArena.Game.UI;
+using MineArena.Items;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,12 +17,10 @@ namespace UI.UIAchievement
         [SerializeField] private TextMeshProUGUI _completeText;
         [SerializeField] private TextMeshProUGUI _name;
         [SerializeField] private TextMeshProUGUI _task;
+        [SerializeField] private TextMeshProUGUI _buttonText;
 
-        private const string AchievementMessageComplete = "Complete";
 
         private Achievement _achievement;
-        private bool _achievementCompleted;
-        private bool _onClickButton;
 
         public event Action<float, float> OnValueChanged;
 
@@ -31,13 +32,13 @@ namespace UI.UIAchievement
         {
             _achievement = achievement;
             MaxValue = achievement.MaxValueProgress;
-            _name.text = achievement.Data.NameQuest;
-            _task.text = achievement.Data.TextTask;
+            _name.text = string.Format(LocalizationService.GetLocalizedText(achievement.Data.NameAchievementKey));
+            _task.text = string.Format(LocalizationService.GetLocalizedText(achievement.Data.TextTaskKey),
+                achievement.Data.MaxValueOnTask, achievement.Data.ItemTarget.Name);
             _button.gameObject.SetActive(false);
             _completeText.gameObject.SetActive(false);
-            _achievementCompleted = achievement.IsCompleted;
-            Debug.Log($"{_achievement.ID} - {_achievementCompleted}");
-            _completeText.text = AchievementMessageComplete;
+            _completeText.text = LocalizationService.GetLocalizedText(Constants.AchievementKey.MessageCompleteKey);
+            _buttonText.text = LocalizationService.GetLocalizedText(Constants.AchievementKey.ButtonTextKey);
         }
 
         public void ChangeCurrentValue()
@@ -45,37 +46,19 @@ namespace UI.UIAchievement
             CurrentValue = _achievement.CurrentValueProgress;
 
             if (CurrentValue < MaxValue)
-            {
                 OnValueChanged?.Invoke(CurrentValue, MaxValue);
-            }
 
             if (_achievement.CanTakePrize && !_achievement.IsCompleted)
-            {
                 ShowButtonGetPrize();
-            }
 
             if (_achievement.CanTakePrize && _achievement.IsCompleted)
-            {
                 ShowTextCompleted();
-            }
-
-            // else
-            //     switch (_onClickButton)
-            //     {
-            //         case false:
-            //             ShowButtonGetPrize();
-            //             break;
-            //         case true:
-            //             ShowTextCompleted();
-            //             break;
-            //     }
         }
 
         public void ShowMessageCompleted()
         {
             _button.gameObject.SetActive(false);
             _achievement.TransferPrize();
-            _onClickButton = true;
             _completeText.gameObject.SetActive(true);
         }
 
@@ -90,7 +73,6 @@ namespace UI.UIAchievement
         {
             _progressBar.gameObject.SetActive(false);
             _button.gameObject.SetActive(true);
-            _achievementCompleted = true;
         }
     }
 }

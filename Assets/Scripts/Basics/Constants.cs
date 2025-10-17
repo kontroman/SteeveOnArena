@@ -58,5 +58,13 @@ namespace MineArena.Basics
             public static string PlayerBaseScene = "SampleScene";
             public static string GameplayScene = "GameplayScene";
         }
+
+        public static class AchievementKey
+        {
+            public static string TextMessageTakePrizeKey = "[Achievement]TakePrize";
+            public static string MessageCompleteKey = "Completed";
+            public static string ButtonTextKey = "[Achievement]ButtonGet";
+            public static string WindowNameKey = "[Achievement]WindowName";
+        }
     }
 }

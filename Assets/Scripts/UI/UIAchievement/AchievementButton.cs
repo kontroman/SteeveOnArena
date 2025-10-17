@@ -1,5 +1,6 @@
-using System.Linq;
 using Devotion.SDK.Controllers;
+using Devotion.SDK.Services.Localization;
+using MineArena.Basics;
 using MineArena.Messages;
 using MineArena.Messages.MessageService;
 using TMPro;
@@ -12,12 +13,19 @@ namespace UI.UIAchievement
         IMessageSubscriber<AchievementMessages.AchievementCompleted>
     {
         [SerializeField] private TextMeshProUGUI _text;
+        [SerializeField] private TextMeshProUGUI _name;
+        
 
         private readonly int _addValue = 1;
         private readonly int _subtractValue = -1;
 
         private int _startValue;
         private int _valueAchievementWithPrize;
+
+        private void Awake()
+        {
+            _name.text = LocalizationService.GetLocalizedText(Constants.AchievementKey.WindowNameKey);
+        }
 
         private void Start()
         {
@@ -34,9 +42,11 @@ namespace UI.UIAchievement
 
         private void LoadData()
         {
-            foreach (var data in GameRoot.PlayerProgress.AchievementProgress.AchievementsDataSave.Where(data =>
-                         data.CanTakePrize && !data.IsCompleted))
-                _startValue++;
+            foreach (var (key, data) in GameRoot.PlayerProgress.AchievementProgress.Achievements)
+            {
+                if (data.CanTakePrize && !data.IsCompleted)
+                    _startValue++;
+            }
         }
 
         private void SetValue(int value)

@@ -11,7 +11,7 @@ namespace MineArena.AI
     public class MobPreset : ScriptableObject, IAchievementTarget
     {
         [Header("Mian Settings")]
-        public string Name;
+        public string name;
         public Sprite Icon;
         public MobTypes MobType;
 
@@ -46,5 +46,6 @@ namespace MineArena.AI
 
         [Header("Drop only one or more items")]
         [SerializeField] private bool _isOneDrop;*/
+        public string Name { get; }
     }
 }

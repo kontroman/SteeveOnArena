@@ -1,4 +1,5 @@
-﻿using MineArena.Basics;
+﻿using Devotion.SDK.Services.Localization;
+using MineArena.Basics;
 using Structs;
 using TMPro;
 using UnityEngine;
@@ -29,8 +30,8 @@ namespace UI.Sector
         public void Configure(DataAchievement data)
         {
             SetIcon(data.ItemPrize?.Icon);
-            SetTextContent(data.TextTask);
-            SetQuestName(data.NameQuest);
+            SetTextContent(LocalizationService.GetLocalizedText(data.TextTaskKey));
+            SetQuestName(LocalizationService.GetLocalizedText(data.NameAchievementKey));
             SetAmount(data.Amount);
         }
 
