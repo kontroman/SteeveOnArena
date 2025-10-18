@@ -6,7 +6,7 @@ using MineArena.Controllers;
 using MineArena.Levels;
 using MineArena.Managers;
 using MineArena.Windows.Elements;
-using System.Collections;
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -54,23 +54,39 @@ namespace MineArena.Windows.SelectLevel
 
         private void StartLevel()
         {
+            startButton.interactable = false;
+
             GameRoot.UIManager.CloseAllWindows();
 
             LoadingWindow loadingWindow = (LoadingWindow)GameRoot.UIManager.OpenWindow<LoadingWindow>();
-
-            //TODO: ����� ������� �������� ������ � LevelController? 
+            LevelController levelController = null;
 
             loadingWindow.SetProgressValue(0.3f)
                 .Then(() => GameRoot.GetManager<UnitySceneLoader>().LoadSceneAsync(Constants.SceneNames.GameplayScene))
                 //.Then(() => GameRoot.GameConfig.);
-                .Then(() => FindObjectOfType<LevelController>().InitLevel(_config))
+                .Then(() =>
+                {
+                    levelController = FindObjectOfType<LevelController>();
+                    if (levelController == null)
+                    {
+                        throw new InvalidOperationException("LevelController not found in scene after loading gameplay.");
+                    }
+
+                    return levelController.InitLevel(_config);
+                })
                 .Then(() => loadingWindow.SetProgressValue(0.8f))
-                .Then(() => FindObjectOfType<LevelController>().GenerateLevel())
+                .Then(() => levelController.GenerateLevel())
                 .Then(() => WeatherManager.Instance.ApplyLevelPreset(_config.WeatherPreset))
+                .Then(() => levelController.GenerateOres())
                 .Then(() => loadingWindow.SetProgressValue(0.9f))
                 //.Then(() => GameRoot.LevelController)
                 .Then(() => loadingWindow.SetProgressValue(1f))
-                .Finally(() => GameRoot.UIManager.CloseWindow<LoadingWindow>());
+                .Finally(() =>
+                {
+                    GameRoot.UIManager.CloseWindow<LoadingWindow>();
+                    startButton.interactable = true;
+                });
         }
+
     }
 }

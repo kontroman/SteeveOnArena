@@ -10,6 +10,8 @@ namespace MineArena.Items
 
         private Item item;
 
+        public ItemConfig ItemConfig => _item;
+
         private void Awake()
         {
             if (_item.Stackable)

@@ -16,10 +16,19 @@ MonoBehaviour:
   difficulty: 0
   settings: {fileID: 11400000, guid: 9fdf3c636a1b6ed43b54b4edf8dfc7a0, type: 2}
   availableResources:
-  - {fileID: 11400000, guid: 2341848530a95b34794be486a7bc64c3, type: 2}
-  - {fileID: 11400000, guid: 4d4666ba7dbbefa47b57dbff0b891f42, type: 2}
-  - {fileID: 11400000, guid: 10c265e30aa9be34685985507820bbb4, type: 2}
   - {fileID: 11400000, guid: 8d4377309a1b81045ba99f7bb848ff29, type: 2}
+  - {fileID: 11400000, guid: 2341848530a95b34794be486a7bc64c3, type: 2}
+  - {fileID: 11400000, guid: 748b6e8fd10cc5f458155de6d72cfb74, type: 2}
+  - {fileID: 11400000, guid: 4d4666ba7dbbefa47b57dbff0b891f42, type: 2}
+  resourceSpawnConfigs:
+  - resource: {fileID: 6831494909658651806, guid: 5e34c181307af274da91e900b69084af, type: 3}
+    spawnChance: 0.35
+  - resource: {fileID: 8637239530525059325, guid: 79c8a2040dc0ef747b153c4004dc7868, type: 3}
+    spawnChance: 0.6
+  - resource: {fileID: 7734615867120498341, guid: 8c8b955f9f3e932419e1c97db03732e7, type: 3}
+    spawnChance: 0.4
+  - resource: {fileID: 4470322958617729804, guid: cbfc4609802435e469abad930689a627, type: 3}
+    spawnChance: 0.4
   rewardResources:
   - Item: {fileID: 11400000, guid: 4d4666ba7dbbefa47b57dbff0b891f42, type: 2}
     Amount: 10
