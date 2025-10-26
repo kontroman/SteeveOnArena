@@ -1,7 +1,7 @@
 using Devotion.SDK.Controllers;
 using Devotion.SDK.Helpers;
 using Devotion.SDK.Managers;
-using MineArena.Windows;
+using MineArena.Windows.Crafting;
 using UnityEngine;
 
 namespace MineArena.Buildings
@@ -15,9 +15,11 @@ namespace MineArena.Buildings
         {
             if (other.IsPlayer())
             {
-                BuildingWindow window = (BuildingWindow)GameRoot.UIManager.OpenWindow<BuildingWindow>();
-
-                window.InitializeBuilding(config, this.transform);
+                var window = (CraftingWindow)GameRoot.UIManager.OpenWindow<CraftingWindow>();
+                if (window != null)
+                {
+                    window.Initialize(config);
+                }
             }           
         }
 
@@ -25,7 +27,7 @@ namespace MineArena.Buildings
         {
             if (other.IsPlayer())
             {
-                GameRoot.UIManager.CloseWindow<BuildingWindow>();
+                GameRoot.UIManager.CloseWindow<CraftingWindow>();
             }
         }
 

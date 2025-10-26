@@ -4,18 +4,43 @@ using MineArena.Levels;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using MineArena.Items;
 
 namespace MineArena.Controllers
 {
     public class LevelController : MonoBehaviour
     {
+        public static LevelController Current { get; private set; }
+
         private LevelConfig _currentConfig;
         private Arena _currentArena;
+        private readonly Dictionary<ItemConfig, int> _collectedResources = new Dictionary<ItemConfig, int>();
+
+        public IReadOnlyDictionary<ItemConfig, int> CollectedResources { get { return _collectedResources; } }
+
+        private void Awake()
+        {
+            if (Current != null && Current != this)
+            {
+                Debug.LogWarning("Multiple LevelController instances detected. Overwriting current instance reference.");
+            }
+
+            Current = this;
+        }
+
+        private void OnDestroy()
+        {
+            if (Current == this)
+            {
+                Current = null;
+            }
+        }
 
         public IPromise InitLevel(LevelConfig config)
         {
             var promise = new Promise();
             _currentConfig = config;
+            ResetCollectedResources();
             promise.Resolve();
             return promise;
         }
@@ -103,6 +128,28 @@ namespace MineArena.Controllers
 
             promise.Resolve();
             return promise;
+        }
+
+        public void RegisterCollectedResource(ItemConfig resource, int amount)
+        {
+            if (resource == null || amount <= 0)
+            {
+                return;
+            }
+
+            if (_collectedResources.TryGetValue(resource, out var total))
+            {
+                _collectedResources[resource] = total + amount;
+            }
+            else
+            {
+                _collectedResources[resource] = amount;
+            }
+        }
+
+        public void ResetCollectedResources()
+        {
+            _collectedResources.Clear();
         }
 
         private ResourceSpawnConfig SelectResourceByChance(IReadOnlyList<ResourceSpawnConfig> resourceConfigs)

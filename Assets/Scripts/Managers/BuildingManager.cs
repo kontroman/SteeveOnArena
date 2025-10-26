@@ -12,6 +12,31 @@ namespace MineArena.Managers
         private readonly Dictionary<Transform, GameObject> _activeBuildings = new();
         private readonly Dictionary<Transform, int> _buildingLevels = new();
 
+        public int GetBuildingLevel(BuildingConfig config)
+        {
+            if (config == null)
+                return 0;
+
+            if (GameRoot.PlayerProgress != null &&
+                GameRoot.PlayerProgress.BuildingProgress != null &&
+                GameRoot.PlayerProgress.BuildingProgress.SavedBuildings != null &&
+                GameRoot.PlayerProgress.BuildingProgress.SavedBuildings.TryGetValue(config.BuildingName, out var savedData) &&
+                savedData != null)
+            {
+                return savedData.Level;
+            }
+
+            var currentLevelConfig = config.GetCurrentLevel();
+            if (currentLevelConfig != null)
+                return currentLevelConfig.Level;
+
+            var levels = config.Levels;
+            if (levels != null && levels.Count > 0 && levels[0] != null)
+                return levels[0].Level;
+
+            return 0;
+        }
+
         public override void InitManager()
         {
             _activeBuildings.Clear();

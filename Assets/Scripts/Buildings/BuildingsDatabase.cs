@@ -9,6 +9,8 @@ namespace MineArena.Buildings
     {
         [SerializeField] private List<BuildingConfig> allItems;
 
+        public IReadOnlyList<BuildingConfig> AllBuildings => allItems;
+
         public BuildingConfig GetBuildingConfig(string buildingName)
         {
             try

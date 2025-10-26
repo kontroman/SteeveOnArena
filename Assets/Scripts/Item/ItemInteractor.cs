@@ -1,4 +1,5 @@
 using Devotion.SDK.Controllers;
+using MineArena.Controllers;
 using MineArena.Managers;
 using UnityEngine;
 
@@ -40,7 +41,15 @@ namespace MineArena.Items
 
         private void AddToInventory(Item item)
         {
-            GameRoot.GetManager<InventoryManager>().AddItem(item);
+            int amount = 1;
+            if (item is StackableItem stackable)
+            {
+                amount = Mathf.Max(1, stackable.CurrentStack);
+            }
+
+            GameRoot.GetManager<InventoryManager>().AddItem(item, amount);
+
+            LevelController.Current?.RegisterCollectedResource(_item, amount);
 
             Destroy(this.gameObject);
         }
