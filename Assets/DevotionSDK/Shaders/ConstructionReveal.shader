@@ -12,6 +12,11 @@ Shader "Devotion/ConstructionReveal"
         _EmissionMap("Emission Map", 2D) = "white" {}
         _RevealHeight("Reveal Height", Float) = 999
         _RevealFeather("Reveal Feather", Range(0,1)) = 0.05
+        _BlockSize("Block Size", Float) = 1
+        _BlockOffsetSteps("Block Offset Steps", Range(0,4)) = 1
+        _BlockNoiseScale("Block Noise Scale", Float) = 1
+        _BlockRandomSeed("Block Random Seed", Float) = 0
+        _BlockClipPadding("Block Clip Padding", Float) = 0.01
     }
 
     SubShader
@@ -34,6 +39,12 @@ Shader "Devotion/ConstructionReveal"
         fixed4 _EmissionColor;
         float _RevealHeight;
         float _RevealFeather;
+        float _BlockSize;
+        float _BlockOffsetSteps;
+        float _BlockNoiseScale;
+        float _BlockRandomSeed;
+        float _BlockClipPadding;
+        float4 _RevealBoundsMin;
 
         struct Input
         {
@@ -42,6 +53,54 @@ Shader "Devotion/ConstructionReveal"
             float2 uv_EmissionMap;
             float3 worldPos;
         };
+
+        float Hash21(float2 p)
+        {
+            float3 p3 = frac(float3(p.xyx) * 0.1031);
+            p3 += dot(p3, p3.yzx + 33.33);
+            return frac((p3.x + p3.y) * p3.z);
+        }
+
+        float ComputeBlockOffset(float3 worldPos)
+        {
+            const float minBlockSize = 0.0001f;
+            if (_BlockOffsetSteps <= 0.0f || _BlockSize <= minBlockSize)
+                return 0.0f;
+
+            const float blockSize = max(_BlockSize, minBlockSize);
+            float2 localXZ = (worldPos.xz - _RevealBoundsMin.xz) / blockSize;
+            float2 cell = floor(localXZ);
+
+            float2 noiseCoord = cell;
+            if (_BlockNoiseScale > minBlockSize)
+            {
+                noiseCoord *= _BlockNoiseScale;
+            }
+            noiseCoord += _BlockRandomSeed;
+
+            float noiseValue = Hash21(noiseCoord);
+            float offsetIndex = round(lerp(-_BlockOffsetSteps, _BlockOffsetSteps, noiseValue));
+            return offsetIndex * blockSize;
+        }
+
+        float ComputeRevealClip(float3 worldPos, float blockOffset)
+        {
+            const float minBlockSize = 0.0001f;
+            if (_BlockOffsetSteps <= 0.0f || _BlockSize <= minBlockSize)
+            {
+                float clipHeight = _RevealHeight - blockOffset;
+                return clipHeight - worldPos.y;
+            }
+
+            float blockSize = max(_BlockSize, minBlockSize);
+            float revealHeight = _RevealHeight - blockOffset;
+            float localY = worldPos.y - _RevealBoundsMin.y;
+            float blockIndex = floor(localY / blockSize);
+            float blockTop = (blockIndex + 1.0f) * blockSize + _RevealBoundsMin.y;
+            float padding = clamp(max(_BlockClipPadding, blockSize * 0.01f), 0.0f, blockSize * 0.49f);
+            float threshold = blockTop - padding;
+            return revealHeight - threshold;
+        }
 
         void surf(Input IN, inout SurfaceOutputStandard o)
         {
@@ -58,12 +117,13 @@ Shader "Devotion/ConstructionReveal"
             fixed3 emissionTex = tex2D(_EmissionMap, IN.uv_EmissionMap).rgb;
             o.Emission = emissionTex * _EmissionColor.rgb;
 
-            float clipDistance = _RevealHeight - IN.worldPos.y;
-            clip(clipDistance);
+            float blockOffset = ComputeBlockOffset(IN.worldPos);
+            float clipValue = ComputeRevealClip(IN.worldPos, blockOffset);
+            clip(clipValue);
 
-            if (_RevealFeather > 0.0001f)
+            if (_BlockOffsetSteps <= 0.0f && _RevealFeather > 0.0001f)
             {
-                float fade = saturate(clipDistance / _RevealFeather);
+                float fade = saturate(clipValue / _RevealFeather);
                 o.Alpha *= fade;
             }
         }

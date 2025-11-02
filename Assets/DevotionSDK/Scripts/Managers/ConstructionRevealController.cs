@@ -16,6 +16,20 @@ namespace DevotionSDK.Managers
     {
         private const string RevealHeightProperty = "_RevealHeight";
         private const string RevealFeatherProperty = "_RevealFeather";
+        private const string BlockSizeProperty = "_BlockSize";
+        private const string BlockOffsetStepsProperty = "_BlockOffsetSteps";
+        private const string BlockNoiseScaleProperty = "_BlockNoiseScale";
+        private const string BlockRandomSeedProperty = "_BlockRandomSeed";
+        private const string RevealBoundsMinProperty = "_RevealBoundsMin";
+        private const string BlockClipPaddingProperty = "_BlockClipPadding";
+        private static readonly int RevealHeightPropertyId = Shader.PropertyToID(RevealHeightProperty);
+        private static readonly int RevealFeatherPropertyId = Shader.PropertyToID(RevealFeatherProperty);
+        private static readonly int BlockSizePropertyId = Shader.PropertyToID(BlockSizeProperty);
+        private static readonly int BlockOffsetStepsPropertyId = Shader.PropertyToID(BlockOffsetStepsProperty);
+        private static readonly int BlockNoiseScalePropertyId = Shader.PropertyToID(BlockNoiseScaleProperty);
+        private static readonly int BlockRandomSeedPropertyId = Shader.PropertyToID(BlockRandomSeedProperty);
+        private static readonly int RevealBoundsMinPropertyId = Shader.PropertyToID(RevealBoundsMinProperty);
+        private static readonly int BlockClipPaddingPropertyId = Shader.PropertyToID(BlockClipPaddingProperty);
         [SerializeField]
         private Shader revealShader;
 
@@ -49,6 +63,36 @@ namespace DevotionSDK.Managers
         [SerializeField]
         private bool autoRefreshBounds = true;
 
+        [SerializeField]
+        private bool enableBlockJitter = true;
+
+        [SerializeField]
+        private bool autoConfigureBlockSize = true;
+
+        [SerializeField, Min(0.01f)]
+        private float blockSize = 1f;
+
+        [SerializeField, Range(0, 4)]
+        private int maxBlockOffsetSteps = 1;
+
+        [SerializeField, Min(0.01f)]
+        private float blockNoiseScale = 1f;
+
+        [SerializeField]
+        private int blockSeed = 0;
+
+        [SerializeField, Min(0f)]
+        private float blockClipPadding = 0.01f;
+
+        [SerializeField]
+        private bool debugDrawClipPlane = false;
+
+        [SerializeField]
+        private Color debugPlaneFillColor = new Color(0f, 1f, 1f, 0.15f);
+
+        [SerializeField]
+        private Color debugPlaneOutlineColor = new Color(0f, 1f, 1f, 0.6f);
+
         [SerializeField, HideInInspector]
         private List<RendererMaterialSnapshot> originalMaterialSnapshots = new List<RendererMaterialSnapshot>();
 
@@ -59,12 +103,27 @@ namespace DevotionSDK.Managers
         private float _currentHeight;
         private bool _isPlaying;
         private double _nextStepTime;
+        private Bounds _worldBounds;
+        private Vector3 _boundsMin;
+        private float _resolvedBlockSize = 1f;
+        private float _resolvedNoiseSeed;
+        private float _resolvedClipPadding;
 
         private readonly Dictionary<Renderer, RendererState> _rendererStates = new Dictionary<Renderer, RendererState>();
 
         private float SafeFeather => Mathf.Max(0.0001f, feather);
-        private float RevealFloor => _minWorldY - SafeFeather;
-        private float RevealCeiling => _maxWorldY + SafeFeather;
+        private float MaxBlockOffset
+        {
+            get
+            {
+                int stepCount = enableBlockJitter && maxBlockOffsetSteps > 0 ? maxBlockOffsetSteps : 0;
+                float jitterSpan = stepCount * _resolvedBlockSize;
+                float padding = stepCount > 0 ? _resolvedClipPadding : 0f;
+                return jitterSpan + padding;
+            }
+        }
+        private float RevealFloor => _minWorldY - SafeFeather - MaxBlockOffset;
+        private float RevealCeiling => _maxWorldY + SafeFeather + MaxBlockOffset;
 
         [System.Serializable]
         private class RendererMaterialSnapshot
@@ -217,7 +276,15 @@ namespace DevotionSDK.Managers
             if (_renderers == null)
                 return;
 
+            UpdateBlockConfiguration();
+
             _propertyBlock ??= new MaterialPropertyBlock();
+            var resolvedBlockSize = Mathf.Max(0.01f, _resolvedBlockSize);
+            int resolvedOffsetStepCount = enableBlockJitter ? Mathf.Max(0, maxBlockOffsetSteps) : 0;
+            float resolvedOffsetSteps = resolvedOffsetStepCount;
+            float resolvedClipPadding = resolvedOffsetStepCount > 0 ? _resolvedClipPadding : 0f;
+            float resolvedNoiseScale = Mathf.Max(0.01f, blockNoiseScale);
+            var boundsMinVector = new Vector4(_boundsMin.x, _boundsMin.y, _boundsMin.z, 0f);
 
             foreach (var renderer in _renderers)
             {
@@ -225,8 +292,14 @@ namespace DevotionSDK.Managers
                     continue;
 
                 renderer.GetPropertyBlock(_propertyBlock);
-                _propertyBlock.SetFloat(RevealHeightProperty, _currentHeight);
-                _propertyBlock.SetFloat(RevealFeatherProperty, feather);
+                _propertyBlock.SetFloat(RevealHeightPropertyId, _currentHeight);
+                _propertyBlock.SetFloat(RevealFeatherPropertyId, feather);
+                _propertyBlock.SetFloat(BlockSizePropertyId, resolvedBlockSize);
+                _propertyBlock.SetFloat(BlockOffsetStepsPropertyId, resolvedOffsetSteps);
+                _propertyBlock.SetFloat(BlockNoiseScalePropertyId, resolvedNoiseScale);
+                _propertyBlock.SetFloat(BlockRandomSeedPropertyId, _resolvedNoiseSeed);
+                _propertyBlock.SetFloat(BlockClipPaddingPropertyId, resolvedClipPadding);
+                _propertyBlock.SetVector(RevealBoundsMinPropertyId, boundsMinVector);
                 renderer.SetPropertyBlock(_propertyBlock);
             }
         }
@@ -668,24 +741,137 @@ namespace DevotionSDK.Managers
         {
             if (_renderers == null || _renderers.Length == 0)
             {
-                _minWorldY = _maxWorldY = transform.position.y;
+                var position = transform.position;
+                _worldBounds = new Bounds(position, Vector3.zero);
+                _boundsMin = position;
+                _minWorldY = position.y;
+                _maxWorldY = position.y;
+                UpdateBlockConfiguration();
+                _currentHeight = Mathf.Clamp(_currentHeight, RevealFloor, RevealCeiling);
                 return;
             }
 
-            var bounds = _renderers[0].bounds;
-            for (int i = 1; i < _renderers.Length; i++)
+            Bounds bounds = default;
+            bool hasBounds = false;
+            for (int i = 0; i < _renderers.Length; i++)
             {
                 var renderer = _renderers[i];
                 if (renderer == null)
                     continue;
 
-                bounds.Encapsulate(renderer.bounds);
+                if (!hasBounds)
+                {
+                    bounds = renderer.bounds;
+                    hasBounds = true;
+                }
+                else
+                {
+                    bounds.Encapsulate(renderer.bounds);
+                }
             }
 
+            if (!hasBounds)
+            {
+                var position = transform.position;
+                _worldBounds = new Bounds(position, Vector3.zero);
+                _boundsMin = position;
+                _minWorldY = position.y;
+                _maxWorldY = position.y;
+                UpdateBlockConfiguration();
+                _currentHeight = Mathf.Clamp(_currentHeight, RevealFloor, RevealCeiling);
+                return;
+            }
+
+            _worldBounds = bounds;
+            _boundsMin = bounds.min;
             _minWorldY = bounds.min.y;
             _maxWorldY = bounds.max.y;
+            UpdateBlockConfiguration();
             _currentHeight = Mathf.Clamp(_currentHeight, RevealFloor, RevealCeiling);
         }
+
+        private void UpdateBlockConfiguration()
+        {
+            float baseSize = autoConfigureBlockSize ? ComputeAutoBlockSize(_worldBounds) : Mathf.Max(0.01f, blockSize);
+            _resolvedBlockSize = Mathf.Max(0.01f, baseSize);
+            _resolvedNoiseSeed = ResolveNoiseSeed();
+            if (enableBlockJitter && maxBlockOffsetSteps > 0)
+            {
+                float minPadding = _resolvedBlockSize * 0.01f;
+                float maxPadding = _resolvedBlockSize * 0.49f;
+                _resolvedClipPadding = Mathf.Clamp(Mathf.Max(blockClipPadding, minPadding), minPadding, maxPadding);
+            }
+            else
+            {
+                _resolvedClipPadding = 0f;
+            }
+        }
+
+        private static float ComputeAutoBlockSize(in Bounds bounds)
+        {
+            var horizontal = new Vector2(Mathf.Abs(bounds.size.x), Mathf.Abs(bounds.size.z));
+            float average = (horizontal.x + horizontal.y) * 0.5f;
+            if (average <= 0.0001f)
+                return 1f;
+
+            int estimatedCells = Mathf.Max(1, Mathf.RoundToInt(average));
+            return Mathf.Max(0.01f, average / estimatedCells);
+        }
+
+        private float ResolveNoiseSeed()
+        {
+            int seedSource = blockSeed != 0 ? blockSeed : GetInstanceID();
+            seedSource = Mathf.Abs(seedSource % 9973);
+            if (seedSource == 0)
+            {
+                seedSource = 1;
+            }
+
+            return seedSource * 0.131f;
+        }
+
+#if UNITY_EDITOR
+        private static readonly Vector3[] DebugPlateCorners = new Vector3[5];
+
+        private static float Frac(float value) => value - Mathf.Floor(value);
+
+        private static Vector3 Frac(Vector3 value) => new Vector3(Frac(value.x), Frac(value.y), Frac(value.z));
+
+        private static float Hash21(Vector2 p)
+        {
+            var p3 = new Vector3(p.x, p.y, p.x);
+            p3 = Frac(p3 * 0.1031f);
+
+            var yzX = new Vector3(p3.y, p3.z, p3.x);
+            float dot = Vector3.Dot(p3, yzX + new Vector3(33.33f, 33.33f, 33.33f));
+            p3 += new Vector3(dot, dot, dot);
+
+            return Frac((p3.x + p3.y) * p3.z);
+        }
+
+        private float SampleBlockOffset(Vector2 cellIndex)
+        {
+            if (!enableBlockJitter || maxBlockOffsetSteps <= 0)
+                return 0f;
+
+            const float minBlockSize = 0.0001f;
+            float blockSizeValue = Mathf.Max(minBlockSize, _resolvedBlockSize);
+
+            Vector2 noiseCoord = cellIndex;
+            if (blockNoiseScale > minBlockSize)
+            {
+                noiseCoord *= blockNoiseScale;
+            }
+
+            float seed = _resolvedNoiseSeed;
+            noiseCoord.x += seed;
+            noiseCoord.y += seed;
+
+            float noiseValue = Hash21(noiseCoord);
+            float offsetIndex = Mathf.Round(Mathf.Lerp(-maxBlockOffsetSteps, maxBlockOffsetSteps, noiseValue));
+            return offsetIndex * blockSizeValue;
+        }
+#endif
 
         private void ScheduleNextStep()
         {
@@ -715,6 +901,87 @@ namespace DevotionSDK.Managers
             }
 
             ApplyProperties();
+        }
+#endif
+
+#if UNITY_EDITOR
+        private void OnDrawGizmosSelected()
+        {
+            if (!debugDrawClipPlane)
+                return;
+
+            CacheRenderers();
+            RecalculateBounds();
+            UpdateBlockConfiguration();
+
+            if (_renderers == null || _renderers.Length == 0)
+                return;
+
+            var bounds = _worldBounds;
+            if (bounds.size.sqrMagnitude <= 0.0001f)
+                return;
+
+            float blockSizeValue = Mathf.Max(0.01f, _resolvedBlockSize);
+            int steps = enableBlockJitter ? Mathf.Max(0, maxBlockOffsetSteps) : 0;
+            int columnsX = Mathf.Max(1, Mathf.CeilToInt(bounds.size.x / blockSizeValue));
+            int columnsZ = Mathf.Max(1, Mathf.CeilToInt(bounds.size.z / blockSizeValue));
+            float cellWidth = blockSizeValue * 0.95f;
+            float cellDepth = blockSizeValue * 0.95f;
+            float outlineWidth = Mathf.Clamp(blockSizeValue * 0.05f, 0.5f, 3f);
+            float clipPadding = steps > 0 ? _resolvedClipPadding : 0f;
+
+            var previousHandlesColor = Handles.color;
+            var previousZTest = Handles.zTest;
+            Handles.zTest = CompareFunction.Greater;
+
+            if (steps > 0)
+            {
+                for (int x = 0; x < columnsX; x++)
+                {
+                    for (int z = 0; z < columnsZ; z++)
+                    {
+                        var cellIndex = new Vector2(x, z);
+                        float offset = SampleBlockOffset(cellIndex);
+                        float height = _currentHeight - offset - clipPadding;
+
+                        var center = new Vector3(
+                            _boundsMin.x + (x + 0.5f) * blockSizeValue,
+                            height,
+                            _boundsMin.z + (z + 0.5f) * blockSizeValue);
+
+                        DrawDebugPlate(center, cellWidth, cellDepth, outlineWidth);
+                    }
+                }
+            }
+            else
+            {
+                float baseHeight = _currentHeight;
+                var planeCenter = new Vector3(bounds.center.x, baseHeight, bounds.center.z);
+                float planeWidth = Mathf.Max(0.01f, bounds.size.x);
+                float planeDepth = Mathf.Max(0.01f, bounds.size.z);
+                DrawDebugPlate(planeCenter, planeWidth, planeDepth, outlineWidth);
+            }
+
+            Handles.zTest = previousZTest;
+            Handles.color = previousHandlesColor;
+        }
+
+        private void DrawDebugPlate(Vector3 center, float width, float depth, float outlineWidth)
+        {
+            float halfX = width * 0.5f;
+            float halfZ = depth * 0.5f;
+
+            DebugPlateCorners[0] = new Vector3(center.x - halfX, center.y, center.z - halfZ);
+            DebugPlateCorners[1] = new Vector3(center.x + halfX, center.y, center.z - halfZ);
+            DebugPlateCorners[2] = new Vector3(center.x + halfX, center.y, center.z + halfZ);
+            DebugPlateCorners[3] = new Vector3(center.x - halfX, center.y, center.z + halfZ);
+            DebugPlateCorners[4] = DebugPlateCorners[0];
+
+            Handles.color = debugPlaneFillColor;
+            Handles.DrawAAConvexPolygon(DebugPlateCorners[0], DebugPlateCorners[1], DebugPlateCorners[2], DebugPlateCorners[3]);
+
+            Handles.color = debugPlaneOutlineColor;
+            Handles.DrawAAPolyLine(outlineWidth, DebugPlateCorners);
         }
 #endif
     }
