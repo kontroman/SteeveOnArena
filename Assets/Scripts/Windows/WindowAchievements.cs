@@ -18,6 +18,7 @@ namespace Windows
     {
         [SerializeField] private AchievementsConstructor _achievementsConstructor;
         [SerializeField] private TextMeshProUGUI _name;
+        [SerializeField] private AchievementScrollRectSizer _scrollSizer;
         
 
         private List<Achievement> _activeAchievements = new();
@@ -25,9 +26,11 @@ namespace Windows
 
         private void Awake()
         {
+            EnsureScrollSizer();
             _activeAchievements = GameRoot.GetManager<AchievementManager>().GetQuests();
             _achievementVisualizers = _achievementsConstructor.CreateQuestVisualizers(_activeAchievements);
             _name.text = LocalizationService.GetLocalizedText(Constants.AchievementKey.WindowNameKey);
+            _scrollSizer?.RefreshForItems(_achievementVisualizers.Count);
         }
 
         public void Close() =>
@@ -52,9 +55,17 @@ namespace Windows
         {
             UpdateProgressValue();
             MessageService.Subscribe(this);
+            EnsureScrollSizer();
+            _scrollSizer?.RefreshForItems(_achievementVisualizers.Count);
         }
 
         private void OnDisable() =>
             MessageService.Unsubscribe(this);
+
+        private void EnsureScrollSizer()
+        {
+            if (_scrollSizer == null)
+                _scrollSizer = GetComponentInChildren<AchievementScrollRectSizer>(true);
+        }
     }
 }
