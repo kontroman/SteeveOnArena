@@ -22,6 +22,8 @@ namespace MineArena.PlayerSystem
         [Header("Configuration")]
         [SerializeField] private AttackConfig _config;
 
+        private static readonly int AttackTrigger = Animator.StringToHash("Attack");
+
         private float _nextAttackTime;
         private ICommand _damageCommand;
         private bool _isEnabled;
@@ -32,6 +34,11 @@ namespace MineArena.PlayerSystem
             _isEnabled = true;
 
             _damageCommand = ScriptableObject.CreateInstance<DamageCommand>();
+
+            if (_animator == null)
+            {
+                _animator = GetComponent<Animator>();
+            }
         }
 
         private void OnDestroy()
@@ -46,11 +53,19 @@ namespace MineArena.PlayerSystem
             if (Inputs.LKMPressed && Time.time >= _nextAttackTime)
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                Vector3 targetPoint;
 
                 if (Physics.Raycast(ray, out RaycastHit hit))
                 {
-                    StartCoroutine(AttackRoutine(hit.point));
+                    targetPoint = hit.point;
                 }
+                else
+                {
+                    // fallback: attack straight ahead if nothing was hit so animation still plays
+                    targetPoint = transform.position + transform.forward;
+                }
+
+                StartCoroutine(AttackRoutine(targetPoint));
             }
         }
 
@@ -72,9 +87,9 @@ namespace MineArena.PlayerSystem
         {
             _nextAttackTime = Time.time + _config.Cooldown;
 
-            //TODO: create VFXManager
-            //TODO: change animation to Attack;
+            _animator.SetTrigger(AttackTrigger);
 
+            //TODO: create VFXManager
             GameRoot.GetManager<AudioManager>().PlayEffect("AttackSound");
 
             yield return new WaitForSeconds(_config.AnimationDelay);

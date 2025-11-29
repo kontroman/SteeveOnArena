@@ -24,11 +24,6 @@ namespace MineArena.Controllers
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Mouse0))
-            {
-                GetComponentFromList<Animator>().SetBool("isAttacking", true);
-            }
-
             if(Input.GetKeyDown(KeyCode.I)) 
                 GameRoot.UIManager.OpenWindow<InventoryWindow>();
         }

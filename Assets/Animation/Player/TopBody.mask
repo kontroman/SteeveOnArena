@@ -11,95 +11,31 @@ AvatarMask:
   m_Elements:
   - m_Path: 
     m_Weight: 1
-  - m_Path: Armature
+  - m_Path: SimplePlayer.arma
     m_Weight: 1
-  - m_Path: Armature/controller
+  - m_Path: SimplePlayer.arma/MAIN
+    m_Weight: 1
+  - m_Path: SimplePlayer.arma/MAIN/center
+    m_Weight: 1
+  - m_Path: SimplePlayer.arma/MAIN/center/Body
+    m_Weight: 1
+  - m_Path: SimplePlayer.arma/MAIN/center/Body/Chest
+    m_Weight: 1
+  - m_Path: SimplePlayer.arma/MAIN/center/Body/Chest/Head
+    m_Weight: 1
+  - m_Path: SimplePlayer.arma/MAIN/center/Body/Chest/Arm:Left:Upper
+    m_Weight: 1
+  - m_Path: SimplePlayer.arma/MAIN/center/Body/Chest/Arm:Left:Upper/Arm:Left:Lower
+    m_Weight: 1
+  - m_Path: SimplePlayer.arma/MAIN/center/Body/Chest/Arm:Right:Upper
+    m_Weight: 1
+  - m_Path: SimplePlayer.arma/MAIN/center/Body/Chest/Arm:Right:Upper/Arm:Right:Lower
+    m_Weight: 1
+  - m_Path: SimplePlayer.arma/MAIN/center/Leg:Right:Upper
     m_Weight: 0
-  - m_Path: Armature/controller/elbowIK.L
-    m_Weight: 1
-  - m_Path: Armature/controller/elbowIK.L/elbowIK.L_end
-    m_Weight: 1
-  - m_Path: Armature/controller/elbowIK.R
-    m_Weight: 1
-  - m_Path: Armature/controller/elbowIK.R/elbowIK.R_end
-    m_Weight: 1
-  - m_Path: Armature/controller/footIK.L
+  - m_Path: SimplePlayer.arma/MAIN/center/Leg:Right:Upper/Leg:Right:Lower
     m_Weight: 0
-  - m_Path: Armature/controller/footIK.L/footIK.L_end
+  - m_Path: SimplePlayer.arma/MAIN/center/Leg:Left:Upper
     m_Weight: 0
-  - m_Path: Armature/controller/footIK.R
-    m_Weight: 0
-  - m_Path: Armature/controller/footIK.R/footIK.R_end
-    m_Weight: 0
-  - m_Path: Armature/controller/handIK.L
-    m_Weight: 1
-  - m_Path: Armature/controller/handIK.L/handIK.L_end
-    m_Weight: 1
-  - m_Path: Armature/controller/handIK.R
-    m_Weight: 1
-  - m_Path: Armature/controller/handIK.R/handIK.R_end
-    m_Weight: 1
-  - m_Path: Armature/controller/kneeIK.L
-    m_Weight: 0
-  - m_Path: Armature/controller/kneeIK.L/kneeIK.L_end
-    m_Weight: 0
-  - m_Path: Armature/controller/kneeIK.R
-    m_Weight: 0
-  - m_Path: Armature/controller/kneeIK.R/kneeIK.R_end
-    m_Weight: 0
-  - m_Path: Armature/controller/pelvis
-    m_Weight: 0
-  - m_Path: Armature/controller/pelvis/hips
-    m_Weight: 0
-  - m_Path: Armature/controller/pelvis/hips/legUpper.L
-    m_Weight: 0
-  - m_Path: Armature/controller/pelvis/hips/legUpper.L/legLower.L
-    m_Weight: 0
-  - m_Path: Armature/controller/pelvis/hips/legUpper.L/legLower.L/foot.L
-    m_Weight: 0
-  - m_Path: Armature/controller/pelvis/hips/legUpper.L/legLower.L/foot.L/foot.L_end
-    m_Weight: 0
-  - m_Path: Armature/controller/pelvis/hips/legUpper.R
-    m_Weight: 0
-  - m_Path: Armature/controller/pelvis/hips/legUpper.R/legLower.R
-    m_Weight: 0
-  - m_Path: Armature/controller/pelvis/hips/legUpper.R/legLower.R/foot.R
-    m_Weight: 0
-  - m_Path: Armature/controller/pelvis/hips/legUpper.R/legLower.R/foot.R/foot.R_end
-    m_Weight: 0
-  - m_Path: Armature/controller/pelvis/spine
-    m_Weight: 1
-  - m_Path: Armature/controller/pelvis/spine/ribs
-    m_Weight: 1
-  - m_Path: Armature/controller/pelvis/spine/ribs/head
-    m_Weight: 1
-  - m_Path: Armature/controller/pelvis/spine/ribs/head/head_end
-    m_Weight: 1
-  - m_Path: Armature/controller/pelvis/spine/ribs/shoulder.L
-    m_Weight: 1
-  - m_Path: Armature/controller/pelvis/spine/ribs/shoulder.L/armUpper.L
-    m_Weight: 1
-  - m_Path: Armature/controller/pelvis/spine/ribs/shoulder.L/armUpper.L/armLower.L
-    m_Weight: 1
-  - m_Path: Armature/controller/pelvis/spine/ribs/shoulder.L/armUpper.L/armLower.L/hand.L
-    m_Weight: 1
-  - m_Path: Armature/controller/pelvis/spine/ribs/shoulder.L/armUpper.L/armLower.L/hand.L/hand.L_end
-    m_Weight: 1
-  - m_Path: Armature/controller/pelvis/spine/ribs/shoulder.R
-    m_Weight: 1
-  - m_Path: Armature/controller/pelvis/spine/ribs/shoulder.R/armUpper.R
-    m_Weight: 1
-  - m_Path: Armature/controller/pelvis/spine/ribs/shoulder.R/armUpper.R/armLower.R
-    m_Weight: 1
-  - m_Path: Armature/controller/pelvis/spine/ribs/shoulder.R/armUpper.R/armLower.R/hand.R
-    m_Weight: 1
-  - m_Path: Armature/controller/pelvis/spine/ribs/shoulder.R/armUpper.R/armLower.R/hand.R/hand.R_end
-    m_Weight: 1
-  - m_Path: Camera
-    m_Weight: 0
-  - m_Path: Circle
-    m_Weight: 0
-  - m_Path: Cube
-    m_Weight: 1
-  - m_Path: Lamp
+  - m_Path: SimplePlayer.arma/MAIN/center/Leg:Left:Upper/Leg:Left:Lower
     m_Weight: 0
