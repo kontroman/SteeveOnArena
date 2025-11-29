@@ -52,7 +52,17 @@ namespace MineArena.Game.Health
                     return;
             }
 #endif
-            ChangeValue(-damageData.Damage);
+            var damageToApply = damageData.Damage;
+
+            if (damageToApply > 0f)
+            {
+                foreach (var provider in GetComponents<IDefenseProvider>())
+                {
+                    damageToApply = provider.ModifyIncomingDamage(damageToApply);
+                }
+            }
+
+            ChangeValue(-damageToApply);
         }
 
         protected virtual void Die()
