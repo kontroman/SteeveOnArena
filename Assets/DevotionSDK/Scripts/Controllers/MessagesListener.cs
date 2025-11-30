@@ -21,12 +21,6 @@ namespace Devotion.SDK.Controllers
             MessageService.Unsubscribe(this);
         }
 
-        private IEnumerator Start()
-        {
-            yield return new WaitForSeconds(2);
-            Debug.LogError(LocalizationService.GetLocalizedText("Title"));
-        }
-
         public void OnMessage(GameMessages.WorldChestOpened message)
         {
             InfoPopupWindow window = (InfoPopupWindow)GameRoot.UIManager.ShowWindow<InfoPopupWindow>();

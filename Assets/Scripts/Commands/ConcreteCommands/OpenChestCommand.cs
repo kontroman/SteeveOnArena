@@ -18,14 +18,15 @@ namespace MineArena.Commands
             PlayerAttack patc = Player.Instance.GetComponentFromList<PlayerAttack>();
             RotationController rc = Player.Instance.GetComponentFromList<RotationController>();
             Transform chest = GameRoot.GetManager<InteractionManager>().CurrentTargetTransform;
-            Animator pa = Player.Instance.GetComponentFromList<Animator>();
+            var pa = Player.Instance.GetComponentFromList<PlayerAnimatorController>() ??
+                     Player.Instance.GetComponent<IPlayerAnimator>();
 
             pm.SetMovement(false);
             patc.SetComponentEnable(false);
             rc.RotatePlayerToTarget(chest);
 
-            pa.SetBool("isRunning", false);
-            pa.SetTrigger("ChestOpening");
+            pa?.SetRunning(false);
+            pa?.TriggerChestOpening();
 
             await Task.Delay(TimeSpan.FromSeconds(0.8f));
 
@@ -34,7 +35,7 @@ namespace MineArena.Commands
             await Task.Delay(TimeSpan.FromSeconds(2.7f));
 
             pm.SetMovement(true);
-            pa.ResetTrigger("ChestOpening");
+            pa?.ResetChestOpening();
             patc.SetComponentEnable(true);
             callback?.Invoke();
 

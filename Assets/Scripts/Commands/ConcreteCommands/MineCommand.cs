@@ -20,14 +20,15 @@ namespace MineArena.Commands
             PlayerAttack patc = Player.Instance.GetComponentFromList <PlayerAttack>();
             RotationController rc = Player.Instance.GetComponentFromList<RotationController>();
             Transform ore = GameRoot.GetManager<InteractionManager>().CurrentTargetTransform;
-            Animator pa = Player.Instance.GetComponentFromList<Animator>();
+            var pa = Player.Instance.GetComponentFromList<PlayerAnimatorController>() ??
+                     Player.Instance.GetComponent<IPlayerAnimator>();
             PlayerEquipment equipment = Player.Instance.GetComponentFromList<PlayerEquipment>();
 
             pm.SetMovement(false);
             patc.SetComponentEnable(false);
             rc.RotatePlayerToTarget(ore);
 
-            pa.SetBool("isRunning", false);
+            pa?.SetRunning(false);
             equipment?.SetActiveHandItem(HandItemType.Pickaxe);
 
             float miningDuration = equipment?.GetMiningDuration() ?? 3.33f;
@@ -35,16 +36,13 @@ namespace MineArena.Commands
 
             for (int i = 0; i < miningLoops; i++)
             {
-                if (!string.IsNullOrWhiteSpace(_miningStateName))
-                    pa.Play(_miningStateName, _miningLayer, 0f);
-                else
-                    pa.SetTrigger("Mining");
+                pa?.PlayMiningAnimation(_miningStateName, _miningLayer);
 
                 await Task.Delay(TimeSpan.FromSeconds(miningDuration));
             }
 
             pm.SetMovement(true);
-            pa.ResetTrigger("Mining");
+            pa?.ResetMiningAnimation();
             patc.SetComponentEnable(true);
             callback?.Invoke();
         }

@@ -10,6 +10,7 @@ using MineArena.Messages.MessageService;
 using MineArena.Messages;
 using MineArena.Controllers;
 using MineArena.PlayerSystem;
+using UnityEngine.EventSystems;
 
 namespace MineArena.PlayerSystem
 {
@@ -18,8 +19,7 @@ namespace MineArena.PlayerSystem
         IMessageSubscriber<GameMessages.NewSwordEquiped>
     {
         //TODO: change playerState from Player class
-        [SerializeField] private Animator _animator;
-        [SerializeField] private string _runBoolParameter = "isRunning";
+        [SerializeField] private PlayerAnimatorController _animatorController;
         [SerializeField] private string _attackStateName = "Attack";
         [SerializeField] private int _attackLayerIndex = 0;
         [SerializeField] private float _attackStateFailSafe = 1.5f;
@@ -28,13 +28,12 @@ namespace MineArena.PlayerSystem
         [SerializeField] private AttackConfig _config;
         [SerializeField] private PlayerEquipment _equipment;
 
-        private static readonly int AttackTrigger = Animator.StringToHash("Attack");
-
         private float _nextAttackTime;
         private ICommand _damageCommand;
         private bool _isEnabled;
-        private int _runParamHash;
         private bool _isAttacking;
+        private IPlayerAnimator _animator;
+        private Animator _rawAnimator;
 
         private void Awake()
         {
@@ -43,12 +42,8 @@ namespace MineArena.PlayerSystem
 
             _damageCommand = ScriptableObject.CreateInstance<DamageCommand>();
 
-            if (_animator == null)
-            {
-                _animator = GetComponent<Animator>();
-            }
-
-            _runParamHash = Animator.StringToHash(_runBoolParameter);
+            _animator = _animatorController ?? GetComponent<IPlayerAnimator>();
+            _rawAnimator = (_animator as PlayerAnimatorController)?.Animator ?? GetComponent<Animator>();
 
             if (_equipment == null)
             {
@@ -67,6 +62,11 @@ namespace MineArena.PlayerSystem
 
             if (Inputs.LKMPressed && Time.time >= _nextAttackTime)
             {
+                if (IsPointerOverUi())
+                {
+                    return;
+                }
+
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 Vector3 targetPoint;
 
@@ -84,13 +84,18 @@ namespace MineArena.PlayerSystem
             }
         }
 
+        private static bool IsPointerOverUi()
+        {
+            return EventSystem.current != null && EventSystem.current.IsPointerOverGameObject();
+        }
+
         private IEnumerator AttackRoutine(Vector3 targetPoint)
         {
             _isAttacking = true;
 
             Vector3 attackDirection = (targetPoint - transform.position).normalized;
 
-            bool isRunning = _animator != null && _animator.GetBool(_runParamHash);
+            bool isRunning = _animator?.IsRunning() ?? false;
 
             if (!isRunning)
             {
@@ -128,8 +133,7 @@ namespace MineArena.PlayerSystem
 
             _nextAttackTime = Time.time + _config.Cooldown;
 
-            _animator.ResetTrigger(AttackTrigger);
-            _animator.SetTrigger(AttackTrigger);
+            _animator?.TriggerAttack();
 
             //TODO: create VFXManager
             GameRoot.GetManager<AudioManager>().PlayEffect("AttackSound");
@@ -217,13 +221,13 @@ namespace MineArena.PlayerSystem
 
         private IEnumerator WaitForAttackAnimation(AttackConfig activeConfig)
         {
-            if (_animator == null || string.IsNullOrWhiteSpace(_attackStateName))
+            if (_rawAnimator == null || string.IsNullOrWhiteSpace(_attackStateName))
             {
                 yield return null;
                 yield break;
             }
 
-            int layer = Mathf.Clamp(_attackLayerIndex, 0, _animator.layerCount - 1);
+            int layer = Mathf.Clamp(_attackLayerIndex, 0, _rawAnimator.layerCount - 1);
 
             bool stateStarted = false;
             float failSafeTime = Mathf.Max(_attackStateFailSafe, activeConfig?.AnimationDelay ?? 0f);
@@ -231,13 +235,13 @@ namespace MineArena.PlayerSystem
 
             while (true)
             {
-                var info = _animator.GetCurrentAnimatorStateInfo(layer);
+                var info = _rawAnimator.GetCurrentAnimatorStateInfo(layer);
 
                 if (info.IsName(_attackStateName))
                 {
                     stateStarted = true;
 
-                    if (info.normalizedTime >= 1f && !_animator.IsInTransition(layer))
+                    if (info.normalizedTime >= 1f && !_rawAnimator.IsInTransition(layer))
                     {
                         break;
                     }

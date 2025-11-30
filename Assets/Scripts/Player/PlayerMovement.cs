@@ -10,6 +10,7 @@ namespace MineArena.PlayerSystem
         private CharacterController _characterController;
         private bool _canMove = true;
 
+        private IPlayerAnimator _animator;
         private Transform _cameraTransform;
         private Vector3 _velocity;
         private bool _isGrounded;
@@ -18,6 +19,10 @@ namespace MineArena.PlayerSystem
         {
             _cameraTransform = Camera.main.transform;
             _characterController = GetComponent<CharacterController>();
+
+            _animator = Controllers.Player.Instance?.GetComponentFromList<PlayerAnimatorController>() ??
+                        Controllers.Player.Instance?.GetComponent<IPlayerAnimator>() ??
+                        GetComponent<IPlayerAnimator>();
         }
 
         private void Update()
@@ -43,7 +48,7 @@ namespace MineArena.PlayerSystem
 
             if (moveDirection.magnitude > 0.1f)
             {
-                Controllers.Player.Instance.GetComponentFromList<Animator>().SetBool("isRunning", true);
+                _animator?.SetRunning(true);
                 moveDirection.Normalize();
 
                 Vector3 cameraForward = _cameraTransform.forward;
@@ -55,7 +60,7 @@ namespace MineArena.PlayerSystem
             }
             else
             {
-                Controllers.Player.Instance.GetComponentFromList<Animator>().SetBool("isRunning", false);
+                _animator?.SetRunning(false);
                 return Vector3.zero;
             }
         }

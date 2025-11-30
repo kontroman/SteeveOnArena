@@ -9,8 +9,7 @@ namespace MineArena.PlayerSystem
     public class PlayerEquipment : MonoBehaviour, IDefenseProvider
     {
         [Header("Animator")]
-        [SerializeField] private Animator _animator;
-        [SerializeField] private string _handItemParameter = "HandItemState";
+        [SerializeField] private PlayerAnimatorController _animatorController;
 
         [Header("Hand items (already in rig)")]
         [SerializeField] private GameObject _swordInHand;
@@ -18,9 +17,9 @@ namespace MineArena.PlayerSystem
 
         [Header("Attack configs")]
         [SerializeField] private AttackConfig _defaultSwordAttack;
+        [SerializeField] private AttackConfig _swordAttack;
 
         [Header("Equipped items")]
-        [SerializeField] private SwordConfig _sword;
         [SerializeField] private PickaxeConfig _pickaxe;
         [SerializeField] private ArmorConfig _helmet;
         [SerializeField] private ArmorConfig _chest;
@@ -34,16 +33,13 @@ namespace MineArena.PlayerSystem
         [SerializeField] private ArmorVisual _bootsVisual;
 
         private HandItemType _lastActiveHandItem = HandItemType.None;
-        private int _handItemParamHash;
+        private IPlayerAnimator _animator;
 
         private const float ArmorReductionScale = 100f;
 
         private void Awake()
         {
-            if (_animator == null)
-                _animator = GetComponent<Animator>();
-
-            _handItemParamHash = Animator.StringToHash(_handItemParameter);
+            _animator = _animatorController ?? GetComponent<IPlayerAnimator>();
 
             UpdateHandAnimatorState();
             RefreshArmorVisuals();
@@ -51,14 +47,16 @@ namespace MineArena.PlayerSystem
 
 #region Equip API
 
-        public void EquipSword(SwordConfig config, bool switchToHand = true)
+        public void EquipSword(AttackConfig attackConfig, bool switchToHand = true)
         {
-            _sword = config;
+            _swordAttack = attackConfig;
 
             if (switchToHand)
                 SetActiveHandItem(HandItemType.Sword);
 
             BroadcastSwordAttackConfig();
+
+            UpdateHandItemMaterial(HandItemType.Sword);
         }
 
         public void EquipPickaxe(PickaxeConfig config, bool switchToHand = false)
@@ -67,6 +65,8 @@ namespace MineArena.PlayerSystem
 
             if (switchToHand)
                 SetActiveHandItem(HandItemType.Pickaxe);
+
+            UpdateHandItemMaterial(HandItemType.Pickaxe);
         }
 
         public void EquipArmor(ArmorConfig armor)
@@ -110,10 +110,9 @@ namespace MineArena.PlayerSystem
             };
         }
 
-        public SwordConfig Sword => _sword;
         public PickaxeConfig Pickaxe => _pickaxe;
 
-        public AttackConfig GetSwordAttackConfig() => _sword?.AttackProfile ?? _defaultSwordAttack;
+        public AttackConfig GetSwordAttackConfig() => _swordAttack ?? _defaultSwordAttack;
         public float GetMiningDuration() => _pickaxe?.MiningDuration ?? 3.33f;
         public int GetMiningLoops() => Mathf.Max(1, _pickaxe?.MiningLoops ?? 2);
 
@@ -137,6 +136,7 @@ namespace MineArena.PlayerSystem
             if (_pickaxeInHand != null)
                 _pickaxeInHand.SetActive(type == HandItemType.Pickaxe);
 
+            UpdateHandItemMaterial(type);
             UpdateHandAnimatorState();
         }
 
@@ -145,7 +145,41 @@ namespace MineArena.PlayerSystem
             if (_animator == null)
                 return;
 
-            _animator.SetInteger(_handItemParamHash, (int)_lastActiveHandItem);
+            _animator.SetHandItemState(_lastActiveHandItem);
+        }
+
+        private void UpdateHandItemMaterial(HandItemType type)
+        {
+            switch (type)
+            {
+                case HandItemType.Sword:
+                    var attack = GetSwordAttackConfig();
+                    ApplyMaterialToItem(_swordInHand, attack?.Material);
+                    break;
+                case HandItemType.Pickaxe:
+                    ApplyMaterialToItem(_pickaxeInHand, _pickaxe?.Material);
+                    break;
+            }
+        }
+
+        private static void ApplyMaterialToItem(GameObject item, Material material)
+        {
+            if (item == null || material == null)
+                return;
+
+            var renderers = item.GetComponentsInChildren<Renderer>(includeInactive: true);
+            foreach (var renderer in renderers)
+            {
+                if (renderer == null)
+                    continue;
+
+                var mats = renderer.sharedMaterials;
+                for (int i = 0; i < mats.Length; i++)
+                {
+                    mats[i] = material;
+                }
+                renderer.sharedMaterials = mats;
+            }
         }
 
 #endregion

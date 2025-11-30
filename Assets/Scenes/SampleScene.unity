@@ -11836,7 +11836,7 @@ Transform:
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
   m_LocalRotation: {x: 0.35356745, y: 0.3961026, z: -0.1686416, w: 0.8304534}
-  m_LocalPosition: {x: -0.5664301, y: 13.33, z: 30.245003}
+  m_LocalPosition: {x: 1.8800001, y: 13.33, z: 31.439999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -28652,8 +28652,8 @@ Transform:
   m_GameObject: {fileID: 919132148657959234}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.70710707, z: -0, w: 0.70710653}
-  m_LocalPosition: {x: 8.21357, y: 1.58, z: 37.355003}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 10.66, y: 1.58, z: 38.55}
+  m_LocalScale: {x: 0.89393, y: 0.89393, z: 0.89393}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1392055971903332868}
@@ -29134,6 +29134,7 @@ GameObject:
   - component: {fileID: 919132148657959236}
   - component: {fileID: 919132148657959235}
   - component: {fileID: 919132148657959244}
+  - component: {fileID: 919132148657959245}
   m_Layer: 0
   m_Name: PlayerV2.0
   m_TagString: Player
@@ -29175,7 +29176,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bb275130463ac14c8241552d8f3cf41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animator: {fileID: 577440789}
+  _animatorController: {fileID: 0}
+  _attackStateName: Attack
+  _attackLayerIndex: 0
+  _attackStateFailSafe: 1.5
   _config: {fileID: 11400000, guid: 54682f923d37d094dab0bd0917bf5e93, type: 2}
   _equipment: {fileID: 0}
 --- !u!114 &919132148657959237
@@ -29304,12 +29308,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abb632f71e5036e459c5c89f8572bac3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animator: {fileID: 577440789}
-  _handItemParameter: HandItemState
+  _animatorController: {fileID: 919132148657959245}
   _swordInHand: {fileID: 5529834764166096969}
   _pickaxeInHand: {fileID: 2314285012355362984}
   _defaultSwordAttack: {fileID: 11400000, guid: 54682f923d37d094dab0bd0917bf5e93, type: 2}
-  _sword: {fileID: 0}
+  _swordAttack: {fileID: 11400000, guid: d8ce5082d092ea244a6bb7e4f9cb14e5, type: 2}
   _pickaxe: {fileID: 11400000, guid: 2a2e462701115da419a4fca449d15052, type: 2}
   _helmet: {fileID: 0}
   _chest: {fileID: 0}
@@ -29345,6 +29348,29 @@ MonoBehaviour:
     Renderers:
     - {fileID: 5737140541089204252}
     - {fileID: 1408394138342395811}
+--- !u!114 &919132148657959245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132148657959234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3322c31aa8e6c424ea29c9f7db3800d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _runBoolParameter: isRunning
+  _attackTriggerParameter: Attack
+  _handItemParameter: HandItemState
+  _miningTriggerParameter: Mining
+  _chestOpeningTriggerParameter: ChestOpening
+  _damageTriggerParameter: Damage
+  _deathTriggerParameter: Death
+  _victoryTriggerParameter: Victory
+  _miningStateName: PlayerMiningAnimation
+  _miningLayer: 0
+  _health: {fileID: 919132148657959242}
 --- !u!1 &957691336219240259
 GameObject:
   m_ObjectHideFlags: 0
@@ -37572,7 +37598,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bb275130463ac14c8241552d8f3cf41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animator: {fileID: 0}
+  _animatorController: {fileID: 0}
+  _attackStateName: Attack
+  _attackLayerIndex: 0
+  _attackStateFailSafe: 1.5
   _config: {fileID: 11400000, guid: 54682f923d37d094dab0bd0917bf5e93, type: 2}
   _equipment: {fileID: 0}
 --- !u!114 &8116718894625334555

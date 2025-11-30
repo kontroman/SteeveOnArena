@@ -13,5 +13,6 @@ namespace MineArena.PlayerSystem
         public LayerMask AttackableLayers;
         public GameObject ImpactVFX;
         public AudioClip ImpactSound;
+        public Material Material;
     }
 }

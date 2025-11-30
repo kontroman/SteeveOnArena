@@ -2,11 +2,6 @@ using UnityEngine;
 
 namespace MineArena.PlayerSystem
 {
-    /// <summary>
-    /// Lightweight animation driver for a test-only player instance.
-    /// Hooks into an Animator and flips configured parameters on key presses.
-    /// Does not depend on existing Player scripts or singletons.
-    /// </summary>
     [RequireComponent(typeof(Animator))]
     public class PlayerAnimationTestDriver : MonoBehaviour
     {

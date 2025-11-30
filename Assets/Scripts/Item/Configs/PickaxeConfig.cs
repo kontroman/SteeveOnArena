@@ -7,8 +7,10 @@ namespace MineArena.Items
     {
         [SerializeField] private float _miningDuration = 3.33f;
         [SerializeField] private int _miningLoops = 2;
+        [SerializeField] private Material _material;
 
         public float MiningDuration => _miningDuration;
         public int MiningLoops => _miningLoops;
+        public Material Material => _material;
     }
 }
