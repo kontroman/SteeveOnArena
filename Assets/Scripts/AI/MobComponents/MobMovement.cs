@@ -1,36 +1,77 @@
-using MineArena.Controllers;
+Ôªøusing MineArena.Controllers;
 using MineArena.Interfaces;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace MineArena.AI
 {
-    //NOTE: ÔÓÍ‡ ˜ÚÓ ‰ËÒÚ‡ÌˆËˇ ÓÒÒÚ‡ÌÓ‚ÍË Â„ÛÎËÛÂÚÒˇ ˜ÂÂÁ Ì‡‚ÏÂ¯ ‡„ÂÌÚ‡.
+    //NOTE: –ø–æ–∫–∞ —á—Ç–æ –¥–∏—Å—Ç–∞–Ω—Ü–∏—è –æ—Å—Å—Ç–∞–Ω–æ–≤–∫–∏ —Ä–µ–≥—É–ª–∏—Ä—É–µ—Ç—Å—è —á–µ—Ä–µ–∑ –Ω–∞–≤–º–µ—à –∞–≥–µ–Ω—Ç–∞.
     public class MobMovement : MonoBehaviour, IMobComponent
     {
         private Transform _playerTransform;
         private NavMeshAgent _agent;
+        private MobAnimationController _mobAnimator;
+        private float _stoppingDistance;
+        [Header("Visual")]
+        [SerializeField] private Transform _visualRoot;
+        [SerializeField] private float _visualYawOffset;
+
+        private Quaternion _baseVisualRotation = Quaternion.identity;
 
         public void SetPlayerTransform(Transform playerTransform) => _playerTransform = playerTransform;
+
+        private void Awake()
+        {
+            CacheVisualRotation();
+        }
 
         private void Start()
         {
             _agent = GetComponent<NavMeshAgent>();
             _playerTransform = Player.Instance.GetComponentFromList<Transform>();
+            _mobAnimator = GetComponent<MobAnimationController>();
+
+            ApplyVisualOffset();
+        }
+
+        private void OnEnable()
+        {
+            ApplyVisualOffset();
         }
 
         private void Update()
         {
-            if ( _playerTransform)
+            if (_playerTransform)
             {
                 _playerTransform = Player.Instance.GetComponentFromList<Transform>();
                 _agent.SetDestination(_playerTransform.position);
             }
+
+            _mobAnimator?.UpdateMoveState(_agent.velocity, _agent.isStopped);
         }
 
         public float DistanceToPlayer()
         {
             return _agent.remainingDistance;
+        }
+
+        public bool IsInAttackRange(Transform target, float attackRange)
+        {
+            if (target == null) return false;
+
+            var myRadius = _agent != null ? _agent.radius : 0f;
+
+            float targetRadius = 0f;
+            var targetCollider = target.GetComponent<Collider>();
+            if (targetCollider != null)
+            {
+                // –ü—Ä–∏–±–ª–∏–∑–∏—Ç–µ–ª—å–Ω–æ –æ—Ü–µ–Ω–∏–º —Ä–∞–¥–∏—É—Å –ø–æ –Ω–∞–∏–±–æ–ª—å—à–µ–º—É –ø–æ–ª—É—Ä–∞–∑–º–µ—Ä—É.
+                var extents = targetCollider.bounds.extents;
+                targetRadius = Mathf.Max(extents.x, extents.z);
+            }
+
+            float distance = Vector3.Distance(transform.position, target.position);
+            return distance <= attackRange + myRadius + targetRadius;
         }
 
         public void Stop()
@@ -43,10 +84,25 @@ namespace MineArena.AI
             _agent.isStopped = false;
         }
 
+        private void CacheVisualRotation()
+        {
+            if (_visualRoot != null)
+            {
+                _baseVisualRotation = _visualRoot.localRotation;
+            }
+        }
+
+        private void ApplyVisualOffset()
+        {
+            if (_visualRoot == null) return;
+            _visualRoot.localRotation = Quaternion.Euler(0f, _visualYawOffset, 0f) * _baseVisualRotation;
+        }
+
         public void SetParameters(MobPreset preset)
         {
             _agent.speed = preset.Speed;
             _agent.stoppingDistance = preset.AttackRange;
+            _stoppingDistance = _agent.stoppingDistance;
         }
     }
 }

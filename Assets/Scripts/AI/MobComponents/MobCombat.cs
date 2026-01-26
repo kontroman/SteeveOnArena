@@ -1,4 +1,4 @@
-using MineArena.Commands;
+﻿using MineArena.Commands;
 using MineArena.Controllers;
 using MineArena.Interfaces;
 using MineArena.Structs;
@@ -17,13 +17,30 @@ namespace MineArena.AI
         [SerializeField] private GameObject _projectilePrefab;
         [SerializeField] private Transform _firePoint;
 
-        private bool _isAttack = false;
+        private bool _isAttack;
         private MobMovement _mobMovement;
+        private MobAnimationController _mobAnimator;
         private ICommand _damageCommand;
         private ICommand _attackCommand;
         private IDamageable _playerDamagable;
         private DamageData _damageData;
         private Transform _playerTransform;
+        private Coroutine _attackRoutine;
+        private float _nextAttackTime;
+
+        private void OnEnable()
+        {
+            _mobAnimator = GetComponent<MobAnimationController>();
+
+            if (_mobAnimator != null)
+                _mobAnimator.AttackKeyframeReached += OnAttackKeyframe;
+        }
+
+        private void OnDisable()
+        {
+            if (_mobAnimator != null)
+                _mobAnimator.AttackKeyframeReached -= OnAttackKeyframe;
+        }
 
         private void Start()
         {
@@ -38,13 +55,15 @@ namespace MineArena.AI
                 _attackCommand = ScriptableObject.CreateInstance<RangeAttackCommand>();
             else
                 _attackCommand = ScriptableObject.CreateInstance<MeleeAttackCommand>();
+
+            _nextAttackTime = Time.time;
         }
 
         private void Update()
         {
-            if (!_isAttack && (_mobMovement.DistanceToPlayer() < _attackRange))
+            if (!_isAttack && _mobMovement.IsInAttackRange(_playerTransform, _attackRange))
                 StartAttack();
-            if (_isAttack && _mobMovement.DistanceToPlayer() > _attackRange)
+            if (_isAttack && !_mobMovement.IsInAttackRange(_playerTransform, _attackRange))
                 StopAttack();
 
             if (_isAttack)
@@ -57,40 +76,74 @@ namespace MineArena.AI
         {
             _isAttack = true;
             _mobMovement.Stop();
-            StartCoroutine("Attack");
+            _attackRoutine = StartCoroutine(Attack());
         }
 
         private void StopAttack()
         {
+            StopAttackInternal(true);
+        }
+
+        public void CancelAttack()
+        {
+            StopAttackInternal(false);
+        }
+
+        private void StopAttackInternal(bool resumeMovement)
+        {
             _isAttack = false;
-            _mobMovement.Move();
-            StopCoroutine("Attack");
+
+            if (_attackRoutine != null)
+            {
+                StopCoroutine(_attackRoutine);
+                _attackRoutine = null;
+            }
+
+            if (resumeMovement)
+                _mobMovement.Move();
         }
 
         private IEnumerator Attack()
         {
-            yield return new WaitForSeconds(_attackDelay);
-
             while (_isAttack)
             {
-                if (_isRanged)
+                float wait = _nextAttackTime - Time.time;
+                if (wait > 0f)
                 {
-                    var rangeAttackData = new RangeAttackData(_damageData.Damage, _projectilePrefab, _playerTransform, _firePoint);
-                    _attackCommand.Execute(rangeAttackData);
+                    yield return new WaitForSeconds(wait);
+                    if (!_isAttack) yield break;
                 }
-                else
-                    _attackCommand.Execute(_damageData);
 
-                yield return new WaitForSeconds(_attackDelay);
+                _mobAnimator?.PlayAttack();
+                _nextAttackTime = Time.time + _attackDelay;
+
+                // подождём кадр, чтобы не зациклить триггер моментально
+                yield return null;
+            }
+        }
+
+        private void OnAttackKeyframe()
+        {
+            if (!_isAttack)
+                return;
+
+            if (_isRanged)
+            {
+                var rangeAttackData = new RangeAttackData(_damageData.Damage, _projectilePrefab, _playerTransform, _firePoint);
+                _attackCommand.Execute(rangeAttackData);
+            }
+            else
+            {
+                _attackCommand.Execute(_damageData);
             }
         }
 
         private void FollowTheTarget()
         {
             Vector3 direction = _playerTransform.position - transform.position;
-            direction.y = 0; // ������ �������������� �������
+            direction.y = 0;
 
-            if (direction.sqrMagnitude > 0.01f) // ������ �� ������ ��� ������� �������
+            if (direction.sqrMagnitude > 0.01f)
             {
                 Quaternion targetRotation = Quaternion.LookRotation(direction);
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, _rotationSpeed * Time.deltaTime);
@@ -104,6 +157,7 @@ namespace MineArena.AI
             _attackDelay = preset.AttackDelay;
             _rotationSpeed = preset.RotationSpeed;
             _projectilePrefab = preset.Projectile;
+            _damageData = new DamageData(_damage, _playerDamagable);
         }
     }
 }

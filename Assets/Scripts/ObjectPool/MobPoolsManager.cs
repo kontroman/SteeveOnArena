@@ -11,6 +11,7 @@ namespace MineArena.ObjectPools
             ObjectPoolsManager.Instance.InitPool<Mob>(_poolPreset);
             ObjectPoolsManager.Instance.Get<Zombie, Mob>();
             ObjectPoolsManager.Instance.Get<Skeleton, Mob>();
+            ObjectPoolsManager.Instance.Get<Pillager, Mob>();
         }
     }
 }

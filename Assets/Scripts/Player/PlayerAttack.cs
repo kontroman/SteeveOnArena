@@ -154,8 +154,7 @@ namespace MineArena.PlayerSystem
 
         private void DetectHits()
         {
-            Vector3 offset = -transform.forward * 0.5f;
-            Vector3 attackOrigin = transform.position + offset;
+            Vector3 attackOrigin = GetAttackOrigin();
 
             Collider[] hits = Physics.OverlapSphere(attackOrigin, _config.Radius, _config.AttackableLayers);
 
@@ -190,8 +189,7 @@ namespace MineArena.PlayerSystem
         {
             if (_config == null) return;
 
-            Vector3 offset = -transform.forward * 0.5f;
-            Vector3 attackOrigin = transform.position + offset;
+            Vector3 attackOrigin = GetAttackOrigin();
 
             Gizmos.color = new Color(1, 0, 0, 0.3f);
             Gizmos.DrawWireSphere(attackOrigin, _config.Radius);
@@ -206,6 +204,27 @@ namespace MineArena.PlayerSystem
             Gizmos.color = Color.yellow;
             Gizmos.DrawRay(attackOrigin, leftRayDirection);
             Gizmos.DrawRay(attackOrigin, rightRayDirection);
+        }
+
+        private Vector3 GetAttackOrigin()
+        {
+            float forwardOffset = Mathf.Max(0.1f, _config.Radius * 0.5f);
+
+            if (TryGetComponent<CharacterController>(out var characterController))
+            {
+                forwardOffset = Mathf.Max(forwardOffset, characterController.radius);
+                return transform.position + transform.forward * forwardOffset + Vector3.up * characterController.height * 0.25f;
+            }
+
+            if (TryGetComponent<Collider>(out var collider))
+            {
+                var extents = collider.bounds.extents;
+                float colliderRadius = Mathf.Max(extents.x, extents.z);
+                forwardOffset = Mathf.Max(forwardOffset, colliderRadius);
+                return transform.position + transform.forward * forwardOffset + Vector3.up * extents.y * 0.25f;
+            }
+
+            return transform.position + transform.forward * forwardOffset;
         }
 
 

@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using MineArena.ObjectPools;
 using MineArena.Controllers;
 using MineArena.Interfaces;
@@ -15,6 +15,7 @@ namespace MineArena.AI
         [SerializeField] private MobCombat _mobCombat;
         [SerializeField] private MobMovement _mobMovement;
         [SerializeField] private MobHealth _mobHealth;
+        [SerializeField] private MobAnimationController _mobAnimation;
         [SerializeField] private MobPreset _preset;
 
         public void Start()
@@ -25,10 +26,12 @@ namespace MineArena.AI
 
         public void SetPresetParameters(MobPreset preset)
         {
-            _type = _preset.MobType;
+            _preset = preset;
+            _type = preset.MobType;
             _mobCombat.SetParameters(preset);
             _mobMovement.SetParameters(preset);
             _mobHealth.SetParameters(preset);
+            _mobAnimation?.SetParameters(preset);
         }
     }
 }
