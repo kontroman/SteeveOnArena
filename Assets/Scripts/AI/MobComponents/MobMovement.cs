@@ -13,6 +13,7 @@ namespace MineArena.AI
         private MobAnimationController _mobAnimator;
         private float _stoppingDistance;
         [Header("Facing")]
+        [SerializeField] private bool _useFacingAxis;
         [SerializeField] private FacingAxis _facingAxis = FacingAxis.PositiveZ;
 
         private Quaternion _axisCorrection = Quaternion.identity;
@@ -93,6 +94,9 @@ namespace MineArena.AI
 
         public Quaternion ApplyAxisCorrection(Quaternion rotation)
         {
+            if (!_useFacingAxis)
+                return rotation;
+
             return rotation * _axisCorrection;
         }
 
@@ -121,6 +125,12 @@ namespace MineArena.AI
 
         private void UpdateAxisCorrection()
         {
+            if (!_useFacingAxis)
+            {
+                _axisCorrection = Quaternion.identity;
+                return;
+            }
+
             Vector3 axisVector = GetAxisVector(_facingAxis);
             if (axisVector == Vector3.zero)
             {
