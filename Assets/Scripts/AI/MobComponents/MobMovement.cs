@@ -12,31 +12,37 @@ namespace MineArena.AI
         private NavMeshAgent _agent;
         private MobAnimationController _mobAnimator;
         private float _stoppingDistance;
-        [Header("Visual")]
-        [SerializeField] private Transform _visualRoot;
-        [SerializeField] private float _visualYawOffset;
+        [Header("Facing")]
+        [SerializeField] private FacingAxis _facingAxis = FacingAxis.PositiveZ;
 
-        private Quaternion _baseVisualRotation = Quaternion.identity;
+        private Quaternion _axisCorrection = Quaternion.identity;
+
+        private enum FacingAxis
+        {
+            PositiveZ,
+            NegativeZ,
+            PositiveX,
+            NegativeX,
+            PositiveY,
+            NegativeY
+        }
 
         public void SetPlayerTransform(Transform playerTransform) => _playerTransform = playerTransform;
 
         private void Awake()
         {
-            CacheVisualRotation();
+            UpdateAxisCorrection();
         }
 
         private void Start()
         {
             _agent = GetComponent<NavMeshAgent>();
+            if (_agent != null)
+            {
+                _agent.updateRotation = false;
+            }
             _playerTransform = Player.Instance.GetComponentFromList<Transform>();
             _mobAnimator = GetComponent<MobAnimationController>();
-
-            ApplyVisualOffset();
-        }
-
-        private void OnEnable()
-        {
-            ApplyVisualOffset();
         }
 
         private void Update()
@@ -46,6 +52,8 @@ namespace MineArena.AI
                 _playerTransform = Player.Instance.GetComponentFromList<Transform>();
                 _agent.SetDestination(_playerTransform.position);
             }
+
+            UpdateFacing();
 
             _mobAnimator?.UpdateMoveState(_agent.velocity, _agent.isStopped);
         }
@@ -65,7 +73,6 @@ namespace MineArena.AI
             var targetCollider = target.GetComponent<Collider>();
             if (targetCollider != null)
             {
-                // Приблизительно оценим радиус по наибольшему полуразмеру.
                 var extents = targetCollider.bounds.extents;
                 targetRadius = Mathf.Max(extents.x, extents.z);
             }
@@ -84,18 +91,65 @@ namespace MineArena.AI
             _agent.isStopped = false;
         }
 
-        private void CacheVisualRotation()
+        public Quaternion ApplyAxisCorrection(Quaternion rotation)
         {
-            if (_visualRoot != null)
-            {
-                _baseVisualRotation = _visualRoot.localRotation;
-            }
+            return rotation * _axisCorrection;
         }
 
-        private void ApplyVisualOffset()
+        public Quaternion GetAxisCorrectedLookRotation(Vector3 direction)
         {
-            if (_visualRoot == null) return;
-            _visualRoot.localRotation = Quaternion.Euler(0f, _visualYawOffset, 0f) * _baseVisualRotation;
+            if (direction.sqrMagnitude < 0.0001f)
+                return transform.rotation;
+
+            Quaternion lookRotation = Quaternion.LookRotation(direction.normalized, Vector3.up);
+            return ApplyAxisCorrection(lookRotation);
+        }
+
+        private void UpdateFacing()
+        {
+            if (_agent == null || _playerTransform == null)
+                return;
+
+            Vector3 direction = _playerTransform.position - transform.position;
+            direction.y = 0f;
+
+            if (direction.sqrMagnitude < 0.0001f)
+                return;
+
+            transform.rotation = GetAxisCorrectedLookRotation(direction);
+        }
+
+        private void UpdateAxisCorrection()
+        {
+            Vector3 axisVector = GetAxisVector(_facingAxis);
+            if (axisVector == Vector3.zero)
+            {
+                _axisCorrection = Quaternion.identity;
+                return;
+            }
+
+            _axisCorrection = Quaternion.Inverse(Quaternion.FromToRotation(Vector3.forward, axisVector));
+        }
+
+        private static Vector3 GetAxisVector(FacingAxis axis)
+        {
+            switch (axis)
+            {
+                case FacingAxis.PositiveZ:
+                    return Vector3.forward;
+                case FacingAxis.NegativeZ:
+                    return Vector3.back;
+                case FacingAxis.PositiveX:
+                    return Vector3.right;
+                case FacingAxis.NegativeX:
+                    return Vector3.left;
+                case FacingAxis.PositiveY:
+                    return Vector3.up;
+                case FacingAxis.NegativeY:
+                    return Vector3.down;
+                default:
+                    return Vector3.forward;
+            }
         }
 
         public void SetParameters(MobPreset preset)
@@ -104,5 +158,12 @@ namespace MineArena.AI
             _agent.stoppingDistance = preset.AttackRange;
             _stoppingDistance = _agent.stoppingDistance;
         }
+
+#if UNITY_EDITOR
+        private void OnValidate()
+        {
+            UpdateAxisCorrection();
+        }
+#endif
     }
 }

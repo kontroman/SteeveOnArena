@@ -145,8 +145,11 @@ namespace MineArena.AI
 
             if (direction.sqrMagnitude > 0.01f)
             {
-                Quaternion targetRotation = Quaternion.LookRotation(direction);
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, _rotationSpeed * Time.deltaTime);
+                Quaternion correctedRotation = _mobMovement != null
+                    ? _mobMovement.GetAxisCorrectedLookRotation(direction)
+                    : Quaternion.LookRotation(direction);
+
+                transform.rotation = Quaternion.Slerp(transform.rotation, correctedRotation, _rotationSpeed * Time.deltaTime);
             }
         }
 
