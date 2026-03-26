@@ -22,7 +22,6 @@ namespace MineArena.AI
         protected override void Die()
         {
             ObjectPoolsManager.Instance.Release<Mob>(gameObject);
-            _currentHealth = _maxHealth;
             
             AchievementMessages.AchievementTargetTaken.Publish((_preset,1)); // test quest
         }
