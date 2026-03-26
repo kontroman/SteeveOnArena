@@ -303,6 +303,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c6545e316f431c47baa57341c200cd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _useFacingAxis: 0
+  _facingAxis: 0
 --- !u!195 &8296100569189015961
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -356,10 +358,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1602e9d9d73c0843a5a052cd01fa6a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mobCombat: {fileID: 0}
-  _mobMovement: {fileID: 0}
-  _mobHealth: {fileID: 0}
-  _mobAnimation: {fileID: 0}
+  _mobCombat: {fileID: 7531613061734647052}
+  _mobMovement: {fileID: 1505722137357106999}
+  _mobHealth: {fileID: 4635953631767339074}
+  _mobAnimation: {fileID: 3081791387670097394}
   _preset: {fileID: 11400000, guid: f49cb6236b606ad47aa62d013b876986, type: 2}
 --- !u!136 &7867163122616444193
 CapsuleCollider:

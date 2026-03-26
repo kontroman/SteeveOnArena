@@ -5,7 +5,7 @@ namespace MineArena.ObjectPools
     public class ProjectilePoolsManager : MonoBehaviour
     {
         [SerializeField] ObjectPoolPreset _poolPreset;
-        public void Start()
+        public void Awake()
         {
             ObjectPoolsManager.Instance.InitPool<Projectile>(_poolPreset);
         }
