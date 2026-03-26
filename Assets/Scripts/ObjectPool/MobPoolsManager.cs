@@ -5,12 +5,10 @@ namespace MineArena.ObjectPools
 {
     public class MobPoolsManager : MonoBehaviour
     {
-        [SerializeField] ObjectPoolPreset _poolPreset; 
-        public void Start()
+        [SerializeField] ObjectPoolPreset _poolPreset;
+        public void Awake()
         {
             ObjectPoolsManager.Instance.InitPool<Mob>(_poolPreset);
-            /*ObjectPoolsManager.Instance.Get<Zombie, Mob>();
-            ObjectPoolsManager.Instance.Get<Skeleton, Mob>()*/;
         }
     }
 }
