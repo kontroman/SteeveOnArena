@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffb286fd973581849bfcab14addb1392, type: 3}
   m_Name: Skeleton
   m_EditorClassIdentifier: 
-  Name: Skeleton
+  name: 
   Icon: {fileID: 0}
   MobType: 1
-  Damage: 10
+  Damage: 15
   AttackDelay: 4
   IsRangeAttack: 1
   AttackRange: 10
   Projectile: {fileID: 331499547690822219, guid: ceb94708b22db9346854be84b8326430, type: 3}
   Speed: 2.5
   RotationSpeed: 5
-  MaxHealth: 100
+  MaxHealth: 75

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffb286fd973581849bfcab14addb1392, type: 3}
   m_Name: Zombie
   m_EditorClassIdentifier: 
-  Name: Zombie
+  name: 
   Icon: {fileID: 0}
   MobType: 0
   Damage: 10
@@ -22,4 +22,4 @@ MonoBehaviour:
   Projectile: {fileID: 0}
   Speed: 3
   RotationSpeed: 3
-  MaxHealth: 100
+  MaxHealth: 80
