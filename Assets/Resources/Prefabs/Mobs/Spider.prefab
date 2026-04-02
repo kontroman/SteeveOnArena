@@ -1405,6 +1405,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _useFacingAxis: 1
   _facingAxis: 1
+  _facingUpAxis: 4
+  _facingRotationOffsetEuler: {x: 0, y: 0, z: 0}
 --- !u!114 &5918222683933867608
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1419,6 +1421,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _attackRange: 2
   _attackDelay: 1
+  _attackHitFallbackDelay: 0.25
   _damage: 10
   _rotationSpeed: 50
   _isRanged: 0
@@ -1469,7 +1472,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ffe06965e57afc4fadc83871b7ca265, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dropTable: []
+  _dropTable:
+  - Item: {fileID: 11400000, guid: 8aa06830544349949b65f4dc2dd1431c, type: 2}
+    DropChance: 10
+    MinQuantity: 1
+    MaxQuantity: 5
+  - Item: {fileID: 11400000, guid: 2341848530a95b34794be486a7bc64c3, type: 2}
+    DropChance: 5
+    MinQuantity: 1
+    MaxQuantity: 3
   _isOneDrop: 0
 --- !u!1 &8900694110853142263
 GameObject:

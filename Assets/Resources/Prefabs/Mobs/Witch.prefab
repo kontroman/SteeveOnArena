@@ -1234,7 +1234,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ffe06965e57afc4fadc83871b7ca265, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dropTable: []
+  _dropTable:
+  - Item: {fileID: 11400000, guid: 8aa06830544349949b65f4dc2dd1431c, type: 2}
+    DropChance: 10
+    MinQuantity: 1
+    MaxQuantity: 3
+  - Item: {fileID: 11400000, guid: d0f7104ea4203814b9fefc4223ad1a63, type: 2}
+    DropChance: 3
+    MinQuantity: 1
+    MaxQuantity: 1
   _isOneDrop: 0
 --- !u!1 &5936468387402995546
 GameObject:

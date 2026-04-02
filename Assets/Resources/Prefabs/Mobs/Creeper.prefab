@@ -459,7 +459,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ffe06965e57afc4fadc83871b7ca265, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dropTable: []
+  _dropTable:
+  - Item: {fileID: 11400000, guid: 10c265e30aa9be34685985507820bbb4, type: 2}
+    DropChance: 10
+    MinQuantity: 1
+    MaxQuantity: 3
   _isOneDrop: 0
 --- !u!1 &2959427242998938104
 GameObject:
