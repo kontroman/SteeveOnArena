@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+п»їusing System.Collections.Generic;
 using UnityEngine;
 using Devotion.SDK.GenericSingleton;
 using MineArena.AI;
@@ -11,11 +11,11 @@ namespace MineArena.ObjectPools
         [SerializeField] private Dictionary<Type, ObjectPool> _pools;
         [SerializeField] private ObjectPoolPreset _preset;
 
-        public void InitPool<T>(ObjectPoolPreset preset) where T: Component
+        public void InitPool<T>(ObjectPoolPreset preset) where T : Component
         {
             _preset = preset;
             var prefabList = _preset.Preset;
-            
+
             _pools ??= new Dictionary<Type, ObjectPool>();
 
             foreach (var prefab in prefabList)
@@ -34,7 +34,7 @@ namespace MineArena.ObjectPools
         {
             if (_pools == null || _pools.Count == 0)
             {
-                Debug.Log("Пулы не инициализированы или пусты.");
+                Debug.Log("РџСѓР»С‹ РЅРµ РёРЅРёС†РёР°Р»РёР·РёСЂРѕРІР°РЅС‹ РёР»Рё РїСѓСЃС‚С‹.");
                 return;
             }
 
@@ -43,15 +43,17 @@ namespace MineArena.ObjectPools
                 Type type = kvp.Key;
                 ObjectPool pool = kvp.Value;
 
-                // Выводим тип и ссылку на пул
-                Debug.Log($"Тип: {type.Name}, Пул: {pool}", pool);
+                Debug.Log($"РўРёРї: {type.Name}, РџСѓР»: {pool}", pool);
             }
         }
 
         public GameObject Get<T1, T2>() where T1 : T2
         {
-            Type type = typeof(T1);
+            return Get(typeof(T1));
+        }
 
+        public GameObject Get(Type type)
+        {
             if (_pools.TryGetValue(type, out ObjectPool pool))
             {
                 return pool.GetFromPool();

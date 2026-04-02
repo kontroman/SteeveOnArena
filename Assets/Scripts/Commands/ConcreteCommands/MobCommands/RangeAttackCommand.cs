@@ -6,6 +6,7 @@ using MineArena.Structs;
 using MineArena.Controllers;
 using System.Runtime.Serialization;
 using MineArena.ObjectPools;
+using System;
 
 namespace MineArena.Commands
 {
@@ -45,14 +46,15 @@ namespace MineArena.Commands
 
         private GameObject GetProjectileFromPool()
         {
-            if (projectilePrefab.GetComponent<Arrow>() != null)
-                return ObjectPoolsManager.Instance.Get<Arrow, Projectile>();
+            Projectile projectileComponent = projectilePrefab.GetComponent<Projectile>();
+            if (projectileComponent == null)
+            {
+                Debug.LogError($"Projectile prefab {projectilePrefab.name} does not contain a Projectile component.");
+                return null;
+            }
 
-            if (projectilePrefab.GetComponent<Potion>() != null)
-                return ObjectPoolsManager.Instance.Get<Potion, Projectile>();
-
-            Debug.LogError($"Pool for projectile prefab {projectilePrefab.name} not found.");
-            return null;
+            Type projectileType = projectileComponent.GetType();
+            return ObjectPoolsManager.Instance.Get(projectileType);
         }
     }
 }
