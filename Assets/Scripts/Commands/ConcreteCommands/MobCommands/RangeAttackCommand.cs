@@ -31,7 +31,7 @@ namespace MineArena.Commands
         {
             if (projectilePrefab == null || firePoint == null) return;
 
-            GameObject projectile = ObjectPoolsManager.Instance.Get<Arrow, Projectile>();
+            GameObject projectile = GetProjectileFromPool();
             if (projectile == null) return;
             projectile.transform.position = firePoint.position;
 
@@ -41,6 +41,18 @@ namespace MineArena.Commands
             {
                 projectileScript.SetParameters(target, damageData);
             }
+        }
+
+        private GameObject GetProjectileFromPool()
+        {
+            if (projectilePrefab.GetComponent<Arrow>() != null)
+                return ObjectPoolsManager.Instance.Get<Arrow, Projectile>();
+
+            if (projectilePrefab.GetComponent<Potion>() != null)
+                return ObjectPoolsManager.Instance.Get<Potion, Projectile>();
+
+            Debug.LogError($"Pool for projectile prefab {projectilePrefab.name} not found.");
+            return null;
         }
     }
 }

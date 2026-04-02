@@ -763,8 +763,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c6545e316f431c47baa57341c200cd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _useFacingAxis: 0
-  _facingAxis: 3
+  _useFacingAxis: 1
+  _facingAxis: 1
+  _facingUpAxis: 4
+  _facingRotationOffsetEuler: {x: 0, y: 0, z: 0}
 --- !u!114 &1325910267232566184
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -779,6 +781,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _attackRange: 2
   _attackDelay: 4
+  _attackHitFallbackDelay: 0.25
   _damage: 40
   _rotationSpeed: 50
   _isRanged: 0

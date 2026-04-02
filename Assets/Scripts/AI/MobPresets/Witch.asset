@@ -17,9 +17,9 @@ MonoBehaviour:
   MobType: 6
   Damage: 15
   AttackDelay: 3
-  IsRangeAttack: 0
-  AttackRange: 1
-  Projectile: {fileID: 0}
+  IsRangeAttack: 1
+  AttackRange: 10
+  Projectile: {fileID: 331499547690822219, guid: e34e9986d26c24140a357345fd2fc1a9, type: 3}
   Speed: 2.5
   RotationSpeed: 4
   MaxHealth: 50
