@@ -13,13 +13,19 @@ namespace MineArena.Controllers
 
         public static Player Instance { get; private set; }
 
-        private void Start()
+        private void Awake()
         {
+            if (Instance != null && Instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
+
             Instance = this;
 
             _components = new List<Component>(GetComponents<Component>());
 
-            DontDestroyOnLoad(this);
+            DontDestroyOnLoad(gameObject);
         }
 
         private void Update()

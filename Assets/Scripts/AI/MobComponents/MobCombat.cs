@@ -11,6 +11,7 @@ namespace MineArena.AI
     {
         [SerializeField] private float _attackRange = 2f;
         [SerializeField] private float _attackDelay = 1f;
+        [SerializeField] private float _attackHitFallbackDelay = 0.25f;
         [SerializeField] private float _damage = 10f;
         [SerializeField] private float _rotationSpeed = 50f;
         [SerializeField] private bool _isRanged = false;
@@ -26,6 +27,9 @@ namespace MineArena.AI
         private DamageData _damageData;
         private Transform _playerTransform;
         private Coroutine _attackRoutine;
+        private Coroutine _hitFallbackRoutine;
+        private int _attackCycleId;
+        private bool _attackHitApplied;
         private float _nextAttackTime;
 
         private void OnEnable()
@@ -46,8 +50,8 @@ namespace MineArena.AI
         {
             _mobMovement = GetComponent<MobMovement>();
             _damageCommand = ScriptableObject.CreateInstance<DamageCommand>();
-            _playerDamagable = Player.Instance.GetComponent<IDamageable>();
-            _playerTransform = Player.Instance.transform;
+
+            TryResolvePlayer();
 
             _damageData = new DamageData(_damage, _playerDamagable);
 
@@ -61,6 +65,18 @@ namespace MineArena.AI
 
         private void Update()
         {
+            if (_mobMovement == null)
+                return;
+
+            if (_playerTransform == null || _playerDamagable == null)
+            {
+                TryResolvePlayer();
+                if (_playerTransform == null || _playerDamagable == null)
+                    return;
+
+                _damageData = new DamageData(_damage, _playerDamagable);
+            }
+
             if (!_isAttack && _mobMovement.IsInAttackRange(_playerTransform, _attackRange))
                 StartAttack();
             if (_isAttack && !_mobMovement.IsInAttackRange(_playerTransform, _attackRange))
@@ -99,6 +115,12 @@ namespace MineArena.AI
                 _attackRoutine = null;
             }
 
+            if (_hitFallbackRoutine != null)
+            {
+                StopCoroutine(_hitFallbackRoutine);
+                _hitFallbackRoutine = null;
+            }
+
             if (resumeMovement)
                 _mobMovement.Move();
         }
@@ -117,6 +139,12 @@ namespace MineArena.AI
                 _mobAnimator?.PlayAttack();
                 _nextAttackTime = Time.time + _attackDelay;
 
+                _attackHitApplied = false;
+                _attackCycleId++;
+                if (_hitFallbackRoutine != null)
+                    StopCoroutine(_hitFallbackRoutine);
+                _hitFallbackRoutine = StartCoroutine(AttackHitFallback(_attackCycleId));
+
                 // подождём кадр, чтобы не зациклить триггер моментально
                 yield return null;
             }
@@ -124,18 +152,44 @@ namespace MineArena.AI
 
         private void OnAttackKeyframe()
         {
-            if (!_isAttack)
+            if (!_isAttack || _attackHitApplied)
                 return;
+
+            ApplyAttackHit();
+        }
+
+        private IEnumerator AttackHitFallback(int cycleId)
+        {
+            if (_attackHitFallbackDelay > 0f)
+                yield return new WaitForSeconds(_attackHitFallbackDelay);
+
+            if (!_isAttack || cycleId != _attackCycleId || _attackHitApplied)
+                yield break;
+
+            if (_mobMovement == null || !_mobMovement.IsInAttackRange(_playerTransform, _attackRange))
+                yield break;
+
+            ApplyAttackHit();
+        }
+
+        private void ApplyAttackHit()
+        {
+            _attackHitApplied = true;
 
             if (_isRanged)
             {
-                var rangeAttackData = new RangeAttackData(_damageData.Damage, _projectilePrefab, _playerTransform, _firePoint);
+                if (_projectilePrefab == null || _firePoint == null)
+                {
+                    (_damageCommand ??= ScriptableObject.CreateInstance<DamageCommand>()).Execute(_damageData);
+                    return;
+                }
+
+                var rangeAttackData = new RangeAttackData(_damageData, _projectilePrefab, _playerTransform, _firePoint);
                 _attackCommand.Execute(rangeAttackData);
+                return;
             }
-            else
-            {
-                _attackCommand.Execute(_damageData);
-            }
+
+            _attackCommand.Execute(_damageData);
         }
 
         private void FollowTheTarget()
@@ -156,11 +210,34 @@ namespace MineArena.AI
         public void SetParameters(MobPreset preset)
         {
             _damage = preset.Damage;
-            _attackRange = preset.AttackRange;
             _attackDelay = preset.AttackDelay;
             _rotationSpeed = preset.RotationSpeed;
-            _projectilePrefab = preset.Projectile;
+
+            _isRanged = preset.IsRangeAttack;
+            if (_isRanged)
+            {
+                _attackRange = preset.AttackRange;
+                _projectilePrefab = preset.Projectile;
+                if (_attackCommand is not RangeAttackCommand)
+                    _attackCommand = ScriptableObject.CreateInstance<RangeAttackCommand>();
+            }
+            else
+            {
+                if (_attackCommand is not MeleeAttackCommand)
+                    _attackCommand = ScriptableObject.CreateInstance<MeleeAttackCommand>();
+            }
+
+            TryResolvePlayer();
             _damageData = new DamageData(_damage, _playerDamagable);
+        }
+
+        private void TryResolvePlayer()
+        {
+            if (Player.Instance == null)
+                return;
+
+            _playerTransform = Player.Instance.transform;
+            _playerDamagable = Player.Instance.GetComponent<IDamageable>();
         }
     }
 }

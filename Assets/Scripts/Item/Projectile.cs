@@ -16,16 +16,15 @@ namespace MineArena
         private Transform _target;
         private DamageData _damageData;
 
-        private void Start()
-        {
-            transform.LookAt(_target);
-        }
-
         public void SetParameters(Transform target, DamageData damageData)
         {
+            CancelInvoke(nameof(ReturnToPool));
             _damageData = damageData;
             _target = target;
-            transform.LookAt(_target);
+
+            if (_target != null)
+                transform.LookAt(_target);
+
             Invoke(nameof(ReturnToPool), destroyDelay);
         }
 
@@ -36,6 +35,15 @@ namespace MineArena
 
         private void OnTriggerEnter(Collider other)
         {
+            if (_target != null)
+            {
+                var otherTransform = other.transform;
+                if (otherTransform == _target || otherTransform.IsChildOf(_target))
+                    OnHit();
+
+                return;
+            }
+
             if (other.CompareTag("Player"))
                 OnHit();
         }
@@ -50,7 +58,16 @@ namespace MineArena
 
         private void ReturnToPool()
         {
-            ObjectPoolsManager.Instance.Release<Projectile>(gameObject);
+            CancelInvoke(nameof(ReturnToPool));
+            if (ObjectPoolsManager.Instance != null)
+                ObjectPoolsManager.Instance.Release<Projectile>(gameObject);
+        }
+
+        private void OnDisable()
+        {
+            CancelInvoke(nameof(ReturnToPool));
+            _target = null;
+            _damageData = default;
         }
     }
 }

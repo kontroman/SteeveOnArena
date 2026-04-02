@@ -15,8 +15,11 @@ namespace MineArena.AI
         [Header("Facing")]
         [SerializeField] private bool _useFacingAxis;
         [SerializeField] private FacingAxis _facingAxis = FacingAxis.PositiveZ;
+        [SerializeField] private FacingAxis _facingUpAxis = FacingAxis.PositiveY;
+        [SerializeField] private Vector3 _facingRotationOffsetEuler = Vector3.zero;
 
         private Quaternion _axisCorrection = Quaternion.identity;
+        private Quaternion _manualFacingOffset = Quaternion.identity;
 
         private enum FacingAxis
         {
@@ -42,26 +45,30 @@ namespace MineArena.AI
             {
                 _agent.updateRotation = false;
             }
-            _playerTransform = Player.Instance.GetComponentFromList<Transform>();
+
+            if (Player.Instance != null)
+                _playerTransform = Player.Instance.GetComponentFromList<Transform>();
+
             _mobAnimator = GetComponent<MobAnimationController>();
         }
 
         private void Update()
         {
-            if (_playerTransform)
-            {
+            if (_playerTransform == null && Player.Instance != null)
                 _playerTransform = Player.Instance.GetComponentFromList<Transform>();
+
+            if (_agent != null && _playerTransform != null)
                 _agent.SetDestination(_playerTransform.position);
-            }
 
             UpdateFacing();
 
-            _mobAnimator?.UpdateMoveState(_agent.velocity, _agent.isStopped);
+            if (_agent != null)
+                _mobAnimator?.UpdateMoveState(_agent.velocity, _agent.isStopped);
         }
 
         public float DistanceToPlayer()
         {
-            return _agent.remainingDistance;
+            return _agent != null ? _agent.remainingDistance : float.PositiveInfinity;
         }
 
         public bool IsInAttackRange(Transform target, float attackRange)
@@ -94,10 +101,8 @@ namespace MineArena.AI
 
         public Quaternion ApplyAxisCorrection(Quaternion rotation)
         {
-            if (!_useFacingAxis)
-                return rotation;
-
-            return rotation * _axisCorrection;
+            Quaternion axisCorrection = _useFacingAxis ? _axisCorrection : Quaternion.identity;
+            return rotation * axisCorrection * _manualFacingOffset;
         }
 
         public Quaternion GetAxisCorrectedLookRotation(Vector3 direction)
@@ -125,20 +130,32 @@ namespace MineArena.AI
 
         private void UpdateAxisCorrection()
         {
+            _manualFacingOffset = Quaternion.Euler(_facingRotationOffsetEuler);
+
             if (!_useFacingAxis)
             {
                 _axisCorrection = Quaternion.identity;
                 return;
             }
 
-            Vector3 axisVector = GetAxisVector(_facingAxis);
-            if (axisVector == Vector3.zero)
+            Vector3 forwardAxis = GetAxisVector(_facingAxis);
+            Vector3 upAxis = GetAxisVector(_facingUpAxis);
+
+            if (forwardAxis == Vector3.zero || upAxis == Vector3.zero)
             {
                 _axisCorrection = Quaternion.identity;
                 return;
             }
 
-            _axisCorrection = Quaternion.Inverse(Quaternion.FromToRotation(Vector3.forward, axisVector));
+            bool invalidUpAxis = Mathf.Abs(Vector3.Dot(forwardAxis.normalized, upAxis.normalized)) > 0.999f;
+            if (invalidUpAxis)
+            {
+                _axisCorrection = Quaternion.identity;
+                return;
+            }
+
+            Quaternion localAxesRotation = Quaternion.LookRotation(forwardAxis, upAxis);
+            _axisCorrection = Quaternion.Inverse(localAxesRotation);
         }
 
         private static Vector3 GetAxisVector(FacingAxis axis)
@@ -164,6 +181,8 @@ namespace MineArena.AI
 
         public void SetParameters(MobPreset preset)
         {
+            if (_agent == null) return;
+
             _agent.speed = preset.Speed;
             _agent.stoppingDistance = preset.AttackRange;
             _stoppingDistance = _agent.stoppingDistance;
