@@ -271,7 +271,7 @@ GameObject:
   - component: {fileID: 6173644200714742922}
   - component: {fileID: 3395926847619436531}
   - component: {fileID: 541839886153795591}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Creeper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -305,7 +305,7 @@ Animator:
   m_GameObject: {fileID: 2953911814267714423}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 7b5c6717030035a41803d816b91e9a80, type: 2}
+  m_Controller: {fileID: 22100000, guid: c27f1d5cc994c6342b22d25cdcc2e7d6, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -426,8 +426,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94d4c79e4eae9f444aea87edab65b1e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentHealth: 0
-  _maxHealth: 0
+  _currentHealth: 50
+  _maxHealth: 50
 --- !u!114 &3395926847619436531
 MonoBehaviour:
   m_ObjectHideFlags: 0

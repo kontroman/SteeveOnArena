@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using MineArena.Interfaces;
 using MineArena.Structs;
 using MineArena.Commands;
@@ -155,32 +156,42 @@ namespace MineArena.PlayerSystem
         private void DetectHits()
         {
             Vector3 attackOrigin = GetAttackOrigin();
+            Vector3 capsuleStart = GetAttackBasePoint(attackOrigin);
 
-            Collider[] hits = Physics.OverlapSphere(attackOrigin, _config.Radius, _config.AttackableLayers);
+            Collider[] hits = Physics.OverlapCapsule(capsuleStart, attackOrigin, _config.Radius, _config.AttackableLayers);
+            HashSet<IDamageable> processedTargets = new HashSet<IDamageable>();
 
             foreach (Collider hit in hits)
             {
-                Vector3 directionToTarget = hit.transform.position - attackOrigin;
+                Vector3 targetPoint = hit.bounds.center;
+                Vector3 directionToTarget = targetPoint - transform.position;
+                directionToTarget.y = 0f;
+
+                if (directionToTarget.sqrMagnitude <= Mathf.Epsilon)
+                {
+                    directionToTarget = hit.transform.position - transform.position;
+                    directionToTarget.y = 0f;
+                }
+
                 float angle = Vector3.Angle(transform.forward, directionToTarget);
 
-                if (angle <= _config.Angle / 2)
+                if (angle <= _config.Angle / 2 &&
+                    hit.TryGetComponent<IDamageable>(out IDamageable damageable) &&
+                    processedTargets.Add(damageable))
                 {
-                    if (hit.TryGetComponent<IDamageable>(out IDamageable damageable))
-                    {
-                        var damageToDeal = _config.BaseDamage;
+                    var damageToDeal = _config.BaseDamage;
 
 #if UNITY_EDITOR || DEVOTION_GODMODE
-                        var config = GameRoot.GameConfig;
-                        if (config != null && config.GodModeOneHitKill)
-                        {
-                            damageToDeal = 9999999f;
-                        }
-#endif
-                        _damageCommand.Execute(new DamageData(
-                            damageToDeal,
-                            damageable
-                        ));
+                    var config = GameRoot.GameConfig;
+                    if (config != null && config.GodModeOneHitKill)
+                    {
+                        damageToDeal = 9999999f;
                     }
+#endif
+                    _damageCommand.Execute(new DamageData(
+                        damageToDeal,
+                        damageable
+                    ));
                 }
             }
         }
@@ -190,11 +201,13 @@ namespace MineArena.PlayerSystem
             if (_config == null) return;
 
             Vector3 attackOrigin = GetAttackOrigin();
+            Vector3 capsuleStart = GetAttackBasePoint(attackOrigin);
+            float radius = _config.Radius;
 
             Gizmos.color = new Color(1, 0, 0, 0.3f);
-            Gizmos.DrawWireSphere(attackOrigin, _config.Radius);
+            DrawWireCapsule(capsuleStart, attackOrigin, radius);
 
-            Vector3 forward = transform.forward * _config.Radius;
+            Vector3 forward = transform.forward * radius;
             Quaternion leftRayRotation = Quaternion.AngleAxis(-_config.Angle / 2, Vector3.up);
             Quaternion rightRayRotation = Quaternion.AngleAxis(_config.Angle / 2, Vector3.up);
 
@@ -202,8 +215,8 @@ namespace MineArena.PlayerSystem
             Vector3 rightRayDirection = rightRayRotation * forward;
 
             Gizmos.color = Color.yellow;
-            Gizmos.DrawRay(attackOrigin, leftRayDirection);
-            Gizmos.DrawRay(attackOrigin, rightRayDirection);
+            Gizmos.DrawRay(capsuleStart, leftRayDirection);
+            Gizmos.DrawRay(capsuleStart, rightRayDirection);
         }
 
         private Vector3 GetAttackOrigin()
@@ -225,6 +238,51 @@ namespace MineArena.PlayerSystem
             }
 
             return transform.position + transform.forward * forwardOffset;
+        }
+
+        private Vector3 GetAttackBasePoint(Vector3 attackOrigin)
+        {
+            Vector3 basePoint = transform.position;
+
+            if (TryGetComponent<CharacterController>(out var characterController))
+            {
+                basePoint += Vector3.up * characterController.height * 0.25f;
+            }
+            else if (TryGetComponent<Collider>(out var collider))
+            {
+                basePoint += Vector3.up * collider.bounds.extents.y * 0.25f;
+            }
+
+            // Keep the capsule axis horizontal so the hit volume stretches from the player to the forward attack origin.
+            basePoint.y = attackOrigin.y;
+            return basePoint;
+        }
+
+        private static void DrawWireCapsule(Vector3 start, Vector3 end, float radius)
+        {
+            Gizmos.DrawWireSphere(start, radius);
+
+            Vector3 axis = end - start;
+            if (axis.sqrMagnitude <= Mathf.Epsilon)
+            {
+                return;
+            }
+
+            Vector3 up = axis.normalized;
+            Vector3 right = Vector3.Cross(up, Vector3.forward);
+
+            if (right.sqrMagnitude <= Mathf.Epsilon)
+            {
+                right = Vector3.Cross(up, Vector3.right);
+            }
+
+            right.Normalize();
+            Vector3 forward = Vector3.Cross(up, right).normalized;
+
+            Gizmos.DrawLine(start + right * radius, end + right * radius);
+            Gizmos.DrawLine(start - right * radius, end - right * radius);
+            Gizmos.DrawLine(start + forward * radius, end + forward * radius);
+            Gizmos.DrawLine(start - forward * radius, end - forward * radius);
         }
 
 

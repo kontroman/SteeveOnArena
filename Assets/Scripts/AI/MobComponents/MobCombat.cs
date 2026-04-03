@@ -31,9 +31,11 @@ namespace MineArena.AI
         private int _attackCycleId;
         private bool _attackHitApplied;
         private float _nextAttackTime;
+        private bool _isDead;
 
         private void OnEnable()
         {
+            _isDead = false;
             _mobAnimator = GetComponent<MobAnimationController>();
 
             if (_mobAnimator != null)
@@ -65,6 +67,9 @@ namespace MineArena.AI
 
         private void Update()
         {
+            if (_isDead)
+                return;
+
             if (_mobMovement == null)
                 return;
 
@@ -102,6 +107,15 @@ namespace MineArena.AI
 
         public void CancelAttack()
         {
+            StopAttackInternal(false);
+        }
+
+        public void HandleDeath()
+        {
+            if (_isDead)
+                return;
+
+            _isDead = true;
             StopAttackInternal(false);
         }
 
@@ -209,6 +223,7 @@ namespace MineArena.AI
 
         public void SetParameters(MobPreset preset)
         {
+            _isDead = false;
             _damage = preset.Damage;
             _attackDelay = preset.AttackDelay;
             _rotationSpeed = preset.RotationSpeed;

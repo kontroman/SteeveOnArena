@@ -12,6 +12,7 @@ namespace MineArena.AI
         private NavMeshAgent _agent;
         private MobAnimationController _mobAnimator;
         private float _stoppingDistance;
+        private bool _isDead;
         [Header("Facing")]
         [SerializeField] private bool _useFacingAxis;
         [SerializeField] private FacingAxis _facingAxis = FacingAxis.PositiveZ;
@@ -32,6 +33,11 @@ namespace MineArena.AI
         }
 
         public void SetPlayerTransform(Transform playerTransform) => _playerTransform = playerTransform;
+
+        private void OnEnable()
+        {
+            _isDead = false;
+        }
 
         private void Awake()
         {
@@ -54,6 +60,13 @@ namespace MineArena.AI
 
         private void Update()
         {
+            if (_isDead)
+            {
+                if (_agent != null)
+                    _mobAnimator?.UpdateMoveState(_agent.velocity, true);
+                return;
+            }
+
             if (_playerTransform == null && Player.Instance != null)
                 _playerTransform = Player.Instance.GetComponentFromList<Transform>();
 
@@ -91,12 +104,25 @@ namespace MineArena.AI
 
         public void Stop()
         {
+            if (_agent == null) return;
             _agent.isStopped = true;
         }
 
         public void Move()
         {
+            if (_agent == null || _isDead) return;
             _agent.isStopped = false;
+        }
+
+        public void HandleDeath()
+        {
+            _isDead = true;
+
+            if (_agent == null) return;
+
+            _agent.isStopped = true;
+            _agent.ResetPath();
+            _agent.velocity = Vector3.zero;
         }
 
         public Quaternion ApplyAxisCorrection(Quaternion rotation)
@@ -181,11 +207,13 @@ namespace MineArena.AI
 
         public void SetParameters(MobPreset preset)
         {
+            _isDead = false;
             if (_agent == null) return;
 
             _agent.speed = preset.Speed;
             _agent.stoppingDistance = preset.AttackRange;
             _stoppingDistance = _agent.stoppingDistance;
+            _agent.isStopped = false;
         }
 
 #if UNITY_EDITOR
