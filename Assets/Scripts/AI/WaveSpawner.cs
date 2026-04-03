@@ -1,4 +1,4 @@
-using MineArena.Messages;
+﻿using MineArena.Messages;
 using MineArena.ObjectPools;
 using System.Collections;
 using System.Collections.Generic;
@@ -118,16 +118,25 @@ namespace MineArena.AI
 
         private GameObject GetMobFromPool(MobTypes mobType)
         {
-            switch (mobType)
+            System.Type mobClassType = ResolveMobClassType(mobType);
+            if (mobClassType == null)
             {
-                case MobTypes.Zombie:
-                    return ObjectPoolsManager.Instance.Get<Zombie, Mob>();
-                case MobTypes.Skeleton:
-                    return ObjectPoolsManager.Instance.Get<Skeleton, Mob>();
-                default:
-                    Debug.LogError($"Pool for mob type {mobType} not found.");
-                    return null;
+                Debug.LogError($"Pool for mob type {mobType} not found.");
+                return null;
             }
+
+            return ObjectPoolsManager.Instance.Get(mobClassType);
+        }
+
+        private System.Type ResolveMobClassType(MobTypes mobType)
+        {
+            string fullTypeName = $"{typeof(Mob).Namespace}.{mobType}";
+            System.Type mobClassType = typeof(Mob).Assembly.GetType(fullTypeName);
+
+            if (mobClassType == null || !typeof(Mob).IsAssignableFrom(mobClassType))
+                return null;
+
+            return mobClassType;
         }
     }
 }
