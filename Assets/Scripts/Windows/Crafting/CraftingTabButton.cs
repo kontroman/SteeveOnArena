@@ -13,6 +13,8 @@ namespace MineArena.Windows.Crafting
 
         private Action _onClick;
 
+        public Button Button => _button;
+
         public void Setup(string title, Action onClick)
         {
             if (_label != null)

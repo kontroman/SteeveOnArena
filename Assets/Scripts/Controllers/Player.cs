@@ -2,6 +2,7 @@ using Devotion.SDK.Controllers;
 using MineArena.Messages;
 using MineArena.Messages.MessageService;
 using MineArena.UI;
+using MineArena.Windows.Crafting;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -32,6 +33,9 @@ namespace MineArena.Controllers
         {
             if(Input.GetKeyDown(KeyCode.I)) 
                 GameRoot.UIManager.OpenWindow<InventoryWindow>();
+
+            if (Input.GetKeyDown(KeyCode.B))
+                CraftingWindow.Toggle();
         }
 
         public T GetComponentFromList<T>() where T : Component
