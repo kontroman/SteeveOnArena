@@ -1,5 +1,6 @@
 using MineArena.Basics;
 using MineArena.Controllers;
+using System;
 using UnityEngine;
 
 namespace MineArena.PlayerSystem
@@ -9,11 +10,20 @@ namespace MineArena.PlayerSystem
     {
         private CharacterController _characterController;
         private bool _canMove = true;
+        private bool _isDead;
 
         private IPlayerAnimator _animator;
         private Transform _cameraTransform;
         private Vector3 _velocity;
         private bool _isGrounded;
+
+        public static event Action<Transform> PlayerDied;
+        public static bool IsPlayerDead { get; private set; }
+
+        private void Awake()
+        {
+            IsPlayerDead = false;
+        }
 
         private void Start()
         {
@@ -27,6 +37,12 @@ namespace MineArena.PlayerSystem
 
         private void Update()
         {
+            if (_isDead)
+            {
+                ApplyDeathGravity();
+                return;
+            }
+
             if (_canMove)
             {
                 Vector3 horizontalMove = GetHorizontalMovement();
@@ -82,6 +98,28 @@ namespace MineArena.PlayerSystem
             _velocity.y += Constants.PlayerSettings.Gravity * Time.deltaTime;
         }
 
+        private void ApplyDeathGravity()
+        {
+            if (_characterController == null)
+                _characterController = GetComponent<CharacterController>();
+
+            if (_characterController == null || !_characterController.enabled)
+                return;
+
+            _isGrounded = _characterController.isGrounded;
+
+            if (_isGrounded && _velocity.y <= 0f)
+            {
+                _velocity.y = -2f;
+            }
+            else
+            {
+                _velocity.y += Constants.PlayerSettings.Gravity * Time.deltaTime;
+            }
+
+            _characterController.Move(new Vector3(0f, _velocity.y, 0f) * Time.deltaTime);
+        }
+
         private void RotatePlayer(Vector3 moveDirection)
         {
             if (moveDirection != Vector3.zero && !Player.Instance.GetComponentFromList<RotationController>().IsRotating())
@@ -96,7 +134,20 @@ namespace MineArena.PlayerSystem
 
         public void SetMovement(bool canMove)
         {
-            _canMove = canMove;
+            _canMove = canMove && !_isDead;
+        }
+
+        public void SetDead()
+        {
+            if (_isDead)
+                return;
+
+            _isDead = true;
+            IsPlayerDead = true;
+            _canMove = false;
+            _velocity = new Vector3(0f, -2f, 0f);
+            _animator?.SetRunning(false);
+            PlayerDied?.Invoke(transform);
         }
     }
 }

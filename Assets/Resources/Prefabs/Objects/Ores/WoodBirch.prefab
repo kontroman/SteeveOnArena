@@ -122,6 +122,7 @@ GameObject:
   - component: {fileID: 1537103858862787055}
   - component: {fileID: 349848148571469088}
   - component: {fileID: 3356887126336422466}
+  - component: {fileID: 6586997021342361035}
   m_Layer: 0
   m_Name: WoodBirch
   m_TagString: Untagged
@@ -288,3 +289,24 @@ MonoBehaviour:
     MinQuantity: 1
     MaxQuantity: 1
   _isOneDrop: 1
+--- !u!114 &6586997021342361035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7734615867120498341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c15f8a55a614aeabf1f802e3e8822cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _lineMaterial: {fileID: 0}
+  _outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  _lineWidth: 0.025
+  _cornerLength: 0.28
+  _boundsPadding: 0.03
+  _includeChildren: 1
+  _renderers:
+  - {fileID: 4722200056100857666}
+  - {fileID: 3215313033353448390}

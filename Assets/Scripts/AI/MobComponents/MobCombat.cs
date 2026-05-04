@@ -1,6 +1,7 @@
 ﻿using MineArena.Commands;
 using MineArena.Controllers;
 using MineArena.Interfaces;
+using MineArena.PlayerSystem;
 using MineArena.Structs;
 using System.Collections;
 using UnityEngine;
@@ -31,6 +32,7 @@ namespace MineArena.AI
         private int _attackCycleId;
         private bool _attackHitApplied;
         private float _nextAttackTime;
+        private bool _isAfk;
 
         private void OnEnable()
         {
@@ -38,12 +40,17 @@ namespace MineArena.AI
 
             if (_mobAnimator != null)
                 _mobAnimator.AttackKeyframeReached += OnAttackKeyframe;
+
+            PlayerMovement.PlayerDied += HandlePlayerDied;
+            _isAfk = PlayerMovement.IsPlayerDead;
         }
 
         private void OnDisable()
         {
             if (_mobAnimator != null)
                 _mobAnimator.AttackKeyframeReached -= OnAttackKeyframe;
+
+            PlayerMovement.PlayerDied -= HandlePlayerDied;
         }
 
         private void Start()
@@ -65,6 +72,9 @@ namespace MineArena.AI
 
         private void Update()
         {
+            if (_isAfk)
+                return;
+
             if (_mobMovement == null)
                 return;
 
@@ -174,6 +184,9 @@ namespace MineArena.AI
 
         private void ApplyAttackHit()
         {
+            if (_isAfk)
+                return;
+
             _attackHitApplied = true;
 
             if (_isRanged)
@@ -238,6 +251,12 @@ namespace MineArena.AI
 
             _playerTransform = Player.Instance.transform;
             _playerDamagable = Player.Instance.GetComponent<IDamageable>();
+        }
+
+        private void HandlePlayerDied(Transform playerTransform)
+        {
+            _isAfk = true;
+            CancelAttack();
         }
     }
 }

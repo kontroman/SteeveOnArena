@@ -25,6 +25,7 @@ namespace MineArena.AI
         private Coroutine _deathRoutine;
         private bool _isDead;
         private bool _isMoving;
+        private bool _isForcedIdle;
 
         public event Action AttackKeyframeReached;
         public event Action DeathSequenceFinished;
@@ -32,10 +33,12 @@ namespace MineArena.AI
         private void OnEnable()
         {
             _isDead = false;
+            _isForcedIdle = false;
             StopAllCoroutines();
 
             if (_animator != null)
             {
+                _animator.speed = 1f;
                 _animator.Rebind();
                 _animator.Update(0f);
                 _animator.SetBool(WalkHash, false);
@@ -51,6 +54,9 @@ namespace MineArena.AI
         public void UpdateMoveState(Vector3 velocity, bool isStopped)
         {
             if (_isDead || _animator == null) return;
+
+            _isForcedIdle = false;
+            _animator.speed = 1f;
 
             var speedSqr = velocity.sqrMagnitude;
             var startSqr = _moveStartThreshold * _moveStartThreshold;
@@ -68,10 +74,28 @@ namespace MineArena.AI
             }
         }
 
+        public void ForceIdle()
+        {
+            if (_isDead || _animator == null) return;
+
+            if (_isForcedIdle)
+                return;
+
+            _isMoving = false;
+            _animator.SetBool(WalkHash, false);
+            _animator.ResetTrigger(AttackHash);
+            _animator.Rebind();
+            _animator.Update(0f);
+            _animator.speed = 0f;
+            _isForcedIdle = true;
+        }
+
         public void PlayAttack()
         {
             if (_isDead || _animator == null) return;
 
+            _isForcedIdle = false;
+            _animator.speed = 1f;
             _animator.ResetTrigger(AttackHash);
             _animator.SetTrigger(AttackHash);
         }
@@ -81,9 +105,11 @@ namespace MineArena.AI
             if (_isDead) return;
 
             _isDead = true;
+            _isForcedIdle = false;
 
             if (_animator != null)
             {
+                _animator.speed = 1f;
                 _animator.SetBool(WalkHash, false);
                 _animator.ResetTrigger(AttackHash);
                 _animator.SetTrigger(DeathHash);

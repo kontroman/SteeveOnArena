@@ -26,7 +26,16 @@ namespace Devotion.SDK.Services.SaveSystem.Progress
         public PurchasesProgress PurchasesProgress => purchasesProgress;
         public AdsProgress AdsProgress => adsProgress;
         public LuckyWheelProgress LuckyWheelProgress => luckyWheelProgress;
-        public PlayerDataProgress PlayerDataProgress => playerDataProgress;
+        public PlayerDataProgress PlayerDataProgress
+        {
+            get
+            {
+                if (playerDataProgress == null)
+                    playerDataProgress = new PlayerDataProgress();
+
+                return playerDataProgress;
+            }
+        }
         public AchievementProgress AchievementProgress => achievementProgress;
 
         public PlayerProgress(string saveId)

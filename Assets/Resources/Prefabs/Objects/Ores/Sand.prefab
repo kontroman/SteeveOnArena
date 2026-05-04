@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 2005958162258767512}
   - component: {fileID: 5905211723277768916}
   - component: {fileID: 6830424204741849487}
+  - component: {fileID: 688356659020420949}
   m_Layer: 0
   m_Name: Sand
   m_TagString: Untagged
@@ -177,3 +178,23 @@ MonoBehaviour:
     MinQuantity: 1
     MaxQuantity: 3
   _isOneDrop: 1
+--- !u!114 &688356659020420949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2297095161383156283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c15f8a55a614aeabf1f802e3e8822cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _lineMaterial: {fileID: 0}
+  _outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  _lineWidth: 0.025
+  _cornerLength: 0.28
+  _boundsPadding: 0.03
+  _includeChildren: 1
+  _renderers:
+  - {fileID: 5021867394273027141}

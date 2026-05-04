@@ -6,6 +6,7 @@ using MineArena.Interfaces;
 using MineArena.Structs;
 using Devotion.SDK.Controllers;
 using MineArena.Controllers;
+using MineArena.PlayerSystem;
 
 namespace MineArena.Game.Health
 {
@@ -67,6 +68,16 @@ namespace MineArena.Game.Health
 
         protected virtual void Die()
         {
+            if (Player.Instance != null && gameObject == Player.Instance.gameObject)
+            {
+                Player.Instance.GetComponentFromList<PlayerMovement>()?.SetDead();
+                Player.Instance.GetComponentFromList<PlayerAttack>()?.SetComponentEnable(false);
+                Player.Instance.GetComponentFromList<PlayerAnimatorController>()?.TriggerDeath();
+
+                // Destroy(gameObject);
+                return;
+            }
+
             Destroy(gameObject);
         }
     }

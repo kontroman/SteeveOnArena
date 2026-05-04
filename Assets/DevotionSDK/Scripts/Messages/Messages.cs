@@ -10,6 +10,10 @@ namespace Devotion.SDK.Messages
         public sealed class SavePlayerProgress : BaseMessage<SavePlayerProgress>
         {
         }
+
+        public sealed class PlayerProgressLoaded : BaseMessage<PlayerProgressLoaded>
+        {
+        }
     }
 
 }

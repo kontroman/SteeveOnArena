@@ -1,18 +1,25 @@
 using Devotion.SDK.Controllers;
+using Devotion.SDK.Services.SaveSystem.Progress;
 using MineArena.Messages;
 using MineArena.Messages.MessageService;
+using MineArena.PlayerSystem;
 using MineArena.UI;
 using MineArena.Windows.Crafting;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace MineArena.Controllers
 {
-    public class Player : MonoBehaviour
+    public class Player : MonoBehaviour,
+        IMessageSubscriber<Devotion.SDK.Messages.Player.PlayerProgressLoaded>
     {
         private List<Component> _components;
 
         public static Player Instance { get; private set; }
+        public static event Action<PlayerExperience> ExperienceInitialized;
+
+        public PlayerExperience Experience { get; private set; }
 
         private void Awake()
         {
@@ -25,8 +32,18 @@ namespace MineArena.Controllers
             Instance = this;
 
             _components = new List<Component>(GetComponents<Component>());
+            Experience = new PlayerExperience(GetPlayerDataProgress());
+            ExperienceInitialized?.Invoke(Experience);
+
+            MessageService.Subscribe(this);
 
             DontDestroyOnLoad(gameObject);
+        }
+
+        private void OnDestroy()
+        {
+            if (Instance == this)
+                MessageService.Unsubscribe(this);
         }
 
         private void Update()
@@ -65,6 +82,21 @@ namespace MineArena.Controllers
                 _components.Remove(component);
                 Destroy(component);
             }
+        }
+
+        public void OnMessage(Devotion.SDK.Messages.Player.PlayerProgressLoaded message)
+        {
+            Experience ??= new PlayerExperience();
+            Experience.BindProgress(GetPlayerDataProgress());
+            ExperienceInitialized?.Invoke(Experience);
+        }
+
+        private static PlayerDataProgress GetPlayerDataProgress()
+        {
+            if (GameRoot.Instance == null || GameRoot.PlayerProgress == null)
+                return null;
+
+            return GameRoot.PlayerProgress.PlayerDataProgress;
         }
     }
 }

@@ -55,6 +55,7 @@ namespace Devotion.SDK.Services.SaveSystem
             return loadPromise.Then(rawData =>
             {
                 ApplyLoadedProgress(rawData);
+                Messages.Player.PlayerProgressLoaded.Publish();
                 return Promise.ResolveAndReturn();
             });
         }

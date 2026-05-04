@@ -1553,6 +1553,7 @@ GameObject:
   - component: {fileID: 8602299480994262809}
   - component: {fileID: 8602299480994262808}
   - component: {fileID: 5274552801406137089}
+  - component: {fileID: 8602299480994262816}
   - component: {fileID: 8602299480994262815}
   - component: {fileID: 8602299480994262814}
   m_Layer: 0
@@ -1590,7 +1591,7 @@ Animator:
   m_GameObject: {fileID: 8602299480994262813}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 0dfb55527bd74bd41a3bcfce04ff308f, type: 3}
-  m_Controller: {fileID: 9100000, guid: f1ca3413461e3c440afd5150fe890b33, type: 2}
+  m_Controller: {fileID: 9100000, guid: 7d5cc23d7ba12b243bc8e27f7a4b0a0d, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1641,6 +1642,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _currentHealth: 70
   _maxHealth: 100
+--- !u!114 &8602299480994262816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8602299480994262813}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3322c31aa8e6c424ea29c9f7db3800d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _runBoolParameter: isRunning
+  _attackTriggerParameter: Attack
+  _handItemParameter: HandItemState
+  _miningTriggerParameter: Mining
+  _chestOpeningTriggerParameter: ChestOpening
+  _damageTriggerParameter: Damage
+  _deathTriggerParameter: Death
+  _victoryTriggerParameter: Victory
+  _miningStateName: PlayerMiningAnimation
+  _miningLayer: 0
+  _health: {fileID: 5274552801406137089}
 --- !u!114 &8602299480994262815
 MonoBehaviour:
   m_ObjectHideFlags: 0
