@@ -4,11 +4,11 @@ using UnityEngine;
 
 namespace Devotion.SDK.UI
 {
-    public class RouletteWIndow : BaseWindow
+    public class FortuneWheelWindow : BaseWindow
     {
         public override void CloseWindow()
         {
-            GameRoot.UIManager.CloseWindow<RouletteWIndow>();
+            GameRoot.UIManager.CloseWindow<FortuneWheelWindow>();
         }
 
         private void Update()

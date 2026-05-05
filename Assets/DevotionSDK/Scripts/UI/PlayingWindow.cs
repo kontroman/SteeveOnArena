@@ -7,5 +7,7 @@ namespace Devotion.SDK.UI
     public class PlayingWindow : BaseWindow
     {
         public void OnAchievmentButtonClick() => GameRoot.UIManager.ShowWindow<WindowAchievements>();
+
+        public void OnWheelButtonClick() => GameRoot.UIManager.ShowWindow<FortuneWheelWindow>();
     }
 }
