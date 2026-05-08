@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using static Devotion.SDK.Helpers.ContainersHelper;
 
@@ -7,9 +8,38 @@ namespace Devotion.SDK.Services.SaveSystem.Progress
     [Serializable]
     public class InventoryProgress : BaseProgress
     {
-        [SerializeField] private SerializableDictionary<string, int> savedResources = new();
+        private const int QuickSlotCount = 5;
 
-        public SerializableDictionary<string, int> SavedResources { get { return savedResources; } }
+        [SerializeField] private SerializableDictionary<string, int> savedResources = new();
+        [SerializeField] private List<string> quickSlotItemIds = new();
+        [SerializeField] private int selectedQuickSlotIndex;
+
+        public SerializableDictionary<string, int> SavedResources
+        {
+            get
+            {
+                savedResources ??= new SerializableDictionary<string, int>();
+                return savedResources;
+            }
+        }
+
+        public IReadOnlyList<string> QuickSlotItemIds
+        {
+            get
+            {
+                EnsureQuickSlots();
+                return quickSlotItemIds;
+            }
+        }
+
+        public int SelectedQuickSlotIndex
+        {
+            get
+            {
+                EnsureQuickSlots();
+                return Mathf.Clamp(selectedQuickSlotIndex, 0, QuickSlotCount - 1);
+            }
+        }
 
         public InventoryProgress() { }
 
@@ -38,6 +68,79 @@ namespace Devotion.SDK.Services.SaveSystem.Progress
 
             Debug.LogError("[TODO]: remove autosave");
             Save();
+        }
+
+        public void ClearInventory(bool clearQuickSlots = true)
+        {
+            SavedResources.Clear();
+
+            if (clearQuickSlots)
+            {
+                EnsureQuickSlots();
+
+                for (int i = 0; i < quickSlotItemIds.Count; i++)
+                    quickSlotItemIds[i] = string.Empty;
+            }
+
+            Save();
+        }
+
+        public string GetQuickSlotItemId(int index)
+        {
+            EnsureQuickSlots();
+
+            if (index < 0 || index >= quickSlotItemIds.Count)
+                return string.Empty;
+
+            return quickSlotItemIds[index];
+        }
+
+        public void SetQuickSlotItemId(int index, string itemId)
+        {
+            EnsureQuickSlots();
+
+            if (index < 0 || index >= quickSlotItemIds.Count)
+                return;
+
+            itemId ??= string.Empty;
+            if (quickSlotItemIds[index] == itemId)
+                return;
+
+            if (!string.IsNullOrWhiteSpace(itemId))
+            {
+                for (int i = 0; i < quickSlotItemIds.Count; i++)
+                {
+                    if (i != index && quickSlotItemIds[i] == itemId)
+                        quickSlotItemIds[i] = string.Empty;
+                }
+            }
+
+            quickSlotItemIds[index] = itemId;
+            Save();
+        }
+
+        public void SetSelectedQuickSlotIndex(int index)
+        {
+            EnsureQuickSlots();
+            index = Mathf.Clamp(index, 0, QuickSlotCount - 1);
+            if (selectedQuickSlotIndex == index)
+                return;
+
+            selectedQuickSlotIndex = index;
+            Save();
+        }
+
+        private void EnsureQuickSlots()
+        {
+            quickSlotItemIds ??= new List<string>(QuickSlotCount);
+
+            while (quickSlotItemIds.Count < QuickSlotCount)
+                quickSlotItemIds.Add(string.Empty);
+
+            while (quickSlotItemIds.Count > QuickSlotCount)
+                quickSlotItemIds.RemoveAt(quickSlotItemIds.Count - 1);
+
+            selectedQuickSlotIndex = Mathf.Clamp(selectedQuickSlotIndex, 0, QuickSlotCount - 1);
         }
     }
 }

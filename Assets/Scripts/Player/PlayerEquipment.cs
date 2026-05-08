@@ -14,6 +14,7 @@ namespace MineArena.PlayerSystem
         [Header("Hand items (already in rig)")]
         [SerializeField] private GameObject _swordInHand;
         [SerializeField] private GameObject _pickaxeInHand;
+        [SerializeField] private GameObject _bowInHand;
 
         [Header("Attack configs")]
         [SerializeField] private AttackConfig _defaultSwordAttack;
@@ -40,6 +41,7 @@ namespace MineArena.PlayerSystem
         private void Awake()
         {
             _animator = _animatorController ?? GetComponent<IPlayerAnimator>();
+            ResolveHandItemReferences();
 
             UpdateHandAnimatorState();
             RefreshArmorVisuals();
@@ -124,17 +126,16 @@ namespace MineArena.PlayerSystem
 
         public void SetActiveHandItem(HandItemType type)
         {
-            if (type == HandItemType.None)
-                type = _lastActiveHandItem;
-
-            if (type != HandItemType.None)
-                _lastActiveHandItem = type;
+            _lastActiveHandItem = type;
 
             if (_swordInHand != null)
                 _swordInHand.SetActive(type == HandItemType.Sword);
 
             if (_pickaxeInHand != null)
                 _pickaxeInHand.SetActive(type == HandItemType.Pickaxe);
+
+            if (_bowInHand != null)
+                _bowInHand.SetActive(type == HandItemType.Bow);
 
             UpdateHandItemMaterial(type);
             UpdateHandAnimatorState();
@@ -160,6 +161,27 @@ namespace MineArena.PlayerSystem
                     ApplyMaterialToItem(_pickaxeInHand, _pickaxe?.Material);
                     break;
             }
+        }
+
+        private void ResolveHandItemReferences()
+        {
+            if (_bowInHand == null)
+                _bowInHand = FindChildGameObject("bow");
+        }
+
+        private GameObject FindChildGameObject(string childName)
+        {
+            if (string.IsNullOrWhiteSpace(childName))
+                return null;
+
+            var children = GetComponentsInChildren<Transform>(true);
+            foreach (var child in children)
+            {
+                if (child != null && string.Equals(child.name, childName, StringComparison.OrdinalIgnoreCase))
+                    return child.gameObject;
+            }
+
+            return null;
         }
 
         private static void ApplyMaterialToItem(GameObject item, Material material)

@@ -11,9 +11,22 @@ namespace MineArena.UI
 
         public void SetResource(StackableItemConfig resource)
         {
+            SetSprite(resource != null ? resource.Icon : null);
+        }
+
+        public void SetSprite(Sprite sprite)
+        {
+            if (resourceImages == null)
+                return;
+
             foreach (var item in resourceImages)
             {
-                item.sprite = resource.Icon;
+                if (item == null)
+                    continue;
+
+                item.sprite = sprite;
+                item.enabled = sprite != null;
+                item.raycastTarget = false;
             }
         }
     }

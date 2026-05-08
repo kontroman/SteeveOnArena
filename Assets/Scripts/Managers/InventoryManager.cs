@@ -32,15 +32,22 @@ namespace MineArena.Managers
 
                 var config = GameRoot.GameConfig.ItemDatabase.GetStackableItemConfig(itemId);
 
-                if (config == null)
+                if (config != null)
                 {
-                    Debug.LogError($"[InventoryManager] item config not found id: {itemId}");
+                    var newItem = new StackableItem(config, amount);
+
+                    _items.Add(newItem);
                     continue;
                 }
 
-                var newItem = new StackableItem(config, amount);
+                var itemConfig = GameRoot.GameConfig.ItemDatabase.GetItemConfig(itemId);
+                if (itemConfig != null)
+                {
+                    _items.Add(CreateItemFromConfig(itemConfig));
+                    continue;
+                }
 
-                _items.Add(newItem);
+                _items.Add(new Item(itemId, null, null));
             }
 
             InventoryUpdated?.Invoke();
@@ -74,6 +81,41 @@ namespace MineArena.Managers
 
             Debug.Log($"Item added to inventory: {item.Name}");
 
+            InventoryUpdated?.Invoke();
+        }
+
+        public bool HasItem(string itemId)
+        {
+            if (string.IsNullOrWhiteSpace(itemId))
+                return false;
+
+            if (_items.Any(item => item != null && item.Name == itemId))
+                return true;
+
+            return GameRoot.PlayerProgress.InventoryProgress.SavedResources.ContainsKey(itemId);
+        }
+
+        public void AddItemById(string itemId, int amount = 1)
+        {
+            if (string.IsNullOrWhiteSpace(itemId))
+                return;
+
+            amount = Mathf.Max(1, amount);
+            var config = GameRoot.GameConfig.ItemDatabase.GetItemConfig(itemId);
+
+            if (config == null)
+            {
+                AddItem(new Item(itemId, null, null), amount);
+                return;
+            }
+
+            AddItem(CreateItemFromConfig(config, amount), amount);
+        }
+
+        public void ClearInventory(bool clearQuickSlots = true)
+        {
+            _items.Clear();
+            GameRoot.PlayerProgress?.InventoryProgress?.ClearInventory(clearQuickSlots);
             InventoryUpdated?.Invoke();
         }
 
@@ -234,6 +276,26 @@ namespace MineArena.Managers
         private static bool CategoryEquals(string left, string right)
         {
             return string.Equals(left, right, StringComparison.OrdinalIgnoreCase);
+        }
+
+        private static Item CreateItemFromConfig(ItemConfig config, int amount = 1)
+        {
+            if (config == null)
+                return null;
+
+            if (config.Stackable && config is StackableItemConfig stackableConfig)
+                return new StackableItem(stackableConfig, amount);
+
+            if (config is PickaxeConfig pickaxeConfig)
+                return new Pickaxe(pickaxeConfig);
+
+            if (config is ArmorConfig armorConfig)
+                return new Armor(armorConfig);
+
+            if (config is EquipmentItemConfig equipmentConfig)
+                return new EquipmentItem(equipmentConfig);
+
+            return new Item(config.Name, config.Prefab, config.Icon);
         }
     }
 }

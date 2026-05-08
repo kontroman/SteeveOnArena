@@ -49,7 +49,7 @@ namespace MineArena.Game.Health
             var config = GameRoot.GameConfig;
             if (config != null && config.GodModeInvulnerability)
             {
-                if (gameObject == Player.Instance.gameObject)
+                if (Player.Instance != null && gameObject == Player.Instance.gameObject)
                     return;
             }
 #endif

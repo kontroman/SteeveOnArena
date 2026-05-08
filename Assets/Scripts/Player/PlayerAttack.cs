@@ -21,7 +21,7 @@ namespace MineArena.PlayerSystem
         //TODO: change playerState from Player class
         [SerializeField] private PlayerAnimatorController _animatorController;
         [SerializeField] private string _attackStateName = "Attack";
-        [SerializeField] private int _attackLayerIndex = 0;
+        [SerializeField] private int _attackLayerIndex = 1;
         [SerializeField] private float _attackStateFailSafe = 1.5f;
 
         [Header("Configuration")]
@@ -64,6 +64,13 @@ namespace MineArena.PlayerSystem
             {
                 if (IsPointerOverUi())
                 {
+                    return;
+                }
+
+                if (_equipment != null && _equipment.LastActiveHandItem == HandItemType.Bow)
+                {
+                    _nextAttackTime = Time.time + 0.5f;
+                    Debug.Log("[PlayerAttack] Bow attack selected. Bow attack will be implemented later.");
                     return;
                 }
 
@@ -246,7 +253,8 @@ namespace MineArena.PlayerSystem
                 yield break;
             }
 
-            int layer = Mathf.Clamp(_attackLayerIndex, 0, _rawAnimator.layerCount - 1);
+            int preferredLayer = Mathf.Clamp(_attackLayerIndex, 0, _rawAnimator.layerCount - 1);
+            int activeLayer = -1;
 
             bool stateStarted = false;
             float failSafeTime = Mathf.Max(_attackStateFailSafe, activeConfig?.AnimationDelay ?? 0f);
@@ -254,21 +262,29 @@ namespace MineArena.PlayerSystem
 
             while (true)
             {
-                var info = _rawAnimator.GetCurrentAnimatorStateInfo(layer);
+                if (activeLayer < 0)
+                    activeLayer = FindAttackStateLayer(preferredLayer);
 
-                if (info.IsName(_attackStateName))
+                if (activeLayer >= 0)
                 {
-                    stateStarted = true;
+                    var info = _rawAnimator.GetCurrentAnimatorStateInfo(activeLayer);
+                    bool currentAttackState = info.IsName(_attackStateName);
+                    bool nextAttackState = _rawAnimator.IsInTransition(activeLayer) &&
+                                           _rawAnimator.GetNextAnimatorStateInfo(activeLayer).IsName(_attackStateName);
 
-                    if (info.normalizedTime >= 1f && !_rawAnimator.IsInTransition(layer))
+                    if (currentAttackState || nextAttackState)
+                    {
+                        stateStarted = true;
+
+                        if (currentAttackState && info.normalizedTime >= 1f && !_rawAnimator.IsInTransition(activeLayer))
+                        {
+                            break;
+                        }
+                    }
+                    else if (stateStarted)
                     {
                         break;
                     }
-                }
-                else if (stateStarted)
-                {
-                    // left attack state early
-                    break;
                 }
 
                 elapsed += Time.deltaTime;
@@ -279,6 +295,32 @@ namespace MineArena.PlayerSystem
 
                 yield return null;
             }
+        }
+
+        private int FindAttackStateLayer(int preferredLayer)
+        {
+            if (IsAttackStateActive(preferredLayer))
+                return preferredLayer;
+
+            for (int layer = 0; layer < _rawAnimator.layerCount; layer++)
+            {
+                if (layer == preferredLayer)
+                    continue;
+
+                if (IsAttackStateActive(layer))
+                    return layer;
+            }
+
+            return -1;
+        }
+
+        private bool IsAttackStateActive(int layer)
+        {
+            if (_rawAnimator.GetCurrentAnimatorStateInfo(layer).IsName(_attackStateName))
+                return true;
+
+            return _rawAnimator.IsInTransition(layer) &&
+                   _rawAnimator.GetNextAnimatorStateInfo(layer).IsName(_attackStateName);
         }
     }
 }

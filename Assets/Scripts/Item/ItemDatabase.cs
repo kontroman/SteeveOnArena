@@ -16,6 +16,9 @@ namespace MineArena.Items
         {
             _itemsById = new Dictionary<string, ItemConfig>();
 
+            if (allItems == null)
+                return;
+
             foreach (var item in allItems)
             {
                 if (item == null || string.IsNullOrWhiteSpace(item.Name))
@@ -32,18 +35,24 @@ namespace MineArena.Items
 
         public ItemConfig GetItemConfig(string id)
         {
-            if (_itemsById == null)
+            if (string.IsNullOrWhiteSpace(id))
                 return null;
+
+            if (_itemsById == null)
+                Initialize();
 
             if (_itemsById.TryGetValue(id, out var config))
                 return config;
 
-            return null;
+            return allItems.Find(x => x != null && x.Name == id);
         }
 
         public StackableItemConfig GetStackableItemConfig(string id)
         {
-            return allItems.Find(x => x.Name == id) as StackableItemConfig;
+            if (string.IsNullOrWhiteSpace(id) || allItems == null)
+                return null;
+
+            return allItems.Find(x => x != null && x.Name == id) as StackableItemConfig;
         }
     }
 }

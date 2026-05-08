@@ -22,9 +22,9 @@ namespace Devotion.SDK.Controllers
 
         private Dictionary<System.Type, BaseManager> _managers = new Dictionary<System.Type, BaseManager>();
 
-        public static GameConfig GameConfig => Instance.gameConfig;
+        public static GameConfig GameConfig => Instance != null ? Instance.gameConfig : null;
         public static UIManager UIManager => GetManager<UIManager>();
-        public static PlayerProgress PlayerProgress => Instance.playerProgress;
+        public static PlayerProgress PlayerProgress => Instance != null ? Instance.playerProgress : null;
 
         private void Awake()
         {
@@ -41,10 +41,17 @@ namespace Devotion.SDK.Controllers
 
         private void Start()
         {
+#if UNITY_EDITOR || DEVOTION_GODMODE
             if (gameConfig != null)
             {
                 gameConfig.GodModeChanged += HandleGodModeChanged;
             }
+#else
+            if (gameConfig != null)
+            {
+                gameConfig.GodMode = false;
+            }
+#endif
 
             SaveService.Instance.Initialize().
                 Then(LocalizationService.Initialize(gameConfig.LocalizationConfig)).
@@ -64,11 +71,23 @@ namespace Devotion.SDK.Controllers
 
             UIManager.ShowWindow<PlayingWindow>();
 
+#if UNITY_EDITOR || DEVOTION_GODMODE
             if (gameConfig != null)
             {
                 HandleGodModeChanged(gameConfig.GodMode);
             }
+#endif
         }
+
+#if UNITY_EDITOR || DEVOTION_GODMODE
+        private void Update()
+        {
+            if (gameConfig != null && Input.GetKeyDown(KeyCode.F10))
+            {
+                gameConfig.GodMode = !gameConfig.GodMode;
+            }
+        }
+#endif
 
         public static T GetManager<T>() where T : BaseManager
         {
@@ -88,22 +107,28 @@ namespace Devotion.SDK.Controllers
 
         private void OnDestroy()
         {
+#if UNITY_EDITOR || DEVOTION_GODMODE
             if (Instance == this && gameConfig != null)
             {
                 gameConfig.GodModeChanged -= HandleGodModeChanged;
             }
+#endif
         }
 
 
         private void HandleGodModeChanged(bool isEnabled)
         {
+            var uiManager = UIManager;
+            if (uiManager == null)
+                return;
+
             if (isEnabled)
             {
-                UIManager.ShowWindow<GodModeWindow>();
+                uiManager.ShowWindow<GodModeWindow>();
             }
             else
             {
-                UIManager.CloseWindow<GodModeWindow>();
+                uiManager.CloseWindow<GodModeWindow>();
             }
         }
         private static BaseManager LoadManager(BaseManager manager, System.Type type)

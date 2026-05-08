@@ -10,7 +10,6 @@ using UnityEngine.Serialization;
 using Devotion.SDK.Confgs;
 using MineArena.Items;
 using MineArena.Buildings;
-using UnityEngine.Events;
 using Sirenix.OdinInspector;
 
 
@@ -25,6 +24,7 @@ namespace MineArena.Structs
         [SerializeField] private LocalizationConfig localizationConfig;
         [SerializeField] private ItemDatabase itemDatabase;
         [SerializeField] private BuildingsDatabase buildingsDatabase;
+        [SerializeField, Min(1)] private int freeFortuneSpinCooldownMinutes = 30;
 
         public List<LevelConfig> Levels { get { return levels; } }
         public List<ItemPrize> Prizes { get { return _prizes; } }
@@ -32,6 +32,7 @@ namespace MineArena.Structs
         public LocalizationConfig LocalizationConfig { get { return localizationConfig; } }
         public ItemDatabase ItemDatabase { get { return itemDatabase; } }
         public BuildingsDatabase BuildingsDatabase { get { return buildingsDatabase; } }
+        public int FreeFortuneSpinCooldownMinutes => freeFortuneSpinCooldownMinutes <= 0 ? 30 : freeFortuneSpinCooldownMinutes;
 
 #region GODMODE
         [Space(10)]
@@ -39,26 +40,26 @@ namespace MineArena.Structs
         private bool godModeInvulnerability;
         private bool godModeOneHitKill;
 
-        private UnityEvent<bool> godModeChanged;
-        private UnityEvent<bool> invulnerabilityChanged;
-        private UnityEvent<bool> oneHitKillChanged;
+        private event Action<bool> godModeChanged;
+        private event Action<bool> invulnerabilityChanged;
+        private event Action<bool> oneHitKillChanged;
 
         public event Action<bool> GodModeChanged
         {
-            add => godModeChanged.AddListener(value.Invoke);
-            remove => godModeChanged.RemoveListener(value.Invoke);
+            add => godModeChanged += value;
+            remove => godModeChanged -= value;
         }
 
         public event Action<bool> InvulnerabilityChanged
         {
-            add => invulnerabilityChanged.AddListener(value.Invoke);
-            remove => invulnerabilityChanged.RemoveListener(value.Invoke);
+            add => invulnerabilityChanged += value;
+            remove => invulnerabilityChanged -= value;
         }
 
         public event Action<bool> OneHitKillChanged
         {
-            add => oneHitKillChanged.AddListener(value.Invoke);
-            remove => oneHitKillChanged.RemoveListener(value.Invoke);
+            add => oneHitKillChanged += value;
+            remove => oneHitKillChanged -= value;
         }
         public bool GodMode
         {
