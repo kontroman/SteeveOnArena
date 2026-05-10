@@ -200,11 +200,13 @@ namespace Devotion.SDK.UI
                 return;
 
             var item = ResolveInventoryItem(progress.GetQuickSlotItemId(progress.SelectedQuickSlotIndex));
+            var itemConfig = ResolveItemConfig(progress.GetQuickSlotItemId(progress.SelectedQuickSlotIndex));
             var equipment = Player.Instance != null ? Player.Instance.GetComponentFromList<PlayerEquipment>() : null;
             if (equipment == null)
                 return;
 
             var handItem = ResolveHandItemType(item);
+            ApplyEquipmentConfig(equipment, itemConfig);
 
             if (handItem != HandItemType.None)
             {
@@ -244,6 +246,31 @@ namespace Devotion.SDK.UI
                 return new Item(config.Name, config.Prefab, config.Icon);
 
             return new Item(itemId, null, null);
+        }
+
+        private ItemConfig ResolveItemConfig(string itemId)
+        {
+            if (string.IsNullOrWhiteSpace(itemId))
+                return null;
+
+            var database = GameRoot.GameConfig != null ? GameRoot.GameConfig.ItemDatabase : null;
+            return database != null ? database.GetItemConfig(itemId) : null;
+        }
+
+        private static void ApplyEquipmentConfig(PlayerEquipment equipment, ItemConfig itemConfig)
+        {
+            if (equipment == null || itemConfig is not WeaponItemConfig weaponConfig)
+                return;
+
+            switch (weaponConfig.Kind)
+            {
+                case WeaponItemKind.Sword:
+                    equipment.EquipSword(weaponConfig.AttackConfig, false);
+                    break;
+                case WeaponItemKind.Bow:
+                    equipment.EquipBow(weaponConfig.AttackConfig, false);
+                    break;
+            }
         }
 
         private static HandItemType ResolveHandItemType(Item item)

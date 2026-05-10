@@ -10,6 +10,7 @@ namespace MineArena.PlayerSystem
         void SetRunning(bool isRunning);
 
         void TriggerAttack();
+        void TriggerBowShoot();
         void TriggerDamage();
         void TriggerDeath();
         void TriggerVictory();

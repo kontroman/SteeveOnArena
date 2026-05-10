@@ -98,8 +98,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 076222918d46a9f46b58e1cd5bcf7f12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  speed: 40
   destroyDelay: 5
+  stickDepth: 0.08
+  stuckLifetime: 2
 --- !u!1 &1110433616816073250
 GameObject:
   m_ObjectHideFlags: 0

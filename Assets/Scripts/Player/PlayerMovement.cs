@@ -13,6 +13,7 @@ namespace MineArena.PlayerSystem
         private bool _isDead;
 
         private IPlayerAnimator _animator;
+        private PlayerAttack _playerAttack;
         private Transform _cameraTransform;
         private Vector3 _velocity;
         private bool _isGrounded;
@@ -33,6 +34,8 @@ namespace MineArena.PlayerSystem
             _animator = Controllers.Player.Instance?.GetComponentFromList<PlayerAnimatorController>() ??
                         Controllers.Player.Instance?.GetComponent<IPlayerAnimator>() ??
                         GetComponent<IPlayerAnimator>();
+            _playerAttack = Controllers.Player.Instance?.GetComponentFromList<PlayerAttack>() ??
+                            GetComponent<PlayerAttack>();
         }
 
         private void Update()
@@ -122,6 +125,9 @@ namespace MineArena.PlayerSystem
 
         private void RotatePlayer(Vector3 moveDirection)
         {
+            if (_playerAttack != null && _playerAttack.IsAttacking)
+                return;
+
             if (moveDirection != Vector3.zero && !Player.Instance.GetComponentFromList<RotationController>().IsRotating())
             {
                 Player.Instance.GetComponentFromList<RotationController>().RotateToDirection(

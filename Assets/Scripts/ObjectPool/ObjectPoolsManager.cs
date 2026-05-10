@@ -63,6 +63,11 @@ namespace MineArena.ObjectPools
             return null;
         }
 
+        public bool HasPool(Type type)
+        {
+            return _pools != null && type != null && _pools.ContainsKey(type);
+        }
+
         public void Release<T>(GameObject gameObject) where T : Component
         {
             var component = gameObject.GetComponent<T>();
