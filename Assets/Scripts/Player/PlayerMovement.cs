@@ -56,6 +56,11 @@ namespace MineArena.PlayerSystem
 
                 RotatePlayer(horizontalMove);
             }
+            else
+            {
+                ApplyGravity();
+                _characterController.Move(new Vector3(0f, _velocity.y, 0f) * Time.deltaTime);
+            }
         }
 
         private Vector3 GetHorizontalMovement()
@@ -97,6 +102,20 @@ namespace MineArena.PlayerSystem
                     _velocity.y = Constants.PlayerSettings.JumpForce;
                 }
             }
+
+            ApplyGravity();
+        }
+
+        private void ApplyGravity()
+        {
+            if (_characterController == null)
+                _characterController = GetComponent<CharacterController>();
+
+            if (_characterController == null || !_characterController.enabled)
+                return;
+
+            if (_characterController.isGrounded && _velocity.y <= 0f)
+                _velocity.y = -2f;
 
             _velocity.y += Constants.PlayerSettings.Gravity * Time.deltaTime;
         }

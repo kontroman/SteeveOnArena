@@ -11,6 +11,8 @@ namespace Devotion.SDK.Services.SaveSystem.Progress
         private const int QuickSlotCount = 5;
 
         [SerializeField] private SerializableDictionary<string, int> savedResources = new();
+        [SerializeField] private List<string> inventoryItemOrder = new();
+        [SerializeField] private SerializableDictionary<string, string> equippedArmorItemIds = new();
         [SerializeField] private List<string> quickSlotItemIds = new();
         [SerializeField] private int selectedQuickSlotIndex;
 
@@ -32,6 +34,15 @@ namespace Devotion.SDK.Services.SaveSystem.Progress
             }
         }
 
+        public IReadOnlyList<string> InventoryItemOrder
+        {
+            get
+            {
+                EnsureInventoryItemOrder();
+                return inventoryItemOrder;
+            }
+        }
+
         public int SelectedQuickSlotIndex
         {
             get
@@ -45,10 +56,18 @@ namespace Devotion.SDK.Services.SaveSystem.Progress
 
         public void AddResource(string id, int amount = 1)
         {
+            if (string.IsNullOrWhiteSpace(id))
+                return;
+
+            bool isNewItem = !SavedResources.ContainsKey(id);
+
             if (savedResources.TryGetValue(id, out int currentAmount))
                 savedResources[id] = currentAmount + amount;
             else
                 savedResources[id] = amount;
+
+            if (isNewItem)
+                AddInventoryOrderItem(id);
 
             Debug.LogError("[TODO]: remove autosave");
             Save();
@@ -62,7 +81,10 @@ namespace Devotion.SDK.Services.SaveSystem.Progress
             int newAmount = Mathf.Max(0, currentAmount - amount);
 
             if (newAmount <= 0)
+            {
                 savedResources.Remove(id);
+                inventoryItemOrder?.Remove(id);
+            }
             else
                 savedResources[id] = newAmount;
 
@@ -73,6 +95,8 @@ namespace Devotion.SDK.Services.SaveSystem.Progress
         public void ClearInventory(bool clearQuickSlots = true)
         {
             SavedResources.Clear();
+            inventoryItemOrder?.Clear();
+            EquippedArmorItemIds.Clear();
 
             if (clearQuickSlots)
             {
@@ -81,6 +105,65 @@ namespace Devotion.SDK.Services.SaveSystem.Progress
                 for (int i = 0; i < quickSlotItemIds.Count; i++)
                     quickSlotItemIds[i] = string.Empty;
             }
+
+            Save();
+        }
+
+        public string GetEquippedArmorItemId(string slot)
+        {
+            if (string.IsNullOrWhiteSpace(slot))
+                return string.Empty;
+
+            return EquippedArmorItemIds.TryGetValue(slot, out var itemId) ? itemId : string.Empty;
+        }
+
+        public void SetEquippedArmorItemId(string slot, string itemId)
+        {
+            if (string.IsNullOrWhiteSpace(slot))
+                return;
+
+            itemId ??= string.Empty;
+
+            if (string.IsNullOrWhiteSpace(itemId))
+            {
+                if (!EquippedArmorItemIds.Remove(slot))
+                    return;
+            }
+            else
+            {
+                if (EquippedArmorItemIds.TryGetValue(slot, out var currentItemId) && currentItemId == itemId)
+                    return;
+
+                EquippedArmorItemIds[slot] = itemId;
+            }
+
+            Save();
+        }
+
+        public void SetInventoryItemOrder(IReadOnlyList<string> itemIds)
+        {
+            inventoryItemOrder ??= new List<string>();
+            inventoryItemOrder.Clear();
+
+            if (itemIds != null)
+            {
+                foreach (var itemId in itemIds)
+                {
+                    if (string.IsNullOrWhiteSpace(itemId))
+                    {
+                        inventoryItemOrder.Add(string.Empty);
+                        continue;
+                    }
+
+                    if (!SavedResources.ContainsKey(itemId) || inventoryItemOrder.Contains(itemId))
+                        continue;
+
+                    inventoryItemOrder.Add(itemId);
+                }
+            }
+
+            foreach (var itemId in SavedResources.Keys)
+                AddInventoryOrderItem(itemId);
 
             Save();
         }
@@ -141,6 +224,40 @@ namespace Devotion.SDK.Services.SaveSystem.Progress
                 quickSlotItemIds.RemoveAt(quickSlotItemIds.Count - 1);
 
             selectedQuickSlotIndex = Mathf.Clamp(selectedQuickSlotIndex, 0, QuickSlotCount - 1);
+        }
+
+        private SerializableDictionary<string, string> EquippedArmorItemIds
+        {
+            get
+            {
+                equippedArmorItemIds ??= new SerializableDictionary<string, string>();
+                return equippedArmorItemIds;
+            }
+        }
+
+        private void EnsureInventoryItemOrder()
+        {
+            inventoryItemOrder ??= new List<string>();
+
+            for (int i = inventoryItemOrder.Count - 1; i >= 0; i--)
+            {
+                if (!string.IsNullOrWhiteSpace(inventoryItemOrder[i]) && !SavedResources.ContainsKey(inventoryItemOrder[i]))
+                    inventoryItemOrder.RemoveAt(i);
+            }
+
+            foreach (var itemId in SavedResources.Keys)
+                AddInventoryOrderItem(itemId);
+        }
+
+        private void AddInventoryOrderItem(string itemId)
+        {
+            if (string.IsNullOrWhiteSpace(itemId))
+                return;
+
+            inventoryItemOrder ??= new List<string>();
+
+            if (!inventoryItemOrder.Contains(itemId))
+                inventoryItemOrder.Add(itemId);
         }
     }
 }

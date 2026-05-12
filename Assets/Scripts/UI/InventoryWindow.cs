@@ -77,6 +77,9 @@ namespace MineArena.UI
             {
                 if (i < _inventoryCells.Count)
                 {
+                    if (items[i] == null)
+                        continue;
+
                     var cellUI = _inventoryCells[i];
                     cellUI.Setup(items[i]);
                 }
@@ -192,7 +195,10 @@ namespace MineArena.UI
             foreach (var item in _inventoryManager.Items)
             {
                 if (item == null)
+                {
+                    visibleItems.Add(null);
                     continue;
+                }
 
                 var hiddenCount = hiddenCounts.TryGetValue(item.Name, out var count) ? count : 0;
                 if (hiddenCount <= 0)
@@ -206,11 +212,14 @@ namespace MineArena.UI
                     var visibleAmount = stackableItem.CurrentStack - hiddenCount;
                     if (visibleAmount > 0)
                         visibleItems.Add(new StackableItem(stackableItem.Config, visibleAmount));
+                    else
+                        visibleItems.Add(null);
 
                     hiddenCounts[item.Name] = Mathf.Max(0, hiddenCount - stackableItem.CurrentStack);
                     continue;
                 }
 
+                visibleItems.Add(null);
                 hiddenCounts[item.Name] = hiddenCount - 1;
             }
 
@@ -287,17 +296,7 @@ namespace MineArena.UI
             if (fromCell.HasItem)
             {
                 var itemToMove = fromCell.Item;
-                if (toCell.HasItem)
-                {
-                    var tempItem = toCell.Item;
-                    toCell.Setup(itemToMove);
-                    fromCell.Setup(tempItem);
-                }
-                else
-                {
-                    toCell.Setup(itemToMove);
-                    fromCell.Clear();
-                }
+                _inventoryManager?.MoveItemToSlot(itemToMove, toCellIndex);
             }
         }
 

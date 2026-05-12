@@ -23,31 +23,18 @@ namespace MineArena.Managers
         {
             _items.Clear();
 
-            var savedResources = GameRoot.PlayerProgress.InventoryProgress.SavedResources;
+            var progress = GameRoot.PlayerProgress.InventoryProgress;
+            var savedResources = progress.SavedResources;
 
-            foreach (var kvp in savedResources)
+            foreach (var itemId in progress.InventoryItemOrder)
             {
-                var itemId = kvp.Key;
-                var amount = kvp.Value;
-
-                var config = GameRoot.GameConfig.ItemDatabase.GetStackableItemConfig(itemId);
-
-                if (config != null)
+                if (string.IsNullOrWhiteSpace(itemId))
                 {
-                    var newItem = new StackableItem(config, amount);
-
-                    _items.Add(newItem);
+                    _items.Add(null);
                     continue;
                 }
 
-                var itemConfig = GameRoot.GameConfig.ItemDatabase.GetItemConfig(itemId);
-                if (itemConfig != null)
-                {
-                    _items.Add(CreateItemFromConfig(itemConfig));
-                    continue;
-                }
-
-                _items.Add(new Item(itemId, null, null));
+                AddSavedItem(itemId, savedResources);
             }
 
             InventoryUpdated?.Invoke();
@@ -75,9 +62,14 @@ namespace MineArena.Managers
                 }
             }
 
-            _items.Add(item);
+            var emptySlotIndex = _items.IndexOf(null);
+            if (emptySlotIndex >= 0)
+                _items[emptySlotIndex] = item;
+            else
+                _items.Add(item);
 
             GameRoot.PlayerProgress.InventoryProgress.AddResource(item.Name, amount);
+            SaveInventoryOrder();
 
             Debug.Log($"Item added to inventory: {item.Name}");
 
@@ -139,7 +131,8 @@ namespace MineArena.Managers
 
                 if (stackable.CurrentStack <= 0)
                 {
-                    _items.Remove(stackable);
+                    ClearItemSlot(stackable);
+                    SaveInventoryOrder();
                     Debug.Log($"Item removed from inventory: {item.Name}");
                 }
                 else
@@ -151,12 +144,82 @@ namespace MineArena.Managers
                 return;
             }
 
-            if (_items.Remove(item))
+            int itemIndex = _items.IndexOf(item);
+            if (itemIndex >= 0)
             {
+                _items[itemIndex] = null;
+                TrimTrailingEmptySlots();
                 GameRoot.PlayerProgress.InventoryProgress.RemoveResource(item.Name, amount);
+                SaveInventoryOrder();
                 Debug.Log($"Item removed from inventory: {item.Name}");
                 InventoryUpdated?.Invoke();
             }
+        }
+
+        public void MoveItem(Item itemToMove, Item targetItem)
+        {
+            if (itemToMove == null || targetItem == null || itemToMove == targetItem)
+                return;
+
+            int fromIndex = _items.IndexOf(itemToMove);
+            int toIndex = _items.IndexOf(targetItem);
+
+            if (fromIndex < 0 || toIndex < 0 || fromIndex == toIndex)
+                return;
+
+            _items[fromIndex] = targetItem;
+            _items[toIndex] = itemToMove;
+            SaveInventoryOrder();
+            InventoryUpdated?.Invoke();
+        }
+
+        public void MoveItemToEnd(Item itemToMove)
+        {
+            MoveItemToIndex(itemToMove, _items.Count - 1);
+        }
+
+        public void MoveItemToIndex(Item itemToMove, int toIndex)
+        {
+            if (itemToMove == null || _items.Count == 0)
+                return;
+
+            int fromIndex = _items.IndexOf(itemToMove);
+            toIndex = Mathf.Clamp(toIndex, 0, _items.Count - 1);
+
+            if (fromIndex < 0 || fromIndex == toIndex)
+                return;
+
+            _items.RemoveAt(fromIndex);
+            _items.Insert(toIndex, itemToMove);
+            SaveInventoryOrder();
+            InventoryUpdated?.Invoke();
+        }
+
+        public void MoveItemToSlot(Item itemToMove, int toIndex)
+        {
+            if (itemToMove == null || toIndex < 0)
+                return;
+
+            int fromIndex = _items.IndexOf(itemToMove);
+            if (fromIndex < 0)
+                fromIndex = FindItemIndexByName(itemToMove.Name);
+
+            if (fromIndex < 0)
+                return;
+
+            while (_items.Count <= toIndex)
+                _items.Add(null);
+
+            if (fromIndex == toIndex)
+                return;
+
+            var targetItem = _items[toIndex];
+            _items[toIndex] = _items[fromIndex];
+            _items[fromIndex] = targetItem;
+
+            TrimTrailingEmptySlots();
+            SaveInventoryOrder();
+            InventoryUpdated?.Invoke();
         }
 
         public bool HasResources(IReadOnlyList<ResourceRequired> requiredResources)
@@ -245,9 +308,10 @@ namespace MineArena.Managers
                 GameRoot.PlayerProgress.InventoryProgress.RemoveResource(stackable.Name, amount);
 
                 if (stackable.CurrentStack <= 0)
-                    _items.Remove(stackable);
+                    ClearItemSlot(stackable);
             }
 
+            SaveInventoryOrder();
             InventoryUpdated?.Invoke();
             return true;
         }
@@ -296,6 +360,84 @@ namespace MineArena.Managers
                 return new EquipmentItem(equipmentConfig);
 
             return new Item(config.Name, config.Prefab, config.Icon);
+        }
+
+        private void AddSavedItem(string itemId, IReadOnlyDictionary<string, int> savedResources)
+        {
+            if (string.IsNullOrWhiteSpace(itemId) || savedResources == null || !savedResources.TryGetValue(itemId, out var amount))
+                return;
+
+            var config = GameRoot.GameConfig.ItemDatabase.GetStackableItemConfig(itemId);
+
+            if (config != null)
+            {
+                _items.Add(new StackableItem(config, amount));
+                return;
+            }
+
+            var itemConfig = GameRoot.GameConfig.ItemDatabase.GetItemConfig(itemId);
+            if (itemConfig != null)
+            {
+                _items.Add(CreateItemFromConfig(itemConfig));
+                return;
+            }
+
+            _items.Add(new Item(itemId, null, null));
+        }
+
+        private void SaveInventoryOrder()
+        {
+            var itemIds = new List<string>();
+
+            foreach (var item in _items)
+            {
+                if (item == null)
+                {
+                    itemIds.Add(string.Empty);
+                    continue;
+                }
+
+                if (string.IsNullOrWhiteSpace(item.Name) || itemIds.Contains(item.Name))
+                    continue;
+
+                itemIds.Add(item.Name);
+            }
+
+            GameRoot.PlayerProgress?.InventoryProgress?.SetInventoryItemOrder(itemIds);
+        }
+
+        private int FindItemIndexByName(string itemName)
+        {
+            if (string.IsNullOrWhiteSpace(itemName))
+                return -1;
+
+            for (int i = 0; i < _items.Count; i++)
+            {
+                if (_items[i] != null && string.Equals(_items[i].Name, itemName, StringComparison.OrdinalIgnoreCase))
+                    return i;
+            }
+
+            return -1;
+        }
+
+        private void TrimTrailingEmptySlots()
+        {
+            for (int i = _items.Count - 1; i >= 0; i--)
+            {
+                if (_items[i] != null)
+                    break;
+
+                _items.RemoveAt(i);
+            }
+        }
+
+        private void ClearItemSlot(Item item)
+        {
+            int index = _items.IndexOf(item);
+            if (index >= 0)
+                _items[index] = null;
+
+            TrimTrailingEmptySlots();
         }
     }
 }
