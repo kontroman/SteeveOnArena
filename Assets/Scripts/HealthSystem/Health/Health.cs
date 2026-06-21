@@ -28,15 +28,16 @@ namespace MineArena.Game.Health
 
         public void ChangeValue(float value)
         {
-            _currentHealth += value;
-            _currentHealth = DetermineValue(_currentHealth);
+            SetCurrentValue(_currentHealth + value);
+        }
 
-            if (_currentHealth >= _maxHealth)
-                _currentHealth = _maxHealth;
-
+        public void SetCurrentValue(float value, bool triggerDeath = true)
+        {
+            var wasAlive = _currentHealth > 0f;
+            _currentHealth = DetermineValue(value);
             OnHealthChanged?.Invoke(_currentHealth, _maxHealth);
 
-            if (_currentHealth <= 0)
+            if (triggerDeath && wasAlive && _currentHealth <= 0f)
                 Die();
         }
 

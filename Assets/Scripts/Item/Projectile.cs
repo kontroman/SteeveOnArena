@@ -2,6 +2,7 @@ using MineArena.Commands;
 using MineArena.Interfaces;
 using MineArena.ObjectPools;
 using MineArena.Structs;
+using MineArena.Networking;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -24,6 +25,7 @@ namespace MineArena
         private bool _hasHit;
         private bool _isMoving;
         private bool _stickOnCollision;
+        private string _networkWeaponId;
 
         public void SetParameters(Transform target, DamageData damageData)
         {
@@ -35,6 +37,7 @@ namespace MineArena
             _hasHit = false;
             _isMoving = true;
             _stickOnCollision = false;
+            _networkWeaponId = null;
             SetCollidersEnabled(true);
 
             if (_target != null)
@@ -43,7 +46,12 @@ namespace MineArena
             Invoke(nameof(ReturnToPool), destroyDelay);
         }
 
-        public void SetParameters(Vector3 direction, DamageData damageData, LayerMask attackableLayers, Transform owner = null)
+        public void SetParameters(
+            Vector3 direction,
+            DamageData damageData,
+            LayerMask attackableLayers,
+            Transform owner = null,
+            string networkWeaponId = null)
         {
             CancelInvoke(nameof(ReturnToPool));
             _damageData = damageData;
@@ -53,6 +61,7 @@ namespace MineArena
             _hasHit = false;
             _isMoving = true;
             _stickOnCollision = true;
+            _networkWeaponId = networkWeaponId;
             SetCollidersEnabled(true);
 
             if (direction.sqrMagnitude > 0.0001f)
@@ -85,6 +94,9 @@ namespace MineArena
 
             if (_attackableLayers.value != 0)
             {
+                if (TryHitNetworkPlayer(other))
+                    return;
+
                 if (!other.TryGetComponent<IDamageable>(out var damageable))
                     damageable = other.GetComponentInParent<IDamageable>();
 
@@ -106,6 +118,34 @@ namespace MineArena
             }
 
             TryStickToCollider(other);
+        }
+
+        private bool TryHitNetworkPlayer(Collider hitCollider)
+        {
+            if (string.IsNullOrEmpty(_networkWeaponId) || hitCollider == null)
+                return false;
+
+            var view = hitCollider.GetComponentInParent<NetworkPlayerView>();
+            if (view == null || view.IsLocalPlayer || !view.IsAlive)
+                return false;
+
+            var manager = NetworkClientManager.Instance;
+            if (manager == null || !manager.IsConnected)
+                return false;
+
+            CancelInvoke(nameof(ReturnToPool));
+            _hasHit = true;
+            manager.SendDamageRequest(
+                view.PlayerId,
+                Mathf.Max(1, Mathf.RoundToInt(_damageData.Damage)),
+                _networkWeaponId,
+                hitCollider.ClosestPoint(transform.position));
+
+            if (_stickOnCollision && TryStickToCollider(hitCollider))
+                return true;
+
+            ReturnToPool();
+            return true;
         }
 
         private void OnHit(Collider hitCollider)
@@ -169,6 +209,7 @@ namespace MineArena
             _hasHit = false;
             _isMoving = false;
             _stickOnCollision = false;
+            _networkWeaponId = null;
             transform.SetParent(null, true);
             SetCollidersEnabled(true);
         }

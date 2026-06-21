@@ -41,7 +41,7 @@ namespace MineArena.Items
             {
                 GameRoot.GetManager<InteractionManager>().UnregisterObject(this);
 
-                //HideInteractionPrompt();
+                //HideInteractionPrompt(); 
             }
         }
 
@@ -60,21 +60,25 @@ namespace MineArena.Items
             _canvas.HideUI();
         }
 
-        public void ExecuteCommand()
+        public async void ExecuteCommand()
         {
+            if (_used) return;
+
             _used = true;
 
-            _command?.Execute(() =>
-            {
-                GameRoot.GetManager<InteractionManager>().UnregisterObject(this);
-                HideInteractionPrompt();
+            await _command.Execute(this);
+        }
 
-                if (_destroyOnEnd)
-                {
-                    _dropable.DropItems();
-                    Destroy(gameObject);
-                }
-            });
+        public void CompleteInteraction()
+        {
+            GameRoot.GetManager<InteractionManager>().UnregisterObject(this);
+            HideInteractionPrompt();
+
+            if (_destroyOnEnd)
+            {
+                _dropable?.DropItems();
+                Destroy(gameObject);
+            }
         }
     }
 }

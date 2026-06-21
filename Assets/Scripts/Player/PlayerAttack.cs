@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using MineArena.Interfaces;
 using MineArena.Structs;
 using MineArena.Commands;
@@ -12,6 +13,7 @@ using MineArena.Controllers;
 using MineArena.Items;
 using MineArena.ObjectPools;
 using UnityEngine.EventSystems;
+using MineArena.Networking;
 
 namespace MineArena.PlayerSystem
 {
@@ -30,6 +32,8 @@ namespace MineArena.PlayerSystem
         [Header("Configuration")]
         [SerializeField] private AttackConfig _config;
         [SerializeField] private PlayerEquipment _equipment;
+        [SerializeField, Min(0f)] private float _minimumNetworkAttackCooldown = 0.45f;
+        [SerializeField, Min(0f)] private float _maximumNetworkMeleeRange = 4f;
 
         [Header("Bow")]
         [SerializeField] private AttackConfig _defaultBowAttack;
@@ -156,7 +160,7 @@ namespace MineArena.PlayerSystem
 
             _config = activeConfig;
 
-            _nextAttackTime = Time.time + _config.Cooldown;
+            _nextAttackTime = Time.time + GetAttackCooldown(_config);
 
             _animator?.TriggerAttack();
 
@@ -187,7 +191,7 @@ namespace MineArena.PlayerSystem
                 yield break;
             }
 
-            _nextAttackTime = Time.time + bowConfig.Cooldown;
+            _nextAttackTime = Time.time + GetAttackCooldown(bowConfig);
 
             var firePoint = GetBowFirePoint();
             var targetPoint = GetBowTargetPoint(firePoint.position, bowConfig);
@@ -240,22 +244,50 @@ namespace MineArena.PlayerSystem
         {
             Vector3 attackOrigin = GetAttackOrigin();
 
-            Collider[] hits = Physics.OverlapSphere(attackOrigin, _config.Radius, _config.AttackableLayers);
+            // Remote players use the regular Player layer, while PvE targets use AttackableLayers.
+            // Query all nearby colliders, then keep the existing mask for non-network targets.
+            Collider[] hits = Physics.OverlapSphere(
+                attackOrigin,
+                _config.Radius,
+                ~0,
+                QueryTriggerInteraction.Collide);
+            var networkTargets = new HashSet<int>();
+            var localTargets = new HashSet<IDamageable>();
 
             foreach (Collider hit in hits)
             {
+                if (hit == null || IsOwnerCollider(hit))
+                    continue;
+
                 Vector3 directionToTarget = hit.transform.position - attackOrigin;
                 float angle = Vector3.Angle(transform.forward, directionToTarget);
 
                 if (angle <= _config.Angle / 2)
                 {
-                    if (hit.TryGetComponent<IDamageable>(out IDamageable damageable))
+                    var networkView = hit.GetComponentInParent<NetworkPlayerView>();
+                    if (networkView != null)
                     {
-                        _damageCommand.Execute(new DamageData(
-                            GetMeleeDamage(_config),
-                            damageable
-                        ));
+                        var withinServerRange = Vector3.Distance(transform.position, networkView.transform.position) <=
+                                                _maximumNetworkMeleeRange;
+                        if (!networkView.IsLocalPlayer && networkView.IsAlive && withinServerRange &&
+                            networkTargets.Add(networkView.PlayerId))
+                        {
+                            SendNetworkDamage(
+                                networkView,
+                                GetMeleeDamage(_config),
+                                GetSelectedWeaponId("sword"),
+                                hit.ClosestPoint(attackOrigin));
+                        }
+
+                        continue;
                     }
+
+                    if ((_config.AttackableLayers.value & (1 << hit.gameObject.layer)) == 0)
+                        continue;
+
+                    var damageable = hit.GetComponentInParent<IDamageable>();
+                    if (damageable != null && localTargets.Add(damageable))
+                        _damageCommand.Execute(new DamageData(GetMeleeDamage(_config), damageable));
                 }
             }
         }
@@ -372,7 +404,8 @@ namespace MineArena.PlayerSystem
                 direction,
                 new DamageData(GetBowDamage(bowConfig), null),
                 bowConfig.AttackableLayers,
-                transform
+                transform,
+                GetSelectedWeaponId("bow")
             );
         }
 
@@ -422,14 +455,71 @@ namespace MineArena.PlayerSystem
 
         private void ApplyBowRaycastDamage(AttackConfig bowConfig, Vector3 origin, Vector3 direction)
         {
-            if (!Physics.Raycast(origin, direction, out var hit, bowConfig.Radius, bowConfig.AttackableLayers))
+            var hits = Physics.RaycastAll(origin, direction, bowConfig.Radius, ~0, QueryTriggerInteraction.Ignore);
+            System.Array.Sort(hits, (left, right) => left.distance.CompareTo(right.distance));
+
+            foreach (var hit in hits)
+            {
+                if (hit.collider == null || IsOwnerCollider(hit.collider))
+                    continue;
+
+                var networkView = hit.collider.GetComponentInParent<NetworkPlayerView>();
+                if (networkView != null)
+                {
+                    if (!networkView.IsLocalPlayer && networkView.IsAlive)
+                    {
+                        SendNetworkDamage(
+                            networkView,
+                            GetBowDamage(bowConfig),
+                            GetSelectedWeaponId("bow"),
+                            hit.point);
+                    }
+
+                    return;
+                }
+
+                if ((bowConfig.AttackableLayers.value & (1 << hit.collider.gameObject.layer)) != 0)
+                {
+                    var damageable = hit.collider.GetComponentInParent<IDamageable>();
+                    if (damageable != null)
+                        _damageCommand.Execute(new DamageData(GetBowDamage(bowConfig), damageable));
+                }
+
+                // The first non-owner collider blocks the shot even when it is not damageable.
+                return;
+            }
+        }
+
+        private static void SendNetworkDamage(NetworkPlayerView target, float damage, string weaponId, Vector3 hitPoint)
+        {
+            var manager = NetworkClientManager.Instance;
+            if (manager == null || !manager.IsConnected || target == null)
                 return;
 
-            var damageable = hit.collider.GetComponentInParent<IDamageable>();
-            if (damageable == null)
-                return;
+            manager.SendDamageRequest(
+                target.PlayerId,
+                Mathf.Max(1, Mathf.RoundToInt(damage)),
+                weaponId,
+                hitPoint);
+        }
 
-            _damageCommand.Execute(new DamageData(GetBowDamage(bowConfig), damageable));
+        private static string GetSelectedWeaponId(string fallback)
+        {
+            var progress = GameRoot.PlayerProgress?.InventoryProgress;
+            var selectedItemId = progress != null
+                ? progress.GetQuickSlotItemId(progress.SelectedQuickSlotIndex)
+                : null;
+
+            return string.IsNullOrWhiteSpace(selectedItemId) ? fallback : selectedItemId;
+        }
+
+        private float GetAttackCooldown(AttackConfig attackConfig)
+        {
+            var cooldown = attackConfig != null ? attackConfig.Cooldown : 0f;
+            var manager = NetworkClientManager.Instance;
+            return manager != null && manager.IsConnected
+                ? Mathf.Max(cooldown, _minimumNetworkAttackCooldown)
+                : cooldown;
         }
 
         private float GetMeleeDamage(AttackConfig attackConfig)

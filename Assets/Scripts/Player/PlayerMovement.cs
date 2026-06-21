@@ -174,5 +174,13 @@ namespace MineArena.PlayerSystem
             _animator?.SetRunning(false);
             PlayerDied?.Invoke(transform);
         }
+
+        public void SetAlive()
+        {
+            _isDead = false;
+            IsPlayerDead = false;
+            _canMove = true;
+            _velocity = new Vector3(0f, -2f, 0f);
+        }
     }
 }
