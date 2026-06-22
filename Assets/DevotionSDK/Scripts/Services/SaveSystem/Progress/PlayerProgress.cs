@@ -20,13 +20,49 @@ namespace Devotion.SDK.Services.SaveSystem.Progress
         [SerializeField] private PlayerDataProgress playerDataProgress;
         [SerializeField] private AchievementProgress achievementProgress;
 
-        public InventoryProgress InventoryProgress => inventoryProgress;
+        public InventoryProgress InventoryProgress
+        {
+            get
+            {
+                if (inventoryProgress == null)
+                    inventoryProgress = new InventoryProgress();
+
+                return inventoryProgress;
+            }
+        }
         public BuildingProgress BuildingProgress => buildingsProgress;
-        public LevelsProgress LevelsProgress => levelsProgress;
+        public LevelsProgress LevelsProgress
+        {
+            get
+            {
+                if (levelsProgress == null)
+                    levelsProgress = new LevelsProgress();
+
+                return levelsProgress;
+            }
+        }
         public PurchasesProgress PurchasesProgress => purchasesProgress;
         public AdsProgress AdsProgress => adsProgress;
-        public LuckyWheelProgress LuckyWheelProgress => luckyWheelProgress;
-        public PlayerDataProgress PlayerDataProgress => playerDataProgress;
+        public LuckyWheelProgress LuckyWheelProgress
+        {
+            get
+            {
+                if (luckyWheelProgress == null)
+                    luckyWheelProgress = new LuckyWheelProgress();
+
+                return luckyWheelProgress;
+            }
+        }
+        public PlayerDataProgress PlayerDataProgress
+        {
+            get
+            {
+                if (playerDataProgress == null)
+                    playerDataProgress = new PlayerDataProgress();
+
+                return playerDataProgress;
+            }
+        }
         public AchievementProgress AchievementProgress => achievementProgress;
 
         public PlayerProgress(string saveId)
@@ -38,6 +74,7 @@ namespace Devotion.SDK.Services.SaveSystem.Progress
             levelsProgress = new LevelsProgress();
             purchasesProgress = new PurchasesProgress();
             adsProgress = new AdsProgress();
+            luckyWheelProgress = new LuckyWheelProgress();
             achievementProgress = new AchievementProgress();
             playerDataProgress = new PlayerDataProgress();
             achievementProgress = new AchievementProgress();

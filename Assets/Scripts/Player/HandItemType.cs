@@ -4,6 +4,7 @@ namespace MineArena.PlayerSystem
     {
         None = 0,
         Sword = 1,
-        Pickaxe = 2
+        Pickaxe = 2,
+        Bow = 3
     }
 }

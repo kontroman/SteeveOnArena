@@ -1,5 +1,7 @@
 ﻿using MineArena.Controllers;
 using MineArena.Interfaces;
+using MineArena.PlayerSystem;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -12,7 +14,11 @@ namespace MineArena.AI
         private NavMeshAgent _agent;
         private MobAnimationController _mobAnimator;
         private float _stoppingDistance;
-        private bool _isDead;
+        private Coroutine _retreatRoutine;
+        private bool _isRetreating;
+        private bool _isAfk;
+
+        private const float RetreatDuration = 1.5f;
         [Header("Facing")]
         [SerializeField] private bool _useFacingAxis;
         [SerializeField] private FacingAxis _facingAxis = FacingAxis.PositiveZ;
@@ -36,7 +42,24 @@ namespace MineArena.AI
 
         private void OnEnable()
         {
-            _isDead = false;
+            PlayerMovement.PlayerDied += HandlePlayerDied;
+
+            _isAfk = false;
+            _isRetreating = false;
+
+            if (PlayerMovement.IsPlayerDead && Player.Instance != null)
+                StartRetreatFrom(Player.Instance.transform);
+        }
+
+        private void OnDisable()
+        {
+            PlayerMovement.PlayerDied -= HandlePlayerDied;
+
+            if (_retreatRoutine != null)
+            {
+                StopCoroutine(_retreatRoutine);
+                _retreatRoutine = null;
+            }
         }
 
         private void Awake()
@@ -60,20 +83,22 @@ namespace MineArena.AI
 
         private void Update()
         {
-            if (_isDead)
+            if (_isAfk)
             {
-                if (_agent != null)
-                    _mobAnimator?.UpdateMoveState(_agent.velocity, true);
+                _mobAnimator?.ForceIdle();
                 return;
             }
 
             if (_playerTransform == null && Player.Instance != null)
                 _playerTransform = Player.Instance.GetComponentFromList<Transform>();
 
-            if (_agent != null && _playerTransform != null)
+            if (_agent != null && _agent.isOnNavMesh && _playerTransform != null && !_isRetreating)
                 _agent.SetDestination(_playerTransform.position);
 
-            UpdateFacing();
+            if (_isRetreating)
+                UpdateRetreatFacing();
+            else
+                UpdateFacing();
 
             if (_agent != null)
                 _mobAnimator?.UpdateMoveState(_agent.velocity, _agent.isStopped);
@@ -104,25 +129,18 @@ namespace MineArena.AI
 
         public void Stop()
         {
-            if (_agent == null) return;
+            if (_agent == null || !_agent.enabled || !_agent.isOnNavMesh)
+                return;
+
             _agent.isStopped = true;
         }
 
         public void Move()
         {
-            if (_agent == null || _isDead) return;
+            if (_agent == null || !_agent.enabled || !_agent.isOnNavMesh || _isAfk)
+                return;
+
             _agent.isStopped = false;
-        }
-
-        public void HandleDeath()
-        {
-            _isDead = true;
-
-            if (_agent == null) return;
-
-            _agent.isStopped = true;
-            _agent.ResetPath();
-            _agent.velocity = Vector3.zero;
         }
 
         public Quaternion ApplyAxisCorrection(Quaternion rotation)
@@ -152,6 +170,84 @@ namespace MineArena.AI
                 return;
 
             transform.rotation = GetAxisCorrectedLookRotation(direction);
+        }
+
+        private void UpdateRetreatFacing()
+        {
+            if (_agent == null)
+                return;
+
+            Vector3 direction = _agent.velocity;
+            direction.y = 0f;
+
+            if (direction.sqrMagnitude < 0.0001f)
+                return;
+
+            transform.rotation = GetAxisCorrectedLookRotation(direction);
+        }
+
+        private void HandlePlayerDied(Transform playerTransform)
+        {
+            StartRetreatFrom(playerTransform);
+        }
+
+        private void StartRetreatFrom(Transform playerTransform)
+        {
+            if (playerTransform == null)
+                return;
+
+            if (_agent == null)
+                _agent = GetComponent<NavMeshAgent>();
+
+            if (_agent == null || !_agent.enabled || !_agent.isOnNavMesh || !isActiveAndEnabled)
+                return;
+
+            if (_retreatRoutine != null)
+                StopCoroutine(_retreatRoutine);
+
+            _retreatRoutine = StartCoroutine(RetreatRoutine(playerTransform));
+        }
+
+        private IEnumerator RetreatRoutine(Transform playerTransform)
+        {
+            _isAfk = false;
+            _isRetreating = true;
+
+            Vector3 retreatDirection = transform.position - playerTransform.position;
+            retreatDirection.y = 0f;
+
+            if (retreatDirection.sqrMagnitude < 0.0001f)
+                retreatDirection = -transform.forward;
+
+            retreatDirection.Normalize();
+
+            float distance = Mathf.Max(_agent.speed * RetreatDuration, _agent.stoppingDistance + 0.5f);
+            Vector3 targetPosition = transform.position + retreatDirection * distance;
+
+            if (NavMesh.SamplePosition(targetPosition, out NavMeshHit hit, distance, _agent.areaMask))
+                targetPosition = hit.position;
+
+            if (_agent != null && _agent.enabled && _agent.isOnNavMesh)
+            {
+                _agent.isStopped = false;
+                _agent.ResetPath();
+                _agent.SetDestination(targetPosition);
+            }
+
+            yield return new WaitForSeconds(RetreatDuration);
+
+            _isRetreating = false;
+            _isAfk = true;
+
+            if (_agent != null && _agent.enabled && _agent.isOnNavMesh)
+            {
+                _agent.isStopped = true;
+                _agent.ResetPath();
+                _agent.velocity = Vector3.zero;
+            }
+
+            _mobAnimator?.ForceIdle();
+            _retreatRoutine = null;
         }
 
         private void UpdateAxisCorrection()
@@ -207,13 +303,11 @@ namespace MineArena.AI
 
         public void SetParameters(MobPreset preset)
         {
-            _isDead = false;
             if (_agent == null) return;
 
             _agent.speed = preset.Speed;
             _agent.stoppingDistance = preset.AttackRange;
             _stoppingDistance = _agent.stoppingDistance;
-            _agent.isStopped = false;
         }
 
 #if UNITY_EDITOR

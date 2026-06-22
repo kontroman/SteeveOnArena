@@ -1,57 +1,90 @@
+using System;
+using Devotion.SDK.Async;
 using Devotion.SDK.Base;
 using Devotion.SDK.Controllers;
-using DG.Tweening;
-using MineArena.Windows.SelectLevel;
-using System.Collections.Generic;
+using MineArena.Basics;
+using MineArena.Controllers;
+using MineArena.Levels;
+using MineArena.Managers;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace MineArena.Windows
 {
     public class SelectLevelWindow : BaseWindow
     {
-        [SerializeField] private List<Button> buttons = new List<Button>();
-        [SerializeField] private GameObject LevelInfoPrefab;
+        private bool _isLoading;
 
-        private int currentSelectedLevel = -1;
-        private GameObject currentLevelInfoPrefab;
-
-        public void OnSelectLevelButtonClicked(int level) => ShowLevelDetails(level);
-
-        private void Start()
+        public override void CloseWindow()
         {
-            for (int i = 0; i < buttons.Count; i++)
-            {
-                if (i < GameRoot.GameConfig.Levels.Count)
-                {
-                    buttons[i].image.sprite = GameRoot.GameConfig.Levels[i].LevelIcon;
-
-                    //buttons[i].interactable = GameRoot.GameConfig.Levels[i].IsUnlocked;
-                }
-            }
+            GameRoot.UIManager.CloseWindow<SelectLevelWindow>();
         }
 
-        private void ShowLevelDetails(int level)
+        public void OnCloseClick()
         {
-            if (currentSelectedLevel == level) return;
+            CloseWindow();
+        }
 
-            currentSelectedLevel = level;
+        public void OnSelectLevelButtonClicked(int levelIndex)
+        {
+            if (_isLoading || !TryGetLevelConfig(levelIndex, out var config))
+                return;
 
-            if (currentLevelInfoPrefab)
-            {
-                var cachedPrefab = currentLevelInfoPrefab;
-                cachedPrefab.GetComponent<RectTransform>().DOAnchorPosY(-1500, 0.5f)
-                    .OnComplete(() => Destroy(cachedPrefab));
-            }
+            StartLevel(config);
+        }
 
-            currentLevelInfoPrefab = Instantiate(LevelInfoPrefab, transform);
-            RectTransform rectTransform = currentLevelInfoPrefab.GetComponent<RectTransform>();
+        private static bool TryGetLevelConfig(int levelIndex, out LevelConfig config)
+        {
+            config = null;
 
-            rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, 1000);
+            var levels = GameRoot.GameConfig != null ? GameRoot.GameConfig.Levels : null;
+            if (levels == null || levelIndex < 0 || levelIndex >= levels.Count)
+                return false;
 
-            rectTransform.DOAnchorPosY(0, 0.5f);
+            if (!IsLevelUnlocked(levelIndex))
+                return false;
 
-            currentLevelInfoPrefab.GetComponent<LevelDescription>().Initialize(GameRoot.GameConfig.Levels[currentSelectedLevel]);
+            config = levels[levelIndex];
+            return config != null && config.LevelPrefab != null;
+        }
+
+        private static bool IsLevelUnlocked(int levelIndex)
+        {
+            var progress = GameRoot.PlayerProgress != null ? GameRoot.PlayerProgress.LevelsProgress : null;
+            return progress != null ? progress.IsLevelUnlocked(levelIndex) : levelIndex == 0;
+        }
+
+        private void StartLevel(LevelConfig config)
+        {
+            _isLoading = true;
+
+            GameRoot.UIManager.CloseAllWindows();
+
+            var loadingWindow = (LoadingWindow)GameRoot.UIManager.OpenWindow<LoadingWindow>();
+            LevelController levelController = null;
+
+            loadingWindow.SetProgressValue(0.3f)
+                .Then(() => GameRoot.GetManager<UnitySceneLoader>().LoadSceneAsync(Constants.SceneNames.GameplayScene))
+                .Then(() =>
+                {
+                    levelController = FindObjectOfType<LevelController>();
+                    if (levelController == null)
+                    {
+                        throw new InvalidOperationException("LevelController not found in scene after loading gameplay.");
+                    }
+
+                    return levelController.InitLevel(config);
+                })
+                .Then(() => loadingWindow.SetProgressValue(0.8f))
+                .Then(() => levelController.GenerateLevel())
+                .Then(() => WeatherManager.Instance.ApplyLevelPreset(config.WeatherPreset))
+                .Then(() => levelController.GenerateOres())
+                .Then(() => loadingWindow.SetProgressValue(0.9f))
+                .Then(() => loadingWindow.SetProgressValue(1f))
+                .Finally(() =>
+                {
+                    GameRoot.UIManager.CloseWindow<LoadingWindow>();
+                    _isLoading = false;
+                });
         }
     }
 }

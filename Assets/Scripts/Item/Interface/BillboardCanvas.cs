@@ -6,6 +6,7 @@ namespace MineArena.Items
     {
         [SerializeField] private Vector3 _posOffset;
         [SerializeField] private Vector3 _sizeOffset;
+        [SerializeField] private GameObject _billboardCanvas;
 
         private Camera _mainCamera;
         private GameObject _canvas;
@@ -13,7 +14,7 @@ namespace MineArena.Items
         private void Start()
         {
             _mainCamera = Camera.main;
-            _canvas = Instantiate(Resources.Load<GameObject>("Prefabs/Camera/BillboardCanvas"), transform);
+            _canvas = Instantiate(_billboardCanvas, transform);
             _canvas.GetComponent<Canvas>().worldCamera = _mainCamera;
 
             _canvas.transform.localPosition = _canvas.transform.localPosition + _posOffset;
@@ -22,12 +23,18 @@ namespace MineArena.Items
 
         private void Update()
         {
-            if (_mainCamera != null)
-            {
-                Vector3 directionToCamera = (_mainCamera.transform.position - _canvas.transform.position).normalized;
-                _canvas.transform.rotation = Quaternion.LookRotation(directionToCamera);
-                _canvas.transform.rotation = Quaternion.Euler(0, 180 + _canvas.transform.rotation.eulerAngles.y, 0);
-            }
+            if (_canvas == null)
+                return;
+
+            if (_mainCamera == null)
+                _mainCamera = Camera.main;
+
+            if (_mainCamera == null)
+                return;
+
+            Vector3 directionToCamera = (_mainCamera.transform.position - _canvas.transform.position).normalized;
+            _canvas.transform.rotation = Quaternion.LookRotation(directionToCamera);
+            _canvas.transform.rotation = Quaternion.Euler(0, 180 + _canvas.transform.rotation.eulerAngles.y, 0);
         }
 
         public void ShowUI()

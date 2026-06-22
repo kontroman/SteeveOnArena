@@ -2,9 +2,15 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using MineArena.Items;
 
 namespace MineArena.UI
 {
+    public interface IInventoryItemDropTarget
+    {
+        bool TryDropInventoryItem(Item item);
+    }
+
     public class InventoryCellDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
     {
         [SerializeField] private Canvas _canvas;
@@ -85,6 +91,14 @@ namespace MineArena.UI
             var raycastResults = new List<RaycastResult>();
             EventSystem.current.RaycastAll(eventData, raycastResults);
 
+            var dropTarget = FindDropTarget(raycastResults);
+            if (dropTarget != null && dropTarget.TryDropInventoryItem(_cellUI.Item))
+            {
+                CleanupDraggedVisual();
+                RestoreOriginalIconVisual();
+                return;
+            }
+
             InventoryCellUI targetCell = null;
             foreach (var result in raycastResults)
             {
@@ -109,6 +123,24 @@ namespace MineArena.UI
 
             CleanupDraggedVisual();
             RestoreOriginalIconVisual();
+        }
+
+        private IInventoryItemDropTarget FindDropTarget(List<RaycastResult> raycastResults)
+        {
+            foreach (var result in raycastResults)
+            {
+                if (result.gameObject == null)
+                    continue;
+
+                var behaviours = result.gameObject.GetComponentsInParent<MonoBehaviour>(true);
+                foreach (var behaviour in behaviours)
+                {
+                    if (behaviour is IInventoryItemDropTarget dropTarget)
+                        return dropTarget;
+                }
+            }
+
+            return null;
         }
 
         private void UpdateDraggedVisualPosition(PointerEventData eventData)

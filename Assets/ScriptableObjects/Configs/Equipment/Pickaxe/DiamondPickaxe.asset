@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d47b0ea8511dc545b22a0e1360b4e6c, type: 3}
   m_Name: DiamondPickaxe
   m_EditorClassIdentifier: 
-  _name: 
+  _name: DiamondPickaxe
   _prefab: {fileID: 0}
-  _icon: {fileID: 0}
+  _icon: {fileID: 21300000, guid: 7c00c7507dec6b54aad17f1efc0ca4b1, type: 3}
   _usable: 0
   _stackable: 0
   _blockStyleIcon: 0
   _description: 
   _descriptionLocalizationKey: 
   _craftCosts: []
-  _price: 0
+  _price: 60
   _miningDuration: 1
   _miningLoops: 2
   _material: {fileID: 2100000, guid: 25b61ea1a4d223449be0ab5d88395507, type: 2}

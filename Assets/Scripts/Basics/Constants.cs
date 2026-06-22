@@ -66,5 +66,10 @@ namespace MineArena.Basics
             public static string ButtonTextKey = "[Achievement]ButtonGet";
             public static string WindowNameKey = "[Achievement]WindowName";
         }
+
+        public static class GameSetting
+        {
+            public static int ExperiencePerLevel = 1000;
+        }
     }
 }

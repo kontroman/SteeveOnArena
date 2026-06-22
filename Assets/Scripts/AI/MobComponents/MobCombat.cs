@@ -1,6 +1,7 @@
 ﻿using MineArena.Commands;
 using MineArena.Controllers;
 using MineArena.Interfaces;
+using MineArena.PlayerSystem;
 using MineArena.Structs;
 using System.Collections;
 using UnityEngine;
@@ -31,21 +32,25 @@ namespace MineArena.AI
         private int _attackCycleId;
         private bool _attackHitApplied;
         private float _nextAttackTime;
-        private bool _isDead;
+        private bool _isAfk;
 
         private void OnEnable()
         {
-            _isDead = false;
             _mobAnimator = GetComponent<MobAnimationController>();
 
             if (_mobAnimator != null)
                 _mobAnimator.AttackKeyframeReached += OnAttackKeyframe;
+
+            PlayerMovement.PlayerDied += HandlePlayerDied;
+            _isAfk = PlayerMovement.IsPlayerDead;
         }
 
         private void OnDisable()
         {
             if (_mobAnimator != null)
                 _mobAnimator.AttackKeyframeReached -= OnAttackKeyframe;
+
+            PlayerMovement.PlayerDied -= HandlePlayerDied;
         }
 
         private void Start()
@@ -67,7 +72,7 @@ namespace MineArena.AI
 
         private void Update()
         {
-            if (_isDead)
+            if (_isAfk)
                 return;
 
             if (_mobMovement == null)
@@ -107,15 +112,6 @@ namespace MineArena.AI
 
         public void CancelAttack()
         {
-            StopAttackInternal(false);
-        }
-
-        public void HandleDeath()
-        {
-            if (_isDead)
-                return;
-
-            _isDead = true;
             StopAttackInternal(false);
         }
 
@@ -188,6 +184,9 @@ namespace MineArena.AI
 
         private void ApplyAttackHit()
         {
+            if (_isAfk)
+                return;
+
             _attackHitApplied = true;
 
             if (_isRanged)
@@ -223,7 +222,6 @@ namespace MineArena.AI
 
         public void SetParameters(MobPreset preset)
         {
-            _isDead = false;
             _damage = preset.Damage;
             _attackDelay = preset.AttackDelay;
             _rotationSpeed = preset.RotationSpeed;
@@ -253,6 +251,12 @@ namespace MineArena.AI
 
             _playerTransform = Player.Instance.transform;
             _playerDamagable = Player.Instance.GetComponent<IDamageable>();
+        }
+
+        private void HandlePlayerDied(Transform playerTransform)
+        {
+            _isAfk = true;
+            CancelAttack();
         }
     }
 }

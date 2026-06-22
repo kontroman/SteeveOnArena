@@ -6,6 +6,7 @@ using MineArena.Interfaces;
 using MineArena.Structs;
 using Devotion.SDK.Controllers;
 using MineArena.Controllers;
+using MineArena.PlayerSystem;
 
 namespace MineArena.Game.Health
 {
@@ -27,15 +28,16 @@ namespace MineArena.Game.Health
 
         public void ChangeValue(float value)
         {
-            _currentHealth += value;
-            _currentHealth = DetermineValue(_currentHealth);
+            SetCurrentValue(_currentHealth + value);
+        }
 
-            if (_currentHealth >= _maxHealth)
-                _currentHealth = _maxHealth;
-
+        public void SetCurrentValue(float value, bool triggerDeath = true)
+        {
+            var wasAlive = _currentHealth > 0f;
+            _currentHealth = DetermineValue(value);
             OnHealthChanged?.Invoke(_currentHealth, _maxHealth);
 
-            if (_currentHealth <= 0)
+            if (triggerDeath && wasAlive && _currentHealth <= 0f)
                 Die();
         }
 
@@ -48,7 +50,7 @@ namespace MineArena.Game.Health
             var config = GameRoot.GameConfig;
             if (config != null && config.GodModeInvulnerability)
             {
-                if (gameObject == Player.Instance.gameObject)
+                if (Player.Instance != null && gameObject == Player.Instance.gameObject)
                     return;
             }
 #endif
@@ -67,6 +69,16 @@ namespace MineArena.Game.Health
 
         protected virtual void Die()
         {
+            if (Player.Instance != null && gameObject == Player.Instance.gameObject)
+            {
+                Player.Instance.GetComponentFromList<PlayerMovement>()?.SetDead();
+                Player.Instance.GetComponentFromList<PlayerAttack>()?.SetComponentEnable(false);
+                Player.Instance.GetComponentFromList<PlayerAnimatorController>()?.TriggerDeath();
+
+                // Destroy(gameObject);
+                return;
+            }
+
             Destroy(gameObject);
         }
     }

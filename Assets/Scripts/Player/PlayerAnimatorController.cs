@@ -13,6 +13,7 @@ namespace MineArena.PlayerSystem
         [Header("Animator parameter names")]
         [SerializeField] private string _runBoolParameter = "isRunning";
         [SerializeField] private string _attackTriggerParameter = "Attack";
+        [SerializeField] private string _bowShootTriggerParameter = "BowShoot";
         [SerializeField] private string _handItemParameter = "HandItemState";
         [SerializeField] private string _miningTriggerParameter = "Mining";
         [SerializeField] private string _chestOpeningTriggerParameter = "ChestOpening";
@@ -33,6 +34,7 @@ namespace MineArena.PlayerSystem
 
         private int _runParamHash;
         private int _attackTriggerHash;
+        private int _bowShootTriggerHash;
         private int _handItemParamHash;
         private int _miningTriggerHash;
         private int _chestOpeningTriggerHash;
@@ -48,6 +50,7 @@ namespace MineArena.PlayerSystem
 
             _runParamHash = Animator.StringToHash(_runBoolParameter);
             _attackTriggerHash = Animator.StringToHash(_attackTriggerParameter);
+            _bowShootTriggerHash = Animator.StringToHash(_bowShootTriggerParameter);
             _handItemParamHash = Animator.StringToHash(_handItemParameter);
             _miningTriggerHash = Animator.StringToHash(_miningTriggerParameter);
             _chestOpeningTriggerHash = Animator.StringToHash(_chestOpeningTriggerParameter);
@@ -101,6 +104,15 @@ namespace MineArena.PlayerSystem
 
             _animator.ResetTrigger(_attackTriggerHash);
             _animator.SetTrigger(_attackTriggerHash);
+        }
+
+        public void TriggerBowShoot()
+        {
+            if (_animator == null)
+                return;
+
+            _animator.ResetTrigger(_bowShootTriggerHash);
+            _animator.SetTrigger(_bowShootTriggerHash);
         }
 
         public void TriggerDamage()

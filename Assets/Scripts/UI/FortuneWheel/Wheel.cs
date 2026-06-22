@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Devotion.SDK.Controllers;
+using Devotion.SDK.UI;
 using MineArena.Basics;
 using UnityEngine;
 
@@ -21,6 +22,12 @@ namespace MineArena.UI.FortuneWheel
         private float _currentRotationTime;
         private float _maxRotationTime;
 
+        private void Awake()
+        {
+            if (GetComponent<FortuneWheelWindow>() != null)
+                enabled = false;
+        }
+
         private void Start()
         {
             CreatListPrizeItems();
@@ -29,6 +36,9 @@ namespace MineArena.UI.FortuneWheel
 
         public void TernWheel()
         {
+            if (!isActiveAndEnabled)
+                return;
+
             if (_isStarted)
                 return;
 
