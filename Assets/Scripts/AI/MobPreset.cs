@@ -16,11 +16,15 @@ namespace MineArena.AI
         public MobTypes MobType;
 
         [Header("Combat Settings")]
+        public MobAttackType AttackType;
         public float Damage;
         public float AttackDelay;
-        public bool IsRangeAttack;
-        [ShowIf("IsRangeAttack")] public float AttackRange = 1;
-        [ShowIf("IsRangeAttack")] public GameObject Projectile;
+        [HideInInspector] public bool IsRangeAttack;
+        public float AttackRange = 1;
+        [ShowIf("@AttackType == MobAttackType.Range")] public GameObject Projectile;
+        [ShowIf("@AttackType == MobAttackType.Explosion")] public float ExplosionDelay = 1f;
+        [ShowIf("@AttackType == MobAttackType.Explosion")] public float ExplosionRadius = 2f;
+        [ShowIf("@AttackType == MobAttackType.Explosion")] public LayerMask ExplosionTargetMask = ~0;
 
         [Header("Movement Settings")]
         public float Speed;
@@ -47,5 +51,15 @@ namespace MineArena.AI
         [Header("Drop only one or more items")]
         [SerializeField] private bool _isOneDrop;*/
         public string Name { get; }
+
+#if UNITY_EDITOR
+        private void OnValidate()
+        {
+            if (AttackType == MobAttackType.Melee && IsRangeAttack)
+                AttackType = MobAttackType.Range;
+
+            IsRangeAttack = AttackType == MobAttackType.Range;
+        }
+#endif
     }
 }

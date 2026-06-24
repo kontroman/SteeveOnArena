@@ -17,6 +17,7 @@ namespace MineArena.AI
         private Coroutine _retreatRoutine;
         private bool _isRetreating;
         private bool _isAfk;
+        private bool _isDead;
 
         private const float RetreatDuration = 1.5f;
         [Header("Facing")]
@@ -44,8 +45,12 @@ namespace MineArena.AI
         {
             PlayerMovement.PlayerDied += HandlePlayerDied;
 
+            _isDead = false;
             _isAfk = false;
             _isRetreating = false;
+
+            if (_agent != null && _agent.enabled && _agent.isOnNavMesh)
+                _agent.isStopped = false;
 
             if (PlayerMovement.IsPlayerDead && Player.Instance != null)
                 StartRetreatFrom(Player.Instance.transform);
@@ -83,6 +88,13 @@ namespace MineArena.AI
 
         private void Update()
         {
+            if (_isDead)
+            {
+                if (_agent != null)
+                    _mobAnimator?.UpdateMoveState(Vector3.zero, true);
+                return;
+            }
+
             if (_isAfk)
             {
                 _mobAnimator?.ForceIdle();
@@ -137,10 +149,33 @@ namespace MineArena.AI
 
         public void Move()
         {
-            if (_agent == null || !_agent.enabled || !_agent.isOnNavMesh || _isAfk)
+            if (_agent == null || !_agent.enabled || !_agent.isOnNavMesh || _isAfk || _isDead)
                 return;
 
             _agent.isStopped = false;
+        }
+
+        public void HandleDeath()
+        {
+            if (_isDead)
+                return;
+
+            _isDead = true;
+            _isAfk = false;
+            _isRetreating = false;
+
+            if (_retreatRoutine != null)
+            {
+                StopCoroutine(_retreatRoutine);
+                _retreatRoutine = null;
+            }
+
+            if (_agent == null || !_agent.enabled || !_agent.isOnNavMesh)
+                return;
+
+            _agent.isStopped = true;
+            _agent.ResetPath();
+            _agent.velocity = Vector3.zero;
         }
 
         public Quaternion ApplyAxisCorrection(Quaternion rotation)
@@ -188,12 +223,15 @@ namespace MineArena.AI
 
         private void HandlePlayerDied(Transform playerTransform)
         {
+            if (_isDead)
+                return;
+
             StartRetreatFrom(playerTransform);
         }
 
         private void StartRetreatFrom(Transform playerTransform)
         {
-            if (playerTransform == null)
+            if (_isDead || playerTransform == null)
                 return;
 
             if (_agent == null)
@@ -303,11 +341,15 @@ namespace MineArena.AI
 
         public void SetParameters(MobPreset preset)
         {
+            _isDead = false;
             if (_agent == null) return;
 
             _agent.speed = preset.Speed;
             _agent.stoppingDistance = preset.AttackRange;
             _stoppingDistance = _agent.stoppingDistance;
+
+            if (_agent.enabled && _agent.isOnNavMesh && !_isAfk)
+                _agent.isStopped = false;
         }
 
 #if UNITY_EDITOR
