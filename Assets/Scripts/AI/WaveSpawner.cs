@@ -18,6 +18,7 @@ namespace MineArena.AI
 
         [SerializeField] private List<SpawnPoint> _spawnPoints = new List<SpawnPoint>();
         [SerializeField] private List<WaveConfig> _waves = new List<WaveConfig>();
+        [SerializeField] private bool _loopWaves;
         [SerializeField] private float _startDelay = 1f;
         [SerializeField] private float _nextWaveDelay = 5f;
         [SerializeField] private float _retryDelay = 0.2f;
@@ -29,19 +30,22 @@ namespace MineArena.AI
 
         private IEnumerator SpawnWaves()
         {
-            if (_startDelay > 0f)
-                yield return new WaitForSeconds(_startDelay);
-
             if (_waves.Count == 0)
                 yield break;
 
-            for (int waveIndex = 0; waveIndex < _waves.Count; waveIndex++)
+            do
             {
-                yield return StartCoroutine(SpawnWaveCoroutine(_waves[waveIndex]));
+                if (_startDelay > 0f)
+                    yield return new WaitForSeconds(_startDelay);
 
-                if (waveIndex < _waves.Count - 1 && _nextWaveDelay > 0f)
-                    yield return new WaitForSeconds(_nextWaveDelay);
-            }
+                for (int waveIndex = 0; waveIndex < _waves.Count; waveIndex++)
+                {
+                    yield return StartCoroutine(SpawnWaveCoroutine(_waves[waveIndex]));
+
+                    if (waveIndex < _waves.Count - 1 && _nextWaveDelay > 0f)
+                        yield return new WaitForSeconds(_nextWaveDelay);
+                }
+            } while (_loopWaves);
         }
 
         private IEnumerator SpawnWaveCoroutine(WaveConfig wave)

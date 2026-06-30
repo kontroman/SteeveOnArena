@@ -1,21 +1,16 @@
 using MineArena.Controllers;
-using MineArena.ObjectPools;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace MineArena.AI
 {
     public class SpawnPoint : MonoBehaviour
     {
-        private bool _isReady;
-
         [SerializeField] private float _cooldown = 5f;
         [SerializeField] private LayerMask _enemyLayer;
         [SerializeField] private float _radius;
         [SerializeField] private Camera _targetCamera;
 
-        private Transform _playerTransform;
+        private float _nextSpawnTime;
 
         private bool IsInCameraView()
         {
@@ -30,43 +25,25 @@ namespace MineArena.AI
         }
         private bool IsPositionClear() => Physics.OverlapSphere(transform.position, _radius, _enemyLayer).Length == 0;
 
-        void Start()
-        {
-            UpdateState();
-        }
-
         public bool IsReadyForSpawn()
         {
-            return IsPositionClear() && !IsInCameraView();
+            return Time.time >= _nextSpawnTime
+                && IsPositionClear()
+                && !IsInCameraView();
         }
 
         public bool TrySpawn(GameObject mobObject)
         {
-            if (_isReady)
-            {
-                Debug.Log(transform.position);
-                mobObject.transform.position = transform.position;
-                mobObject.transform.LookAt(Player.Instance.transform.position);
-                mobObject.SetActive(true);
-                StartCooldown();
-                return true;
-            }
-            else
+            if (!IsReadyForSpawn())
                 return false;
-        }
 
-        private void StartCooldown()
-        {
-            _isReady = false;
-            Invoke("UpdateState", _cooldown);
-        }
+            Debug.Log(transform.position);
+            mobObject.transform.position = transform.position;
+            mobObject.transform.LookAt(Player.Instance.transform.position);
+            mobObject.SetActive(true);
 
-        private IEnumerator CheckReadinessForSpawn()
-        {
-            UpdateState();
-            yield return new WaitForSeconds(_cooldown);
+            _nextSpawnTime = Time.time + Mathf.Max(0f, _cooldown);
+            return true;
         }
-
-        private void UpdateState() => _isReady = IsReadyForSpawn();
     }
 }

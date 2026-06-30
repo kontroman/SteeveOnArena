@@ -857,7 +857,7 @@ GameObject:
   - component: {fileID: 5229888837562173251}
   - component: {fileID: 1713063567952937169}
   - component: {fileID: 5755808691473071522}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wolf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -891,7 +891,7 @@ Animator:
   m_GameObject: {fileID: 7910999831644282214}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: cdf48a9a396cceb4cadbef3739392d8d, type: 2}
+  m_Controller: {fileID: 22100000, guid: fbd38ce19204f534cafec985fb054372, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

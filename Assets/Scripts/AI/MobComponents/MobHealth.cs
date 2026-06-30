@@ -35,10 +35,10 @@ namespace MineArena.AI
             AchievementMessages.AchievementTargetTaken.Publish((_preset, 1));
 
             if (_mobCombat != null)
-                _mobCombat.CancelAttack();
+                _mobCombat.HandleDeath();
 
             if (_mobMovement != null)
-                _mobMovement.Stop();
+                _mobMovement.HandleDeath();
 
             if (_mobAnimator != null)
             {

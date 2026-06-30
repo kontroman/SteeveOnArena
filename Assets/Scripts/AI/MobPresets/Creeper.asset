@@ -15,11 +15,17 @@ MonoBehaviour:
   name: 
   Icon: {fileID: 0}
   MobType: 8
+  AttackType: 2
   Damage: 100
   AttackDelay: 3
   IsRangeAttack: 0
   AttackRange: 1
   Projectile: {fileID: 0}
+  ExplosionDelay: 1
+  ExplosionRadius: 2.5
+  ExplosionTargetMask:
+    serializedVersion: 2
+    m_Bits: 1023
   Speed: 1.5
   RotationSpeed: 3
   MaxHealth: 75

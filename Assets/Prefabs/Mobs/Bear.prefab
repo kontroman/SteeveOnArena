@@ -661,7 +661,7 @@ GameObject:
   - component: {fileID: 6732702476643139781}
   - component: {fileID: 7963886281796032800}
   - component: {fileID: 6750339348415088007}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Bear
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -695,7 +695,7 @@ Animator:
   m_GameObject: {fileID: 5080520924821185231}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: dba3e28ba56e54846a4ae41353aba109, type: 2}
+  m_Controller: {fileID: 22100000, guid: c4a28efee49f2c74b95bff31cea8b420, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

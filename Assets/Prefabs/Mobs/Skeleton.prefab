@@ -759,7 +759,7 @@ GameObject:
   - component: {fileID: 1815770771967324563}
   - component: {fileID: 2969414598802889958}
   - component: {fileID: 6841788975879381558}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Skeleton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -799,7 +799,7 @@ Animator:
   m_GameObject: {fileID: 5052713220987418412}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ca6e35c92f5adcd47a43ce811b6c5d74, type: 2}
+  m_Controller: {fileID: 22100000, guid: 557bca6490cd0bb4c988f7d76d817483, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -900,7 +900,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2

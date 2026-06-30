@@ -280,7 +280,7 @@ Animator:
   m_GameObject: {fileID: 2048721006207426640}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 7dcc6f164acc6e74ba74492e3b7093b2, type: 2}
+  m_Controller: {fileID: 22100000, guid: 301621e6c72d74b4e86c725f752fdbc4, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -305,6 +305,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _useFacingAxis: 0
   _facingAxis: 0
+  _facingUpAxis: 4
+  _facingRotationOffsetEuler: {x: 0, y: 0, z: 0}
 --- !u!195 &8296100569189015961
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -341,6 +343,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _attackRange: 2
   _attackDelay: 3
+  _attackHitFallbackDelay: 0.25
   _damage: 10
   _rotationSpeed: 50
   _isRanged: 0

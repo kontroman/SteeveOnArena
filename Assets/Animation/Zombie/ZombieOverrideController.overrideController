@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: ZombieOverrideController
+  m_Controller: {fileID: 9100000, guid: 15d55369eb4472c45bc430a0da44bbf2, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: ebc3fc5a19eac614597f6e643c554cdc, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: b33cbe114ff6cc94ca642f201cfb3149, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 983cd077e036455439f942e9ac779d64, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 81cc62df578cc8b489bedf000f4964f7, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 2e63aca1d11221b4292f0d58428ba5f2, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 57ccfeafcffca5b40ac5d5d4e01f023c, type: 2}
