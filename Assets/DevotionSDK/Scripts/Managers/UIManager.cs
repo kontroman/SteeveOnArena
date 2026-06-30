@@ -99,7 +99,7 @@ namespace Devotion.SDK.Managers
 
         private GameObject FindWindowPrefab<T>() where T : BaseWindow
         {
-            return _windows.Find(w => w.GetType() == typeof(T))?.gameObject;
+            return _windows.Find(w => w != null && w.GetType() == typeof(T))?.gameObject;
         }
 
         protected T GetWindowByType<T>() where T : BaseWindow
@@ -111,7 +111,7 @@ namespace Devotion.SDK.Managers
                 return (T)cachedWindow;
             }
 
-            BaseWindow windowPrefab = _windows.Find(w => w.GetType() == type);
+            BaseWindow windowPrefab = _windows.Find(w => w != null && w.GetType() == type);
             if (windowPrefab == null)
             {
                 Debug.LogError($"Window of type '{type}' not found.");

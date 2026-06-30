@@ -23,6 +23,26 @@ namespace MineArena.AI
         [SerializeField] private float _nextWaveDelay = 5f;
         [SerializeField] private float _retryDelay = 0.2f;
 
+        public int TotalMobCount
+        {
+            get
+            {
+                if (_loopWaves)
+                {
+                    Debug.LogWarning($"{nameof(WaveSpawner)} has loop waves enabled. Level progress uses one pass of configured waves.");
+                }
+
+                int total = 0;
+                foreach (var wave in _waves)
+                {
+                    if (wave != null)
+                        total += Mathf.Max(0, wave.MobCount);
+                }
+
+                return total;
+            }
+        }
+
         void Start()
         {
             StartCoroutine(SpawnWaves());

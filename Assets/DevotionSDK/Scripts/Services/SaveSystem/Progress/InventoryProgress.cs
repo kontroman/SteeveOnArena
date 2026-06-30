@@ -9,6 +9,7 @@ namespace Devotion.SDK.Services.SaveSystem.Progress
     public class InventoryProgress : BaseProgress
     {
         private const int QuickSlotCount = 5;
+        private const string StarterSwordItemId = "WoodSword";
 
         [SerializeField] private SerializableDictionary<string, int> savedResources = new();
         [SerializeField] private List<string> inventoryItemOrder = new();
@@ -53,6 +54,18 @@ namespace Devotion.SDK.Services.SaveSystem.Progress
         }
 
         public InventoryProgress() { }
+
+        public void InitializeNewPlayerInventory()
+        {
+            if (!SavedResources.ContainsKey(StarterSwordItemId))
+                SavedResources[StarterSwordItemId] = 1;
+
+            AddInventoryOrderItem(StarterSwordItemId);
+
+            EnsureQuickSlots();
+            quickSlotItemIds[0] = StarterSwordItemId;
+            selectedQuickSlotIndex = 0;
+        }
 
         public void AddResource(string id, int amount = 1)
         {

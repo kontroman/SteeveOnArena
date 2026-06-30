@@ -132,6 +132,7 @@ namespace Devotion.SDK.Services.SaveSystem
 
             if (string.IsNullOrWhiteSpace(rawData))
             {
+                progress.InventoryProgress.InitializeNewPlayerInventory();
                 return;
             }
 

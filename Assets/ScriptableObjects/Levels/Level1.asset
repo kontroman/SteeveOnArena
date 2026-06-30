@@ -49,3 +49,5 @@ MonoBehaviour:
     ambientLight: {r: 0.6981132, g: 0.6981132, b: 0.6981132, a: 1}
     ambientIntensity: 1
     rainIntensity: 0.5
+  requiredKillPercentToOpenPortal: 0.7
+  portalPrefab: {fileID: 5969946980864186293, guid: 856b2a6a20e15574082dd2bdc40526f5, type: 3}

@@ -1411,6 +1411,7 @@ MonoBehaviour:
   - MobCount: 5
     DelayBetweenMobs: 10
     MobTypes: 00000000
+  _loopWaves: 0
   _startDelay: 1
   _nextWaveDelay: 5
   _retryDelay: 0.2
@@ -2107,7 +2108,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &196488862
 RectTransform:
   m_ObjectHideFlags: 0
@@ -28516,9 +28517,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 842852265324155065, guid: 22144dbd0a0e62a40a1d7e37dce20978, type: 3}
+      propertyPath: _bowAttack
+      value: 
+      objectReference: {fileID: 11400000, guid: 9f8f74a22d0b4cd4b9e6a746b0aa9d6a, type: 2}
+    - target: {fileID: 842852265324155065, guid: 22144dbd0a0e62a40a1d7e37dce20978, type: 3}
+      propertyPath: _swordAttack
+      value: 
+      objectReference: {fileID: 11400000, guid: 54682f923d37d094dab0bd0917bf5e93, type: 2}
+    - target: {fileID: 842852265324155065, guid: 22144dbd0a0e62a40a1d7e37dce20978, type: 3}
+      propertyPath: _defaultBowAttack
+      value: 
+      objectReference: {fileID: 11400000, guid: 9f8f74a22d0b4cd4b9e6a746b0aa9d6a, type: 2}
     - target: {fileID: 2964385685650872449, guid: 22144dbd0a0e62a40a1d7e37dce20978, type: 3}
       propertyPath: m_Name
       value: PlayerV2.0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4857785937040177400, guid: 22144dbd0a0e62a40a1d7e37dce20978, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6281505188528521790, guid: 22144dbd0a0e62a40a1d7e37dce20978, type: 3}
       propertyPath: m_LocalPosition.x
@@ -28564,6 +28581,10 @@ PrefabInstance:
       propertyPath: Camera
       value: 
       objectReference: {fileID: 963194227}
+    - target: {fileID: 7988853351199852902, guid: 22144dbd0a0e62a40a1d7e37dce20978, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -29932,6 +29953,11 @@ MonoBehaviour:
   _equipment: {fileID: 0}
   _minimumNetworkAttackCooldown: 0.45
   _maximumNetworkMeleeRange: 4
+  attackRange: 3
+  startHalfWidth: 0.8
+  endHalfWidth: 1.8
+  includeBehindPlayerCircle: 1
+  nearPlayerRadius: 0.8
   _defaultBowAttack: {fileID: 0}
   _arrowProjectilePrefab: {fileID: 0}
   _bowFirePoint: {fileID: 0}

@@ -1,5 +1,6 @@
 using Devotion.SDK.Controllers;
 using Devotion.SDK.Helpers;
+using MineArena.Controllers;
 using MineArena.Windows;
 using UnityEngine;
 
@@ -11,6 +12,9 @@ namespace MineArena.Buildings.Portal
         {
             if (other.IsPlayer())
             {
+                if (LevelController.Current != null && LevelController.Current.TryEnterSpawnedPortal(transform))
+                    return;
+
                 GameRoot.UIManager.OpenWindow<SelectLevelWindow>();
             }
         }

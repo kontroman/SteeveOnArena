@@ -818,6 +818,11 @@ MonoBehaviour:
   _equipment: {fileID: 0}
   _minimumNetworkAttackCooldown: 0.45
   _maximumNetworkMeleeRange: 4
+  attackRange: 3
+  startHalfWidth: 0.8
+  endHalfWidth: 1.8
+  includeBehindPlayerCircle: 1
+  nearPlayerRadius: 0.8
   _defaultBowAttack: {fileID: 0}
   _arrowProjectilePrefab: {fileID: 0}
   _bowFirePoint: {fileID: 0}

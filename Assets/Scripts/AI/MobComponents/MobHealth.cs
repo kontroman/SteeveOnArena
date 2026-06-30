@@ -3,6 +3,7 @@ using MineArena.Interfaces;
 using MineArena.ObjectPools;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using MineArena.Messages;
 using UnityEngine;
 
@@ -14,6 +15,8 @@ namespace MineArena.AI
         private MobAnimationController _mobAnimator;
         private MobMovement _mobMovement;
         private MobCombat _mobCombat;
+
+        public static event Action<MobHealth> MobDied;
 
         private void Awake()
         {
@@ -32,6 +35,7 @@ namespace MineArena.AI
 
         protected override void Die()
         {
+            MobDied?.Invoke(this);
             AchievementMessages.AchievementTargetTaken.Publish((_preset, 1));
 
             if (_mobCombat != null)

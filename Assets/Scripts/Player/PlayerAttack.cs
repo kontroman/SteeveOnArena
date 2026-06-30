@@ -35,6 +35,13 @@ namespace MineArena.PlayerSystem
         [SerializeField, Min(0f)] private float _minimumNetworkAttackCooldown = 0.45f;
         [SerializeField, Min(0f)] private float _maximumNetworkMeleeRange = 4f;
 
+        [Header("Melee Area")]
+        [SerializeField, Min(0f)] private float attackRange = 3f;
+        [SerializeField, Min(0f)] private float startHalfWidth = 0.8f;
+        [SerializeField, Min(0f)] private float endHalfWidth = 1.8f;
+        [SerializeField] private bool includeBehindPlayerCircle = true;
+        [SerializeField, Min(0f)] private float nearPlayerRadius = 0.8f;
+
         [Header("Bow")]
         [SerializeField] private AttackConfig _defaultBowAttack;
         [SerializeField] private GameObject _arrowProjectilePrefab;
@@ -100,17 +107,7 @@ namespace MineArena.PlayerSystem
                 return;
             }
 
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            Vector3 targetPoint;
-
-            if (Physics.Raycast(ray, out RaycastHit hit))
-            {
-                targetPoint = hit.point;
-            }
-            else
-            {
-                targetPoint = transform.position + transform.forward;
-            }
+            Vector3 targetPoint = GetAttackClickTargetPoint();
 
             StartCoroutine(AttackRoutine(targetPoint));
         }
@@ -118,6 +115,27 @@ namespace MineArena.PlayerSystem
         private static bool IsPointerOverUi()
         {
             return EventSystem.current != null && EventSystem.current.IsPointerOverGameObject();
+        }
+
+        private Vector3 GetAttackClickTargetPoint()
+        {
+            var camera = Camera.main;
+            if (camera == null)
+                return transform.position + transform.forward;
+
+            Ray ray = camera.ScreenPointToRay(Input.mousePosition);
+            var hits = Physics.RaycastAll(ray, 500f, ~0, QueryTriggerInteraction.Ignore);
+            System.Array.Sort(hits, (left, right) => left.distance.CompareTo(right.distance));
+
+            foreach (var hit in hits)
+            {
+                if (hit.collider == null || IsOwnerCollider(hit.collider) || ShouldIgnoreAttackClick(hit.collider))
+                    continue;
+
+                return hit.point;
+            }
+
+            return transform.position + transform.forward;
         }
 
         private IEnumerator AttackRoutine(Vector3 targetPoint)
@@ -243,12 +261,13 @@ namespace MineArena.PlayerSystem
         private void DetectHits()
         {
             Vector3 attackOrigin = GetAttackOrigin();
+            Vector3 attackForward = GetFlatAttackForward();
 
             // Remote players use the regular Player layer, while PvE targets use AttackableLayers.
             // Query all nearby colliders, then keep the existing mask for non-network targets.
             Collider[] hits = Physics.OverlapSphere(
                 attackOrigin,
-                _config.Radius,
+                GetMeleeCandidateRadius(),
                 ~0,
                 QueryTriggerInteraction.Collide);
             var networkTargets = new HashSet<int>();
@@ -259,37 +278,77 @@ namespace MineArena.PlayerSystem
                 if (hit == null || IsOwnerCollider(hit))
                     continue;
 
-                Vector3 directionToTarget = hit.transform.position - attackOrigin;
-                float angle = Vector3.Angle(transform.forward, directionToTarget);
+                if (!IsWithinMeleeArea(hit, attackOrigin, attackForward))
+                    continue;
 
-                if (angle <= _config.Angle / 2)
+                var networkView = hit.GetComponentInParent<NetworkPlayerView>();
+                if (networkView != null)
                 {
-                    var networkView = hit.GetComponentInParent<NetworkPlayerView>();
-                    if (networkView != null)
+                    var withinServerRange = Vector3.Distance(transform.position, networkView.transform.position) <=
+                                            _maximumNetworkMeleeRange;
+                    if (!networkView.IsLocalPlayer && networkView.IsAlive && withinServerRange &&
+                        networkTargets.Add(networkView.PlayerId))
                     {
-                        var withinServerRange = Vector3.Distance(transform.position, networkView.transform.position) <=
-                                                _maximumNetworkMeleeRange;
-                        if (!networkView.IsLocalPlayer && networkView.IsAlive && withinServerRange &&
-                            networkTargets.Add(networkView.PlayerId))
-                        {
-                            SendNetworkDamage(
-                                networkView,
-                                GetMeleeDamage(_config),
-                                GetSelectedWeaponId("sword"),
-                                hit.ClosestPoint(attackOrigin));
-                        }
-
-                        continue;
+                        SendNetworkDamage(
+                            networkView,
+                            GetMeleeDamage(_config),
+                            GetSelectedWeaponId("sword"),
+                            hit.ClosestPoint(attackOrigin));
                     }
 
-                    if ((_config.AttackableLayers.value & (1 << hit.gameObject.layer)) == 0)
-                        continue;
-
-                    var damageable = hit.GetComponentInParent<IDamageable>();
-                    if (damageable != null && localTargets.Add(damageable))
-                        _damageCommand.Execute(new DamageData(GetMeleeDamage(_config), damageable));
+                    continue;
                 }
+
+                if ((_config.AttackableLayers.value & (1 << hit.gameObject.layer)) == 0)
+                    continue;
+
+                var damageable = hit.GetComponentInParent<IDamageable>();
+                if (damageable != null && localTargets.Add(damageable))
+                    _damageCommand.Execute(new DamageData(GetMeleeDamage(_config), damageable));
             }
+        }
+
+        private float GetMeleeCandidateRadius()
+        {
+            float range = Mathf.Max(0f, attackRange);
+            float farCornerDistance = Mathf.Sqrt(range * range + endHalfWidth * endHalfWidth);
+            return Mathf.Max(farCornerDistance, startHalfWidth, nearPlayerRadius);
+        }
+
+        private Vector3 GetFlatAttackForward()
+        {
+            Vector3 forward = transform.forward;
+            forward.y = 0f;
+
+            return forward.sqrMagnitude > 0.0001f ? forward.normalized : Vector3.forward;
+        }
+
+        private bool IsWithinMeleeArea(Collider hit, Vector3 attackOrigin, Vector3 attackForward)
+        {
+            if (hit == null)
+                return false;
+
+            return IsPointWithinMeleeArea(hit.transform.position, attackOrigin, attackForward) ||
+                   IsPointWithinMeleeArea(hit.ClosestPoint(attackOrigin), attackOrigin, attackForward);
+        }
+
+        private bool IsPointWithinMeleeArea(Vector3 worldPoint, Vector3 attackOrigin, Vector3 attackForward)
+        {
+            // Truncated cone / wide cone attack area in the XZ plane.
+            Vector3 toTarget = worldPoint - attackOrigin;
+            toTarget.y = 0f;
+
+            if (includeBehindPlayerCircle && toTarget.sqrMagnitude <= nearPlayerRadius * nearPlayerRadius)
+                return true;
+
+            float range = Mathf.Max(0.0001f, attackRange);
+            float distanceForward = Vector3.Dot(toTarget, attackForward);
+            if (distanceForward < 0f || distanceForward > range)
+                return false;
+
+            Vector3 sideOffset = toTarget - attackForward * distanceForward;
+            float allowedHalfWidth = Mathf.Lerp(startHalfWidth, endHalfWidth, distanceForward / range);
+            return sideOffset.sqrMagnitude <= allowedHalfWidth * allowedHalfWidth;
         }
 
         private bool IsBowSelectedInQuickSlot()
@@ -367,7 +426,7 @@ namespace MineArena.PlayerSystem
 
             foreach (var hit in hits)
             {
-                if (hit.collider != null && !IsOwnerCollider(hit.collider))
+                if (hit.collider != null && !IsOwnerCollider(hit.collider) && !ShouldIgnoreAttackClick(hit.collider))
                     return hit.point;
             }
 
@@ -568,47 +627,54 @@ namespace MineArena.PlayerSystem
             return hitTransform == transform || hitTransform.IsChildOf(transform);
         }
 
+        private static bool ShouldIgnoreAttackClick(Collider hitCollider)
+        {
+            return hitCollider != null && hitCollider.GetComponentInParent<IgnoreAttackClickTarget>() != null;
+        }
+
         private void OnDrawGizmosSelected()
         {
             if (_config == null)
                 return;
 
             Vector3 attackOrigin = GetAttackOrigin();
+            Vector3 forward = GetFlatAttackForward();
+            Vector3 right = Vector3.Cross(Vector3.up, forward).normalized;
+            float range = Mathf.Max(0f, attackRange);
+
+            Vector3 nearLeft = attackOrigin - right * startHalfWidth;
+            Vector3 nearRight = attackOrigin + right * startHalfWidth;
+            Vector3 farCenter = attackOrigin + forward * range;
+            Vector3 farLeft = farCenter - right * endHalfWidth;
+            Vector3 farRight = farCenter + right * endHalfWidth;
 
             Gizmos.color = new Color(1, 0, 0, 0.3f);
-            Gizmos.DrawWireSphere(attackOrigin, _config.Radius);
+            Gizmos.DrawLine(nearLeft, nearRight);
+            Gizmos.DrawLine(farLeft, farRight);
+            Gizmos.DrawLine(nearLeft, farLeft);
+            Gizmos.DrawLine(nearRight, farRight);
+            Gizmos.DrawLine(attackOrigin, farCenter);
 
-            Vector3 forward = transform.forward * _config.Radius;
-            Quaternion leftRayRotation = Quaternion.AngleAxis(-_config.Angle / 2, Vector3.up);
-            Quaternion rightRayRotation = Quaternion.AngleAxis(_config.Angle / 2, Vector3.up);
-
-            Vector3 leftRayDirection = leftRayRotation * forward;
-            Vector3 rightRayDirection = rightRayRotation * forward;
-
-            Gizmos.color = Color.yellow;
-            Gizmos.DrawRay(attackOrigin, leftRayDirection);
-            Gizmos.DrawRay(attackOrigin, rightRayDirection);
+            if (includeBehindPlayerCircle && nearPlayerRadius > 0f)
+            {
+                Gizmos.color = Color.yellow;
+                Gizmos.DrawWireSphere(attackOrigin, nearPlayerRadius);
+            }
         }
 
         private Vector3 GetAttackOrigin()
         {
-            float forwardOffset = Mathf.Max(0.1f, _config.Radius * 0.5f);
-
             if (TryGetComponent<CharacterController>(out var characterController))
             {
-                forwardOffset = Mathf.Max(forwardOffset, characterController.radius);
-                return transform.position + transform.forward * forwardOffset + Vector3.up * characterController.height * 0.25f;
+                return characterController.bounds.center;
             }
 
             if (TryGetComponent<Collider>(out var collider))
             {
-                var extents = collider.bounds.extents;
-                float colliderRadius = Mathf.Max(extents.x, extents.z);
-                forwardOffset = Mathf.Max(forwardOffset, colliderRadius);
-                return transform.position + transform.forward * forwardOffset + Vector3.up * extents.y * 0.25f;
+                return collider.bounds.center;
             }
 
-            return transform.position + transform.forward * forwardOffset;
+            return transform.position;
         }
 
         public void SetComponentEnable(bool value)

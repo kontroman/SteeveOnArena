@@ -7,9 +7,11 @@ namespace MineArena.Levels
     public class Arena : MonoBehaviour
     {
         [SerializeField] private Transform _playerSpawnPosition;
+        [SerializeField] private Transform _portalSpawnPoint;
         [SerializeField, HideInInspector] private List<Transform> _oreSpawnPoints = new List<Transform>();
 
         public Transform PlayerSpawnPosition { get { return _playerSpawnPosition; } }
+        public Transform PortalSpawnPoint { get { return _portalSpawnPoint; } }
         public IReadOnlyList<Transform> OreSpawnPoints { get { return _oreSpawnPoints; } }
 
         private void Awake()

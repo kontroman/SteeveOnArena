@@ -17,6 +17,8 @@ namespace MineArena.Levels
         [SerializeField] private GameObject levelPrefab;
         [SerializeField] private Quaternion levelPrefabRotation;
         [SerializeField] private WeatherPreset weatherPreset;
+        [SerializeField, Range(0f, 1f)] private float requiredKillPercentToOpenPortal = 0.7f;
+        [SerializeField] private GameObject portalPrefab;
 
         public Sprite LevelIcon {  get { return levelIcon; } }
         public LevelDifficulty Difficulty { get { return difficulty; } }
@@ -27,6 +29,8 @@ namespace MineArena.Levels
         public GameObject LevelPrefab { get { return levelPrefab; } }
         public Quaternion LevelPrefabRotation { get { return levelPrefabRotation; } }
         public WeatherPreset WeatherPreset { get { return weatherPreset; } }
+        public float RequiredKillPercentToOpenPortal { get { return requiredKillPercentToOpenPortal; } }
+        public GameObject PortalPrefab { get { return portalPrefab; } }
     }
 
     [Serializable]
