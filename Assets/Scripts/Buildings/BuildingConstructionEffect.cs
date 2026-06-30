@@ -1,6 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Devotion.SDK.Async;
+using Devotion.SDK.Enums;
+using Devotion.SDK.Interfaces;
 using UnityEngine;
 
 #if UNITY_EDITOR
@@ -18,59 +21,21 @@ namespace MineArena.Buildings
         private const string ChunkMeshNamePrefix = "ConstructionMeshChunk_";
         private const float MinimumCellSize = 0.05f;
 
-        private static readonly Vector3[] CellSampleOffsets =
-        {
-            Vector3.zero,
-            new Vector3(-1f, -1f, -1f),
-            new Vector3(-1f, -1f, 1f),
-            new Vector3(-1f, 1f, -1f),
-            new Vector3(-1f, 1f, 1f),
-            new Vector3(1f, -1f, -1f),
-            new Vector3(1f, -1f, 1f),
-            new Vector3(1f, 1f, -1f),
-            new Vector3(1f, 1f, 1f)
-        };
-
-        private static readonly Vector3[] MaterialSampleOffsets =
-        {
-            Vector3.up,
-            Vector3.down,
-            Vector3.right,
-            Vector3.left,
-            Vector3.forward,
-            Vector3.back
-        };
-
-        private static readonly Vector3[] MaterialSampleDirections =
-        {
-            Vector3.down,
-            Vector3.up,
-            Vector3.left,
-            Vector3.right,
-            Vector3.back,
-            Vector3.forward
-        };
-
         [Header("Source")]
         [SerializeField] private Renderer sourceRenderer;
-        [SerializeField] private Collider sourceCollider;
 
-        [Header("Blocks")]
-        [SerializeField] private BlockGeometryMode blockGeometryMode = BlockGeometryMode.SourceMeshChunks;
-        [SerializeField] private GameObject blockPrefab;
-        [SerializeField] private BlockMaterialMode blockMaterialMode = BlockMaterialMode.SampleSourceSubMesh;
-        [SerializeField] private MaterialBlockPrefabOverride[] materialPrefabOverrides;
+        [Header("Chunks")]
         [SerializeField] private Vector3 cellSize = Vector3.one;
         [SerializeField] private float blockScaleMultiplier = 1f;
         [SerializeField] private Transform parentForBlocks;
         [SerializeField] private int maxBlocksSafetyLimit = 1500;
 
         [Header("Animation")]
-        [SerializeField] private float fallHeightMin = 3f;
-        [SerializeField] private float fallHeightMax = 7f;
-        [SerializeField] private float animationDuration = 0.45f;
-        [SerializeField] private float delayPerHeight = 0.35f;
-        [SerializeField] private float randomDelay = 0.12f;
+        [SerializeField] private float fallHeightMin = 10f;
+        [SerializeField] private float fallHeightMax = 15;
+        [SerializeField] private float animationDuration = 1.5f;
+        [SerializeField] private float delayPerHeight = 0.75f;
+        [SerializeField] private float randomDelay = 0.75f;
         [SerializeField] private bool buildFromBottomToTop = true;
         [SerializeField] private AnimationCurve movementCurve = new AnimationCurve(
             new Keyframe(0f, 0f, 0f, 2.5f),
@@ -84,6 +49,7 @@ namespace MineArena.Buildings
         [SerializeField, HideInInspector] private List<BlockState> blocks = new List<BlockState>();
 
         private Coroutine runtimeCoroutine;
+        private Promise runtimePromise;
 
 #if UNITY_EDITOR
         private bool editorPreviewPlaying;
@@ -92,24 +58,32 @@ namespace MineArena.Buildings
 
         public int GeneratedBlockCount => blocks != null ? blocks.Count : 0;
         public Renderer SourceRenderer => sourceRenderer;
-        public Collider SourceCollider => sourceCollider;
-        public GameObject BlockPrefab => blockPrefab;
-        public BlockGeometryMode GeometryMode => blockGeometryMode;
         public Vector3 CellSize => cellSize;
         public int MaxBlocksSafetyLimit => maxBlocksSafetyLimit;
 
         public void PlayRuntime()
         {
+            PlayRuntimeAsync();
+        }
+
+        public IPromise PlayRuntimeAsync()
+        {
             if (!Application.isPlaying)
             {
                 Debug.LogWarning($"{nameof(BuildingConstructionEffect)}: PlayRuntime can only run in Play Mode.", this);
-                return;
+                return Promise.ResolveAndReturn();
             }
 
             if (runtimeCoroutine != null)
+            {
                 StopCoroutine(runtimeCoroutine);
+                RejectRuntimePromise(new OperationCanceledException($"{nameof(BuildingConstructionEffect)} runtime animation was interrupted."));
+            }
 
-            runtimeCoroutine = StartCoroutine(PlayRuntimeRoutine());
+            runtimePromise = new Promise();
+            Debug.Log($"{nameof(BuildingConstructionEffect)}: runtime animation requested on {gameObject.name}.", this);
+            runtimeCoroutine = StartCoroutine(PlayRuntimeRoutine(runtimePromise));
+            return runtimePromise;
         }
 
         public void GeneratePreviewBlocks()
@@ -119,193 +93,51 @@ namespace MineArena.Buildings
 
             ClearGeneratedBlocks(false);
 
-            if (blockGeometryMode == BlockGeometryMode.SourceMeshChunks)
-            {
-                GenerateSourceMeshChunks();
-                return;
-            }
-
-            GeneratePrefabGridBlocks();
-        }
-
-        private void GenerateSourceMeshChunks()
-        {
             var meshFilter = sourceRenderer.GetComponent<MeshFilter>();
             var sourceMesh = meshFilter != null ? meshFilter.sharedMesh : null;
 
             if (sourceMesh == null)
             {
-                Debug.LogError($"{nameof(BuildingConstructionEffect)}: SourceMeshChunks requires Source Renderer with MeshFilter and readable shared mesh.", this);
+                Debug.LogError($"{nameof(BuildingConstructionEffect)}: Source Renderer must be on an object with MeshFilter.", this);
                 return;
             }
 
-            var sourceBounds = sourceRenderer.bounds;
-            var chunkDataByCell = BuildSourceMeshChunkData(sourceMesh, sourceBounds);
+            Dictionary<CellKey, MeshChunkData> chunkDataByCell;
+
+            try
+            {
+                chunkDataByCell = BuildSourceMeshChunkData(sourceMesh);
+            }
+            catch (Exception exception)
+            {
+                Debug.LogError($"{nameof(BuildingConstructionEffect)}: failed to read source mesh. Enable Read/Write on the imported mesh if needed. {exception.Message}", this);
+                return;
+            }
 
             if (chunkDataByCell.Count > maxBlocksSafetyLimit)
             {
                 Debug.LogWarning(
-                    $"{nameof(BuildingConstructionEffect)}: source mesh produced {chunkDataByCell.Count} chunks, max safety limit is {maxBlocksSafetyLimit}. Generation stopped. Increase Cell Size or Max Blocks Safety Limit.",
+                    $"{nameof(BuildingConstructionEffect)}: generated chunk count {chunkDataByCell.Count} exceeds Max Blocks Safety Limit {maxBlocksSafetyLimit}. Increase Cell Size or the limit.",
                     this);
                 return;
             }
 
             var blocksParent = GetOrCreateBlocksParent();
             var generated = new List<BlockState>(chunkDataByCell.Count);
+            var sourceBounds = sourceRenderer.bounds;
             var sourceMaterials = sourceRenderer.sharedMaterials;
 
             foreach (var pair in chunkDataByCell)
             {
                 var chunkData = pair.Value;
-                var block = CreateSourceMeshChunkObject(blocksParent, chunkData, sourceMaterials);
+                var chunkObject = CreateChunkObject(blocksParent, chunkData, sourceMaterials);
 
-                if (block == null)
+                if (chunkObject == null)
                     continue;
 
-                var state = CreateBlockState(block.transform, chunkData.Center, sourceBounds, Vector3.one * blockScaleMultiplier);
+                var state = CreateBlockState(chunkObject.transform, chunkData.Center, sourceBounds);
                 ApplyBlockTransform(state, state.FinalPosition);
                 generated.Add(state);
-            }
-
-            blocks = generated;
-            SetSourceVisible(true);
-            MarkDirty();
-        }
-
-        private Dictionary<CellKey, MeshChunkData> BuildSourceMeshChunkData(Mesh sourceMesh, Bounds sourceBounds)
-        {
-            var sourceTransform = sourceRenderer.transform;
-            var sourceVertices = sourceMesh.vertices;
-            var sourceNormals = sourceMesh.normals;
-            var sourceUv = sourceMesh.uv;
-            var hasNormals = sourceNormals != null && sourceNormals.Length == sourceVertices.Length;
-            var hasUv = sourceUv != null && sourceUv.Length == sourceVertices.Length;
-            var chunks = new Dictionary<CellKey, MeshChunkData>();
-            var subMeshCount = sourceMesh.subMeshCount;
-
-            for (int subMeshIndex = 0; subMeshIndex < subMeshCount; subMeshIndex++)
-            {
-                var triangles = sourceMesh.GetTriangles(subMeshIndex);
-
-                for (int i = 0; i + 2 < triangles.Length; i += 3)
-                {
-                    var i0 = triangles[i];
-                    var i1 = triangles[i + 1];
-                    var i2 = triangles[i + 2];
-                    var w0 = sourceTransform.TransformPoint(sourceVertices[i0]);
-                    var w1 = sourceTransform.TransformPoint(sourceVertices[i1]);
-                    var w2 = sourceTransform.TransformPoint(sourceVertices[i2]);
-                    var center = (w0 + w1 + w2) / 3f;
-                    var key = GetCellKey(center, sourceBounds);
-
-                    if (!chunks.TryGetValue(key, out var chunk))
-                    {
-                        chunk = new MeshChunkData(GetCellCenter(key, sourceBounds), subMeshCount);
-                        chunks.Add(key, chunk);
-                    }
-
-                    var n0 = hasNormals ? sourceTransform.TransformDirection(sourceNormals[i0]).normalized : Vector3.zero;
-                    var n1 = hasNormals ? sourceTransform.TransformDirection(sourceNormals[i1]).normalized : Vector3.zero;
-                    var n2 = hasNormals ? sourceTransform.TransformDirection(sourceNormals[i2]).normalized : Vector3.zero;
-                    var uv0 = hasUv ? sourceUv[i0] : Vector2.zero;
-                    var uv1 = hasUv ? sourceUv[i1] : Vector2.zero;
-                    var uv2 = hasUv ? sourceUv[i2] : Vector2.zero;
-
-                    chunk.AddTriangle(subMeshIndex, w0, w1, w2, n0, n1, n2, uv0, uv1, uv2, hasNormals);
-                }
-            }
-
-            return chunks;
-        }
-
-        private CellKey GetCellKey(Vector3 worldPosition, Bounds sourceBounds)
-        {
-            return new CellKey(
-                Mathf.FloorToInt((worldPosition.x - sourceBounds.min.x) / cellSize.x),
-                Mathf.FloorToInt((worldPosition.y - sourceBounds.min.y) / cellSize.y),
-                Mathf.FloorToInt((worldPosition.z - sourceBounds.min.z) / cellSize.z));
-        }
-
-        private Vector3 GetCellCenter(CellKey key, Bounds sourceBounds)
-        {
-            return new Vector3(
-                sourceBounds.min.x + (key.X + 0.5f) * cellSize.x,
-                sourceBounds.min.y + (key.Y + 0.5f) * cellSize.y,
-                sourceBounds.min.z + (key.Z + 0.5f) * cellSize.z);
-        }
-
-        private GameObject CreateSourceMeshChunkObject(Transform blocksParent, MeshChunkData chunkData, Material[] sourceMaterials)
-        {
-            var block = new GameObject("SourceMesh_ConstructionChunk");
-            block.transform.SetParent(blocksParent, false);
-            block.transform.rotation = Quaternion.identity;
-
-#if UNITY_EDITOR
-            if (!Application.isPlaying)
-                Undo.RegisterCreatedObjectUndo(block, "Create Building Mesh Chunk");
-#endif
-
-            var meshFilter = block.AddComponent<MeshFilter>();
-            var meshRenderer = block.AddComponent<MeshRenderer>();
-            var chunkMesh = chunkData.CreateMesh();
-            meshFilter.sharedMesh = chunkMesh;
-            meshRenderer.sharedMaterials = sourceMaterials;
-            return block;
-        }
-
-        private void GeneratePrefabGridBlocks()
-        {
-            if (blockPrefab == null)
-            {
-                Debug.LogError($"{nameof(BuildingConstructionEffect)}: Block Prefab is not assigned.", this);
-                return;
-            }
-
-            var sourceBounds = sourceRenderer.bounds;
-            var gridCount = CalculateGridCount(sourceBounds, cellSize);
-            var estimatedCells = (long)gridCount.x * gridCount.y * gridCount.z;
-
-            if (estimatedCells > maxBlocksSafetyLimit)
-            {
-                Debug.LogWarning(
-                    $"{nameof(BuildingConstructionEffect)}: calculated {estimatedCells} cells, max safety limit is {maxBlocksSafetyLimit}. Generation stopped. Increase Cell Size or Max Blocks Safety Limit.",
-                    this);
-                return;
-            }
-
-            var blocksParent = GetOrCreateBlocksParent();
-            var generated = new List<BlockState>((int)Math.Min(estimatedCells, maxBlocksSafetyLimit));
-
-            Physics.SyncTransforms();
-
-            for (int y = 0; y < gridCount.y; y++)
-            {
-                for (int x = 0; x < gridCount.x; x++)
-                {
-                    for (int z = 0; z < gridCount.z; z++)
-                    {
-                        var center = new Vector3(
-                            sourceBounds.min.x + (x + 0.5f) * cellSize.x,
-                            sourceBounds.min.y + (y + 0.5f) * cellSize.y,
-                            sourceBounds.min.z + (z + 0.5f) * cellSize.z);
-
-                        if (!ShouldCreateBlock(center, cellSize))
-                            continue;
-
-                        var sourceMaterial = ResolveBlockMaterial(center);
-                        var prefabForCell = ResolveBlockPrefab(sourceMaterial);
-                        var block = CreateBlockInstance(blocksParent, prefabForCell);
-
-                        if (block == null)
-                            continue;
-
-                        ApplyBlockMaterial(block, sourceMaterial);
-
-                        var state = CreateBlockState(block.transform, center, sourceBounds, GetBlockScale(prefabForCell));
-                        ApplyBlockTransform(state, state.FinalPosition);
-                        generated.Add(state);
-                    }
-                }
             }
 
             blocks = generated;
@@ -377,17 +209,101 @@ namespace MineArena.Buildings
             MarkDirty();
         }
 
-        private IEnumerator PlayRuntimeRoutine()
+        private Dictionary<CellKey, MeshChunkData> BuildSourceMeshChunkData(Mesh sourceMesh)
+        {
+            var sourceTransform = sourceRenderer.transform;
+            var sourceBounds = sourceRenderer.bounds;
+            var sourceVertices = sourceMesh.vertices;
+            var sourceNormals = sourceMesh.normals;
+            var sourceUv = sourceMesh.uv;
+            var hasNormals = sourceNormals != null && sourceNormals.Length == sourceVertices.Length;
+            var hasUv = sourceUv != null && sourceUv.Length == sourceVertices.Length;
+            var chunks = new Dictionary<CellKey, MeshChunkData>();
+            var subMeshCount = sourceMesh.subMeshCount;
+
+            for (int subMeshIndex = 0; subMeshIndex < subMeshCount; subMeshIndex++)
+            {
+                var triangles = sourceMesh.GetTriangles(subMeshIndex);
+
+                for (int i = 0; i + 2 < triangles.Length; i += 3)
+                {
+                    var i0 = triangles[i];
+                    var i1 = triangles[i + 1];
+                    var i2 = triangles[i + 2];
+                    var w0 = sourceTransform.TransformPoint(sourceVertices[i0]);
+                    var w1 = sourceTransform.TransformPoint(sourceVertices[i1]);
+                    var w2 = sourceTransform.TransformPoint(sourceVertices[i2]);
+                    var triangleCenter = (w0 + w1 + w2) / 3f;
+                    var cellKey = GetCellKey(triangleCenter, sourceBounds);
+
+                    if (!chunks.TryGetValue(cellKey, out var chunk))
+                    {
+                        chunk = new MeshChunkData(GetCellCenter(cellKey, sourceBounds), subMeshCount);
+                        chunks.Add(cellKey, chunk);
+                    }
+
+                    var n0 = hasNormals ? sourceTransform.TransformDirection(sourceNormals[i0]).normalized : Vector3.zero;
+                    var n1 = hasNormals ? sourceTransform.TransformDirection(sourceNormals[i1]).normalized : Vector3.zero;
+                    var n2 = hasNormals ? sourceTransform.TransformDirection(sourceNormals[i2]).normalized : Vector3.zero;
+                    var uv0 = hasUv ? sourceUv[i0] : Vector2.zero;
+                    var uv1 = hasUv ? sourceUv[i1] : Vector2.zero;
+                    var uv2 = hasUv ? sourceUv[i2] : Vector2.zero;
+
+                    chunk.AddTriangle(subMeshIndex, w0, w1, w2, n0, n1, n2, uv0, uv1, uv2, hasNormals);
+                }
+            }
+
+            return chunks;
+        }
+
+        private CellKey GetCellKey(Vector3 worldPosition, Bounds sourceBounds)
+        {
+            return new CellKey(
+                Mathf.FloorToInt((worldPosition.x - sourceBounds.min.x) / cellSize.x),
+                Mathf.FloorToInt((worldPosition.y - sourceBounds.min.y) / cellSize.y),
+                Mathf.FloorToInt((worldPosition.z - sourceBounds.min.z) / cellSize.z));
+        }
+
+        private Vector3 GetCellCenter(CellKey key, Bounds sourceBounds)
+        {
+            return new Vector3(
+                sourceBounds.min.x + (key.X + 0.5f) * cellSize.x,
+                sourceBounds.min.y + (key.Y + 0.5f) * cellSize.y,
+                sourceBounds.min.z + (key.Z + 0.5f) * cellSize.z);
+        }
+
+        private GameObject CreateChunkObject(Transform blocksParent, MeshChunkData chunkData, Material[] sourceMaterials)
+        {
+            var chunkObject = new GameObject("ConstructionMeshChunk");
+            chunkObject.transform.SetParent(blocksParent, false);
+            chunkObject.transform.rotation = Quaternion.identity;
+
+#if UNITY_EDITOR
+            if (!Application.isPlaying)
+                Undo.RegisterCreatedObjectUndo(chunkObject, "Create Building Mesh Chunk");
+#endif
+
+            var meshFilter = chunkObject.AddComponent<MeshFilter>();
+            var meshRenderer = chunkObject.AddComponent<MeshRenderer>();
+            meshFilter.sharedMesh = chunkData.CreateMesh();
+            meshRenderer.sharedMaterials = sourceMaterials;
+            return chunkObject;
+        }
+
+        private IEnumerator PlayRuntimeRoutine(Promise promise)
         {
             GeneratePreviewBlocks();
 
             if (blocks == null || blocks.Count == 0)
             {
+                Debug.LogWarning($"{nameof(BuildingConstructionEffect)}: no generated blocks, runtime animation will finish immediately.", this);
                 runtimeCoroutine = null;
+                ResolveRuntimePromise(promise);
                 yield break;
             }
 
             PrepareBlocksForAnimation();
+            Debug.Log($"{nameof(BuildingConstructionEffect)}: runtime animation started with {blocks.Count} blocks, totalDuration={GetTotalAnimationTime():0.00}s.", this);
 
             if (hideSourceDuringPreview)
                 SetSourceVisible(false);
@@ -405,6 +321,25 @@ namespace MineArena.Buildings
             UpdateAnimation(totalDuration);
             CompletePreview();
             runtimeCoroutine = null;
+            Debug.Log($"{nameof(BuildingConstructionEffect)}: runtime animation finished.", this);
+            ResolveRuntimePromise(promise);
+        }
+
+        private void ResolveRuntimePromise(Promise promise)
+        {
+            if (promise != null && promise.State == PromiseState.Pending)
+                promise.Resolve();
+
+            if (runtimePromise == promise)
+                runtimePromise = null;
+        }
+
+        private void RejectRuntimePromise(Exception exception)
+        {
+            if (runtimePromise != null && runtimePromise.State == PromiseState.Pending)
+                runtimePromise.Reject(exception);
+
+            runtimePromise = null;
         }
 
         private void PrepareBlocksForAnimation()
@@ -488,18 +423,17 @@ namespace MineArena.Buildings
             }
         }
 
-        private BlockState CreateBlockState(Transform blockTransform, Vector3 finalPosition, Bounds sourceBounds, Vector3 scale)
+        private BlockState CreateBlockState(Transform blockTransform, Vector3 finalPosition, Bounds sourceBounds)
         {
             var fallHeight = UnityEngine.Random.Range(fallHeightMin, fallHeightMax);
-            var startPosition = finalPosition + Vector3.up * fallHeight;
             var normalizedHeight = GetNormalizedHeight(finalPosition, sourceBounds);
 
             return new BlockState
             {
                 Transform = blockTransform,
                 FinalPosition = finalPosition,
-                StartPosition = startPosition,
-                Scale = scale,
+                StartPosition = finalPosition + Vector3.up * fallHeight,
+                Scale = Vector3.one * blockScaleMultiplier,
                 HeightDelay = buildFromBottomToTop ? normalizedHeight * delayPerHeight : 0f,
                 RandomDelay = randomDelay > 0f ? UnityEngine.Random.Range(0f, randomDelay) : 0f
             };
@@ -508,198 +442,8 @@ namespace MineArena.Buildings
         private void ApplyBlockTransform(BlockState block, Vector3 position)
         {
             block.Transform.position = position;
+            block.Transform.rotation = Quaternion.identity;
             SetWorldScale(block.Transform, block.Scale);
-        }
-
-        private Vector3 GetBlockScale(GameObject prefab)
-        {
-            var prefabScale = prefab != null ? prefab.transform.localScale : Vector3.one;
-            return Vector3.Scale(prefabScale, cellSize) * blockScaleMultiplier;
-        }
-
-        private bool ShouldCreateBlock(Vector3 center, Vector3 size)
-        {
-            if (sourceCollider == null)
-                return true;
-
-            var cellBounds = new Bounds(center, size);
-
-            if (!sourceCollider.bounds.Intersects(cellBounds))
-                return false;
-
-            var closestToCenter = sourceCollider.ClosestPoint(center);
-
-            if (cellBounds.Contains(closestToCenter) || (closestToCenter - center).sqrMagnitude < 0.0001f)
-                return true;
-
-            var halfSize = size * 0.49f;
-
-            for (int i = 0; i < CellSampleOffsets.Length; i++)
-            {
-                var sample = center + Vector3.Scale(CellSampleOffsets[i], halfSize);
-                var closest = sourceCollider.ClosestPoint(sample);
-
-                if ((closest - sample).sqrMagnitude < 0.0001f || cellBounds.Contains(closest))
-                    return true;
-            }
-
-            return false;
-        }
-
-        private GameObject CreateBlockInstance(Transform blocksParent, GameObject prefab)
-        {
-            if (prefab == null)
-                prefab = blockPrefab;
-
-            GameObject block;
-
-#if UNITY_EDITOR
-            if (!Application.isPlaying)
-            {
-                block = PrefabUtility.InstantiatePrefab(prefab, blocksParent) as GameObject;
-
-                if (block == null)
-                    block = Instantiate(prefab, blocksParent);
-
-                Undo.RegisterCreatedObjectUndo(block, "Create Building Preview Block");
-            }
-            else
-#endif
-            {
-                block = Instantiate(prefab, blocksParent);
-            }
-
-            block.name = $"{prefab.name}_ConstructionBlock";
-            block.transform.rotation = prefab.transform.rotation;
-            return block;
-        }
-
-        private void ApplyBlockMaterial(GameObject block, Material material)
-        {
-            if (blockMaterialMode == BlockMaterialMode.PrefabMaterial)
-                return;
-
-            if (material == null)
-                return;
-
-            var blockRenderers = block.GetComponentsInChildren<Renderer>();
-
-            if (blockRenderers == null || blockRenderers.Length == 0)
-                return;
-
-            for (int i = 0; i < blockRenderers.Length; i++)
-                blockRenderers[i].sharedMaterial = material;
-        }
-
-        private GameObject ResolveBlockPrefab(Material sourceMaterial)
-        {
-            if (sourceMaterial == null || materialPrefabOverrides == null)
-                return blockPrefab;
-
-            for (int i = 0; i < materialPrefabOverrides.Length; i++)
-            {
-                var item = materialPrefabOverrides[i];
-
-                if (item == null || item.SourceMaterial == null || item.BlockPrefab == null)
-                    continue;
-
-                if (item.SourceMaterial == sourceMaterial)
-                    return item.BlockPrefab;
-            }
-
-            return blockPrefab;
-        }
-
-        private Material ResolveBlockMaterial(Vector3 samplePosition)
-        {
-            if (blockMaterialMode == BlockMaterialMode.PrefabMaterial)
-                return null;
-
-            var material = ResolveSourceMaterial(samplePosition);
-
-            if (material == null)
-                return null;
-
-            return material;
-        }
-
-        private Material ResolveSourceMaterial(Vector3 samplePosition)
-        {
-            if (sourceRenderer == null)
-                return null;
-
-            var sourceMaterials = sourceRenderer.sharedMaterials;
-
-            if (sourceMaterials == null || sourceMaterials.Length == 0)
-                return null;
-
-            if (blockMaterialMode == BlockMaterialMode.SourceFirstMaterial)
-                return sourceMaterials[0];
-
-            if (blockMaterialMode != BlockMaterialMode.SampleSourceSubMesh)
-                return null;
-
-            if (TryGetSourceMaterialIndex(samplePosition, out var materialIndex) &&
-                materialIndex >= 0 &&
-                materialIndex < sourceMaterials.Length)
-            {
-                return sourceMaterials[materialIndex];
-            }
-
-            return sourceMaterials[0];
-        }
-
-        private bool TryGetSourceMaterialIndex(Vector3 samplePosition, out int materialIndex)
-        {
-            materialIndex = 0;
-
-            if (sourceCollider is not MeshCollider meshCollider || meshCollider.sharedMesh == null)
-                return false;
-
-            var rayDistance = Mathf.Max(sourceRenderer.bounds.size.magnitude, cellSize.magnitude) + 1f;
-            var bestDistance = float.PositiveInfinity;
-            var bestTriangleIndex = -1;
-
-            for (int i = 0; i < MaterialSampleOffsets.Length; i++)
-            {
-                var ray = new Ray(samplePosition + MaterialSampleOffsets[i] * rayDistance, MaterialSampleDirections[i]);
-
-                if (!meshCollider.Raycast(ray, out var hit, rayDistance * 2f))
-                    continue;
-
-                if (hit.distance >= bestDistance)
-                    continue;
-
-                bestDistance = hit.distance;
-                bestTriangleIndex = hit.triangleIndex;
-            }
-
-            if (bestTriangleIndex < 0)
-                return false;
-
-            materialIndex = GetSubMeshIndexForTriangle(meshCollider.sharedMesh, bestTriangleIndex);
-            return true;
-        }
-
-        private static int GetSubMeshIndexForTriangle(Mesh mesh, int triangleIndex)
-        {
-            if (mesh == null || triangleIndex < 0)
-                return 0;
-
-            var triangleStart = triangleIndex * 3;
-            var accumulatedIndices = 0;
-
-            for (int subMeshIndex = 0; subMeshIndex < mesh.subMeshCount; subMeshIndex++)
-            {
-                var indexCount = (int)mesh.GetIndexCount(subMeshIndex);
-
-                if (triangleStart >= accumulatedIndices && triangleStart < accumulatedIndices + indexCount)
-                    return subMeshIndex;
-
-                accumulatedIndices += indexCount;
-            }
-
-            return 0;
         }
 
         private Transform GetOrCreateBlocksParent()
@@ -732,28 +476,6 @@ namespace MineArena.Buildings
             target.position = Vector3.zero;
             target.rotation = Quaternion.identity;
             SetWorldScale(target, Vector3.one);
-        }
-
-        private static void SetWorldScale(Transform target, Vector3 worldScale)
-        {
-            var parent = target.parent;
-
-            if (parent == null)
-            {
-                target.localScale = worldScale;
-                return;
-            }
-
-            var parentScale = parent.lossyScale;
-            target.localScale = new Vector3(
-                SafeDivide(worldScale.x, parentScale.x),
-                SafeDivide(worldScale.y, parentScale.y),
-                SafeDivide(worldScale.z, parentScale.z));
-        }
-
-        private static float SafeDivide(float value, float divisor)
-        {
-            return Mathf.Abs(divisor) > 0.0001f ? value / divisor : value;
         }
 
         private void ClearGeneratedBlocks(bool restoreSource)
@@ -835,12 +557,6 @@ namespace MineArena.Buildings
                 return false;
             }
 
-            if (blockGeometryMode == BlockGeometryMode.PrefabGridBlocks && blockPrefab == null)
-            {
-                Debug.LogError($"{nameof(BuildingConstructionEffect)}: Block Prefab is not assigned. It is required only for PrefabGridBlocks mode.", this);
-                return false;
-            }
-
             if (cellSize.x < MinimumCellSize || cellSize.y < MinimumCellSize || cellSize.z < MinimumCellSize)
             {
                 Debug.LogWarning(
@@ -856,14 +572,6 @@ namespace MineArena.Buildings
             }
 
             return true;
-        }
-
-        private static Vector3Int CalculateGridCount(Bounds bounds, Vector3 size)
-        {
-            return new Vector3Int(
-                Mathf.Max(1, Mathf.CeilToInt(bounds.size.x / size.x)),
-                Mathf.Max(1, Mathf.CeilToInt(bounds.size.y / size.y)),
-                Mathf.Max(1, Mathf.CeilToInt(bounds.size.z / size.z)));
         }
 
         private static float GetNormalizedHeight(Vector3 position, Bounds bounds)
@@ -891,14 +599,19 @@ namespace MineArena.Buildings
         {
             if (sourceRenderer == null)
                 sourceRenderer = GetComponentInChildren<Renderer>();
-
-            if (sourceCollider == null)
-                sourceCollider = GetComponentInChildren<Collider>();
         }
 
         private void OnDisable()
         {
             StopEditorPreview();
+
+            if (runtimeCoroutine != null)
+            {
+                StopCoroutine(runtimeCoroutine);
+                runtimeCoroutine = null;
+            }
+
+            RejectRuntimePromise(new OperationCanceledException($"{nameof(BuildingConstructionEffect)} was disabled."));
         }
 
         private void OnValidate()
@@ -924,48 +637,10 @@ namespace MineArena.Buildings
 
             var bounds = sourceRenderer.bounds;
 
-            Gizmos.color = new Color(0.2f, 0.75f, 1f, 0.35f);
+            Gizmos.color = new Color(0.2f, 0.75f, 1f, 0.25f);
             Gizmos.DrawCube(bounds.center, bounds.size);
             Gizmos.color = new Color(0.05f, 0.45f, 1f, 0.9f);
             Gizmos.DrawWireCube(bounds.center, bounds.size);
-
-            DrawGridGizmos(bounds);
-        }
-
-        private void DrawGridGizmos(Bounds bounds)
-        {
-            var safeCellSize = new Vector3(
-                Mathf.Max(MinimumCellSize, cellSize.x),
-                Mathf.Max(MinimumCellSize, cellSize.y),
-                Mathf.Max(MinimumCellSize, cellSize.z));
-            var count = CalculateGridCount(bounds, safeCellSize);
-            var maxLinesPerAxis = 24;
-            var stepX = Mathf.Max(1, Mathf.CeilToInt(count.x / (float)maxLinesPerAxis));
-            var stepY = Mathf.Max(1, Mathf.CeilToInt(count.y / (float)maxLinesPerAxis));
-            var stepZ = Mathf.Max(1, Mathf.CeilToInt(count.z / (float)maxLinesPerAxis));
-
-            Gizmos.color = new Color(1f, 0.82f, 0.2f, 0.55f);
-
-            for (int x = 0; x <= count.x; x += stepX)
-            {
-                var px = bounds.min.x + x * safeCellSize.x;
-                Gizmos.DrawLine(new Vector3(px, bounds.min.y, bounds.min.z), new Vector3(px, bounds.max.y, bounds.min.z));
-                Gizmos.DrawLine(new Vector3(px, bounds.min.y, bounds.max.z), new Vector3(px, bounds.max.y, bounds.max.z));
-            }
-
-            for (int y = 0; y <= count.y; y += stepY)
-            {
-                var py = bounds.min.y + y * safeCellSize.y;
-                Gizmos.DrawLine(new Vector3(bounds.min.x, py, bounds.min.z), new Vector3(bounds.max.x, py, bounds.min.z));
-                Gizmos.DrawLine(new Vector3(bounds.min.x, py, bounds.max.z), new Vector3(bounds.max.x, py, bounds.max.z));
-            }
-
-            for (int z = 0; z <= count.z; z += stepZ)
-            {
-                var pz = bounds.min.z + z * safeCellSize.z;
-                Gizmos.DrawLine(new Vector3(bounds.min.x, bounds.min.y, pz), new Vector3(bounds.max.x, bounds.min.y, pz));
-                Gizmos.DrawLine(new Vector3(bounds.min.x, bounds.max.y, pz), new Vector3(bounds.max.x, bounds.max.y, pz));
-            }
         }
 
         private void MarkDirty()
@@ -981,6 +656,28 @@ namespace MineArena.Buildings
 #endif
         }
 
+        private static void SetWorldScale(Transform target, Vector3 worldScale)
+        {
+            var parent = target.parent;
+
+            if (parent == null)
+            {
+                target.localScale = worldScale;
+                return;
+            }
+
+            var parentScale = parent.lossyScale;
+            target.localScale = new Vector3(
+                SafeDivide(worldScale.x, parentScale.x),
+                SafeDivide(worldScale.y, parentScale.y),
+                SafeDivide(worldScale.z, parentScale.z));
+        }
+
+        private static float SafeDivide(float value, float divisor)
+        {
+            return Mathf.Abs(divisor) > 0.0001f ? value / divisor : value;
+        }
+
 #if UNITY_EDITOR
         private void UpdateEditorPreview()
         {
@@ -990,8 +687,7 @@ namespace MineArena.Buildings
                 return;
             }
 
-            var now = EditorApplication.timeSinceStartup;
-            var elapsed = (float)(now - editorPreviewStartedAt);
+            var elapsed = (float)(EditorApplication.timeSinceStartup - editorPreviewStartedAt);
 
             UpdateAnimation(elapsed);
             SceneView.RepaintAll();
@@ -1005,7 +701,6 @@ namespace MineArena.Buildings
         }
 #endif
 
-        [Serializable]
         private readonly struct CellKey : IEquatable<CellKey>
         {
             public readonly int X;
@@ -1139,26 +834,6 @@ namespace MineArena.Buildings
             public float RandomDelay;
 
             public float TotalDelay => HeightDelay + RandomDelay;
-        }
-
-        public enum BlockMaterialMode
-        {
-            PrefabMaterial,
-            SourceFirstMaterial,
-            SampleSourceSubMesh
-        }
-
-        public enum BlockGeometryMode
-        {
-            SourceMeshChunks,
-            PrefabGridBlocks
-        }
-
-        [Serializable]
-        public class MaterialBlockPrefabOverride
-        {
-            public Material SourceMaterial = null;
-            public GameObject BlockPrefab = null;
         }
     }
 }

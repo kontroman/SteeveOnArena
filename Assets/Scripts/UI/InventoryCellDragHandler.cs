@@ -102,7 +102,7 @@ namespace MineArena.UI
             InventoryCellUI targetCell = null;
             foreach (var result in raycastResults)
             {
-                var cell = result.gameObject.GetComponent<InventoryCellUI>();
+                var cell = result.gameObject.GetComponentInParent<InventoryCellUI>();
                 if (cell != null && cell != _cellUI)
                 {
                     targetCell = cell;

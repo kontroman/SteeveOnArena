@@ -49,6 +49,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: d43c59812cf0eb94f969c19e39fd4569, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: d43c59812cf0eb94f969c19e39fd4569, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: c4c46f344f949bd4f93a05c205a8db26, type: 2}
@@ -103,6 +107,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d43c59812cf0eb94f969c19e39fd4569, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4215492820797218662}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d43c59812cf0eb94f969c19e39fd4569, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2997987598380587095}
   m_SourcePrefab: {fileID: 100100000, guid: d43c59812cf0eb94f969c19e39fd4569, type: 3}
 --- !u!1 &2910505988916865209 stripped
 GameObject:
@@ -131,3 +138,59 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 163758094482028127, guid: d43c59812cf0eb94f969c19e39fd4569, type: 3}
+--- !u!114 &2997987598380587095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2910505988916865209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26e3fecdf71fa6f458d9366003b2319e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sourceRenderer: {fileID: 3703310979277703532}
+  cellSize: {x: 1, y: 1, z: 1}
+  blockScaleMultiplier: 1
+  parentForBlocks: {fileID: 0}
+  maxBlocksSafetyLimit: 1500
+  fallHeightMin: 10
+  fallHeightMax: 15
+  animationDuration: 1.5
+  delayPerHeight: 0.75
+  randomDelay: 0.75
+  buildFromBottomToTop: 1
+  movementCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 2.5
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  hideSourceDuringPreview: 1
+  showSourceOnComplete: 1
+  clearBlocksOnComplete: 1
+  blocks: []
+--- !u!23 &3703310979277703532 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: d43c59812cf0eb94f969c19e39fd4569, type: 3}
+  m_PrefabInstance: {fileID: 2640613612967974376}
+  m_PrefabAsset: {fileID: 0}

@@ -118,20 +118,27 @@ namespace MineArena.Managers
 
             if (item is StackableItem stackable)
             {
+                var inventoryStack = _items
+                    .OfType<StackableItem>()
+                    .FirstOrDefault(i => i == stackable || i.CanStackWith(stackable) || i.Name == stackable.Name);
+
+                if (inventoryStack == null)
+                    return;
+
                 if (amount <= 0)
                     amount = 1;
 
-                var toRemove = Mathf.Min(amount, stackable.CurrentStack);
+                var toRemove = Mathf.Min(amount, inventoryStack.CurrentStack);
 
                 if (toRemove <= 0)
                     return;
 
-                stackable.RemoveFromStack(toRemove);
-                GameRoot.PlayerProgress.InventoryProgress.RemoveResource(stackable.Name, toRemove);
+                inventoryStack.RemoveFromStack(toRemove);
+                GameRoot.PlayerProgress.InventoryProgress.RemoveResource(inventoryStack.Name, toRemove);
 
-                if (stackable.CurrentStack <= 0)
+                if (inventoryStack.CurrentStack <= 0)
                 {
-                    ClearItemSlot(stackable);
+                    ClearItemSlot(inventoryStack);
                     SaveInventoryOrder();
                     Debug.Log($"Item removed from inventory: {item.Name}");
                 }

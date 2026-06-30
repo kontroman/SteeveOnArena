@@ -76,12 +76,6 @@ namespace MineArena.Editor
             if (effect.SourceRenderer == null)
                 EditorGUILayout.HelpBox("Source Renderer is not assigned.", MessageType.Warning);
 
-            if (effect.GeometryMode == BuildingConstructionEffect.BlockGeometryMode.PrefabGridBlocks && effect.BlockPrefab == null)
-                EditorGUILayout.HelpBox("Block Prefab is not assigned. It is required for PrefabGridBlocks mode.", MessageType.Warning);
-
-            if (effect.GeometryMode == BuildingConstructionEffect.BlockGeometryMode.PrefabGridBlocks && effect.SourceCollider == null)
-                EditorGUILayout.HelpBox("Source Collider is empty. Blocks will be generated for the whole Renderer.bounds box.", MessageType.None);
-
             if (effect.CellSize.x <= 0.05f || effect.CellSize.y <= 0.05f || effect.CellSize.z <= 0.05f)
                 EditorGUILayout.HelpBox("Cell Size is very small and may create too many blocks.", MessageType.Warning);
 

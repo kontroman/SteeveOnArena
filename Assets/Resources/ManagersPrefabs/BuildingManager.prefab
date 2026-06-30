@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5031827440109186388}
   - component: {fileID: 5849200307932309850}
+  - component: {fileID: 444142920284902597}
+  - component: {fileID: -7452429026268092209}
   m_Layer: 0
   m_Name: BuildingManager
   m_TagString: Untagged
@@ -44,3 +46,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75ded66b338891e429d6b57ae6116ccc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  constructionSequence: {fileID: 444142920284902597}
+--- !u!114 &444142920284902597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7010731271056181304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fd0739a67844cd2bb59b23eb080fd71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cinematicCamera: {fileID: -7452429026268092209}
+  targetCamera: {fileID: 0}
+  fadeDuration: 0.75
+--- !u!114 &-7452429026268092209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7010731271056181304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7e7a40b3be34af3aa6e8ab0d92f8d33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  duration: 3
+  radius: 6
+  height: 3
+  startAngle: -35
+  endAngle: 35
+  lookAtOffset: {x: 0, y: 1.5, z: 0}

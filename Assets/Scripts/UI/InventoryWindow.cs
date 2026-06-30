@@ -16,6 +16,7 @@ namespace MineArena.UI
     {
         [SerializeField] private Transform _inventoryGrid;
         [SerializeField] private List<InventoryCellUI> _inventoryCells = new List<InventoryCellUI>();
+        [SerializeField] private int _trashCellIndex = 34;
         [Header("Equipment slots")]
         [SerializeField] private Image _equipHelmet;
         [SerializeField] private Image _equipChest;
@@ -73,16 +74,22 @@ namespace MineArena.UI
 
             var items = GetVisibleInventoryItems();
 
-            for (int i = 0; i < items.Count; i++)
+            int cellIndex = 0;
+            for (int i = 0; i < items.Count && cellIndex < _inventoryCells.Count; i++)
             {
-                if (i < _inventoryCells.Count)
-                {
-                    if (items[i] == null)
-                        continue;
+                while (IsTrashCellIndex(cellIndex))
+                    cellIndex++;
 
-                    var cellUI = _inventoryCells[i];
+                if (cellIndex >= _inventoryCells.Count)
+                    break;
+
+                if (items[i] != null)
+                {
+                    var cellUI = _inventoryCells[cellIndex];
                     cellUI.Setup(items[i]);
                 }
+
+                cellIndex++;
             }
         }
 
@@ -275,9 +282,12 @@ namespace MineArena.UI
 
         private void ClearCells()
         {
-            foreach (var cell in _inventoryCells)
+            for (int i = 0; i < _inventoryCells.Count; i++)
             {
-                cell.Clear();
+                if (IsTrashCellIndex(i))
+                    _inventoryCells[i].ClearItemPreserveIcon();
+                else
+                    _inventoryCells[i].Clear();
             }
         }
 
@@ -296,8 +306,29 @@ namespace MineArena.UI
             if (fromCell.HasItem)
             {
                 var itemToMove = fromCell.Item;
+
+                if (IsTrashCellIndex(toCellIndex))
+                {
+                    RemoveInventoryItem(itemToMove);
+                    return;
+                }
+
                 _inventoryManager?.MoveItemToSlot(itemToMove, toCellIndex);
             }
+        }
+
+        private void RemoveInventoryItem(Item item)
+        {
+            if (_inventoryManager == null || item == null)
+                return;
+
+            var amount = item is StackableItem stackableItem ? stackableItem.CurrentStack : 1;
+            _inventoryManager.RemoveItem(item, amount);
+        }
+
+        private bool IsTrashCellIndex(int cellIndex)
+        {
+            return cellIndex == _trashCellIndex;
         }
 
         public override void CloseWindow()

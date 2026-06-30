@@ -124,6 +124,29 @@ namespace MineArena.UI
             }
         }
 
+        public void ClearItemPreserveIcon()
+        {
+            _item = null;
+            _usesBlockableIcon = false;
+
+            if (_icon2 != null)
+            {
+                _icon2.gameObject.SetActive(false);
+            }
+
+            if (_icon != null && _icon.sprite != null)
+            {
+                _icon.gameObject.SetActive(true);
+                _icon.enabled = true;
+            }
+
+            if (_counter != null)
+            {
+                _counter.text = string.Empty;
+                _counter.enabled = false;
+            }
+        }
+
         private static bool ShouldUseBlockableIcon(Items.Item item)
         {
             if (item is StackableItem stackableItem)

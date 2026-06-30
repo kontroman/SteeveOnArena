@@ -9,6 +9,8 @@ namespace MineArena.Managers
 {
     public class BuildingManager : BaseManager
     {
+        [SerializeField] private BuildingConstructionSequence constructionSequence;
+
         private readonly Dictionary<Transform, GameObject> _activeBuildings = new();
         private readonly Dictionary<Transform, int> _buildingLevels = new();
 
@@ -85,6 +87,8 @@ namespace MineArena.Managers
 
             DisableBuildingPlaceCollider(buildingPlace);
             SaveBuildingData(config.BuildingName, levelConfig.Level, buildingPlace);
+            Debug.Log($"BuildingManager: build confirmed for {config.BuildingName}, instance={instance.name}, place={buildingPlace.name}.", this);
+            PlayConstructionSequence(config, instance, buildingPlace);
 
             return true;
         }
@@ -107,6 +111,8 @@ namespace MineArena.Managers
                 return false;
 
             SaveBuildingData(config.BuildingName, nextLevelConfig.Level, buildingPlace);
+            Debug.Log($"BuildingManager: upgrade confirmed for {config.BuildingName} to level {nextLevelConfig.Level}, instance={instance.name}, place={buildingPlace.name}.", this);
+            PlayConstructionSequence(config, instance, buildingPlace);
             return true;
         }
 
@@ -124,6 +130,21 @@ namespace MineArena.Managers
             _buildingLevels[buildingPlace] = levelConfig.Level;
 
             return instance;
+        }
+
+        private void PlayConstructionSequence(BuildingConfig config, GameObject instance, Transform buildingPlace)
+        {
+            if (!Application.isPlaying)
+                return;
+
+            if (constructionSequence == null)
+            {
+                constructionSequence = GetComponent<BuildingConstructionSequence>() ?? gameObject.AddComponent<BuildingConstructionSequence>();
+                Debug.Log($"BuildingManager: using {nameof(BuildingConstructionSequence)} on {constructionSequence.gameObject.name}.", this);
+            }
+
+            constructionSequence.PlayForBuilding(config, instance, buildingPlace)
+                .Catch(exception => Debug.LogError($"BuildingManager: construction cinematic failed for {config.BuildingName}. {exception.Message}", this));
         }
 
         private void DisableBuildingPlaceCollider(Transform buildingPlace)

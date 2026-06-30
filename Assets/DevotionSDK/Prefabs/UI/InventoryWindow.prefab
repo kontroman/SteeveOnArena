@@ -1006,8 +1006,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 50, y: 50}
+  m_AnchoredPosition: {x: 0.00000095367, y: 0.0000076294}
+  m_SizeDelta: {x: 40.1626, y: 45.639}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2414463018107423499
 CanvasRenderer:
@@ -1037,7 +1037,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 476752462c720ba4ca31c3ed0a43725e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 903cf48e27dc3e742b89fe298f2b9208, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1235,8 +1235,8 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 24
     m_Bottom: 0
-  m_ChildAlignment: 2
-  m_StartCorner: 1
+  m_ChildAlignment: 0
+  m_StartCorner: 0
   m_StartAxis: 0
   m_CellSize: {x: 60, y: 60}
   m_Spacing: {x: 12, y: 12}
@@ -7784,6 +7784,7 @@ MonoBehaviour:
   - {fileID: 9171664320819682238}
   - {fileID: 4167264162261884428}
   - {fileID: 6999233996955880281}
+  _trashCellIndex: 34
   _equipHelmet: {fileID: 2725703116659599432}
   _equipChest: {fileID: 4447383383900544800}
   _equipLeggins: {fileID: 8788591751151872604}

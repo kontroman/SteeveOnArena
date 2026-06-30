@@ -11,6 +11,12 @@ namespace MineArena.Buildings
     {
         [SerializeField] private BuildingConfig config;
         [SerializeField] private GameObject signObject;
+        [SerializeField] private Transform playerPositionOnBuild;
+        [SerializeField] private bool overrideCinematicCamera;
+        [SerializeField] private BuildingCinematicCameraSettings cinematicCameraSettings = new BuildingCinematicCameraSettings();
+
+        public Transform PlayerPositionOnBuild => playerPositionOnBuild;
+        public BuildingCinematicCameraSettings CinematicCameraSettings => overrideCinematicCamera ? cinematicCameraSettings : null;
 
         private void OnTriggerEnter(Collider other)
         {
