@@ -8,6 +8,8 @@ using DG.Tweening;
 using MineArena.Items;
 using Devotion.SDK.Helpers;
 using MineArena.VFX;
+using MineArena.Basics;
+using MineArena.Managers;
 
 namespace MineArena.Commands
 {
@@ -56,6 +58,7 @@ namespace MineArena.Commands
                         return;
 
                     PlayDigVfx(ore);
+                    GameRoot.GetManager<AudioManager>()?.PlayEffect(Constants.AudioNames.MiningHit);
                     ore.DOShakeScale(0.25f, 0.25f, 8, 90);
                 });
 

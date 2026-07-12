@@ -1,6 +1,7 @@
 using MineArena.Basics;
 using MineArena.Controllers;
 using MineArena.VFX;
+using MineArena.Managers;
 using Devotion.SDK.Controllers;
 using Devotion.SDK.Services;
 using System;
@@ -27,6 +28,10 @@ namespace MineArena.PlayerSystem
         [SerializeField] private LayerMask _landingSurfaceMask = ~0;
         [SerializeField, Min(0.1f)] private float _landingRaycastDistance = 2f;
         [SerializeField] private Vector3 _landingVfxOffset = new Vector3(0f, 0.03f, 0f);
+
+        [Header("Footsteps")]
+        [SerializeField, Min(0.05f)] private float _footstepInterval = 0.42f;
+        private float _nextFootstepTime;
 
         public static event Action<Transform> PlayerDied;
         public static bool IsPlayerDead { get; private set; }
@@ -65,6 +70,7 @@ namespace MineArena.PlayerSystem
                 Vector3 totalMovement = horizontalMove * Constants.PlayerSettings.Speed + new Vector3(0, _velocity.y, 0);
                 _characterController.Move(totalMovement * Time.deltaTime);
                 HandleLanding(wasGrounded);
+                HandleFootsteps(horizontalMove);
 
                 RotatePlayer(horizontalMove);
             }
@@ -186,6 +192,21 @@ namespace MineArena.PlayerSystem
             {
                 return GameRoot.GetManager<VFXManager>();
             }
+        }
+
+        private void HandleFootsteps(Vector3 horizontalMove)
+        {
+            if (horizontalMove.sqrMagnitude <= 0.01f || !_characterController.isGrounded)
+            {
+                _nextFootstepTime = Time.time;
+                return;
+            }
+
+            if (Time.time < _nextFootstepTime)
+                return;
+
+            GameRoot.GetManager<AudioManager>()?.PlayRandomEffect(Constants.AudioNames.Footsteps);
+            _nextFootstepTime = Time.time + _footstepInterval;
         }
 
         private void ApplyDeathGravity()

@@ -61,11 +61,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _music:
+  - _name: SpawnMusic
+    _clip: {fileID: 8300000, guid: 39b694f8b91adc34d9c3441115de22bc, type: 3}
+    _volume: 1
+  - _name: ArenaMusic
+    _clip: {fileID: 8300000, guid: 755d09285c4c3bd4581825310b19b87d, type: 3}
+    _volume: 1
   - _name: BackGround
     _clip: {fileID: 8300000, guid: 10d5084fc8336bc4c8fc4c5d53712514, type: 3}
+    _volume: 1
   _effects:
   - _name: DropResourse
     _clip: {fileID: 8300000, guid: def9275928ffa87429ac9e12d1bfd84f, type: 3}
+    _volume: 1
+  - _name: Footstep1
+    _clip: {fileID: 8300000, guid: 7a834c5f572b82444b7d2acb9b2f7b71, type: 3}
+    _volume: 1
+  - _name: Footstep2
+    _clip: {fileID: 8300000, guid: 51cbcad616c4f6348965495e8cb6e5a5, type: 3}
+    _volume: 1
+  - _name: Footstep3
+    _clip: {fileID: 8300000, guid: 17bfb1cf76831e24b9f16b3ff54a0c4b, type: 3}
+    _volume: 1
+  - _name: MiningHit
+    _clip: {fileID: 8300000, guid: 064650063c3e14046be38931c29b6a1c, type: 3}
+    _volume: 1
+  - _name: MiningBreak
+    _clip: {fileID: 8300000, guid: e1dfc8af244d3c646815c9a24ae487b4, type: 3}
+    _volume: 1
+  - _name: Pickup
+    _clip: {fileID: 8300000, guid: a1ff6b79b52793e419775d756079136e, type: 3}
+    _volume: 2
 --- !u!82 &7491967095746286204
 AudioSource:
   m_ObjectHideFlags: 0

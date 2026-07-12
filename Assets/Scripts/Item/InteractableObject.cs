@@ -5,6 +5,7 @@ using MineArena.Commands;
 using Devotion.SDK.Helpers;
 using MineArena.Drop;
 using MineArena.VFX;
+using MineArena.Basics;
 
 namespace MineArena.Items
 {
@@ -80,6 +81,7 @@ namespace MineArena.Items
             if (_destroyOnEnd)
             {
                 PlayCompleteInteractionVfx();
+                GameRoot.GetManager<AudioManager>()?.PlayEffect(Constants.AudioNames.MiningBreak);
                 _dropable?.DropItems();
                 Destroy(gameObject);
             }

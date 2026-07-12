@@ -22,8 +22,23 @@ namespace MineArena.Basics
 
         public static class AudioNames
         {
-            public const string BackgroundMusic = "BackGround";
+            public const string BackgroundMusic = "SpawnMusic";
+            public const string SpawnMusic = "SpawnMusic";
+            public const string ArenaMusic = "ArenaMusic";
             public const string DropResource = "DropResourse";
+            public const string MiningHit = "MiningHit";
+            public const string MiningBreak = "MiningBreak";
+            public const string Pickup = "Pickup";
+            public const string Footstep1 = "Footstep1";
+            public const string Footstep2 = "Footstep2";
+            public const string Footstep3 = "Footstep3";
+
+            public static readonly string[] Footsteps =
+            {
+                Footstep1,
+                Footstep2,
+                Footstep3
+            };
         }
 
         public static class PlayerSettings

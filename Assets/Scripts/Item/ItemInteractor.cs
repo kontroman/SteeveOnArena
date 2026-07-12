@@ -48,6 +48,7 @@ namespace MineArena.Items
             }
 
             GameRoot.GetManager<InventoryManager>().AddItem(item, amount);
+            GameRoot.GetManager<AudioManager>()?.PlayEffect(MineArena.Basics.Constants.AudioNames.Pickup);
 
             LevelController.Current?.RegisterCollectedResource(_item, amount);
 

@@ -26,6 +26,13 @@ namespace MineArena.MusicResourses
             return effectElement?.Clip;
         }
 
+        public float GetEffectVolume(string name)
+        {
+            var effectElement = _effects.FirstOrDefault(element => element.Name == name);
+
+            return effectElement?.Volume ?? 1f;
+        }
+
     }
 }
 
