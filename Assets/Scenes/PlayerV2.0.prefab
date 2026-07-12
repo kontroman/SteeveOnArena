@@ -721,6 +721,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _currentHealth: 100
   _maxHealth: 100
+  _hitVfxId: 1
 --- !u!114 &267932526906602437
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -745,6 +746,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2dd2585ad6b7e44fbed3dc8a27c61f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _landingVfxId: 6
+  _landingSurfaceMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  _landingRaycastDistance: 2
+  _landingVfxOffset: {x: 0, y: 0.03, z: 0}
 --- !u!114 &943518638595228430
 MonoBehaviour:
   m_ObjectHideFlags: 0

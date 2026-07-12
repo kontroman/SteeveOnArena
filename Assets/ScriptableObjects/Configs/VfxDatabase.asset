@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76175195a4d76b748813e83f57cd2747, type: 3}
+  m_Name: VfxDatabase
+  m_EditorClassIdentifier: 
+  effects:
+  - id: 6
+    prefab: {fileID: 3479631833301816454, guid: 56a2c465e5721e34bac24e5acc63aba4, type: 3}
+    defaultParentMode: 0
+    localOffset: {x: 0, y: 0.1, z: 0}
+    eulerOffset: {x: -90, y: 0, z: 0}
+    scale: {x: 1, y: 1, z: 1}
+    usePooling: 1
+    autoRelease: 1
+    fallbackLifetime: 1
+    preloadCount: 1
+    maxPoolSize: 1
+  - id: 7
+    prefab: {fileID: 4752875378327258792, guid: 0a6aba64dca4fb446b279713d2a08c16, type: 3}
+    defaultParentMode: 0
+    localOffset: {x: 0, y: 1, z: 0}
+    eulerOffset: {x: 0, y: 0, z: 0}
+    scale: {x: 1, y: 1, z: 1}
+    usePooling: 1
+    autoRelease: 1
+    fallbackLifetime: 0.5
+    preloadCount: 2
+    maxPoolSize: 2
+  - id: 8
+    prefab: {fileID: 246407642419542607, guid: d686cfd8f4ce6ed459ceb133dd443d1a, type: 3}
+    defaultParentMode: 0
+    localOffset: {x: 0, y: 1, z: 0}
+    eulerOffset: {x: 0, y: 0, z: 0}
+    scale: {x: 1, y: 1, z: 1}
+    usePooling: 1
+    autoRelease: 1
+    fallbackLifetime: 0.5
+    preloadCount: 2
+    maxPoolSize: 2
+  - id: 1
+    prefab: {fileID: 8084207493179391912, guid: 39137db2a9152ab4ab1ee4d105650c46, type: 3}
+    defaultParentMode: 0
+    localOffset: {x: 0, y: 1.5, z: 0}
+    eulerOffset: {x: 0, y: 0, z: 0}
+    scale: {x: 1, y: 1, z: 1}
+    usePooling: 1
+    autoRelease: 1
+    fallbackLifetime: 3
+    preloadCount: 0
+    maxPoolSize: 32

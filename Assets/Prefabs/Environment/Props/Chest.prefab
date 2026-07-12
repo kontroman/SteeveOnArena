@@ -286,6 +286,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _posOffset: {x: 0, y: 1, z: 0}
   _sizeOffset: {x: 1, y: 1, z: 1}
+  _billboardCanvas: {fileID: 0}
 --- !u!114 &3098413675385666302
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -336,7 +337,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _chestId: forestChest
   _prize:
-    _itemConfig: {fileID: 11400000, guid: 0ed2fa501a44c2243a2b52eb7877b148, type: 2}
+    _itemConfig: {fileID: 11400000, guid: 8d4377309a1b81045ba99f7bb848ff29, type: 2}
     distributionType: 0
     _amountInStack: 33
 --- !u!1 &6548239250239783413

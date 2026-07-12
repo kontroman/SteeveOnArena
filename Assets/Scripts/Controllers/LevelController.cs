@@ -6,6 +6,7 @@ using MineArena.AI;
 using MineArena.Basics;
 using MineArena.Levels;
 using MineArena.Managers;
+using MineArena.Buildings;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -44,6 +45,7 @@ namespace MineArena.Controllers
             }
 
             Current = this;
+            LevelConfig.ChangedInInspector += HandleLevelConfigChangedInInspector;
         }
 
         private void OnDestroy()
@@ -54,6 +56,13 @@ namespace MineArena.Controllers
             }
 
             MobHealth.MobDied -= HandleMobDied;
+            LevelConfig.ChangedInInspector -= HandleLevelConfigChangedInInspector;
+        }
+
+        private void HandleLevelConfigChangedInInspector(LevelConfig config)
+        {
+            if (config == _currentConfig)
+                ApplyCameraSettings();
         }
 
         public IPromise InitLevel(LevelConfig config)
@@ -80,7 +89,7 @@ namespace MineArena.Controllers
             var promise = new Promise();
             try
             {
-                _currentArena = Instantiate(_currentConfig.LevelPrefab, Vector3.zero, _currentConfig.LevelPrefabRotation).GetComponent<Arena>();
+                _currentArena = Instantiate(_currentConfig.LevelPrefab, _currentConfig.LevelPrefabPosition, _currentConfig.LevelPrefabRotation).GetComponent<Arena>();
 
                 Player player = FindObjectOfType<Player>();
                 if (player != null && _currentArena != null && _currentArena.PlayerSpawnPosition != null)
@@ -88,6 +97,7 @@ namespace MineArena.Controllers
                 else
                     Debug.LogWarning($"{nameof(LevelController)}: player or player spawn point is not assigned.");
 
+                ApplyCameraSettings();
                 InitializeLevelProgress(player);
 
                 promise.Resolve();
@@ -101,6 +111,29 @@ namespace MineArena.Controllers
 
             promise.Resolve();
             return promise;
+        }
+
+        private void ApplyCameraSettings()
+        {
+            if (_currentConfig == null)
+                return;
+
+            var cameraZoomController = FindObjectOfType<CameraZoomController>();
+            if (cameraZoomController == null)
+            {
+                Debug.LogWarning($"{nameof(LevelController)}: {nameof(CameraZoomController)} was not found. Camera follow offset from level config was not applied.");
+                return;
+            }
+
+            if (_currentConfig.OverrideCameraZoomLimits)
+            {
+                cameraZoomController.SetDistanceLimits(
+                    _currentConfig.CameraMinDistance,
+                    _currentConfig.CameraMaxDistance);
+            }
+
+            if (_currentConfig.OverrideCameraFollowOffset)
+                cameraZoomController.SetFollowOffset(_currentConfig.CameraFollowOffset);
         }
 
         public IPromise GenerateOres()
@@ -261,6 +294,7 @@ namespace MineArena.Controllers
 
             _spawnedPortal = Instantiate(_currentConfig.PortalPrefab, spawnPoint.position, spawnPoint.rotation);
             _portalSpawned = true;
+            PlayPortalConstructionEffect(_spawnedPortal);
 
             LevelPortal portal = _spawnedPortal.GetComponentInChildren<LevelPortal>();
             if (portal == null)
@@ -271,6 +305,16 @@ namespace MineArena.Controllers
             Player player = Player.Instance != null ? Player.Instance : FindObjectOfType<Player>();
             if (_progressWindow != null)
                 _progressWindow.SetPortalTarget(_spawnedPortal.transform, player != null ? player.transform : null);
+        }
+
+        private static void PlayPortalConstructionEffect(GameObject portalObject)
+        {
+            if (portalObject == null)
+                return;
+
+            var effect = portalObject.GetComponentInChildren<BuildingConstructionEffect>(true);
+            if (effect != null)
+                effect.PlayRuntime();
         }
 
         public bool TryEnterSpawnedPortal(Transform portalTrigger)

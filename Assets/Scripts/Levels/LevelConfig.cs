@@ -8,6 +8,8 @@ namespace MineArena.Levels
     [CreateAssetMenu(menuName = "Levels/" + nameof(LevelConfig))]
     public class LevelConfig : ScriptableObject
     {
+        public static event Action<LevelConfig> ChangedInInspector;
+
         [SerializeField] private Sprite levelIcon;
         [SerializeField] private LevelDifficulty difficulty;
         [SerializeField] private LevelSettings settings;
@@ -15,8 +17,20 @@ namespace MineArena.Levels
         [SerializeField] private List<ResourceSpawnConfig> resourceSpawnConfigs;
         [SerializeField] private List<LevelRewards> rewardResources;
         [SerializeField] private GameObject levelPrefab;
+        [SerializeField] private Vector3 levelPrefabPosition;
         [SerializeField] private Quaternion levelPrefabRotation;
+
+        [Header("Camera")]
+        [SerializeField] private bool overrideCameraFollowOffset;
+        [SerializeField] private Vector3 cameraFollowOffset = new Vector3(-8.78f, 11.75f, -7.11f);
+        [SerializeField] private bool overrideCameraZoomLimits;
+        [SerializeField, Min(0.1f)] private float cameraMinDistance = 8f;
+        [SerializeField, Min(0.1f)] private float cameraMaxDistance = 28f;
+
+        [Header("Weather")]
+        [SerializeField] private List<WeatherPreset> weatherPresets = new List<WeatherPreset>();
         [SerializeField] private WeatherPreset weatherPreset;
+
         [SerializeField, Range(0f, 1f)] private float requiredKillPercentToOpenPortal = 0.7f;
         [SerializeField] private GameObject portalPrefab;
 
@@ -27,10 +41,34 @@ namespace MineArena.Levels
         public IReadOnlyList<ResourceSpawnConfig> ResourceSpawnConfigs { get { return resourceSpawnConfigs; } }
         public List<LevelRewards> RewardResources { get { return rewardResources; } }
         public GameObject LevelPrefab { get { return levelPrefab; } }
+        public Vector3 LevelPrefabPosition { get { return levelPrefabPosition; } }
         public Quaternion LevelPrefabRotation { get { return levelPrefabRotation; } }
+        public bool OverrideCameraFollowOffset { get { return overrideCameraFollowOffset; } }
+        public Vector3 CameraFollowOffset { get { return cameraFollowOffset; } }
+        public bool OverrideCameraZoomLimits { get { return overrideCameraZoomLimits; } }
+        public float CameraMinDistance { get { return cameraMinDistance; } }
+        public float CameraMaxDistance { get { return cameraMaxDistance; } }
         public WeatherPreset WeatherPreset { get { return weatherPreset; } }
+        public IReadOnlyList<WeatherPreset> WeatherPresets { get { return weatherPresets; } }
         public float RequiredKillPercentToOpenPortal { get { return requiredKillPercentToOpenPortal; } }
         public GameObject PortalPrefab { get { return portalPrefab; } }
+
+        public WeatherPreset GetRandomWeatherPreset()
+        {
+            if (weatherPresets != null && weatherPresets.Count > 0)
+                return weatherPresets[UnityEngine.Random.Range(0, weatherPresets.Count)];
+
+            return weatherPreset;
+        }
+
+        private void OnValidate()
+        {
+            cameraMinDistance = Mathf.Max(0.1f, cameraMinDistance);
+            cameraMaxDistance = Mathf.Max(cameraMinDistance, cameraMaxDistance);
+
+            if (Application.isPlaying)
+                ChangedInInspector?.Invoke(this);
+        }
     }
 
     [Serializable]

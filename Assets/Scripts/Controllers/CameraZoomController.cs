@@ -90,6 +90,38 @@ namespace MineArena.Controllers
             _transposer.m_FollowOffset = _zoomDirection * _currentDistance;
         }
 
+        public void SetFollowOffset(Vector3 followOffset)
+        {
+            if (!_isInitialized)
+                Initialize();
+
+            if (!_isInitialized || followOffset.sqrMagnitude <= Mathf.Epsilon)
+                return;
+
+            _zoomDirection = followOffset.normalized;
+            _currentDistance = Mathf.Clamp(followOffset.magnitude, _minDistance, _maxDistance);
+            _targetDistance = _currentDistance;
+            _zoomVelocity = 0f;
+            _transposer.m_FollowOffset = _zoomDirection * _currentDistance;
+        }
+
+        public void SetDistanceLimits(float minDistance, float maxDistance)
+        {
+            _minDistance = Mathf.Max(0.1f, minDistance);
+            _maxDistance = Mathf.Max(_minDistance, maxDistance);
+
+            if (!_isInitialized)
+                Initialize();
+
+            if (!_isInitialized)
+                return;
+
+            _currentDistance = Mathf.Clamp(_currentDistance, _minDistance, _maxDistance);
+            _targetDistance = Mathf.Clamp(_targetDistance, _minDistance, _maxDistance);
+            _zoomVelocity = 0f;
+            _transposer.m_FollowOffset = _zoomDirection * _currentDistance;
+        }
+
         private void OnValidate()
         {
             _minDistance = Mathf.Max(0.1f, _minDistance);

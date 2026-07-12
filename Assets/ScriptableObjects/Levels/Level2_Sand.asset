@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41f600800be6f1842bb6cb5a88114a94, type: 3}
+  m_Name: Level2_Sand
+  m_EditorClassIdentifier: 
+  levelIcon: {fileID: 21300000, guid: bdf8cb8d531a0a24daf8601cf13bee25, type: 3}
+  difficulty: 0
+  settings: {fileID: 11400000, guid: 4721b15ba15429b40896a829236a9f4d, type: 2}
+  availableResources:
+  - {fileID: 11400000, guid: 8d4377309a1b81045ba99f7bb848ff29, type: 2}
+  - {fileID: 11400000, guid: 10c265e30aa9be34685985507820bbb4, type: 2}
+  resourceSpawnConfigs:
+  - resource: {fileID: 2297095161383156283, guid: 9b4c5ebb516f2044085b965fa085bae0, type: 3}
+    spawnChance: 0.85
+  - resource: {fileID: 6831494909658651806, guid: 5e34c181307af274da91e900b69084af, type: 3}
+    spawnChance: 0.15
+  rewardResources:
+  - Item: {fileID: 11400000, guid: 501e28faeabb676418a62d09f9eb6cb9, type: 2}
+    Amount: 5
+  levelPrefab: {fileID: 204151599868836669, guid: ce1f5b7c1945ea74a9fd5b34c5fb7b4f, type: 3}
+  levelPrefabPosition: {x: 0, y: 2, z: 0}
+  levelPrefabRotation: {x: -0.70710677, y: 0, z: 0, w: 0.70710677}
+  overrideCameraFollowOffset: 0
+  cameraFollowOffset: {x: -8.78, y: 11.75, z: -7.11}
+  overrideCameraZoomLimits: 0
+  cameraMinDistance: 8
+  cameraMaxDistance: 25
+  weatherPresets: []
+  weatherPreset:
+    presetName: Sunday
+    enableRain: 0
+    sunRotation: {x: 47, y: -113, z: -277}
+    sunIntensity: 0.91
+    sunColor: {r: 1, g: 1, b: 1, a: 1}
+    skyboxMaterial: {fileID: 2100000, guid: f9ec1c0318dcc3149b0e9ae62a6d8cdf, type: 2}
+    fogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    fogDensity: 0.01
+    fogEnabled: 0
+    ambientLight: {r: 0.6981132, g: 0.6981132, b: 0.6981132, a: 1}
+    ambientIntensity: 1
+    rainIntensity: 0.5
+  requiredKillPercentToOpenPortal: 0.7
+  portalPrefab: {fileID: 1847513724388157086, guid: b587cb59b7e1ed44f80b882798eb0fda, type: 3}

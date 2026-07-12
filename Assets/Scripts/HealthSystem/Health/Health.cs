@@ -7,6 +7,7 @@ using MineArena.Structs;
 using Devotion.SDK.Controllers;
 using MineArena.Controllers;
 using MineArena.PlayerSystem;
+using MineArena.VFX;
 
 namespace MineArena.Game.Health
 {
@@ -15,6 +16,7 @@ namespace MineArena.Game.Health
         [SerializeField] protected float _currentHealth;
         
         [SerializeField] protected float _maxHealth;
+        [SerializeField] private VfxId _hitVfxId = VfxId.Hit;
 
         public event Action<float, float> OnHealthChanged;
 
@@ -64,7 +66,35 @@ namespace MineArena.Game.Health
                 }
             }
 
+            if (damageToApply > 0f)
+                PlayHitVfx();
+
             ChangeValue(-damageToApply);
+        }
+
+        private void PlayHitVfx()
+        {
+            if (_hitVfxId == VfxId.None)
+                return;
+
+            var vfxManager = GameRoot.GetManager<VFXManager>();
+            if (vfxManager == null)
+                return;
+
+            vfxManager.Play(_hitVfxId, GetHitVfxPosition(), Quaternion.identity);
+        }
+
+        private Vector3 GetHitVfxPosition()
+        {
+            var colliders = GetComponentsInChildren<Collider>();
+            foreach (var hitCollider in colliders)
+            {
+                if (hitCollider != null && !hitCollider.isTrigger)
+                    return hitCollider.bounds.center;
+            }
+
+            var renderer = GetComponentInChildren<Renderer>();
+            return renderer != null ? renderer.bounds.center : transform.position;
         }
 
         protected virtual void Die()

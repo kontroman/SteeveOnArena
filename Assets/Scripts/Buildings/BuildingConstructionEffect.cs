@@ -22,7 +22,8 @@ namespace MineArena.Buildings
         private const float MinimumCellSize = 0.05f;
 
         [Header("Source")]
-        [SerializeField] private Renderer sourceRenderer;
+        [SerializeField] private List<Renderer> sourceRenderers = new List<Renderer>();
+        [SerializeField, HideInInspector] private Renderer sourceRenderer;
 
         [Header("Chunks")]
         [SerializeField] private Vector3 cellSize = Vector3.one;
@@ -57,7 +58,8 @@ namespace MineArena.Buildings
 #endif
 
         public int GeneratedBlockCount => blocks != null ? blocks.Count : 0;
-        public Renderer SourceRenderer => sourceRenderer;
+        public IReadOnlyList<Renderer> SourceRenderers => GetSourceRenderers();
+        public Renderer SourceRenderer => GetFirstSourceRenderer();
         public Vector3 CellSize => cellSize;
         public int MaxBlocksSafetyLimit => maxBlocksSafetyLimit;
 
@@ -93,51 +95,59 @@ namespace MineArena.Buildings
 
             ClearGeneratedBlocks(false);
 
-            var meshFilter = sourceRenderer.GetComponent<MeshFilter>();
-            var sourceMesh = meshFilter != null ? meshFilter.sharedMesh : null;
-
-            if (sourceMesh == null)
-            {
-                Debug.LogError($"{nameof(BuildingConstructionEffect)}: Source Renderer must be on an object with MeshFilter.", this);
-                return;
-            }
-
-            Dictionary<CellKey, MeshChunkData> chunkDataByCell;
-
-            try
-            {
-                chunkDataByCell = BuildSourceMeshChunkData(sourceMesh);
-            }
-            catch (Exception exception)
-            {
-                Debug.LogError($"{nameof(BuildingConstructionEffect)}: failed to read source mesh. Enable Read/Write on the imported mesh if needed. {exception.Message}", this);
-                return;
-            }
-
-            if (chunkDataByCell.Count > maxBlocksSafetyLimit)
-            {
-                Debug.LogWarning(
-                    $"{nameof(BuildingConstructionEffect)}: generated chunk count {chunkDataByCell.Count} exceeds Max Blocks Safety Limit {maxBlocksSafetyLimit}. Increase Cell Size or the limit.",
-                    this);
-                return;
-            }
-
+            var activeSourceRenderers = GetSourceRenderers();
             var blocksParent = GetOrCreateBlocksParent();
-            var generated = new List<BlockState>(chunkDataByCell.Count);
-            var sourceBounds = sourceRenderer.bounds;
-            var sourceMaterials = sourceRenderer.sharedMaterials;
+            var generated = new List<BlockState>();
 
-            foreach (var pair in chunkDataByCell)
+            foreach (var renderer in activeSourceRenderers)
             {
-                var chunkData = pair.Value;
-                var chunkObject = CreateChunkObject(blocksParent, chunkData, sourceMaterials);
-
-                if (chunkObject == null)
+                if (renderer == null)
                     continue;
 
-                var state = CreateBlockState(chunkObject.transform, chunkData.Center, sourceBounds);
-                ApplyBlockTransform(state, state.FinalPosition);
-                generated.Add(state);
+                var meshFilter = renderer.GetComponent<MeshFilter>();
+                var sourceMesh = meshFilter != null ? meshFilter.sharedMesh : null;
+
+                if (sourceMesh == null)
+                {
+                    Debug.LogWarning($"{nameof(BuildingConstructionEffect)}: Source Renderer {renderer.name} must be on an object with MeshFilter.", renderer);
+                    continue;
+                }
+
+                Dictionary<CellKey, MeshChunkData> chunkDataByCell;
+
+                try
+                {
+                    chunkDataByCell = BuildSourceMeshChunkData(renderer, sourceMesh);
+                }
+                catch (Exception exception)
+                {
+                    Debug.LogError($"{nameof(BuildingConstructionEffect)}: failed to read source mesh on {renderer.name}. Enable Read/Write on the imported mesh if needed. {exception.Message}", renderer);
+                    continue;
+                }
+
+                if (generated.Count + chunkDataByCell.Count > maxBlocksSafetyLimit)
+                {
+                    Debug.LogWarning(
+                        $"{nameof(BuildingConstructionEffect)}: generated chunk count {generated.Count + chunkDataByCell.Count} exceeds Max Blocks Safety Limit {maxBlocksSafetyLimit}. Increase Cell Size or the limit.",
+                        this);
+                    break;
+                }
+
+                var sourceBounds = renderer.bounds;
+                var sourceMaterials = renderer.sharedMaterials;
+
+                foreach (var pair in chunkDataByCell)
+                {
+                    var chunkData = pair.Value;
+                    var chunkObject = CreateChunkObject(blocksParent, chunkData, sourceMaterials);
+
+                    if (chunkObject == null)
+                        continue;
+
+                    var state = CreateBlockState(chunkObject.transform, chunkData.Center, sourceBounds);
+                    ApplyBlockTransform(state, state.FinalPosition);
+                    generated.Add(state);
+                }
             }
 
             blocks = generated;
@@ -209,10 +219,10 @@ namespace MineArena.Buildings
             MarkDirty();
         }
 
-        private Dictionary<CellKey, MeshChunkData> BuildSourceMeshChunkData(Mesh sourceMesh)
+        private Dictionary<CellKey, MeshChunkData> BuildSourceMeshChunkData(Renderer renderer, Mesh sourceMesh)
         {
-            var sourceTransform = sourceRenderer.transform;
-            var sourceBounds = sourceRenderer.bounds;
+            var sourceTransform = renderer.transform;
+            var sourceBounds = renderer.bounds;
             var sourceVertices = sourceMesh.vertices;
             var sourceNormals = sourceMesh.normals;
             var sourceUv = sourceMesh.uv;
@@ -347,15 +357,13 @@ namespace MineArena.Buildings
             if (blocks == null)
                 return;
 
-            var sourceBounds = sourceRenderer != null ? sourceRenderer.bounds : default;
-
             foreach (var block in blocks)
             {
                 if (block == null || block.Transform == null)
                     continue;
 
                 block.RandomDelay = randomDelay > 0f ? UnityEngine.Random.Range(0f, randomDelay) : 0f;
-                block.HeightDelay = buildFromBottomToTop ? GetNormalizedHeight(block.FinalPosition, sourceBounds) * delayPerHeight : 0f;
+                block.HeightDelay = buildFromBottomToTop ? GetNormalizedHeight(block.FinalPosition, block.SourceBounds) * delayPerHeight : 0f;
                 ApplyBlockTransform(block, block.StartPosition);
             }
         }
@@ -434,6 +442,7 @@ namespace MineArena.Buildings
                 FinalPosition = finalPosition,
                 StartPosition = finalPosition + Vector3.up * fallHeight,
                 Scale = Vector3.one * blockScaleMultiplier,
+                SourceBounds = sourceBounds,
                 HeightDelay = buildFromBottomToTop ? normalizedHeight * delayPerHeight : 0f,
                 RandomDelay = randomDelay > 0f ? UnityEngine.Random.Range(0f, randomDelay) : 0f
             };
@@ -551,9 +560,9 @@ namespace MineArena.Buildings
 
         private bool ValidateSetup()
         {
-            if (sourceRenderer == null)
+            if (GetSourceRenderers().Count == 0)
             {
-                Debug.LogError($"{nameof(BuildingConstructionEffect)}: Source Renderer is not assigned.", this);
+                Debug.LogError($"{nameof(BuildingConstructionEffect)}: Source Renderers are not assigned.", this);
                 return false;
             }
 
@@ -584,21 +593,29 @@ namespace MineArena.Buildings
 
         private void SetSourceVisible(bool visible)
         {
-            if (sourceRenderer == null)
-                return;
+            var renderers = GetSourceRenderers();
 
 #if UNITY_EDITOR
-            if (!Application.isPlaying && sourceRenderer.enabled != visible)
-                Undo.RecordObject(sourceRenderer, "Change Building Source Visibility");
+            if (!Application.isPlaying)
+            {
+                foreach (var renderer in renderers)
+                {
+                    if (renderer != null && renderer.enabled != visible)
+                        Undo.RecordObject(renderer, "Change Building Source Visibility");
+                }
+            }
 #endif
 
-            sourceRenderer.enabled = visible;
+            foreach (var renderer in renderers)
+            {
+                if (renderer != null)
+                    renderer.enabled = visible;
+            }
         }
 
         private void OnEnable()
         {
-            if (sourceRenderer == null)
-                sourceRenderer = GetComponentInChildren<Renderer>();
+            EnsureSourceRenderers();
         }
 
         private void OnDisable()
@@ -616,6 +633,8 @@ namespace MineArena.Buildings
 
         private void OnValidate()
         {
+            EnsureSourceRenderers();
+
             cellSize = new Vector3(
                 Mathf.Max(MinimumCellSize, cellSize.x),
                 Mathf.Max(MinimumCellSize, cellSize.y),
@@ -632,15 +651,58 @@ namespace MineArena.Buildings
 
         private void OnDrawGizmosSelected()
         {
-            if (sourceRenderer == null)
+            var renderers = GetSourceRenderers();
+
+            if (renderers.Count == 0)
                 return;
 
-            var bounds = sourceRenderer.bounds;
+            foreach (var renderer in renderers)
+            {
+                if (renderer == null)
+                    continue;
 
-            Gizmos.color = new Color(0.2f, 0.75f, 1f, 0.25f);
-            Gizmos.DrawCube(bounds.center, bounds.size);
-            Gizmos.color = new Color(0.05f, 0.45f, 1f, 0.9f);
-            Gizmos.DrawWireCube(bounds.center, bounds.size);
+                var bounds = renderer.bounds;
+
+                Gizmos.color = new Color(0.2f, 0.75f, 1f, 0.25f);
+                Gizmos.DrawCube(bounds.center, bounds.size);
+                Gizmos.color = new Color(0.05f, 0.45f, 1f, 0.9f);
+                Gizmos.DrawWireCube(bounds.center, bounds.size);
+            }
+        }
+
+        private List<Renderer> GetSourceRenderers()
+        {
+            EnsureSourceRenderers();
+
+            if (sourceRenderers == null)
+                sourceRenderers = new List<Renderer>();
+
+            sourceRenderers.RemoveAll(renderer => renderer == null);
+            return sourceRenderers;
+        }
+
+        private Renderer GetFirstSourceRenderer()
+        {
+            var renderers = GetSourceRenderers();
+            return renderers.Count > 0 ? renderers[0] : null;
+        }
+
+        private void EnsureSourceRenderers()
+        {
+            if (sourceRenderers == null)
+                sourceRenderers = new List<Renderer>();
+
+            sourceRenderers.RemoveAll(renderer => renderer == null);
+
+            if (sourceRenderer != null && !sourceRenderers.Contains(sourceRenderer))
+                sourceRenderers.Add(sourceRenderer);
+
+            if (sourceRenderers.Count == 0)
+            {
+                var fallbackRenderer = GetComponentInChildren<Renderer>();
+                if (fallbackRenderer != null)
+                    sourceRenderers.Add(fallbackRenderer);
+            }
         }
 
         private void MarkDirty()
@@ -830,6 +892,7 @@ namespace MineArena.Buildings
             public Vector3 FinalPosition;
             public Vector3 StartPosition;
             public Vector3 Scale;
+            public Bounds SourceBounds;
             public float HeightDelay;
             public float RandomDelay;
 

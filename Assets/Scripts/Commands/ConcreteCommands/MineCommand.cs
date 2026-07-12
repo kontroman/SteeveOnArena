@@ -1,4 +1,5 @@
 using UnityEngine;
+using Devotion.SDK.Controllers;
 using MineArena.Controllers;
 using MineArena.PlayerSystem;
 using System;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 using DG.Tweening;
 using MineArena.Items;
 using Devotion.SDK.Helpers;
+using MineArena.VFX;
 
 namespace MineArena.Commands
 {
@@ -14,10 +16,15 @@ namespace MineArena.Commands
     {
         [SerializeField] private string _miningStateName = "PlayerMiningAnimation";
         [SerializeField] private int _miningLayer = 0;
+        [SerializeField] private VfxId _digVfxId = VfxId.Dig;
+        [SerializeField] private Vector3 _digVfxOffset = new Vector3(0f, 0.5f, 0f);
 
         public override async Task Execute(Component component)
         {
             var interactable = component as InteractableObject;
+            if (interactable == null)
+                return;
+
             Transform ore = interactable.transform;
 
             PlayerMovement pm = Player.Instance.GetComponentFromList<PlayerMovement>();
@@ -45,6 +52,10 @@ namespace MineArena.Commands
 
                 CoroutineHelper.Delay(0.7f, () =>
                 {
+                    if (ore == null)
+                        return;
+
+                    PlayDigVfx(ore);
                     ore.DOShakeScale(0.25f, 0.25f, 8, 90);
                 });
 
@@ -56,6 +67,34 @@ namespace MineArena.Commands
             patc.SetComponentEnable(true);
 
             interactable.CompleteInteraction();
+        }
+
+        private void PlayDigVfx(Transform target)
+        {
+            if (target == null)
+                return;
+
+            var vfxManager = GameRoot.GetManager<VFXManager>();
+            if (vfxManager == null)
+                return;
+
+            vfxManager.Play(_digVfxId, GetEffectPosition(target) + _digVfxOffset, Quaternion.identity);
+        }
+
+        private static Vector3 GetEffectPosition(Transform target)
+        {
+            if (target.TryGetComponent<Renderer>(out var renderer))
+                return renderer.bounds.center;
+
+            renderer = target.GetComponentInChildren<Renderer>();
+            if (renderer != null)
+                return renderer.bounds.center;
+
+            if (target.TryGetComponent<Collider>(out var collider))
+                return collider.bounds.center;
+
+            collider = target.GetComponentInChildren<Collider>();
+            return collider != null ? collider.bounds.center : target.position;
         }
     }
 }

@@ -18,6 +18,7 @@ public class WeatherPreset
     public Color sunColor = Color.white;
 
     [Header("Sky & Fog")]
+    [Tooltip("Skybox material applied when this weather preset is selected.")]
     public Material skyboxMaterial;
     public Color fogColor = Color.gray;
     public float fogDensity = 0.01f;
@@ -68,6 +69,10 @@ namespace MineArena.Managers
 
         void Start()
         {
+            if (presets.Count == 0)
+                return;
+
+            defaultPresetIndex = Mathf.Clamp(defaultPresetIndex, 0, presets.Count - 1);
             currentPresetIndex = defaultPresetIndex;
             ApplyPreset(presets[currentPresetIndex]);
             lastAppliedPreset = CreateDeepCopy(presets[currentPresetIndex]);
@@ -80,6 +85,9 @@ namespace MineArena.Managers
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
             SceneManager.sceneLoaded -= OnSceneLoaded;
+
+            if (presets.Count == 0)
+                return;
 
             ApplyPreset(presets[currentPresetIndex]);
         }
@@ -136,12 +144,20 @@ namespace MineArena.Managers
 
         public IPromise ApplyLevelPreset(WeatherPreset preset)
         {
+            if (preset == null)
+                return Promise.ResolveAndReturn();
+
+            SetCurrentPreset(preset);
             ApplyPreset(preset);
+            lastAppliedPreset = CreateDeepCopy(preset);
             return Promise.ResolveAndReturn();
         }
 
         public void ApplyPreset(WeatherPreset preset)
         {
+            if (preset == null)
+                return;
+
             if (directionalLight != null)
             {
                 directionalLight.transform.rotation = Quaternion.Euler(preset.sunRotation);
@@ -149,8 +165,11 @@ namespace MineArena.Managers
                 directionalLight.color = preset.sunColor;
             }
 
-            RenderSettings.skybox = preset.skyboxMaterial;
-            DynamicGI.UpdateEnvironment();
+            if (preset.skyboxMaterial != null)
+            {
+                RenderSettings.skybox = preset.skyboxMaterial;
+                DynamicGI.UpdateEnvironment();
+            }
 
             RenderSettings.fog = preset.fogEnabled;
             RenderSettings.fogColor = preset.fogColor;
@@ -169,6 +188,17 @@ namespace MineArena.Managers
                 else if (!preset.enableRain )
                     rainParticles.gameObject.SetActive(false);
             }
+        }
+
+        private void SetCurrentPreset(WeatherPreset preset)
+        {
+            if (preset == null)
+                return;
+
+            if (!presets.Contains(preset))
+                presets.Add(preset);
+
+            currentPresetIndex = presets.IndexOf(preset);
         }
 
         public void SwitchToPreset(string presetName)
@@ -195,6 +225,9 @@ namespace MineArena.Managers
             while (autoCycleEnabled)
             {
                 yield return new WaitForSeconds(autoCycleInterval);
+                if (presets.Count == 0)
+                    continue;
+
                 currentPresetIndex = (currentPresetIndex + 1) % presets.Count;
                 ApplyPreset(presets[currentPresetIndex]);
                 lastAppliedPreset = CreateDeepCopy(presets[currentPresetIndex]);

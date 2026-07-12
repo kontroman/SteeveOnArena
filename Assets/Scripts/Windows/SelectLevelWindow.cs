@@ -40,8 +40,8 @@ namespace MineArena.Windows
             if (levels == null || levelIndex < 0 || levelIndex >= levels.Count)
                 return false;
 
-            if (!IsLevelUnlocked(levelIndex))
-                return false;
+            // if (!IsLevelUnlocked(levelIndex))
+            //     return false;
 
             config = levels[levelIndex];
             return config != null && config.LevelPrefab != null;
@@ -76,7 +76,7 @@ namespace MineArena.Windows
                 })
                 .Then(() => loadingWindow.SetProgressValue(0.8f))
                 .Then(() => levelController.GenerateLevel())
-                .Then(() => WeatherManager.Instance.ApplyLevelPreset(config.WeatherPreset))
+                .Then(() => WeatherManager.Instance.ApplyLevelPreset(config.GetRandomWeatherPreset()))
                 .Then(() => levelController.GenerateOres())
                 .Then(() => loadingWindow.SetProgressValue(0.9f))
                 .Then(() => loadingWindow.SetProgressValue(1f))

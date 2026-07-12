@@ -4,6 +4,7 @@ using UnityEngine;
 using MineArena.Commands;
 using Devotion.SDK.Helpers;
 using MineArena.Drop;
+using MineArena.VFX;
 
 namespace MineArena.Items
 {
@@ -14,6 +15,8 @@ namespace MineArena.Items
         [SerializeField] private float _interactionRange = 3.0f;
 
         [SerializeField] private bool _destroyOnEnd = true;
+        [SerializeField] private VfxId _completeInteractionVfxId = VfxId.EndDig;
+        [SerializeField] private Vector3 _completeInteractionVfxOffset = new Vector3(0f, 0.5f, 0f);
 
         private bool _used;
 
@@ -76,9 +79,38 @@ namespace MineArena.Items
 
             if (_destroyOnEnd)
             {
+                PlayCompleteInteractionVfx();
                 _dropable?.DropItems();
                 Destroy(gameObject);
             }
+        }
+
+        private void PlayCompleteInteractionVfx()
+        {
+            if (_completeInteractionVfxId == VfxId.None)
+                return;
+
+            var vfxManager = GameRoot.GetManager<VFXManager>();
+            if (vfxManager == null)
+                return;
+
+            vfxManager.Play(_completeInteractionVfxId, GetEffectPosition() + _completeInteractionVfxOffset, Quaternion.identity);
+        }
+
+        private Vector3 GetEffectPosition()
+        {
+            if (TryGetComponent<Renderer>(out var renderer))
+                return renderer.bounds.center;
+
+            renderer = GetComponentInChildren<Renderer>();
+            if (renderer != null)
+                return renderer.bounds.center;
+
+            if (TryGetComponent<Collider>(out var collider))
+                return collider.bounds.center;
+
+            collider = GetComponentInChildren<Collider>();
+            return collider != null ? collider.bounds.center : transform.position;
         }
     }
 }

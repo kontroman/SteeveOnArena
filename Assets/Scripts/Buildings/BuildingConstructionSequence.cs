@@ -150,21 +150,32 @@ namespace MineArena.Buildings
 
         private void HideBuildingBeforeConstruction(BuildingConstructionEffect effect)
         {
-            var sourceRenderer = effect != null ? effect.SourceRenderer : null;
+            var sourceRenderers = effect != null ? effect.SourceRenderers : null;
 
-            if (sourceRenderer == null)
+            if (sourceRenderers == null || sourceRenderers.Count == 0)
                 return;
 
-            sourceRenderer.enabled = false;
-            Debug.Log($"{nameof(BuildingConstructionSequence)}: hidden construction source renderer {sourceRenderer.name} before fade.", effect);
+            foreach (var sourceRenderer in sourceRenderers)
+            {
+                if (sourceRenderer != null)
+                    sourceRenderer.enabled = false;
+            }
+
+            Debug.Log($"{nameof(BuildingConstructionSequence)}: hidden {sourceRenderers.Count} construction source renderers before fade.", effect);
         }
 
         private static void RestoreBuildingIfConstructionDidNotShowIt(BuildingConstructionEffect effect)
         {
-            var sourceRenderer = effect != null ? effect.SourceRenderer : null;
+            var sourceRenderers = effect != null ? effect.SourceRenderers : null;
 
-            if (sourceRenderer != null && !sourceRenderer.enabled)
-                sourceRenderer.enabled = true;
+            if (sourceRenderers == null)
+                return;
+
+            foreach (var sourceRenderer in sourceRenderers)
+            {
+                if (sourceRenderer != null && !sourceRenderer.enabled)
+                    sourceRenderer.enabled = true;
+            }
         }
 
         private void MovePlayerToBuildPoint(Transform buildingPlace, Transform playerTransform)

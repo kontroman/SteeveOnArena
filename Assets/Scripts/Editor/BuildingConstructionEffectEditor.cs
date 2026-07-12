@@ -67,14 +67,20 @@ namespace MineArena.Editor
 
         private static void RecordSourceRenderer(BuildingConstructionEffect effect, string undoName)
         {
-            if (effect.SourceRenderer != null)
-                Undo.RecordObject(effect.SourceRenderer, undoName);
+            if (effect.SourceRenderers == null)
+                return;
+
+            foreach (var sourceRenderer in effect.SourceRenderers)
+            {
+                if (sourceRenderer != null)
+                    Undo.RecordObject(sourceRenderer, undoName);
+            }
         }
 
         private static void DrawSetupWarnings(BuildingConstructionEffect effect)
         {
-            if (effect.SourceRenderer == null)
-                EditorGUILayout.HelpBox("Source Renderer is not assigned.", MessageType.Warning);
+            if (effect.SourceRenderers == null || effect.SourceRenderers.Count == 0)
+                EditorGUILayout.HelpBox("Source Renderers are not assigned.", MessageType.Warning);
 
             if (effect.CellSize.x <= 0.05f || effect.CellSize.y <= 0.05f || effect.CellSize.z <= 0.05f)
                 EditorGUILayout.HelpBox("Cell Size is very small and may create too many blocks.", MessageType.Warning);

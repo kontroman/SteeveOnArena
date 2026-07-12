@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41f600800be6f1842bb6cb5a88114a94, type: 3}
+  m_Name: Level3_Mine
+  m_EditorClassIdentifier: 
+  levelIcon: {fileID: 21300000, guid: 9566062bae3cb9c42beae32f213da0e9, type: 3}
+  difficulty: 2
+  settings: {fileID: 11400000, guid: 4721b15ba15429b40896a829236a9f4d, type: 2}
+  availableResources:
+  - {fileID: 11400000, guid: 8d4377309a1b81045ba99f7bb848ff29, type: 2}
+  - {fileID: 11400000, guid: b00bcf18baae3cd448bfe86f83366dca, type: 2}
+  - {fileID: 11400000, guid: 501e28faeabb676418a62d09f9eb6cb9, type: 2}
+  - {fileID: 11400000, guid: 82ac6cc2aac71aa468bb4bcb0fc1738c, type: 2}
+  resourceSpawnConfigs:
+  - resource: {fileID: 6831494909658651806, guid: 5e34c181307af274da91e900b69084af, type: 3}
+    spawnChance: 0.4
+  - resource: {fileID: 2615737806694022535, guid: e26f4c1e328228b4d80a8887b2f721a1, type: 3}
+    spawnChance: 0.5
+  - resource: {fileID: 3449867808116406123, guid: 91fd697de53d53046b78e8a5ca3233ae, type: 3}
+    spawnChance: 0.3
+  - resource: {fileID: 1689226627193447568, guid: 9ac35cbd8ebee2241a0d54dbe7b6373c, type: 3}
+    spawnChance: 0.15
+  rewardResources:
+  - Item: {fileID: 11400000, guid: 48d1784c248929f4881cb36f19b829ac, type: 2}
+    Amount: 5
+  - Item: {fileID: 11400000, guid: 82ac6cc2aac71aa468bb4bcb0fc1738c, type: 2}
+    Amount: 3
+  - Item: {fileID: 11400000, guid: 449aab29c8aae1c4e987d0c579f28819, type: 2}
+    Amount: 1
+  levelPrefab: {fileID: 8822323123280682793, guid: c559c4ed7e16bb44894583db4d8d3c0b, type: 3}
+  levelPrefabPosition: {x: 0, y: -0.59, z: 0}
+  levelPrefabRotation: {x: 0, y: 0, z: 0, w: 0}
+  overrideCameraFollowOffset: 1
+  cameraFollowOffset: {x: -5.8, y: 11, z: -1.5}
+  overrideCameraZoomLimits: 1
+  cameraMinDistance: 8
+  cameraMaxDistance: 16
+  weatherPresets: []
+  weatherPreset:
+    presetName: NightCave
+    enableRain: 0
+    sunRotation: {x: 57, y: -95, z: -180}
+    sunIntensity: 1
+    sunColor: {r: 1, g: 1, b: 1, a: 1}
+    skyboxMaterial: {fileID: 2100000, guid: c1c961cbd00909b45b34d97fd7df5cbf, type: 2}
+    fogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    fogDensity: 0.01
+    fogEnabled: 0
+    ambientLight: {r: 0.2, g: 0.2, b: 0.2, a: 1}
+    ambientIntensity: 1
+    rainIntensity: 0
+  requiredKillPercentToOpenPortal: 0.7
+  portalPrefab: {fileID: 0}

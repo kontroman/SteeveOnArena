@@ -76,7 +76,7 @@ namespace MineArena.Windows.SelectLevel
                 })
                 .Then(() => loadingWindow.SetProgressValue(0.8f))
                 .Then(() => levelController.GenerateLevel())
-                .Then(() => WeatherManager.Instance.ApplyLevelPreset(_config.WeatherPreset))
+                .Then(() => WeatherManager.Instance.ApplyLevelPreset(_config.GetRandomWeatherPreset()))
                 .Then(() => levelController.GenerateOres())
                 .Then(() => loadingWindow.SetProgressValue(0.9f))
                 //.Then(() => GameRoot.LevelController)

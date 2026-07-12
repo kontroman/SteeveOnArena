@@ -1,5 +1,8 @@
 using MineArena.Basics;
 using MineArena.Controllers;
+using MineArena.VFX;
+using Devotion.SDK.Controllers;
+using Devotion.SDK.Services;
 using System;
 using UnityEngine;
 
@@ -17,6 +20,13 @@ namespace MineArena.PlayerSystem
         private Transform _cameraTransform;
         private Vector3 _velocity;
         private bool _isGrounded;
+        private bool _jumpStarted;
+
+        [Header("Landing VFX")]
+        [SerializeField] private VfxId _landingVfxId = VfxId.JumpLanding;
+        [SerializeField] private LayerMask _landingSurfaceMask = ~0;
+        [SerializeField, Min(0.1f)] private float _landingRaycastDistance = 2f;
+        [SerializeField] private Vector3 _landingVfxOffset = new Vector3(0f, 0.03f, 0f);
 
         public static event Action<Transform> PlayerDied;
         public static bool IsPlayerDead { get; private set; }
@@ -48,11 +58,13 @@ namespace MineArena.PlayerSystem
 
             if (_canMove)
             {
+                bool wasGrounded = _characterController.isGrounded;
                 Vector3 horizontalMove = GetHorizontalMovement();
                 ApplyGravityAndJump();
 
                 Vector3 totalMovement = horizontalMove * Constants.PlayerSettings.Speed + new Vector3(0, _velocity.y, 0);
                 _characterController.Move(totalMovement * Time.deltaTime);
+                HandleLanding(wasGrounded);
 
                 RotatePlayer(horizontalMove);
             }
@@ -100,6 +112,7 @@ namespace MineArena.PlayerSystem
                 if (Input.GetButtonDown("Jump"))
                 {
                     _velocity.y = Constants.PlayerSettings.JumpForce;
+                    _jumpStarted = true;
                 }
             }
 
@@ -118,6 +131,61 @@ namespace MineArena.PlayerSystem
                 _velocity.y = -2f;
 
             _velocity.y += Constants.PlayerSettings.Gravity * Time.deltaTime;
+        }
+
+        private void HandleLanding(bool wasGrounded)
+        {
+            if (!_jumpStarted || wasGrounded || !_characterController.isGrounded)
+                return;
+
+            _jumpStarted = false;
+
+            if (!TryGetLandingSurface(out var hit))
+                return;
+
+            Color particleColor = VfxSurfaceColor.TryGetColor(hit, out var surfaceColor)
+                ? surfaceColor
+                : Color.white;
+
+            var vfxService = ResolveVfxService();
+            vfxService?.Play(
+                _landingVfxId,
+                VfxPlayOptions.At(hit.point + _landingVfxOffset, Quaternion.identity).WithColor(particleColor));
+        }
+
+        private bool TryGetLandingSurface(out RaycastHit bestHit)
+        {
+            Vector3 origin = transform.position + Vector3.up * 0.25f;
+            var hits = Physics.RaycastAll(origin, Vector3.down, _landingRaycastDistance, _landingSurfaceMask, QueryTriggerInteraction.Ignore);
+            bestHit = default;
+
+            float bestDistance = float.MaxValue;
+
+            foreach (var hit in hits)
+            {
+                if (hit.collider == null || hit.collider.transform.IsChildOf(transform))
+                    continue;
+
+                if (hit.distance >= bestDistance)
+                    continue;
+
+                bestHit = hit;
+                bestDistance = hit.distance;
+            }
+
+            return bestHit.collider != null;
+        }
+
+        private static IVFXService ResolveVfxService()
+        {
+            try
+            {
+                return ServiceLocator.Resolve<IVFXService>();
+            }
+            catch (Exception)
+            {
+                return GameRoot.GetManager<VFXManager>();
+            }
         }
 
         private void ApplyDeathGravity()
