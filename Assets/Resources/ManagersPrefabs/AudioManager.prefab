@@ -48,6 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _audioMixer: {fileID: 24100000, guid: 62ae8a4ceb2d9c5499c88968241205bd, type: 2}
   _music: {fileID: 6113989595608970861}
+  _musicFadeDuration: 1.25
 --- !u!114 &6113989595608970861
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63,13 +64,10 @@ MonoBehaviour:
   _music:
   - _name: SpawnMusic
     _clip: {fileID: 8300000, guid: 39b694f8b91adc34d9c3441115de22bc, type: 3}
-    _volume: 1
+    _volume: 0.35
   - _name: ArenaMusic
     _clip: {fileID: 8300000, guid: 755d09285c4c3bd4581825310b19b87d, type: 3}
-    _volume: 1
-  - _name: BackGround
-    _clip: {fileID: 8300000, guid: 10d5084fc8336bc4c8fc4c5d53712514, type: 3}
-    _volume: 1
+    _volume: 0.35
   _effects:
   - _name: DropResourse
     _clip: {fileID: 8300000, guid: def9275928ffa87429ac9e12d1bfd84f, type: 3}
