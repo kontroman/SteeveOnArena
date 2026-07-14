@@ -1,7 +1,10 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using MineArena.Basics;
 using Devotion.SDK.Managers;
 using MineArena.MusicResourses;
@@ -13,6 +16,7 @@ namespace MineArena.Managers
         [SerializeField] private AudioMixer _audioMixer;
         [SerializeField] private MusicResourses.MusicResourses _music;
         [SerializeField, Min(0f)] private float _musicFadeDuration = 1.25f;
+        [SerializeField, Range(0f, 1f)] private float _musicVolume = 1f;
 
         private AudioSource _musicSourceA;
         private AudioSource _musicSourceB;
@@ -20,6 +24,7 @@ namespace MineArena.Managers
         private AudioSource _activeMusicSource;
         private Coroutine _musicFadeRoutine;
         private string _currentMusicName;
+        private readonly List<RaycastResult> _uiRaycastResults = new List<RaycastResult>();
 
         private void Awake()
         {
@@ -54,6 +59,7 @@ namespace MineArena.Managers
             ConfigureMusicSource(_musicSourceA, outputGroup);
             ConfigureMusicSource(_musicSourceB, outputGroup);
             _activeMusicSource = _musicSourceA;
+            ApplyMusicVolumeToSources();
         }
 
         private void OnEnable()
@@ -69,6 +75,20 @@ namespace MineArena.Managers
         private void Start()
         {
             ApplySceneMusic(SceneManager.GetActiveScene().name);
+        }
+
+        private void OnValidate()
+        {
+            _musicVolume = Mathf.Clamp01(_musicVolume);
+
+            if (Application.isPlaying)
+                ApplyMusicVolumeToSources();
+        }
+
+        private void Update()
+        {
+            if (TryHandleUiClick())
+                PlayEffect(Constants.AudioNames.UIClick);
         }
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -137,7 +157,8 @@ namespace MineArena.Managers
 
         public void SetMusicVolume(float volume)
         {
-            _audioMixer.SetFloat("MusicVolume", Mathf.Log10(volume) * 20);
+            _musicVolume = Mathf.Clamp01(volume);
+            ApplyMusicVolumeToSources();
         }
 
         public void SetEffectVolume(float volume)
@@ -159,7 +180,8 @@ namespace MineArena.Managers
             if (fromSource.clip == targetClip && fromSource.isPlaying)
                 yield break;
 
-            float startVolume = fromSource.isPlaying ? fromSource.volume : 1f;
+            float startVolume = fromSource.isPlaying ? fromSource.volume : GetTargetMusicVolume();
+            float targetVolume = GetTargetMusicVolume();
 
             toSource.clip = targetClip;
             toSource.loop = true;
@@ -171,7 +193,7 @@ namespace MineArena.Managers
                 if (fromSource.isPlaying)
                     fromSource.Stop();
 
-                toSource.volume = 1f;
+                toSource.volume = targetVolume;
                 _activeMusicSource = toSource;
                 _musicFadeRoutine = null;
                 yield break;
@@ -186,7 +208,7 @@ namespace MineArena.Managers
                 if (fromSource.isPlaying)
                     fromSource.volume = Mathf.Lerp(startVolume, 0f, t);
 
-                toSource.volume = Mathf.Lerp(0f, 1f, t);
+                toSource.volume = Mathf.Lerp(0f, targetVolume, t);
                 yield return null;
             }
 
@@ -194,9 +216,29 @@ namespace MineArena.Managers
                 fromSource.Stop();
 
             fromSource.volume = startVolume;
-            toSource.volume = 1f;
+            toSource.volume = targetVolume;
             _activeMusicSource = toSource;
             _musicFadeRoutine = null;
+        }
+
+        private void ApplyMusicVolumeToSources()
+        {
+            float targetVolume = GetTargetMusicVolume();
+
+            if (_musicSourceA != null && _musicSourceA != _activeMusicSource)
+                _musicSourceA.volume = targetVolume;
+
+            if (_musicSourceB != null && _musicSourceB != _activeMusicSource)
+                _musicSourceB.volume = targetVolume;
+
+            if (_activeMusicSource != null && _activeMusicSource.clip != null)
+                _activeMusicSource.volume = targetVolume;
+        }
+
+        private float GetTargetMusicVolume()
+        {
+            float sourceMultiplier = _effectSource != null ? Mathf.Clamp01(_effectSource.volume) : 1f;
+            return Mathf.Clamp01(_musicVolume) * sourceMultiplier;
         }
 
         private static void ConfigureEffectSource(AudioSource source)
@@ -218,6 +260,43 @@ namespace MineArena.Managers
             source.loop = true;
             source.spatialBlend = 0f;
             source.outputAudioMixerGroup = outputGroup;
+        }
+
+        private bool TryHandleUiClick()
+        {
+            if (EventSystem.current == null || !IsPointerPressedThisFrame())
+                return false;
+
+            var eventData = new PointerEventData(EventSystem.current)
+            {
+                position = GetPointerPosition()
+            };
+
+            _uiRaycastResults.Clear();
+            EventSystem.current.RaycastAll(eventData, _uiRaycastResults);
+
+            for (int i = 0; i < _uiRaycastResults.Count; i++)
+            {
+                var target = _uiRaycastResults[i].gameObject;
+                if (target == null)
+                    continue;
+
+                var button = target.GetComponentInParent<Button>(true);
+                if (button != null && button.interactable)
+                    return true;
+            }
+
+            return false;
+        }
+
+        private static bool IsPointerPressedThisFrame()
+        {
+            return Input.GetMouseButtonDown(0);
+        }
+
+        private static Vector2 GetPointerPosition()
+        {
+            return Input.mousePosition;
         }
     }
 }

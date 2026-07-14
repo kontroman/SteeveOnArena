@@ -29,6 +29,9 @@ namespace MineArena.Basics
             public const string MiningHit = "MiningHit";
             public const string MiningBreak = "MiningBreak";
             public const string Pickup = "Pickup";
+            public const string Jump = "Jump";
+            public const string Landing = "Landing";
+            public const string UIClick = "UIClick";
             public const string Footstep1 = "Footstep1";
             public const string Footstep2 = "Footstep2";
             public const string Footstep3 = "Footstep3";

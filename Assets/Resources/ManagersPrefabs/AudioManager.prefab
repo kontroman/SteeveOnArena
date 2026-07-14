@@ -49,6 +49,7 @@ MonoBehaviour:
   _audioMixer: {fileID: 24100000, guid: 62ae8a4ceb2d9c5499c88968241205bd, type: 2}
   _music: {fileID: 6113989595608970861}
   _musicFadeDuration: 1.25
+  _musicVolume: 1
 --- !u!114 &6113989595608970861
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64,10 +65,10 @@ MonoBehaviour:
   _music:
   - _name: SpawnMusic
     _clip: {fileID: 8300000, guid: 39b694f8b91adc34d9c3441115de22bc, type: 3}
-    _volume: 0.35
+    _volume: 0.3
   - _name: ArenaMusic
     _clip: {fileID: 8300000, guid: 755d09285c4c3bd4581825310b19b87d, type: 3}
-    _volume: 0.35
+    _volume: 0.3
   _effects:
   - _name: DropResourse
     _clip: {fileID: 8300000, guid: def9275928ffa87429ac9e12d1bfd84f, type: 3}
@@ -89,7 +90,16 @@ MonoBehaviour:
     _volume: 1
   - _name: Pickup
     _clip: {fileID: 8300000, guid: a1ff6b79b52793e419775d756079136e, type: 3}
+    _volume: 2.5
+  - _name: Jump
+    _clip: {fileID: 8300000, guid: 8e314c36059393349be1497b4c70816d, type: 3}
+    _volume: 1
+  - _name: Landing
+    _clip: {fileID: 8300000, guid: 66b9377372585364cae3e7994c01a89a, type: 3}
     _volume: 2
+  - _name: UIClick
+    _clip: {fileID: 8300000, guid: 731477a2f3744814abc33534c7e58fab, type: 3}
+    _volume: 1
 --- !u!82 &7491967095746286204
 AudioSource:
   m_ObjectHideFlags: 0

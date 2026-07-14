@@ -119,6 +119,7 @@ namespace MineArena.PlayerSystem
                 {
                     _velocity.y = Constants.PlayerSettings.JumpForce;
                     _jumpStarted = true;
+                    GameRoot.GetManager<AudioManager>()?.PlayEffect(Constants.AudioNames.Jump);
                 }
             }
 
@@ -145,6 +146,7 @@ namespace MineArena.PlayerSystem
                 return;
 
             _jumpStarted = false;
+            GameRoot.GetManager<AudioManager>()?.PlayEffect(Constants.AudioNames.Landing);
 
             if (!TryGetLandingSurface(out var hit))
                 return;
