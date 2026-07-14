@@ -14,6 +14,7 @@ using MineArena.Items;
 using MineArena.ObjectPools;
 using UnityEngine.EventSystems;
 using MineArena.Networking;
+using MineArena.Basics;
 
 namespace MineArena.PlayerSystem
 {
@@ -53,6 +54,7 @@ namespace MineArena.PlayerSystem
         [SerializeField] private float _bowFallbackRange = 60f;
         [SerializeField] private LayerMask _bowFallbackAttackableLayers = 1 << 8;
         [SerializeField] private float _bowAimRaycastDistance = 500f;
+        [SerializeField, Min(0f)] private float _swordAttackSoundExtraDelay = 0.15f;
 
         private float _nextAttackTime;
         private ICommand _damageCommand;
@@ -181,8 +183,7 @@ namespace MineArena.PlayerSystem
             _nextAttackTime = Time.time + GetAttackCooldown(_config);
 
             _animator?.TriggerAttack();
-
-            GameRoot.GetManager<AudioManager>()?.PlayEffect("AttackSound");
+            StartCoroutine(PlayDelayedSwordAttackSound(_config.AnimationDelay + _swordAttackSoundExtraDelay));
 
             yield return new WaitForSeconds(_config.AnimationDelay);
 
@@ -241,6 +242,15 @@ namespace MineArena.PlayerSystem
                 ClearPendingBowShot();
                 _isAttacking = false;
             }
+        }
+
+        private IEnumerator PlayDelayedSwordAttackSound(float delay)
+        {
+            if (delay > 0f)
+                yield return new WaitForSeconds(delay);
+
+            if (_isAttacking)
+                GameRoot.GetManager<AudioManager>()?.PlayEffect(Constants.AudioNames.SwrdAttack);
         }
 
         public void HandleBowShootKeyframe()
