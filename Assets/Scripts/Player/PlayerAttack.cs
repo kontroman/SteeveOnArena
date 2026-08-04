@@ -55,6 +55,7 @@ namespace MineArena.PlayerSystem
         [SerializeField] private LayerMask _bowFallbackAttackableLayers = 1 << 8;
         [SerializeField] private float _bowAimRaycastDistance = 500f;
         [SerializeField, Min(0f)] private float _swordAttackSoundExtraDelay = 0.15f;
+        [SerializeField, Min(0f)] private float _bowAttackSoundDelay = 0.2f;
 
         private float _nextAttackTime;
         private ICommand _damageCommand;
@@ -225,7 +226,7 @@ namespace MineArena.PlayerSystem
                 Player.Instance.GetComponentFromList<RotationController>()?.RotateToDirection(horizontalDirection, 2, 0.08f);
 
             _animator?.TriggerBowShoot();
-            GameRoot.GetManager<AudioManager>()?.PlayEffect("AttackSound");
+            StartCoroutine(PlayDelayedBowAttackSound());
 
             PreparePendingBowShot(bowConfig, targetPoint);
 
@@ -251,6 +252,15 @@ namespace MineArena.PlayerSystem
 
             if (_isAttacking)
                 GameRoot.GetManager<AudioManager>()?.PlayEffect(Constants.AudioNames.SwrdAttack);
+        }
+
+        private IEnumerator PlayDelayedBowAttackSound()
+        {
+            if (_bowAttackSoundDelay > 0f)
+                yield return new WaitForSeconds(_bowAttackSoundDelay);
+
+            if (_isAttacking)
+                GameRoot.GetManager<AudioManager>()?.PlayEffect(Constants.AudioNames.BowAttack);
         }
 
         public void HandleBowShootKeyframe()

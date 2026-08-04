@@ -1,8 +1,11 @@
 ﻿using MineArena.Commands;
 using MineArena.Controllers;
+using MineArena.Basics;
 using MineArena.Interfaces;
 using MineArena.PlayerSystem;
+using MineArena.Managers;
 using MineArena.Structs;
+using Devotion.SDK.Controllers;
 using System.Collections;
 using UnityEngine;
 
@@ -21,10 +24,12 @@ namespace MineArena.AI
         [SerializeField] private float _explosionDelay = 1f;
         [SerializeField] private float _explosionRadius = 2f;
         [SerializeField] private LayerMask _explosionTargetMask = ~0;
+        [SerializeField, Min(0f)] private float _witchPotionSoundDelay = 0.2f;
 
         private bool _isAttack;
         private MobMovement _mobMovement;
         private MobAnimationController _mobAnimator;
+        private MobTypes _mobType;
         private ICommand _damageCommand;
         private ICommand _attackCommand;
         private IDamageable _playerDamagable;
@@ -32,6 +37,7 @@ namespace MineArena.AI
         private Transform _playerTransform;
         private Coroutine _attackRoutine;
         private Coroutine _hitFallbackRoutine;
+        private Coroutine _attackSoundRoutine;
         private int _attackCycleId;
         private bool _attackHitApplied;
         private float _nextAttackTime;
@@ -144,6 +150,12 @@ namespace MineArena.AI
                 _hitFallbackRoutine = null;
             }
 
+            if (_attackSoundRoutine != null)
+            {
+                StopCoroutine(_attackSoundRoutine);
+                _attackSoundRoutine = null;
+            }
+
             if (resumeMovement && !_isDead)
                 _mobMovement.Move();
         }
@@ -160,6 +172,7 @@ namespace MineArena.AI
                 }
 
                 _mobAnimator?.PlayAttack();
+                PlayAttackSound();
 
                 if (_attackType == MobAttackType.Explosion)
                 {
@@ -272,6 +285,7 @@ namespace MineArena.AI
         public void SetParameters(MobPreset preset)
         {
             _isDead = false;
+            _mobType = preset.MobType;
             _damage = preset.Damage;
             _attackDelay = preset.AttackDelay;
             _attackRange = preset.AttackRange;
@@ -287,6 +301,40 @@ namespace MineArena.AI
 
             TryResolvePlayer();
             _damageData = new DamageData(_damage, _playerDamagable);
+        }
+
+        private void PlayAttackSound()
+        {
+            if (_attackSoundRoutine != null)
+                StopCoroutine(_attackSoundRoutine);
+
+            _attackSoundRoutine = StartCoroutine(PlayAttackSoundRoutine());
+        }
+
+        private IEnumerator PlayAttackSoundRoutine()
+        {
+            string soundName = null;
+            float delay = 0f;
+
+            switch (_mobType)
+            {
+                case MobTypes.Skeleton:
+                    soundName = Constants.AudioNames.Skeleton;
+                    break;
+                case MobTypes.Witch:
+                    soundName = Constants.AudioNames.WitchPotion;
+                    delay = _witchPotionSoundDelay;
+                    break;
+            }
+
+            if (string.IsNullOrWhiteSpace(soundName))
+                yield break;
+
+            if (delay > 0f)
+                yield return new WaitForSeconds(delay);
+
+            if (_isAttack && !_isDead && !_isAfk)
+                GameRoot.GetManager<AudioManager>()?.PlayEffect(soundName);
         }
 
         private static MobAttackType ResolveAttackType(MobPreset preset)

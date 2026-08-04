@@ -103,6 +103,15 @@ MonoBehaviour:
   - _name: SwrdAttack
     _clip: {fileID: 8300000, guid: fd90c92bc57ad5e4985fd501c2818775, type: 3}
     _volume: 1
+  - _name: BowAttack
+    _clip: {fileID: 8300000, guid: 9820fe7dc361c594381ccb8df4501c1a, type: 3}
+    _volume: 1
+  - _name: Skeleton
+    _clip: {fileID: 8300000, guid: 9820fe7dc361c594381ccb8df4501c1a, type: 3}
+    _volume: 1
+  - _name: WitchPotion
+    _clip: {fileID: 8300000, guid: d848d9f344e567b4ba709a3805877781, type: 3}
+    _volume: 1
 --- !u!82 &7491967095746286204
 AudioSource:
   m_ObjectHideFlags: 0
