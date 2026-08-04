@@ -8,6 +8,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 
 using Devotion.SDK.Confgs;
+using Devotion.SDK.DailyReward;
 using MineArena.Items;
 using MineArena.Buildings;
 using Sirenix.OdinInspector;
@@ -24,6 +25,7 @@ namespace MineArena.Structs
         [SerializeField] private LocalizationConfig localizationConfig;
         [SerializeField] private ItemDatabase itemDatabase;
         [SerializeField] private BuildingsDatabase buildingsDatabase;
+        [SerializeField] private DailyRewardConfig dailyRewardConfig;
         [SerializeField, Min(1)] private int freeFortuneSpinCooldownMinutes = 30;
 
         public List<LevelConfig> Levels { get { return levels; } }
@@ -32,6 +34,7 @@ namespace MineArena.Structs
         public LocalizationConfig LocalizationConfig { get { return localizationConfig; } }
         public ItemDatabase ItemDatabase { get { return itemDatabase; } }
         public BuildingsDatabase BuildingsDatabase { get { return buildingsDatabase; } }
+        public DailyRewardConfig DailyRewardConfig => dailyRewardConfig;
         public int FreeFortuneSpinCooldownMinutes => freeFortuneSpinCooldownMinutes <= 0 ? 30 : freeFortuneSpinCooldownMinutes;
 
 #region GODMODE

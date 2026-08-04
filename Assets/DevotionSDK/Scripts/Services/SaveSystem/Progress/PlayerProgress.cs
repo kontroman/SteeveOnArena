@@ -17,6 +17,7 @@ namespace Devotion.SDK.Services.SaveSystem.Progress
         [SerializeField] private PurchasesProgress purchasesProgress;
         [SerializeField] private AdsProgress adsProgress;
         [SerializeField] private LuckyWheelProgress luckyWheelProgress;
+        [SerializeField] private DailyRewardProgress dailyRewardProgress;
         [SerializeField] private PlayerDataProgress playerDataProgress;
         [SerializeField] private AchievementProgress achievementProgress;
 
@@ -53,6 +54,16 @@ namespace Devotion.SDK.Services.SaveSystem.Progress
                 return luckyWheelProgress;
             }
         }
+        public DailyRewardProgress DailyRewardProgress
+        {
+            get
+            {
+                if (dailyRewardProgress == null)
+                    dailyRewardProgress = new DailyRewardProgress();
+
+                return dailyRewardProgress;
+            }
+        }
         public PlayerDataProgress PlayerDataProgress
         {
             get
@@ -75,6 +86,7 @@ namespace Devotion.SDK.Services.SaveSystem.Progress
             purchasesProgress = new PurchasesProgress();
             adsProgress = new AdsProgress();
             luckyWheelProgress = new LuckyWheelProgress();
+            dailyRewardProgress = new DailyRewardProgress();
             achievementProgress = new AchievementProgress();
             playerDataProgress = new PlayerDataProgress();
             achievementProgress = new AchievementProgress();
