@@ -34665,7 +34665,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6526254815579831692, guid: 1e08410d1858a204e80b054b0e1ad7d3, type: 3}
       propertyPath: _startManagers.Array.size
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6526254815579831692, guid: 1e08410d1858a204e80b054b0e1ad7d3, type: 3}
       propertyPath: _startManagers.Array.data[3]
@@ -34683,6 +34683,10 @@ PrefabInstance:
       propertyPath: _startManagers.Array.data[6]
       value: 
       objectReference: {fileID: 255469746676732382, guid: 8d12035525ce690479c7c4f1601a0321, type: 3}
+    - target: {fileID: 6526254815579831692, guid: 1e08410d1858a204e80b054b0e1ad7d3, type: 3}
+      propertyPath: _startManagers.Array.data[7]
+      value: 
+      objectReference: {fileID: 7405829006400001002, guid: 4403b3becf3544a9b7d9a10ab32d688e, type: 3}
     - target: {fileID: 6526254815579831693, guid: 1e08410d1858a204e80b054b0e1ad7d3, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -35328,7 +35332,7 @@ MonoBehaviour:
   _landingVfxId: 6
   _landingSurfaceMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 2047
   _landingRaycastDistance: 2
   _landingVfxOffset: {x: 0, y: 0.03, z: 0}
   _footstepInterval: 0.42

@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f486fb0d31db46d9ae354cf58200c117, type: 3}
+  m_Name: DailyRewardsConfig
+  m_EditorClassIdentifier: 
+  rewards:
+  - itemConfig: {fileID: 11400000, guid: 2341848530a95b34794be486a7bc64c3, type: 2}
+    amount: 15
+  - itemConfig: {fileID: 11400000, guid: b00bcf18baae3cd448bfe86f83366dca, type: 2}
+    amount: 5
+  - itemConfig: {fileID: 11400000, guid: 501e28faeabb676418a62d09f9eb6cb9, type: 2}
+    amount: 5
+  - itemConfig: {fileID: 11400000, guid: 10c265e30aa9be34685985507820bbb4, type: 2}
+    amount: 10
+  - itemConfig: {fileID: 11400000, guid: 82ac6cc2aac71aa468bb4bcb0fc1738c, type: 2}
+    amount: 3
+  - itemConfig: {fileID: 11400000, guid: 48d1784c248929f4881cb36f19b829ac, type: 2}
+    amount: 5
+  - itemConfig: {fileID: 11400000, guid: 82ac6cc2aac71aa468bb4bcb0fc1738c, type: 2}
+    amount: 5

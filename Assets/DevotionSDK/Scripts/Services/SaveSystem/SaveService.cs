@@ -16,16 +16,33 @@ namespace Devotion.SDK.Services.SaveSystem
         IMessageSubscriber<Messages.Player.SavePlayerProgress>
     {
         private static SaveService _instance;
-        public static SaveService Instance => _instance.IsNullOrDead() ? _instance = new SaveService() : _instance;
+        public static SaveService Instance => _instance.IsNullOrDead() ? _instance = ResolveInstance() : _instance;
 
         private static readonly FieldInfo PlayerProgressField =
             typeof(GameRoot).GetField("playerProgress", BindingFlags.Instance | BindingFlags.NonPublic);
 
         private ISaveProvider _platformProvider;
 
+        public bool IsLoaded { get; private set; }
+
+        private static SaveService ResolveInstance()
+        {
+            var existing = FindObjectOfType<SaveService>();
+            if (!existing.IsNullOrDead())
+                return existing;
+
+            var root = GameRoot.Instance;
+            if (!root.IsNullOrDead())
+                return root.gameObject.AddComponent<SaveService>();
+
+            var serviceObject = new GameObject(nameof(SaveService));
+            DontDestroyOnLoad(serviceObject);
+            return serviceObject.AddComponent<SaveService>();
+        }
 
         public override IPromise Initialize()
         {
+            IsLoaded = false;
             MessageService.Subscribe(this);
 
             ServiceLocator.Register<ISaveService>(this);
@@ -55,6 +72,7 @@ namespace Devotion.SDK.Services.SaveSystem
             return loadPromise.Then(rawData =>
             {
                 ApplyLoadedProgress(rawData);
+                IsLoaded = true;
                 Messages.Player.PlayerProgressLoaded.Publish();
                 return Promise.ResolveAndReturn();
             });
