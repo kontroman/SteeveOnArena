@@ -25,11 +25,16 @@ namespace Devotion.SDK.Controllers
 
         private IEnumerator LoadRoutine(string sceneName, LoadSceneMode mode, Promise promise)
         {
+            if (MineArena.Platform.YandexPlatform.IsWebPlatform)
+                MineArena.Platform.YandexPlatform.Instance.SetGameplay(false);
             var async = SceneManager.LoadSceneAsync(sceneName, mode);
             async.allowSceneActivation = false;
 
             async.allowSceneActivation = true;
             yield return new WaitUntil(() => async.isDone);
+
+            if (MineArena.Platform.YandexPlatform.IsWebPlatform)
+                MineArena.Platform.YandexPlatform.Instance.SetGameplay(true);
 
             promise.Resolve();
         }

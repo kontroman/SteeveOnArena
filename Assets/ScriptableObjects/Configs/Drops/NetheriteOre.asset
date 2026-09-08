@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: NetheriteOre
   m_EditorClassIdentifier: 
   _name: NetheriteOreDrop
+  _displayName: "Незерит"
   _prefab: {fileID: 1294500603521610, guid: f4eb298fb64cef9438e2244ef62d611d, type: 3}
   _icon: {fileID: 21300000, guid: a65cd027de1fac643aebbfb0f67c03c2, type: 3}
   _usable: 0
@@ -23,3 +24,5 @@ MonoBehaviour:
   _craftCosts: []
   _maxStackSize: 64
   _resourceCategory: 
+  _topIcon: {fileID: 21300000, guid: 4d44f8ca0924f3d4db3ad03cb9d7f41f, type: 3}
+  _sideIcon: {fileID: 21300000, guid: a65cd027de1fac643aebbfb0f67c03c2, type: 3}

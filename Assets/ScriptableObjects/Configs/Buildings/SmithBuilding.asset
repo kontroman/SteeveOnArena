@@ -16,14 +16,91 @@ MonoBehaviour:
   _levels:
   - _level: 1
     _requiredResources:
-    - _resource: {fileID: 11400000, guid: 10c265e30aa9be34685985507820bbb4, type: 2}
-      _amount: 1
-    - _resource: {fileID: 11400000, guid: 8d4377309a1b81045ba99f7bb848ff29, type: 2}
-      _amount: 1
+    - _resource: {fileID: 11400000, guid: 4d4666ba7dbbefa47b57dbff0b891f42, type: 2}
+      _amount: 20
     - _resource: {fileID: 11400000, guid: 2341848530a95b34794be486a7bc64c3, type: 2}
-      _amount: 1
+      _amount: 24
+    - _resource: {fileID: 11400000, guid: 8d4377309a1b81045ba99f7bb848ff29, type: 2}
+      _amount: 6
     _unlocks:
-    - {fileID: 11400000, guid: b00bcf18baae3cd448bfe86f83366dca, type: 2}
+    - {fileID: 11400000, guid: 48d1784c248929f4881cb36f19b829ac, type: 2}
+    - {fileID: 11400000, guid: 70a5b21f16c7993df1d86760d1a13948, type: 2}
+    - {fileID: 11400000, guid: 938907e645c24c388635a8e2ff8ecabe, type: 2}
+    - {fileID: 11400000, guid: 604cd629307e4a70b74e17067193f9cd, type: 2}
+    - {fileID: 11400000, guid: 3de941d949824fd1a245f760e206907e, type: 2}
+    - {fileID: 11400000, guid: 83a7dc608f7d4e0daaa6c4e6071eaa95, type: 2}
+    - {fileID: 11400000, guid: 3d1699ed7bb84d8290876caabae0f55b, type: 2}
+    - {fileID: 11400000, guid: f7bc24ae882a4169bf2ae71848954f74, type: 2}
     _modelPrefab: {fileID: 6925630335015353069, guid: 581c87791ea67d14fad22cfcc424576a, type: 3}
+    _preview: {fileID: 21300000, guid: 92e817dd9611e5e4aac5fb394a5a5b37, type: 3}
+    _craftOutputBonus: 0
+    _expeditionRewardBonusPercent: 0
+    _production: []
+    _productionSeconds: 60
+  - _level: 2
+    _requiredResources:
+    - _resource: {fileID: 11400000, guid: 810f71e127406e14eba2fe7f69697606, type: 2}
+      _amount: 30
+    - _resource: {fileID: 11400000, guid: 70a5b21f16c7993df1d86760d1a13948, type: 2}
+      _amount: 10
+    - _resource: {fileID: 11400000, guid: 2341848530a95b34794be486a7bc64c3, type: 2}
+      _amount: 30
+    _unlocks:
+    - {fileID: 11400000, guid: 5d35540860b8025c2228a7c3d5151682, type: 2}
+    - {fileID: 11400000, guid: bda4ca4c511841178a0aa1d517b17b64, type: 2}
+    - {fileID: 11400000, guid: a2c92c6358264fbcacabb1f5c1d43bc7, type: 2}
+    - {fileID: 11400000, guid: f8c93a9723a24fad983dbe056aeb074f, type: 2}
+    - {fileID: 11400000, guid: c7933c3ef9c54b94bfaf467161278bc4, type: 2}
+    - {fileID: 11400000, guid: dd222e98f79c4acfb8ccaf6a733df987, type: 2}
+    _modelPrefab: {fileID: 6925630335015353069, guid: 581c87791ea67d14fad22cfcc424576a, type: 3}
+    _preview: {fileID: 21300000, guid: 1c7e75856a3eeb743b88cf0c00ea5574, type: 3}
+    _craftOutputBonus: 0
+    _expeditionRewardBonusPercent: 0
+    _production: []
+    _productionSeconds: 60
+  - _level: 3
+    _requiredResources:
+    - _resource: {fileID: 11400000, guid: 810f71e127406e14eba2fe7f69697606, type: 2}
+      _amount: 16
+    - _resource: {fileID: 11400000, guid: 70a5b21f16c7993df1d86760d1a13948, type: 2}
+      _amount: 12
+    - _resource: {fileID: 11400000, guid: 82ac6cc2aac71aa468bb4bcb0fc1738c, type: 2}
+      _amount: 6
+    _unlocks:
+    - {fileID: 11400000, guid: 0970881ff8a44a60b91479eaa642f468, type: 2}
+    - {fileID: 11400000, guid: d716014efd3e4134b242f473adfdbeb9, type: 2}
+    - {fileID: 11400000, guid: d0f7104ea4203814b9fefc4223ad1a63, type: 2}
+    - {fileID: 11400000, guid: 39c8c1c47f5d4d1aaff400b93eeb9e01, type: 2}
+    - {fileID: 11400000, guid: c081d43ded7046fb8bd5a8065fafec5f, type: 2}
+    _modelPrefab: {fileID: 6925630335015353069, guid: 581c87791ea67d14fad22cfcc424576a, type: 3}
+    _preview: {fileID: 21300000, guid: dfdb66238a4e8bf42b0b4bfc43687ff1, type: 3}
+    _craftOutputBonus: 0
+    _expeditionRewardBonusPercent: 0
+    _production: []
+    _productionSeconds: 60
+  - _level: 4
+    _requiredResources:
+    - _resource: {fileID: 11400000, guid: 810f71e127406e14eba2fe7f69697606, type: 2}
+      _amount: 32
+    - _resource: {fileID: 11400000, guid: 70a5b21f16c7993df1d86760d1a13948, type: 2}
+      _amount: 24
+    - _resource: {fileID: 11400000, guid: 82ac6cc2aac71aa468bb4bcb0fc1738c, type: 2}
+      _amount: 12
+    - _resource: {fileID: 11400000, guid: 5d35540860b8025c2228a7c3d5151682, type: 2}
+      _amount: 8
+    _unlocks:
+    - {fileID: 11400000, guid: fbc6e63829645999c6473d016c23e9d1, type: 2}
+    - {fileID: 11400000, guid: ff644b5741109c850b7eb9bd56c34586, type: 2}
+    - {fileID: 11400000, guid: a6f16ceeae2d4eddbd5b43ce1c2f1f30, type: 2}
+    - {fileID: 11400000, guid: 2fe4ea6ef747403ca3ef5c3977142ff4, type: 2}
+    - {fileID: 11400000, guid: 1509e3496bfc4847ad590f8019e8ecd5, type: 2}
+    - {fileID: 11400000, guid: 02186ec8f9fb484980c6149d78868e25, type: 2}
+    - {fileID: 11400000, guid: ee6a6f00ec294cf492d7f5d7cdd25b82, type: 2}
+    _modelPrefab: {fileID: 6925630335015353069, guid: 581c87791ea67d14fad22cfcc424576a, type: 3}
+    _preview: {fileID: 21300000, guid: 85c0ece645861394a90dcc33031c9632, type: 3}
+    _craftOutputBonus: 0
+    _expeditionRewardBonusPercent: 0
+    _production: []
+    _productionSeconds: 60
   _currentLevel: 0
   _buildingRotation: {x: -0.70710677, y: 0, z: 0, w: 0.70710677}

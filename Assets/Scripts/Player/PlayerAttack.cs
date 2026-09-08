@@ -54,13 +54,16 @@ namespace MineArena.PlayerSystem
         [SerializeField] private float _bowFallbackRange = 60f;
         [SerializeField] private LayerMask _bowFallbackAttackableLayers = 1 << 8;
         [SerializeField] private float _bowAimRaycastDistance = 500f;
-        [SerializeField, Min(0f)] private float _swordAttackSoundExtraDelay = 0.15f;
+        [SerializeField, Range(0.1f, 1f)] private float _meleeMovementMultiplier = 0.7f;
         [SerializeField, Min(0f)] private float _bowAttackSoundDelay = 0.2f;
 
         private float _nextAttackTime;
         private ICommand _damageCommand;
         private bool _isEnabled;
         private bool _isAttacking;
+        private bool _meleeActive;
+        private bool _meleeHitResolved;
+        private bool _meleeSoundPlayed;
         private IPlayerAnimator _animator;
         private Animator _rawAnimator;
         private GameObject _cachedArrowProjectilePrefab;
@@ -71,6 +74,7 @@ namespace MineArena.PlayerSystem
         private bool _bowShotReleased;
 
         public bool IsAttacking => _isAttacking;
+        public float MovementMultiplier => _meleeActive ? _meleeMovementMultiplier : 1f;
 
         private void Awake()
         {
@@ -91,8 +95,18 @@ namespace MineArena.PlayerSystem
             MessageService.Unsubscribe(this);
         }
 
+        private void OnDisable()
+        {
+            StopAllCoroutines();
+            _isAttacking = false;
+            _meleeActive = false;
+            ClearPendingBowShot();
+        }
+
         private void Update()
         {
+            if (MineArena.Managers.TutorialService.BlocksInput) return;
+            if (MineArena.Managers.TutorialService.Active && MineArena.Managers.TutorialService.Progress.Step != MineArena.Managers.TutorialStep.Kill) return;
             if (!_isEnabled || _isAttacking)
                 return;
 
@@ -101,6 +115,12 @@ namespace MineArena.PlayerSystem
 
             if (IsPointerOverUi())
                 return;
+
+            if (PotionEffects.SelectedPotion != null)
+            {
+                PotionEffects.TryDrinkSelected();
+                return;
+            }
 
             if (_equipment != null && _equipment.LastActiveHandItem == HandItemType.Bow)
             {
@@ -147,16 +167,13 @@ namespace MineArena.PlayerSystem
 
             Vector3 attackDirection = (targetPoint - transform.position).normalized;
 
-            bool isRunning = _animator?.IsRunning() ?? false;
-            float rotationDuration = isRunning ? 0.08f : 0.2f;
+            float rotationDuration = 0.07f;
             var rotationController = Player.Instance.GetComponentFromList<RotationController>();
 
             if (rotationController != null)
             {
                 rotationController.RotateToDirection(attackDirection, 2, rotationDuration);
 
-                while (rotationController.IsRotating(2))
-                    yield return null;
             }
 
             if (_equipment != null)
@@ -167,7 +184,7 @@ namespace MineArena.PlayerSystem
                     _config = swordAttack;
             }
 
-            StartCoroutine(PerformAttack());
+            yield return PerformAttack();
         }
 
         private IEnumerator PerformAttack()
@@ -183,20 +200,24 @@ namespace MineArena.PlayerSystem
 
             _nextAttackTime = Time.time + GetAttackCooldown(_config);
 
-            _animator?.TriggerAttack();
-            StartCoroutine(PlayDelayedSwordAttackSound(_config.AnimationDelay + _swordAttackSoundExtraDelay));
-
-            yield return new WaitForSeconds(_config.AnimationDelay);
-
-            DetectHits();
-
+            _meleeActive = true;
+            _meleeHitResolved = false;
+            _meleeSoundPlayed = false;
             try
             {
+                _animator?.TriggerAttack();
+                if (_rawAnimator == null || _rawAnimator.runtimeAnimatorController == null)
+                {
+                    HandleMeleeSoundKeyframe();
+                    yield return new WaitForSeconds(activeConfig.AnimationDelay);
+                    HandleMeleeHitKeyframe();
+                }
                 yield return WaitForAttackAnimation(activeConfig);
             }
             finally
             {
                 _isAttacking = false;
+                _meleeActive = false;
             }
         }
 
@@ -245,13 +266,20 @@ namespace MineArena.PlayerSystem
             }
         }
 
-        private IEnumerator PlayDelayedSwordAttackSound(float delay)
+        public void HandleMeleeHitKeyframe()
         {
-            if (delay > 0f)
-                yield return new WaitForSeconds(delay);
+            if (!_isEnabled || !_isAttacking || !_meleeActive || _meleeHitResolved) return;
+            _meleeHitResolved = true;
+            DetectHits();
+        }
 
-            if (_isAttacking)
-                GameRoot.GetManager<AudioManager>()?.PlayEffect(Constants.AudioNames.SwrdAttack);
+        // The clip event leads contact by 90 ms at the authored attack speed (2.2).
+        // SwordAttack's measured acoustic peak then coincides with the damage event.
+        public void HandleMeleeSoundKeyframe()
+        {
+            if (!_isEnabled || !_isAttacking || !_meleeActive || _meleeSoundPlayed) return;
+            _meleeSoundPlayed = true;
+            GameRoot.GetManager<AudioManager>()?.PlayEffect(Constants.AudioNames.SwrdAttack);
         }
 
         private IEnumerator PlayDelayedBowAttackSound()
@@ -700,6 +728,13 @@ namespace MineArena.PlayerSystem
         public void SetComponentEnable(bool value)
         {
             _isEnabled = value;
+            if (!value)
+            {
+                StopAllCoroutines();
+                _isAttacking = false;
+                _hasPendingBowShot = false;
+                _meleeActive = false;
+            }
         }
 
         public void OnMessage(GameMessages.NewSwordEquiped message)

@@ -25,7 +25,7 @@ namespace Devotion.SDK.Controllers
         {
             InfoPopupWindow window = (InfoPopupWindow)GameRoot.UIManager.ShowWindow<InfoPopupWindow>();
 
-            window.Setup(message.Model);
+            window?.Setup(message.Model);
         }
     }
 }

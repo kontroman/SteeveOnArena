@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23b4dfe5a2c9bec418f415cbb49447a1, type: 3}
+  m_Name: Stick
+  m_EditorClassIdentifier: 
+  _name: Stick
+  _prefab: {fileID: 1294500603521610, guid: 88f84f8d5d8f354f441e967d179f9905, type: 3}
+  _icon: {fileID: 21300000, guid: 9eadf7e770affd9d71a2970aba1bc038, type: 3}
+  _usable: 0
+  _stackable: 1
+  _blockStyleIcon: 0
+  _maxStackSize: 64
+  _resourceCategory: Stick
+  _craftCosts: 
+  - _resource: {fileID: 11400000, guid: 810f71e127406e14eba2fe7f69697606, type: 2}
+    _amount: 2
+  _craftAmount: 4
+  _displayName: "Палка"
+  _description: "Палка — материал для переработки и улучшений."

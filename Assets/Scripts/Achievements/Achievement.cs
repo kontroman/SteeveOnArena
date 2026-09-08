@@ -37,12 +37,14 @@ namespace Achievements
 
         public void ChangeCurrentValue(int value)
         {
-            _currentValueProgress += value;
+            if (value <= 0 || _isCompleted || _canTakePrize) return;
+            bool firstProgress = _currentValueProgress == 0;
+            _currentValueProgress = (int)System.Math.Min((long)_currentValueProgress + value, _maxValueProgress);
 
-            if (_currentValueProgress == 1)
+            if (firstProgress && Data.Difficulty == QuestDifficulty.Easy)
                 AchievementMessages.AchievementBegun.Publish(this);
 
-            if (_currentValueProgress == _maxValueProgress)
+            if (_currentValueProgress >= _maxValueProgress)
             {
                 _canTakePrize = true;
                 AchievementMessages.PrizeTake.Publish(this);
@@ -51,6 +53,7 @@ namespace Achievements
 
         public void TransferPrize()
         {
+            if (_isCompleted || !_canTakePrize) return;
             _isCompleted = true;
             AchievementMessages.AchievementCompleted.Publish(this);
             _itemPrize.GiveTo();
@@ -60,7 +63,7 @@ namespace Achievements
         {
             _currentValueProgress = data.CurrentValue;
             _isCompleted = data.IsCompleted;
-            _canTakePrize = data.CanTakePrize;
+            _canTakePrize = !_isCompleted && _currentValueProgress >= _maxValueProgress;
         }
     }
 }

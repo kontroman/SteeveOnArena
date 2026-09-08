@@ -1,0 +1,77 @@
+PASS Shop catalog and currency exist
+PASS Every offer resolves to a real item in the game database
+PASS Registered window 0
+PASS Registered window 1
+PASS Registered window 2
+PASS Registered window 3
+PASS Registered window 4
+PASS Registered window 5
+PASS Registered window 6
+PASS Registered window 7
+PASS Registered window 8
+PASS Registered window 9
+PASS Registered window 10
+PASS Registered window 11
+PASS Registered window 12
+PASS Registered window 13
+PASS Registered window 14
+PASS Window registry has no duplicate types
+PASS New windows are registered
+PASS All nine HUD destinations are wired
+PASS No missing scripts: BlackWindow
+PASS No missing scripts: BuildingWindow
+PASS No missing scripts: DailyGiftWindow
+PASS No missing scripts: FortuneWheelWindow
+PASS No missing scripts: GodModeWindow
+PASS No missing scripts: InfoPopupWindow
+PASS No missing scripts: InventoryWindow
+PASS No missing scripts: LevelCompleteWindow
+PASS No missing scripts: LevelProgressWindow
+PASS No missing scripts: LoadingWindow
+PASS No missing scripts: PlayingWindow
+PASS No missing scripts: PlaytimeGiftWindow
+PASS No missing scripts: SelectLevelWindow
+PASS No missing scripts: SettingsWindow
+PASS No missing scripts: ShopWindow
+PASS No missing scripts: QuestJournalRow
+PASS No missing scripts: ShopOffer
+PASS No missing scripts: CraftingItemView
+PASS No missing scripts: CraftingTabButton
+PASS No missing scripts: CraftingWindow
+PASS Every building model level has a baked preview
+PASS Building preview follows selection: AlchemyBuilding
+PASS Building preview follows selection: FarmBuilding
+PASS Building preview follows selection: LumberjackBuilding
+PASS Building preview follows selection: SmithBuilding
+PASS Building preview follows selection: StorageBuilding
+PASS Quest initialization includes all definitions without duplicates
+PASS Quest rejects premature claims and negative progress
+PASS Quest overshoot unlocks reward and clamps progress
+PASS Ready filter shows eligible quest and enables claim
+PASS Journal grants full reward amount exactly once
+PASS Claimed quest leaves ready list
+PASS Completed filter shows claimed quest without enabling another claim
+PASS Active filter excludes completed quests
+PASS All HUD destinations use icons with tooltips
+PASS Sensitivity slider has intended range
+PASS Sensitivity slider updates saved preference and camera zoom scaling
+PASS Insufficient funds: no debit and no reward
+PASS Exact funds: debit and item granted together
+PASS Invalid prices rejected
+PASS Equipment purchase succeeds
+PASS Duplicate equipment does not charge again
+PASS Resource overflow rejected
+PASS Unknown item rejected
+PASS Wheel charges 15 ore for three spins
+PASS Wheel cannot buy without funds
+PASS No ad provider: no unverified spin granted
+PASS Playtime reward rejects early claim
+PASS Playtime threshold grants once, repeated click does not duplicate
+PASS Playtime survives serialization
+PASS Daily eligibility respects new UTC day
+PASS Daily reward cannot repeat on the same day
+PASS Crafting has all required layout references
+PASS Crafting initializes its rebuilt prefab
+PASS Crafting populates real categories and recipes
+PASS Level completion creates five resource rewards
+Complete. Transient progress only; no player save provider initialized. Full gameplay/ads not simulated.

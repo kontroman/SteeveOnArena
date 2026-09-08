@@ -125,6 +125,15 @@ namespace MineArena.PlayerSystem
             _animator?.SetTrigger(_deathTriggerHash);
         }
 
+        public void ResetAfterDeath()
+        {
+            if (_animator == null || _animator.runtimeAnimatorController == null) return;
+            int hand = _animator.GetInteger(_handItemParamHash);
+            _animator.Rebind();
+            _animator.SetInteger(_handItemParamHash, hand);
+            _animator.Update(0f);
+        }
+
         public void TriggerVictory()
         {
             _animator?.SetTrigger(_victoryTriggerHash);

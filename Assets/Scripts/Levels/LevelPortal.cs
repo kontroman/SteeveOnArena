@@ -12,7 +12,7 @@ namespace MineArena.Levels
 
         private void OnTriggerEnter(Collider other)
         {
-            if (_entered || !other.IsPlayer())
+            if (_entered || !other.IsPlayer() || MineArena.PlayerSystem.PlayerMovement.IsPlayerDead)
                 return;
 
             _entered = true;

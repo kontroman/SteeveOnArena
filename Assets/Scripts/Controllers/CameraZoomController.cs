@@ -66,7 +66,7 @@ namespace MineArena.Controllers
             if (_ignoreWhenPointerOverUi && EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
                 return;
 
-            _targetDistance = Mathf.Clamp(_targetDistance - scroll * _zoomStep, _minDistance, _maxDistance);
+            _targetDistance = Mathf.Clamp(_targetDistance - MineArena.UI.CameraSensitivity.Apply(scroll, _zoomStep), _minDistance, _maxDistance);
         }
 
         private void ApplyZoom()

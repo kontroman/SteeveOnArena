@@ -1,4 +1,5 @@
 using System;
+using Devotion.SDK.Controllers;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,6 +51,12 @@ namespace MineArena.Windows.Crafting
         [SerializeField] private TextMeshProUGUI _emptyState;
         [SerializeField] private TextMeshProUGUI _resultText;
         [SerializeField] private Button _craftButton;
+        [SerializeField] private GameObject _batchControls;
+        [SerializeField] private Button _singleBatchButton;
+        [SerializeField] private Button _allBatchesButton;
+        private bool _craftAll;
+        private int _selectedBatches = 1;
+        public Transform TutorialTarget => _craftButton != null ? _craftButton.transform : null;
         [SerializeField] private Image _craftButtonImage;
         [SerializeField] private TextMeshProUGUI _craftButtonLabel;
 
@@ -82,6 +89,8 @@ namespace MineArena.Windows.Crafting
 
         public static CraftingWindow Open(BuildingConfig initialBuilding = null)
         {
+            if (!MineArena.Managers.TutorialService.AllowWindow(typeof(CraftingWindow))) return null;
+            if (MineArena.Managers.TutorialService.DeferCraft(() => Open(initialBuilding))) return null;
             var window = FindExistingWindow();
 
             if (window == null)
@@ -93,6 +102,7 @@ namespace MineArena.Windows.Crafting
                 return null;
 
             var wasActive = window.gameObject.activeInHierarchy;
+            window.transform.SetAsLastSibling();
             window._pendingInitialBuilding = initialBuilding;
 
             if (!wasActive)
@@ -142,8 +152,58 @@ namespace MineArena.Windows.Crafting
             }
         }
 
+        private Image _craftProgressFill;
+        private bool _wasCrafting;
+        private void RefreshCraftProgress()
+        {
+            if (_craftButton == null || _craftButtonLabel == null) return;
+            if (_craftProgressFill == null)
+            {
+                var go = new GameObject("CraftProgress", typeof(RectTransform), typeof(Image));
+                go.transform.SetParent(_craftButton.transform, false);
+                go.transform.SetAsFirstSibling();
+                _craftProgressFill = go.GetComponent<Image>();
+                _craftProgressFill.color = new Color(0.48f, 0.75f, 0.35f, 0.6f);
+                _craftProgressFill.raycastTarget = false;
+                var rect = _craftProgressFill.rectTransform;
+                rect.anchorMin = Vector2.zero;
+                rect.offsetMin = rect.offsetMax = Vector2.zero;
+            }
+            var job = _adapter.ActiveJob;
+            if (_selectedRecipe != null && _selectedRecipe.IsProduction)
+            {
+                _craftProgressFill.gameObject.SetActive(false);
+                _craftButton.interactable = false;
+                bool growing = _adapter.IsUnlocked(_selectedRecipe);
+                long next = GameRoot.PlayerProgress.InventoryProgress.FarmNextProductionUtcTicks;
+                float seconds = Mathf.Max(0, (float)TimeSpan.FromTicks(next - DateTime.UtcNow.Ticks).TotalSeconds);
+                _craftButtonLabel.text = growing ? $"Урожай через {seconds:0} с" : $"Нужна ферма ур. {_selectedRecipe.RequiredBuildingLevel}";
+                _resultText.text = growing ? "Урожай автоматически поступит в инвентарь" : "Постройте или улучшите ферму на участке";
+                return;
+            }
+            if (_wasCrafting && job == null) _resultText.text = "Готово! Предмет добавлен в инвентарь.";
+            _wasCrafting = job != null;
+            _craftProgressFill.gameObject.SetActive(job != null);
+            if (job != null)
+            {
+                long now = DateTime.UtcNow.Ticks;
+                _craftProgressFill.rectTransform.anchorMax = new Vector2(job.Progress(now), 1f);
+                _craftProgressFill.rectTransform.offsetMax = Vector2.zero;
+                _craftButtonLabel.text = $"Готовится · {job.Remaining(now):0.0} с";
+                _craftButton.interactable = false;
+                var item = GameRoot.GameConfig.ItemDatabase.GetItemConfig(job.ItemId);
+                _resultText.text = $"В работе: {item?.DisplayName} ×{job.Amount}";
+            }
+            else if (_selectedRecipe != null)
+            {
+                _craftButtonLabel.text = $"Создать ×{_adapter.GetCraftAmount(_selectedRecipe) * _selectedBatches} · {_selectedRecipe.Item.CraftSeconds:0.#} с";
+                _craftButton.interactable = _adapter.CanCraft(_selectedRecipe);
+            }
+        }
+
         private void Update()
         {
+            RefreshCraftProgress();
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 CloseWindow();
@@ -152,6 +212,7 @@ namespace MineArena.Windows.Crafting
 
         public void Initialize(BuildingConfig initialBuilding)
         {
+            if (MineArena.Managers.TutorialService.Active) initialBuilding = MineArena.Managers.TutorialService.Workshop;
             _pendingInitialBuilding = initialBuilding;
 
             if (!isActiveAndEnabled)
@@ -632,6 +693,8 @@ namespace MineArena.Windows.Crafting
             RebuildItems();
 
             var recipe = selectFirstRecipe ? category?.Recipes.FirstOrDefault() : _selectedRecipe;
+            if (selectFirstRecipe && MineArena.Managers.TutorialService.Active)
+                recipe = category?.Recipes.FirstOrDefault(r => r.Item != null && r.Item.Name == "Planks");
 
             if (recipe == null || recipe.Category != category)
             {
@@ -643,6 +706,7 @@ namespace MineArena.Windows.Crafting
 
         private void SelectRecipe(CraftingRecipeEntry recipe)
         {
+            _craftAll = false;
             _selectedRecipe = recipe;
             _resultText.text = string.Empty;
             RefreshItemStates();
@@ -690,6 +754,7 @@ namespace MineArena.Windows.Crafting
         private void RefreshDetails()
         {
             ClearCosts();
+            RefreshBatchControls();
 
             if (_selectedRecipe == null)
             {
@@ -700,8 +765,10 @@ namespace MineArena.Windows.Crafting
             _emptyState.gameObject.SetActive(false);
 
             SetItemIcon(_detailIcon, ResolveDetailResourceIcon(), _selectedRecipe.Item, _style.PlaceholderIcon);
-            _detailName.text = _selectedRecipe.DisplayName;
+            _detailName.text = _selectedRecipe.Item.DisplayName + " ×" + _adapter.GetCraftAmount(_selectedRecipe) * _selectedBatches;
             _detailDescription.text = _adapter.GetDescription(_selectedRecipe);
+            foreach (var text in _detailDescription.transform.parent.GetComponentsInChildren<TMP_Text>(true))
+                if (text.name == "CostsTitle") text.text = _selectedRecipe.IsProduction ? "ВЫРАЩИВАНИЕ" : "НУЖНЫЕ РЕСУРСЫ";
 
             var unlocked = _adapter.IsUnlocked(_selectedRecipe);
             var canCraft = _adapter.CanCraft(_selectedRecipe);
@@ -718,14 +785,20 @@ namespace MineArena.Windows.Crafting
                 _detailRequirement.color = _style.MutedText;
             }
 
-            RebuildCosts(_selectedRecipe.Costs);
+            RebuildCosts(_selectedBatches > 1 ? MineArena.Managers.CraftBatchUtility.Scale(_selectedRecipe.Costs, _selectedBatches) : _selectedRecipe.Costs);
+            if (_selectedRecipe.IsProduction)
+            {
+                ClearCosts();
+                var note = CreateText("ProductionInfo", _costsRoot, "Посадка и сбор автоматические.\nЗа время отсутствия накапливается до 10 урожаев.", 20, FontStyles.Normal, TextAlignmentOptions.TopLeft);
+                note.rectTransform.sizeDelta = new Vector2(0, 80);
+            }
 
             _craftButton.interactable = canCraft;
             if (!_usesPrefabLayout && _craftButtonImage != null)
             {
                 _craftButtonImage.sprite = canCraft ? _style.CraftButton : _style.ButtonDisabled;
             }
-            _craftButtonLabel.color = canCraft ? _style.Text : _style.MutedText;
+            _craftButtonLabel.color = canCraft ? new Color32(255, 250, 233, 255) : _style.MutedText;
         }
 
         private void RebuildCosts(IReadOnlyList<ResourceRequired> costs)
@@ -755,20 +828,22 @@ namespace MineArena.Windows.Crafting
         private void CreateCostRow(ResourceRequired cost)
         {
             var row = CreatePanel($"Cost_{cost.Resource.Name}", _costsRoot, _style.Slot);
-            row.sizeDelta = new Vector2(0f, 42f);
+            row.sizeDelta = new Vector2(0f, 64f);
 
             var layout = row.gameObject.AddComponent<HorizontalLayoutGroup>();
             layout.padding = new RectOffset(8, 10, 6, 6);
             layout.spacing = 8f;
             layout.childAlignment = TextAnchor.MiddleLeft;
-            layout.childControlWidth = false;
+            layout.childControlWidth = true;
             layout.childControlHeight = true;
             layout.childForceExpandWidth = false;
             layout.childForceExpandHeight = true;
 
             var iconSlot = CreateRect("IconSlot", row);
-            iconSlot.sizeDelta = new Vector2(30f, 30f);
-            iconSlot.gameObject.AddComponent<LayoutElement>().preferredWidth = 30f;
+            iconSlot.sizeDelta = new Vector2(52f, 52f);
+            var iconLayout = iconSlot.gameObject.AddComponent<LayoutElement>();
+            iconLayout.minWidth = iconLayout.preferredWidth = 52f;
+            iconLayout.flexibleWidth = 0;
 
             var icon = CreateImage("Icon", iconSlot, cost.Resource.Icon != null ? cost.Resource.Icon : _style.PlaceholderIcon);
             Stretch(icon.rectTransform);
@@ -776,11 +851,11 @@ namespace MineArena.Windows.Crafting
             var resourceIcon = CreateResourceIcon(iconSlot, "BlockIcon");
             SetResourceIcon(icon, resourceIcon, cost.Resource, _style.PlaceholderIcon);
 
-            var name = CreateText("Name", row, cost.Resource.Name, 15, FontStyles.Bold, TextAlignmentOptions.Left);
+            var name = CreateText("Name", row, cost.Resource.DisplayName, 18, FontStyles.Bold, TextAlignmentOptions.Left);
             name.gameObject.AddComponent<LayoutElement>().flexibleWidth = 1f;
 
             var available = _adapter.GetAvailable(cost);
-            var amount = CreateText("Amount", row, $"{available}/{cost.Amount}", 15, FontStyles.Bold, TextAlignmentOptions.Right);
+            var amount = CreateText("Amount", row, $"{available}/{cost.Amount}", 18, FontStyles.Bold, TextAlignmentOptions.Right);
             amount.color = available >= cost.Amount ? _style.SuccessText : _style.WarningText;
             amount.rectTransform.sizeDelta = new Vector2(90f, 0f);
             amount.gameObject.AddComponent<LayoutElement>().preferredWidth = 90f;
@@ -788,12 +863,12 @@ namespace MineArena.Windows.Crafting
 
         private void CraftSelected()
         {
-            var result = _adapter.TryCraft(_selectedRecipe);
+            var result = _adapter.TryCraft(_selectedRecipe, _selectedBatches);
 
             if (result.Success)
             {
                 _resultText.color = _style.SuccessText;
-                _resultText.text = "Создано";
+                _resultText.text = "Крафт начат";
             }
             else
             {
@@ -809,6 +884,31 @@ namespace MineArena.Windows.Crafting
         {
             RefreshItemStates();
             RefreshDetails();
+        }
+
+        private void SelectSingleBatch() { _craftAll = false; RefreshDetails(); RefreshCraftProgress(); }
+        private void SelectAllBatches() { _craftAll = true; RefreshDetails(); RefreshCraftProgress(); }
+
+        private void RefreshBatchControls()
+        {
+            bool visible = _selectedRecipe != null && _selectedRecipe.Item.Stackable && !_selectedRecipe.IsProduction && !MineArena.Managers.TutorialService.Active;
+            if (_batchControls != null) _batchControls.SetActive(visible);
+            int max = visible ? _adapter.GetMaxBatches(_selectedRecipe) : 1;
+            _selectedBatches = visible && _craftAll ? Mathf.Max(1, max) : 1;
+            if (_singleBatchButton == null || _allBatchesButton == null) return;
+            _singleBatchButton.onClick.RemoveListener(SelectSingleBatch);
+            _singleBatchButton.onClick.AddListener(SelectSingleBatch);
+            _allBatchesButton.onClick.RemoveListener(SelectAllBatches);
+            _allBatchesButton.onClick.AddListener(SelectAllBatches);
+            _singleBatchButton.interactable = _adapter.ActiveJob == null;
+            _allBatchesButton.interactable = _adapter.ActiveJob == null && max > 1;
+            _singleBatchButton.GetComponentInChildren<TMP_Text>().text = "×1";
+            _allBatchesButton.GetComponentInChildren<TMP_Text>().text = "Всё · " + max;
+            var selected = new Color32(88, 127, 121, 255);
+            _singleBatchButton.targetGraphic.color = _craftAll ? Color.white : selected;
+            _allBatchesButton.targetGraphic.color = _craftAll ? selected : Color.white;
+            _singleBatchButton.GetComponentInChildren<TMP_Text>().color = _craftAll ? new Color32(81, 71, 55, 255) : Color.white;
+            _allBatchesButton.GetComponentInChildren<TMP_Text>().color = _craftAll ? Color.white : new Color32(81, 71, 55, 255);
         }
 
         private CraftingCategory ResolveInitialCategory(BuildingConfig initialBuilding)

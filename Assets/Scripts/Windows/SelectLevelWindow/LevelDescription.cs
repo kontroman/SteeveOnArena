@@ -35,18 +35,31 @@ namespace MineArena.Windows.SelectLevel
 
         private void SetupUI()
         {
-            difficultyText.text = _config.Difficulty.ToString();
+            startButton.onClick.RemoveListener(StartLevel);
+            ClearResources(availableTransform);
+            ClearResources(rewardTransform);
+            startButton.interactable = CanStart();
+            if (_config == null) return;
+            difficultyText.text = LevelSelectionView.DifficultyLabel(_config.Difficulty);
 
-            foreach (var item in _config.AvailableResources)
+            if (_config.AvailableResources != null)
             {
-                var resource = Instantiate(resourcePrefab, availableTransform).GetComponent<BuildingPriceElement>();
-                resource.Setup(item);
+                foreach (var item in _config.AvailableResources)
+                {
+                    if (item == null) continue;
+                    var resource = Instantiate(resourcePrefab, availableTransform).GetComponent<BuildingPriceElement>();
+                    resource.Setup(item);
+                }
             }
 
-            foreach (var item in _config.RewardResources)
+            if (_config.RewardResources != null)
             {
-                var resource = Instantiate(resourcePrefab, rewardTransform).GetComponent<BuildingPriceElement>();
-                resource.Setup(item.Item, item.Amount);
+                foreach (var item in _config.RewardResources)
+                {
+                    if (item == null || item.Item == null || item.Amount <= 0) continue;
+                    var resource = Instantiate(resourcePrefab, rewardTransform).GetComponent<BuildingPriceElement>();
+                    resource.Setup(item.Item, item.Amount);
+                }
             }
 
             startButton.onClick.AddListener(StartLevel);
@@ -54,6 +67,8 @@ namespace MineArena.Windows.SelectLevel
 
         private void StartLevel()
         {
+            if (!MineArena.Managers.TutorialService.AllowLevel(GameRoot.GameConfig.Levels.IndexOf(_config))) return;
+            if (!CanStart()) return;
             startButton.interactable = false;
 
             GameRoot.UIManager.CloseAllWindows();
@@ -86,6 +101,23 @@ namespace MineArena.Windows.SelectLevel
                     GameRoot.UIManager.CloseWindow<LoadingWindow>();
                     startButton.interactable = true;
                 });
+        }
+
+        private bool CanStart()
+        {
+            var levels = GameRoot.GameConfig != null ? GameRoot.GameConfig.Levels : null;
+            int index = levels != null ? levels.IndexOf(_config) : -1;
+            return index >= 0 && _config != null && _config.LevelPrefab != null &&
+                (GameRoot.PlayerProgress?.LevelsProgress?.IsLevelUnlocked(index) ?? index == 0);
+        }
+
+        private static void ClearResources(Transform root)
+        {
+            for (int i = root.childCount - 1; i >= 0; i--)
+            {
+                root.GetChild(i).gameObject.SetActive(false);
+                Destroy(root.GetChild(i).gameObject);
+            }
         }
 
     }

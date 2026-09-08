@@ -1,0 +1,16 @@
+﻿const fs=require('fs');
+const files=['Assets/Scripts/UI/TutorialTheme.cs','Assets/Scripts/Managers/TutorialService.cs','Assets/Scripts/Managers/CraftProductionService.cs','Assets/Scripts/Item/Configs/PotionConfig.cs','Assets/Scripts/Player/PotionEffects.cs','Assets/Scripts/Item/HarvestPlantVisual.cs'];
+let runtime=fs.readFileSync('Assembly-CSharp.csproj','utf8');
+const add=files.filter(p=>!runtime.includes(p.replaceAll('/','\\'))&&!runtime.includes(p));
+runtime=runtime.replace('</Project>','<ItemGroup>'+add.map(p=>'<Compile Include="'+p+'" />').join('')+'</ItemGroup></Project>');
+fs.writeFileSync('RuntimeProduction.Temp.csproj',runtime);
+let editor=fs.readFileSync('Assembly-CSharp-Editor.csproj','utf8').replaceAll('Assembly-CSharp.csproj','RuntimeProduction.Temp.csproj');
+if(!editor.includes('ExpeditionFlowValidation.cs'))editor=editor.replace('</Project>','<ItemGroup><Compile Include="Assets/Scripts/Editor/ExpeditionFlowValidation.cs" /></ItemGroup></Project>');
+if(!editor.includes('TutorialValidation.cs'))editor=editor.replace('</Project>','<ItemGroup><Compile Include="Assets/Scripts/Editor/TutorialValidation.cs" /></ItemGroup></Project>');
+if(!editor.includes('RewardUiRevision.cs'))editor=editor.replace('</Project>','<ItemGroup><Compile Include="Assets/Scripts/Editor/RewardUiRevision.cs" /></ItemGroup></Project>');
+if(!editor.includes('BalanceValidation.cs'))editor=editor.replace('</Project>','<ItemGroup><Compile Include="Assets/Scripts/Editor/BalanceValidation.cs" /></ItemGroup></Project>');
+fs.writeFileSync('EditorProduction.Temp.csproj',editor);
+if(!editor.includes('ProductionUiRevision.cs'))editor=editor.replace('</Project>','<ItemGroup><Compile Include="Assets/Scripts/Editor/ProductionUiRevision.cs" /></ItemGroup></Project>');
+fs.writeFileSync('EditorProduction.Temp.csproj',editor);
+if(!editor.includes('ProductionValidation.cs'))editor=editor.replace('</Project>','<ItemGroup><Compile Include="Assets/Scripts/Editor/ProductionValidation.cs" /></ItemGroup></Project>');
+fs.writeFileSync('EditorProduction.Temp.csproj',editor);

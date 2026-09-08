@@ -2,7 +2,6 @@ using UnityEngine;
 using Devotion.SDK.Controllers;
 using MineArena.Controllers;
 using MineArena.PlayerSystem;
-using System;
 using System.Threading.Tasks;
 using DG.Tweening;
 using MineArena.Items;
@@ -62,7 +61,7 @@ namespace MineArena.Commands
                     ore.DOShakeScale(0.25f, 0.25f, 8, 90);
                 });
 
-                await Task.Delay(TimeSpan.FromSeconds(miningDuration));
+                await CoroutineHelper.DelayAsync(miningDuration);
             }
 
             pm.SetMovement(true);

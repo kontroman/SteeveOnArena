@@ -19,6 +19,7 @@ namespace MineArena.Buildings
         [SerializeField] private float fadeDuration = 0.75f;
 
         private bool _isPlaying;
+        public bool IsPlaying => _isPlaying;
 
         public IPromise PlayForBuilding(BuildingConfig config, GameObject buildingInstance, Transform buildingPlace)
         {
@@ -82,7 +83,7 @@ namespace MineArena.Buildings
 
             if (failure == null)
             {
-                MovePlayerToBuildPoint(buildingPlace, playerTransform);
+                MovePlayerToBuildPoint(buildingPlace, playerTransform, buildingInstance);
                 Debug.Log($"{nameof(BuildingConstructionSequence)}: camera moved to cinematic start around {target?.name ?? "null"}.", this);
                 EnsureCinematicCamera().SetToStart(target, camera, cameraSettings);
             }
@@ -123,6 +124,8 @@ namespace MineArena.Buildings
 
             if (blackWindow != null)
                 yield return WaitForPromise(blackWindow.DoFade(true, fadeDuration), ex => Debug.LogWarning(ex.Message));
+
+            GameRoot.UIManager?.CloseWindow<BlackWindow>();
 
             _isPlaying = false;
 
@@ -178,20 +181,14 @@ namespace MineArena.Buildings
             }
         }
 
-        private void MovePlayerToBuildPoint(Transform buildingPlace, Transform playerTransform)
+        private void MovePlayerToBuildPoint(Transform buildingPlace, Transform playerTransform, GameObject buildingInstance)
         {
             var buildPoint = GetPlayerBuildPoint(buildingPlace);
-
-            if (buildPoint == null)
-            {
-                Debug.LogWarning($"{nameof(BuildingConstructionSequence)}: {buildingPlace?.name ?? "building place"} has no {nameof(BuildingZone)}.{nameof(BuildingZone.PlayerPositionOnBuild)} assigned; player will not be moved.", this);
-                return;
-            }
 
             if (playerTransform == null)
                 return;
             
-            Debug.Log($"{nameof(BuildingConstructionSequence)}: moving player to build point {buildPoint.name}.", this);
+            var destination = ResolveOutsidePosition(buildingInstance, buildPoint != null ? buildPoint.position : playerTransform.position);
 
             var characterController = playerTransform.GetComponent<CharacterController>();
             var wasEnabled = characterController != null && characterController.enabled;
@@ -199,11 +196,41 @@ namespace MineArena.Buildings
             if (characterController != null)
                 characterController.enabled = false;
 
-            playerTransform.position = buildPoint.position;
-            playerTransform.rotation = buildPoint.rotation;
+            playerTransform.position = destination;
+            var facing = buildingInstance.transform.position - destination; facing.y = 0;
+            if (facing.sqrMagnitude > .01f) playerTransform.rotation = Quaternion.LookRotation(facing);
 
             if (characterController != null)
                 characterController.enabled = wasEnabled;
+        }
+
+        public static Vector3 ResolveOutsidePosition(GameObject building, Vector3 preferred)
+        {
+            if (building == null) return preferred;
+            var renderers = building.GetComponentsInChildren<Renderer>(true);
+            if (renderers.Length == 0) return preferred;
+            var bounds = renderers[0].bounds;
+            foreach (var renderer in renderers) bounds.Encapsulate(renderer.bounds);
+            bounds.Expand(new Vector3(3f, 0, 3f));
+            var point = preferred;
+            if (point.x >= bounds.min.x && point.x <= bounds.max.x && point.z >= bounds.min.z && point.z <= bounds.max.z)
+            {
+                var direction = preferred - bounds.center; direction.y = 0;
+                if (direction.sqrMagnitude < .01f) direction = Vector3.forward;
+                direction.Normalize();
+                float x = Mathf.Abs(direction.x) > .001f ? bounds.extents.x / Mathf.Abs(direction.x) : float.PositiveInfinity;
+                float z = Mathf.Abs(direction.z) > .001f ? bounds.extents.z / Mathf.Abs(direction.z) : float.PositiveInfinity;
+                point = bounds.center + direction * (Mathf.Min(x, z) + .1f);
+                point.y = preferred.y;
+            }
+            var hits = Physics.RaycastAll(point + Vector3.up * 10f, Vector3.down, 30f, ~0, QueryTriggerInteraction.Ignore);
+            float nearest = float.MaxValue;
+            foreach (var hit in hits)
+            {
+                if (hit.collider.transform.IsChildOf(building.transform) || hit.collider.GetComponentInParent<Player>() != null || hit.normal.y < .6f || hit.distance >= nearest) continue;
+                nearest = hit.distance; point.y = hit.point.y + .1f;
+            }
+            return point;
         }
 
         private static Transform GetPlayerBuildPoint(Transform buildingPlace)

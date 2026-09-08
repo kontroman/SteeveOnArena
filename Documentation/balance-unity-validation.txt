@@ -1,0 +1,168 @@
+PASS Databases loaded
+PASS No missing inventory references
+PASS Unique inventory IDs
+PASS Five buildings registered
+PASS Unique building save keys
+PASS CoalItem valid costs
+PASS CoalItem positive batch
+PASS Planks valid costs
+PASS Planks positive batch
+PASS Diamond Armor valid costs
+PASS Diamond Armor positive batch
+PASS StoneSword valid costs
+PASS StoneSword positive batch
+PASS IronSword valid costs
+PASS IronSword positive batch
+PASS GoldenSword valid costs
+PASS GoldenSword positive batch
+PASS DiamondSword valid costs
+PASS DiamondSword positive batch
+PASS NetheritheSword valid costs
+PASS NetheritheSword positive batch
+PASS Bow valid costs
+PASS Bow positive batch
+PASS WoodenPickaxe valid costs
+PASS WoodenPickaxe positive batch
+PASS IronPickaxe valid costs
+PASS IronPickaxe positive batch
+PASS DiamondPickaxe valid costs
+PASS DiamondPickaxe positive batch
+PASS NetherithePickaxe valid costs
+PASS NetherithePickaxe positive batch
+PASS IronHelmet valid costs
+PASS IronHelmet positive batch
+PASS IronChestplate valid costs
+PASS IronChestplate positive batch
+PASS IronLeggings valid costs
+PASS IronLeggings positive batch
+PASS IronBoots valid costs
+PASS IronBoots positive batch
+PASS GoldenHelmet valid costs
+PASS GoldenHelmet positive batch
+PASS GoldenChestplate valid costs
+PASS GoldenChestplate positive batch
+PASS GoldenLeggings valid costs
+PASS GoldenLeggings positive batch
+PASS GoldenBoots valid costs
+PASS GoldenBoots positive batch
+PASS Diamond Helmet valid costs
+PASS Diamond Helmet positive batch
+PASS Diamond Leggings valid costs
+PASS Diamond Leggings positive batch
+PASS Diamond Boots valid costs
+PASS Diamond Boots positive batch
+PASS NetheriteHelmet valid costs
+PASS NetheriteHelmet positive batch
+PASS NetheriteChestplate valid costs
+PASS NetheriteChestplate positive batch
+PASS NetheriteLeggings valid costs
+PASS NetheriteLeggings positive batch
+PASS NetheriteBoots valid costs
+PASS NetheriteBoots positive batch
+PASS IronIngot valid costs
+PASS IronIngot positive batch
+PASS GoldIngot valid costs
+PASS GoldIngot positive batch
+PASS NetheriteIngot valid costs
+PASS NetheriteIngot positive batch
+PASS Glass valid costs
+PASS Glass positive batch
+PASS Stick valid costs
+PASS Stick positive batch
+PASS Wool valid costs
+PASS Wool positive batch
+PASS NetheriteScrap valid costs
+PASS NetheriteScrap positive batch
+PASS Sugar valid costs
+PASS Sugar positive batch
+PASS GlassBottle valid costs
+PASS GlassBottle positive batch
+PASS GlisteringMelon valid costs
+PASS GlisteringMelon positive batch
+PASS HealingPotion valid costs
+PASS HealingPotion positive batch
+PASS RegenerationPotion valid costs
+PASS RegenerationPotion positive batch
+PASS SpeedPotion valid costs
+PASS SpeedPotion positive batch
+PASS SmithBuilding expected levels
+PASS SmithBuilding max level cannot upgrade
+PASS SmithBuilding upgrade target
+PASS SmithBuilding model and preview 1
+PASS SmithBuilding positive price 1
+PASS SmithBuilding valid unlocks 1
+PASS SmithBuilding model and preview 2
+PASS SmithBuilding positive price 2
+PASS SmithBuilding valid unlocks 2
+PASS SmithBuilding model and preview 3
+PASS SmithBuilding positive price 3
+PASS SmithBuilding valid unlocks 3
+PASS SmithBuilding model and preview 4
+PASS SmithBuilding positive price 4
+PASS SmithBuilding valid unlocks 4
+PASS LumberjackBuilding expected levels
+PASS LumberjackBuilding max level cannot upgrade
+PASS LumberjackBuilding upgrade target
+PASS LumberjackBuilding model and preview 1
+PASS LumberjackBuilding positive price 1
+PASS LumberjackBuilding valid unlocks 1
+PASS LumberjackBuilding model and preview 2
+PASS LumberjackBuilding positive price 2
+PASS LumberjackBuilding valid unlocks 2
+PASS LumberjackBuilding model and preview 3
+PASS LumberjackBuilding positive price 3
+PASS LumberjackBuilding valid unlocks 3
+PASS FarmBuilding expected levels
+PASS FarmBuilding max level cannot upgrade
+PASS FarmBuilding upgrade target
+PASS FarmBuilding model and preview 1
+PASS FarmBuilding positive price 1
+PASS FarmBuilding valid unlocks 1
+PASS FarmBuilding model and preview 2
+PASS FarmBuilding positive price 2
+PASS FarmBuilding valid unlocks 2
+PASS FarmBuilding model and preview 3
+PASS FarmBuilding positive price 3
+PASS FarmBuilding valid unlocks 3
+PASS StorageBuilding expected levels
+PASS StorageBuilding max level cannot upgrade
+PASS StorageBuilding upgrade target
+PASS StorageBuilding model and preview 1
+PASS StorageBuilding positive price 1
+PASS StorageBuilding valid unlocks 1
+PASS StorageBuilding model and preview 2
+PASS StorageBuilding positive price 2
+PASS StorageBuilding valid unlocks 2
+PASS StorageBuilding model and preview 3
+PASS StorageBuilding positive price 3
+PASS StorageBuilding valid unlocks 3
+PASS AlchemyBuilding expected levels
+PASS AlchemyBuilding max level cannot upgrade
+PASS AlchemyBuilding upgrade target
+PASS AlchemyBuilding model and preview 1
+PASS AlchemyBuilding positive price 1
+PASS AlchemyBuilding valid unlocks 1
+PASS AlchemyBuilding model and preview 2
+PASS AlchemyBuilding positive price 2
+PASS AlchemyBuilding valid unlocks 2
+PASS AlchemyBuilding model and preview 3
+PASS AlchemyBuilding positive price 3
+PASS AlchemyBuilding valid unlocks 3
+PASS Reload preserves more than 64 resources
+PASS Large resource totals merge into one inventory entry
+PASS Large resource costs consume the expected amount
+PASS Legacy material totals are preserved
+PASS Legacy inventory IDs are removed
+PASS Material migration is idempotent
+PASS Level1_Village exit portal
+PASS Level1_Village three populated waves
+PASS Level1_Village rewards resolve
+PASS Level2_Sand exit portal
+PASS Level2_Sand three populated waves
+PASS Level2_Sand rewards resolve
+PASS Level3_Mine exit portal
+PASS Level3_Mine three populated waves
+PASS Level3_Mine rewards resolve
+PASS Level4_Forest exit portal
+PASS Level4_Forest three populated waves
+PASS Level4_Forest rewards resolve

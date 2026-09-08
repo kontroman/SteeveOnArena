@@ -1,0 +1,427 @@
+
+Assets/DevotionSDK/Prefabs/UI/BlackWindow.prefab : MineArena.Windows.BlackWindow
+Background size=(0.00, 0.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(1.00, 1.00) sprite=-
+REF m_Script = BlackWindow
+REF blackScreen = Background
+
+Assets/DevotionSDK/Prefabs/UI/BuildingWindow.prefab : MineArena.Windows.BuildingWindow
+Background size=(0.00, 0.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(1.00, 1.00) sprite=-
+Window size=(-900.55, -461.51) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(1.00, 1.00) sprite=BigWindowPanel
+Window/Button size=(285.77, 73.70) pos=(0.34, 110.00) anchors=(0.50, 0.00)/(0.50, 0.00) sprite=WhiteButton
+Window/CloseButton size=(92.44, 96.31) pos=(-58.03, -94.21) anchors=(1.00, 1.00)/(1.00, 1.00) sprite=-
+REF m_Script = BuildingWindow
+REF _buildingName = BuildingName
+REF _priceTransform = PriceTransform
+REF _opensTransform = OpensTransform
+REF _pricePrefab = PriceElement
+
+Assets/DevotionSDK/Prefabs/UI/DailyGiftWindow.prefab : Devotion.SDK.UI.DailyGiftWIndow
+BG size=(0.00, 0.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(1.00, 1.00) sprite=Background
+Title size=(0.00, 69.85) pos=(0.00, -34.93) anchors=(0.00, 1.00)/(1.00, 1.00) sprite=-
+GameObject size=(100.00, 181.93) pos=(0.00, 83.04) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=-
+GameObject/Reward size=(84.00, 84.00) pos=(0.00, 28.00) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=-
+RewardsRoot size=(520.00, 112.00) pos=(0.00, -89.00) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=-
+RewardsRoot/Slot1 size=(100.00, 100.00) pos=(-300.00, 0.00) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=-
+RewardsRoot/Slot1/Icon size=(75.00, 75.00) pos=(0.00, 12.50) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=-
+RewardsRoot/Slot2 size=(100.00, 100.00) pos=(-200.00, 0.00) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=-
+RewardsRoot/Slot2/Icon size=(75.00, 75.00) pos=(0.00, 12.50) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=-
+RewardsRoot/Slot3 size=(100.00, 100.00) pos=(-100.00, 0.00) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=-
+RewardsRoot/Slot3/Icon size=(75.00, 75.00) pos=(0.00, 12.50) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=-
+RewardsRoot/Slot4 size=(100.00, 100.00) pos=(0.00, 0.00) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=-
+RewardsRoot/Slot4/Icon size=(75.00, 75.00) pos=(0.00, 12.50) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=-
+RewardsRoot/Slot5 size=(100.00, 100.00) pos=(100.00, 0.00) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=-
+RewardsRoot/Slot5/Icon size=(75.00, 75.00) pos=(0.00, 12.50) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=-
+RewardsRoot/Slot6 size=(100.00, 100.00) pos=(200.00, 0.00) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=-
+RewardsRoot/Slot6/Icon size=(75.00, 75.00) pos=(0.00, 12.50) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=-
+RewardsRoot/Slot7 size=(100.00, 100.00) pos=(300.00, 0.00) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=-
+RewardsRoot/Slot7/Icon size=(75.00, 75.00) pos=(0.00, 12.50) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=-
+ClaimButton size=(160.00, 30.00) pos=(-190.00, -205.00) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=UISprite
+CloseButton size=(160.00, 30.00) pos=(190.00, -205.00) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=UISprite
+REF m_Script = DailyGiftWIndow
+REF rewardsRoot = RewardsRoot
+REF rewardSlots.Array.data[0].root = Slot1
+REF rewardSlots.Array.data[0].background = Slot1
+REF rewardSlots.Array.data[0].icon = Icon
+REF rewardSlots.Array.data[0].dayText = Text (TMP) (1)
+REF rewardSlots.Array.data[0].amountText = Text (TMP)
+REF rewardSlots.Array.data[1].root = Slot2
+REF rewardSlots.Array.data[1].background = Slot2
+REF rewardSlots.Array.data[1].icon = Icon
+REF rewardSlots.Array.data[1].dayText = Text (TMP) (1)
+REF rewardSlots.Array.data[1].amountText = Text (TMP)
+REF rewardSlots.Array.data[2].root = Slot3
+REF rewardSlots.Array.data[2].background = Slot3
+REF rewardSlots.Array.data[2].icon = Icon
+REF rewardSlots.Array.data[2].dayText = Text (TMP) (1)
+REF rewardSlots.Array.data[2].amountText = Text (TMP)
+REF rewardSlots.Array.data[3].root = Slot4
+REF rewardSlots.Array.data[3].background = Slot4
+REF rewardSlots.Array.data[3].icon = Icon
+REF rewardSlots.Array.data[3].dayText = Text (TMP) (1)
+REF rewardSlots.Array.data[3].amountText = Text (TMP)
+REF rewardSlots.Array.data[4].root = Slot5
+REF rewardSlots.Array.data[4].background = Slot5
+REF rewardSlots.Array.data[4].icon = Icon
+REF rewardSlots.Array.data[4].dayText = Text (TMP) (1)
+REF rewardSlots.Array.data[4].amountText = Text (TMP)
+REF rewardSlots.Array.data[5].root = Slot6
+REF rewardSlots.Array.data[5].background = Slot6
+REF rewardSlots.Array.data[5].icon = Icon
+REF rewardSlots.Array.data[5].dayText = Text (TMP)
+REF rewardSlots.Array.data[5].amountText = Text (TMP)
+REF rewardSlots.Array.data[6].root = Slot7
+REF rewardSlots.Array.data[6].background = Slot7
+REF rewardSlots.Array.data[6].icon = Icon
+REF rewardSlots.Array.data[6].dayText = Text (TMP) (1)
+REF rewardSlots.Array.data[6].amountText = Text (TMP)
+REF rewardIcon = Reward
+REF titleText = Title
+REF rewardText = RewardText
+REF claimButton = ClaimButton
+REF closeButton = CloseButton
+
+Assets/DevotionSDK/Prefabs/UI/FortuneWheelWindow.prefab : Devotion.SDK.UI.FortuneWheelWindow
+ size=(0.00, 0.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(1.00, 1.00) sprite=-
+BackgroundWheel size=(650.78, 650.78) pos=(0.03, -13.71) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=wheel of fortune
+BackgroundWheel/Item1 size=(100.00, 100.00) pos=(159.90, -95.80) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=diamond_sword
+BackgroundWheel/Item1 (1) size=(100.00, 100.00) pos=(-161.20, 86.50) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=diamond
+BackgroundWheel/Item1 (2) size=(100.00, 100.00) pos=(4.10, -183.90) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=gold_ingot
+BackgroundWheel/Item1 (3) size=(100.00, 100.00) pos=(-152.10, -93.60) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=diamond_chestplate
+BackgroundWheel/Item1 (4) size=(100.00, 100.00) pos=(-1.00, 170.30) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=netherite_helmet
+BackgroundWheel/Item1 (5) size=(100.00, 100.00) pos=(159.20, 91.30) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=iron_ingot
+Pointer size=(650.71, 650.81) pos=(0.06, 298.70) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=arrow of fortune
+Start size=(385.87, 108.00) pos=(0.06, 134.00) anchors=(0.50, 0.00)/(0.50, 0.00) sprite=Button
+BuySpinButton size=(385.87, 108.00) pos=(-273.00, 180.00) anchors=(1.00, 0.50)/(1.00, 0.50) sprite=Button2
+BuySpinButton size=(385.87, 108.00) pos=(-273.00, 54.00) anchors=(1.00, 0.50)/(1.00, 0.50) sprite=Button2
+BuySpinButton size=(385.87, 108.00) pos=(-273.00, -67.00) anchors=(1.00, 0.50)/(1.00, 0.50) sprite=Button2
+BuySpinButton size=(385.87, 108.00) pos=(-273.00, -188.00) anchors=(1.00, 0.50)/(1.00, 0.50) sprite=Button2
+FreeSpinText size=(353.24, 70.83) pos=(-0.03, 44.61) anchors=(0.50, 0.00)/(0.50, 0.00) sprite=-
+TopPanel size=(677.46, 208.60) pos=(0.00, -124.00) anchors=(0.50, 1.00)/(0.50, 1.00) sprite=TopPanel
+PrizesPanel size=(562.97, 568.25) pos=(306.00, -13.69) anchors=(0.00, 0.50)/(0.00, 0.50) sprite=PrizesPanel
+PrizesPanel/PrizeIcon size=(73.23, 73.23) pos=(-151.60, 153.31) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=netherite_helmet
+PrizesPanel/PrizeIcon (1) size=(58.30, 58.30) pos=(-151.60, 82.90) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=diamond_sword
+PrizesPanel/PrizeIcon (2) size=(58.30, 58.30) pos=(-151.60, 5.40) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=diamond_chestplate
+PrizesPanel/PrizeIcon (3) size=(58.30, 58.30) pos=(-151.60, -63.70) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=diamond
+PrizesPanel/PrizeIcon (4) size=(58.30, 58.30) pos=(-151.60, -138.70) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=gold_ingot
+PrizesPanel/PrizeIcon (5) size=(58.30, 58.30) pos=(-151.60, -209.60) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=iron_ingot
+Button size=(80.00, 83.96) pos=(-58.00, -61.68) anchors=(1.00, 1.00)/(1.00, 1.00) sprite=cancel
+REF m_Script = FortuneWheelWindow
+REF _freeSpinTimerText = FreeSpinText
+
+Assets/DevotionSDK/Prefabs/UI/GodModeWindow.prefab : MineArena.Windows.GodModeWindow
+ size=(446.47, 299.27) pos=(-223.24, -149.64) anchors=(1.00, 1.00)/(1.00, 1.00) sprite=-
+Health size=(160.00, 20.00) pos=(-223.00, -57.00) anchors=(1.00, 1.00)/(1.00, 1.00) sprite=-
+Health/Background size=(20.00, 20.00) pos=(10.00, -10.00) anchors=(0.00, 1.00)/(0.00, 1.00) sprite=UISprite
+Health/Background/Checkmark size=(20.00, 20.00) pos=(0.00, 0.00) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=Checkmark
+Damage size=(160.00, 20.00) pos=(-223.00, -122.00) anchors=(1.00, 1.00)/(1.00, 1.00) sprite=-
+Damage/Background size=(20.00, 20.00) pos=(10.00, -10.00) anchors=(0.00, 1.00)/(0.00, 1.00) sprite=UISprite
+Damage/Background/Checkmark size=(20.00, 20.00) pos=(0.00, 0.00) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=Checkmark
+Dropdown size=(246.03, 41.65) pos=(0.00, -37.20) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=UISprite
+Dropdown/Arrow size=(20.00, 20.00) pos=(-15.00, 0.00) anchors=(1.00, 0.50)/(1.00, 0.50) sprite=DropdownArrow
+Dropdown/Template size=(0.00, 150.00) pos=(0.00, 2.00) anchors=(0.00, 0.00)/(1.00, 0.00) sprite=UISprite
+Dropdown/Template/Viewport size=(-18.00, 0.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(1.00, 1.00) sprite=UIMask
+Dropdown/Template/Scrollbar size=(20.00, 0.00) pos=(0.00, 0.00) anchors=(1.00, 0.00)/(1.00, 1.00) sprite=Background
+Button (1) size=(68.60, 51.51) pos=(-53.80, -100.40) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=UISprite
+Button (2) size=(68.60, 51.51) pos=(41.50, -100.40) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=UISprite
+REF m_Script = GodModeWindow
+REF _invulnerabilityToggle = Health
+REF _oneHitKillToggle = Damage
+REF _itemDropdown = Dropdown
+REF _addItemButton = Button (2)
+REF _removeItemButton = Button (1)
+
+Assets/DevotionSDK/Prefabs/UI/InfoPopupWindow.prefab : MineArena.Windows.InfoPopup.InfoPopupWindow
+ size=(0.00, 0.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(1.00, 1.00) sprite=-
+Background size=(823.53, 528.29) pos=(0.00, 0.00) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=InfoPanel
+Background/IconImage size=(109.10, 99.85) pos=(-2.22, -30.00) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=netherite_sword
+Background/OkButton size=(296.90, 91.25) pos=(411.77, 106.17) anchors=(0.00, 0.00)/(0.00, 0.00) sprite=WhiteButton
+REF m_Script = InfoPopupWindow
+REF _titleText = TitleText
+REF _descriptionText = DescriptionText
+REF _iconImage = IconImage
+REF _okButton = OkButton
+
+Assets/DevotionSDK/Prefabs/UI/InventoryWindow.prefab : MineArena.UI.InventoryWindow
+ size=(1010.26, 541.02) pos=(0.00, 0.00) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=InventoryWindow
+GridContainer size=(496.89, 397.29) pos=(-302.30, -3.70) anchors=(1.00, 0.50)/(1.00, 0.50) sprite=-
+GridContainer/Cell size=(0.00, 0.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(0.00, 0.00) sprite=InventoryPanel1
+GridContainer/Cell/Image size=(50.00, 50.00) pos=(0.00, 0.00) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=transparent1x1
+GridContainer/Cell (1) size=(0.00, 0.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(0.00, 0.00) sprite=InventoryPanel1
+GridContainer/Cell (1)/Image size=(50.00, 50.00) pos=(0.00, 0.00) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=transparent1x1
+GridContainer/Cell (2) size=(0.00, 0.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(0.00, 0.00) sprite=InventoryPanel1
+GridContainer/Cell (2)/Image size=(50.00, 50.00) pos=(0.00, 0.00) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=transparent1x1
+GridContainer/Cell (3) size=(0.00, 0.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(0.00, 0.00) sprite=InventoryPanel1
+GridContainer/Cell (3)/Image size=(50.00, 50.00) pos=(0.00, 0.00) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=transparent1x1
+GridContainer/Cell (4) size=(0.00, 0.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(0.00, 0.00) sprite=InventoryPanel1
+GridContainer/Cell (4)/Image size=(50.00, 50.00) pos=(0.00, 0.00) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=transparent1x1
+GridContainer/Cell (5) size=(0.00, 0.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(0.00, 0.00) sprite=InventoryPanel1
+GridContainer/Cell (5)/Image size=(50.00, 50.00) pos=(0.00, 0.00) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=transparent1x1
+GridContainer/Cell (6) size=(0.00, 0.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(0.00, 0.00) sprite=InventoryPanel1
+GridContainer/Cell (6)/Image size=(50.00, 50.00) pos=(0.00, 0.00) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=transparent1x1
+GridContainer/Cell (7) size=(0.00, 0.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(0.00, 0.00) sprite=InventoryPanel1
+GridContainer/Cell (7)/Image size=(50.00, 50.00) pos=(0.00, 0.00) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=transparent1x1
+GridContainer/Cell (8) size=(0.00, 0.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(0.00, 0.00) sprite=InventoryPanel1
+GridContainer/Cell (8)/Image size=(50.00, 50.00) pos=(0.00, 0.00) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=transparent1x1
+GridContainer/Cell (9) size=(0.00, 0.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(0.00, 0.00) sprite=InventoryPanel1
+GridContainer/Cell (9)/Image size=(50.00, 50.00) pos=(0.00, 0.00) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=transparent1x1
+GridContainer/Cell (10) size=(0.00, 0.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(0.00, 0.00) sprite=InventoryPanel1
+GridContainer/Cell (10)/Image size=(50.00, 50.00) pos=(0.00, 0.00) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=transparent1x1
+GridContainer/Cell (11) size=(0.00, 0.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(0.00, 0.00) sprite=InventoryPanel1
+GridContainer/Cell (11)/Image size=(50.00, 50.00) pos=(0.00, 0.00) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=transparent1x1
+GridContainer/Cell (12) size=(0.00, 0.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(0.00, 0.00) sprite=InventoryPanel1
+GridContainer/Cell (12)/Image size=(50.00, 50.00) pos=(0.00, 0.00) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=transparent1x1
+GridContainer/Cell (13) size=(0.00, 0.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(0.00, 0.00) sprite=InventoryPanel1
+GridContainer/Cell (13)/Image size=(50.00, 50.00) pos=(0.00, 0.00) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=transparent1x1
+GridContainer/Cell (14) size=(0.00, 0.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(0.00, 0.00) sprite=InventoryPanel1
+GridContainer/Cell (14)/Image size=(50.00, 50.00) pos=(0.00, 0.00) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=transparent1x1
+GridContainer/Cell (15) size=(0.00, 0.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(0.00, 0.00) sprite=InventoryPanel1
+GridContainer/Cell (15)/Image size=(50.00, 50.00) pos=(0.00, 0.00) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=transparent1x1
+GridContainer/Cell (16) size=(0.00, 0.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(0.00, 0.00) sprite=InventoryPanel1
+GridContainer/Cell (16)/Image size=(50.00, 50.00) pos=(0.00, 0.00) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=transparent1x1
+GridContainer/Cell (17) size=(0.00, 0.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(0.00, 0.00) sprite=InventoryPanel1
+GridContainer/Cell (17)/Image size=(50.00, 50.00) pos=(0.00, 0.00) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=transparent1x1
+GridContainer/Cell (18) size=(0.00, 0.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(0.00, 0.00) sprite=InventoryPanel1
+GridContainer/Cell (18)/Image size=(50.00, 50.00) pos=(0.00, 0.00) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=transparent1x1
+GridContainer/Cell (19) size=(0.00, 0.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(0.00, 0.00) sprite=InventoryPanel1
+GridContainer/Cell (19)/Image size=(50.00, 50.00) pos=(0.00, 0.00) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=transparent1x1
+GridContainer/Cell (20) size=(0.00, 0.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(0.00, 0.00) sprite=InventoryPanel1
+GridContainer/Cell (20)/Image size=(50.00, 50.00) pos=(0.00, 0.00) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=transparent1x1
+GridContainer/Cell (21) size=(0.00, 0.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(0.00, 0.00) sprite=InventoryPanel1
+GridContainer/Cell (21)/Image size=(50.00, 50.00) pos=(0.00, 0.00) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=transparent1x1
+GridContainer/Cell (22) size=(0.00, 0.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(0.00, 0.00) sprite=InventoryPanel1
+GridContainer/Cell (22)/Image size=(50.00, 50.00) pos=(0.00, 0.00) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=transparent1x1
+GridContainer/Cell (23) size=(0.00, 0.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(0.00, 0.00) sprite=InventoryPanel1
+GridContainer/Cell (23)/Image size=(50.00, 50.00) pos=(0.00, 0.00) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=transparent1x1
+GridContainer/Cell (24) size=(0.00, 0.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(0.00, 0.00) sprite=InventoryPanel1
+GridContainer/Cell (24)/Image size=(50.00, 50.00) pos=(0.00, 0.00) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=transparent1x1
+GridContainer/Cell (25) size=(0.00, 0.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(0.00, 0.00) sprite=InventoryPanel1
+GridContainer/Cell (25)/Image size=(50.00, 50.00) pos=(0.00, 0.00) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=transparent1x1
+GridContainer/Cell (26) size=(0.00, 0.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(0.00, 0.00) sprite=InventoryPanel1
+GridContainer/Cell (26)/Image size=(50.00, 50.00) pos=(0.00, 0.00) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=transparent1x1
+GridContainer/Cell (27) size=(0.00, 0.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(0.00, 0.00) sprite=InventoryPanel1
+GridContainer/Cell (27)/Image size=(50.00, 50.00) pos=(0.00, 0.00) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=transparent1x1
+GridContainer/Cell (28) size=(0.00, 0.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(0.00, 0.00) sprite=InventoryPanel1
+GridContainer/Cell (28)/Image size=(50.00, 50.00) pos=(0.00, 0.00) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=transparent1x1
+GridContainer/Cell (29) size=(0.00, 0.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(0.00, 0.00) sprite=InventoryPanel1
+GridContainer/Cell (29)/Image size=(50.00, 50.00) pos=(0.00, 0.00) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=transparent1x1
+GridContainer/Cell (30) size=(0.00, 0.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(0.00, 0.00) sprite=InventoryPanel1
+GridContainer/Cell (30)/Image size=(50.00, 50.00) pos=(0.00, 0.00) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=transparent1x1
+GridContainer/Cell (31) size=(0.00, 0.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(0.00, 0.00) sprite=InventoryPanel1
+GridContainer/Cell (31)/Image size=(50.00, 50.00) pos=(0.00, 0.00) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=transparent1x1
+GridContainer/Cell (32) size=(0.00, 0.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(0.00, 0.00) sprite=InventoryPanel1
+GridContainer/Cell (32)/Image size=(50.00, 50.00) pos=(0.00, 0.00) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=transparent1x1
+GridContainer/Cell (33) size=(0.00, 0.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(0.00, 0.00) sprite=InventoryPanel1
+GridContainer/Cell (33)/Image size=(50.00, 50.00) pos=(0.00, 0.00) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=transparent1x1
+GridContainer/Cell (34) size=(0.00, 0.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(0.00, 0.00) sprite=InventoryPanel1
+GridContainer/Cell (34)/Image size=(40.16, 45.64) pos=(0.00, 0.00) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=trashcan
+Close size=(76.68, 80.16) pos=(-38.34, -40.08) anchors=(1.00, 1.00)/(1.00, 1.00) sprite=cancel
+PlayerPreview size=(291.43, 397.14) pos=(308.70, -8.22) anchors=(0.00, 0.50)/(0.00, 0.50) sprite=PersPanel
+EquipHelmet size=(77.65, 77.65) pos=(104.30, 127.00) anchors=(0.00, 0.50)/(0.00, 0.50) sprite=EquipmentPanel
+EquipHelmet/IconShadow size=(-38.00, -38.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(1.00, 1.00) sprite=diamond_helmet
+EquipChest size=(77.65, 77.65) pos=(104.30, 34.00) anchors=(0.00, 0.50)/(0.00, 0.50) sprite=EquipmentPanel
+EquipChest/IconShadow (1) size=(-38.00, -38.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(1.00, 1.00) sprite=diamond_chestplate
+EquipLeggins size=(77.65, 77.65) pos=(104.30, -56.00) anchors=(0.00, 0.50)/(0.00, 0.50) sprite=EquipmentPanel
+EquipLeggins/IconShadow (2) size=(-38.00, -38.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(1.00, 1.00) sprite=diamond_leggings
+EquipBoots size=(77.65, 77.65) pos=(104.30, -145.00) anchors=(0.00, 0.50)/(0.00, 0.50) sprite=EquipmentPanel
+EquipBoots/IconShadow (3) size=(-38.00, -38.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(1.00, 1.00) sprite=diamond_boots
+REF m_Script = InventoryWindow
+REF _inventoryGrid = GridContainer
+REF _inventoryCells.Array.data[0] = Cell
+REF _inventoryCells.Array.data[1] = Cell (1)
+REF _inventoryCells.Array.data[2] = Cell (2)
+REF _inventoryCells.Array.data[3] = Cell (3)
+REF _inventoryCells.Array.data[4] = Cell (4)
+REF _inventoryCells.Array.data[5] = Cell (5)
+REF _inventoryCells.Array.data[6] = Cell (6)
+REF _inventoryCells.Array.data[7] = Cell (7)
+REF _inventoryCells.Array.data[8] = Cell (8)
+REF _inventoryCells.Array.data[9] = Cell (9)
+REF _inventoryCells.Array.data[10] = Cell (10)
+REF _inventoryCells.Array.data[11] = Cell (11)
+REF _inventoryCells.Array.data[12] = Cell (12)
+REF _inventoryCells.Array.data[13] = Cell (13)
+REF _inventoryCells.Array.data[14] = Cell (14)
+REF _inventoryCells.Array.data[15] = Cell (15)
+REF _inventoryCells.Array.data[16] = Cell (16)
+REF _inventoryCells.Array.data[17] = Cell (17)
+REF _inventoryCells.Array.data[18] = Cell (18)
+REF _inventoryCells.Array.data[19] = Cell (19)
+REF _inventoryCells.Array.data[20] = Cell (20)
+REF _inventoryCells.Array.data[21] = Cell (21)
+REF _inventoryCells.Array.data[22] = Cell (22)
+REF _inventoryCells.Array.data[23] = Cell (23)
+REF _inventoryCells.Array.data[24] = Cell (24)
+REF _inventoryCells.Array.data[25] = Cell (25)
+REF _inventoryCells.Array.data[26] = Cell (26)
+REF _inventoryCells.Array.data[27] = Cell (27)
+REF _inventoryCells.Array.data[28] = Cell (28)
+REF _inventoryCells.Array.data[29] = Cell (29)
+REF _inventoryCells.Array.data[30] = Cell (30)
+REF _inventoryCells.Array.data[31] = Cell (31)
+REF _inventoryCells.Array.data[32] = Cell (32)
+REF _inventoryCells.Array.data[33] = Cell (33)
+REF _inventoryCells.Array.data[34] = Cell (34)
+REF _equipHelmet = EquipHelmet
+REF _equipChest = EquipChest
+REF _equipLeggins = EquipLeggins
+REF _equipBoots = EquipBoots
+REF _playerPreview = PlayerPreview
+
+Assets/DevotionSDK/Prefabs/UI/LevelProgressWindow.prefab : MineArena.Windows.LevelProgressWindow
+Slider size=(-1278.19, 74.44) pos=(0.00, -58.60) anchors=(0.00, 1.00)/(1.00, 1.00) sprite=-
+Slider/Background size=(0.00, 0.00) pos=(0.00, 0.00) anchors=(0.00, 0.25)/(1.00, 0.75) sprite=ProgressbarBack
+Slider/Fill Area/Fill size=(0.00, -14.94) pos=(2.25, 0.17) anchors=(0.00, 0.00)/(0.00, 0.00) sprite=WhiteStraight
+ArrowImage size=(100.00, 100.00) pos=(0.00, 231.00) anchors=(0.50, 0.00)/(0.50, 0.00) sprite=arrow
+REF m_Script = LevelProgressWindow
+REF _progressBar = Slider
+REF _portalArrow = ArrowImage
+
+Assets/DevotionSDK/Prefabs/UI/LoadingWindow.prefab : MineArena.Windows.LoadingWindow
+Background size=(0.00, 0.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(1.00, 1.00) sprite=MineLoadingBackMain
+ProgressBar size=(921.44, 82.24) pos=(0.00, -396.00) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=-
+ProgressBar/Background size=(0.00, 41.12) pos=(0.00, 0.00) anchors=(0.00, 0.25)/(1.00, 0.75) sprite=ProgressbarBack
+ProgressBar/Fill Area/Fill size=(0.00, 0.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(0.00, 0.00) sprite=WhiteStraight
+ProgressBar/Handle Slide Area/Handle size=(20.00, 0.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(0.00, 0.00) sprite=Knob
+REF m_Script = LoadingWindow
+REF _progressBar = ProgressBar
+
+Assets/DevotionSDK/Prefabs/UI/PlayingWindow.prefab : Devotion.SDK.UI.PlayingWindow
+PlayerPanel size=(299.38, 116.85) pos=(175.69, -85.42) anchors=(0.00, 1.00)/(0.00, 1.00) sprite=-
+PlayerPanel/PlayerIcon size=(115.74, 117.00) pos=(57.87, -58.50) anchors=(0.00, 1.00)/(0.00, 1.00) sprite=PlayerBorder
+PlayerPanel/PlayerIcon/Icon size=(-16.00, -16.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(1.00, 1.00) sprite=ArenaForest
+PlayerPanel/PlayerIcon/LvLIcon size=(56.13, 56.13) pos=(0.00, -117.10) anchors=(0.50, 1.00)/(0.50, 1.00) sprite=goal_frame_unobtained
+PlayerPanel/PlayerStats size=(245.71, 60.05) pos=(245.31, -86.83) anchors=(0.00, 1.00)/(0.00, 1.00) sprite=goal_frame_unobtained
+PlayerPanel/PlayerStats/HealthBar size=(231.65, 21.42) pos=(119.87, -14.99) anchors=(0.00, 1.00)/(0.00, 1.00) sprite=botton center Grey
+PlayerPanel/PlayerStats/ArmorBar size=(231.65, 21.42) pos=(119.87, -43.50) anchors=(0.00, 1.00)/(0.00, 1.00) sprite=botton center Grey
+PlayerPanel/LevelProgressBar size=(279.82, 6.31) pos=(78.57, -73.30) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=goal_frame_unobtained
+PlayerPanel/LevelProgressBar/LevelProgressBarFilled size=(274.10, 6.31) pos=(0.00, 0.00) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=Eq_Slot
+Achievement_button size=(109.71, 109.71) pos=(-65.00, -67.00) anchors=(1.00, 1.00)/(1.00, 1.00) sprite=AchievmentsIcon
+WheelButton size=(109.71, 109.71) pos=(-195.00, -67.00) anchors=(1.00, 1.00)/(1.00, 1.00) sprite=ButtonBack
+WheelButton/Icon size=(-33.61, -33.61) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(1.00, 1.00) sprite=wheel of fortune
+BookButton size=(109.71, 109.71) pos=(-325.00, -67.00) anchors=(1.00, 1.00)/(1.00, 1.00) sprite=ButtonBack
+BookButton/Icon size=(-33.61, -33.61) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(1.00, 1.00) sprite=knowledge_book
+AchievementPopup size=(-998.87, 121.86) pos=(-53.00, 91.00) anchors=(0.00, 1.00)/(1.00, 1.00) sprite=Eq_Slot
+AchievementPopup/QuestName/BackgroundText size=(0.00, 0.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(1.00, 1.00) sprite=Eq_Slot
+AchievementPopup/TakePrizeText/BackgroundText size=(0.00, 0.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(1.00, 1.00) sprite=Eq_Slot
+AchievementPopup/ProgressPopupQuestBar/Border size=(0.00, 0.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(1.00, 1.00) sprite=botton center Grey
+AchievementPopup/ProgressPopupQuestBar/Fill size=(0.00, 0.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(1.00, 1.00) sprite=botton center yellow
+InventoryPanel size=(559.58, 112.74) pos=(-14.59, 69.01) anchors=(0.50, 0.00)/(0.50, 0.00) sprite=Square1
+InventoryPanel/Slot size=(80.57, 80.57) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(0.00, 0.00) sprite=Square1
+InventoryPanel/Slot (1) size=(80.57, 80.57) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(0.00, 0.00) sprite=Square1
+InventoryPanel/Slot (2) size=(80.57, 80.57) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(0.00, 0.00) sprite=Square1
+InventoryPanel/Slot (3) size=(80.57, 80.57) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(0.00, 0.00) sprite=Square1
+InventoryPanel/Slot (4) size=(80.57, 80.57) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(0.00, 0.00) sprite=Square1
+REF m_Script = PlayingWindow
+REF _inventoryPanel = InventoryPanel
+REF _inventorySlots.Array.data[0] = Slot
+REF _inventorySlots.Array.data[1] = Slot (1)
+REF _inventorySlots.Array.data[2] = Slot (2)
+REF _inventorySlots.Array.data[3] = Slot (3)
+REF _inventorySlots.Array.data[4] = Slot (4)
+REF _activeSlotSprite = Square1
+REF _inactiveSlotSprite = Square2
+
+Assets/DevotionSDK/Prefabs/UI/PlaytimeGiftWindow.prefab : Devotion.SDK.UI.PlaytimeGiftWindow
+REF m_Script = PlaytimeGiftWindow
+
+Assets/DevotionSDK/Prefabs/UI/SelectLevelWindow.prefab : MineArena.Windows.SelectLevelWindow
+ size=(0.00, 0.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(1.00, 1.00) sprite=-
+ExpeditionPanel size=(1460.00, 940.00) pos=(0.00, 0.00) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=beige-panel
+ExpeditionPanel/PaleBrickTexture size=(-12.00, -12.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(1.00, 1.00) sprite=beige-brick
+ExpeditionPanel/Close size=(60.00, 60.00) pos=(1362.00, -35.00) anchors=(0.00, 1.00)/(0.00, 1.00) sprite=beige-card
+ExpeditionPanel/Divider size=(1388.00, 2.00) pos=(36.00, -131.00) anchors=(0.00, 1.00)/(0.00, 1.00) sprite=-
+ExpeditionPanel/LevelListPanel size=(428.00, 720.00) pos=(34.00, -154.00) anchors=(0.00, 1.00)/(0.00, 1.00) sprite=beige-inset
+ExpeditionPanel/LevelListPanel/PaleBrickTexture size=(-12.00, -12.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(1.00, 1.00) sprite=beige-brick
+ExpeditionPanel/DetailsPanel size=(942.00, 720.00) pos=(482.00, -154.00) anchors=(0.00, 1.00)/(0.00, 1.00) sprite=beige-card
+ExpeditionPanel/DetailsPanel/PaleBrickTexture size=(-12.00, -12.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(1.00, 1.00) sprite=beige-brick
+ExpeditionPanel/DetailsPanel/StartExpedition size=(894.00, 48.00) pos=(24.00, -656.00) anchors=(0.00, 1.00)/(0.00, 1.00) sprite=beige-button
+REF m_Script = SelectLevelWindow
+REF view = SelectLevelWindow
+
+Assets/Prefabs/Windows/Crafting/CraftingWindow.prefab : MineArena.Windows.Crafting.CraftingWindow
+ size=(0.00, 0.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(1.00, 1.00) sprite=craft_overlay
+PixelCraftPanel size=(0.00, 0.00) pos=(0.00, 0.00) anchors=(0.08, 0.08)/(0.92, 0.92) sprite=large_button
+PixelCraftPanel/Header/TabsPanel size=(0.00, 0.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(1.00, 1.00) sprite=craft_button
+PixelCraftPanel/Body/RecipeListPanel size=(0.00, 0.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(0.00, 0.00) sprite=craft_button
+PixelCraftPanel/Body/DetailsPanel size=(0.00, 0.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(0.00, 0.00) sprite=craft_button
+REF m_Script = CraftingWindow
+REF _rootImage = CraftingWindow
+REF _windowPanelImage = PixelCraftPanel
+REF _tabsPanelImage = TabsPanel
+REF _leftPanelImage = RecipeListPanel
+REF _rightPanelImage = DetailsPanel
+REF _listViewportImage = Viewport
+REF _detailIconSlotImage = DetailIconSlot
+REF _canvasGroup = CraftingWindow
+REF _windowPanel = PixelCraftPanel
+REF _tabsRoot = Tabs
+REF _itemsRoot = Content
+REF _costsRoot = Costs
+REF _detailIcon = DetailIcon
+REF _detailName = DetailName
+REF _detailDescription = Description
+REF _detailRequirement = Requirement
+REF _emptyState = EmptyState
+REF _resultText = Result
+REF _craftButton = CraftButton
+REF _craftButtonImage = CraftButton
+REF _craftButtonLabel = CraftButtonLabel
+REF _overlaySprite = craft_overlay
+REF _panelSprite = craft_panel
+REF _panelInsetSprite = craft_panel_inset
+REF _slotSprite = craft_slot
+REF _slotSelectedSprite = craft_slot_selected
+REF _buttonSprite = craft_button
+REF _buttonSelectedSprite = craft_button_selected
+REF _buttonDisabledSprite = craft_button_disabled
+REF _craftButtonSprite = craft_button_green
+REF _placeholderIconSprite = craft_placeholder_icon
+
+Assets/Prefabs/Windows/WindowAchievements.prefab : Windows.WindowAchievements
+ size=(0.00, 0.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(1.00, 1.00) sprite=-
+Background size=(1200.00, 948.10) pos=(0.00, 13.00) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=BigWindowPanel
+Background/ContainerQuests/Scroll size=(0.00, -19.14) pos=(0.00, 9.57) anchors=(0.00, 0.00)/(1.00, 1.00) sprite=Background
+Background/CloseButton size=(80.00, 80.00) pos=(-28.00, -83.00) anchors=(1.00, 1.00)/(1.00, 1.00) sprite=-
+REF m_Script = WindowAchievements
+REF _achievementsConstructor = WindowAchievements
+REF _name = Title
+REF _scrollSizer = Scroll
+
+Assets/Resources/Prefabs/Windows/Crafting/CraftingWindow.prefab : MineArena.Windows.Crafting.CraftingWindow
+ size=(0.00, 0.00) pos=(0.00, 0.00) anchors=(0.00, 0.00)/(1.00, 1.00) sprite=craft_overlay
+PixelCraftPanel size=(0.00, 0.00) pos=(0.00, 0.00) anchors=(0.08, 0.08)/(0.92, 0.92) sprite=craft_panel
+PixelCraftPanel/Header/TabsPanel size=(-205.00, 0.00) pos=(102.50, 0.00) anchors=(0.00, 0.00)/(1.00, 1.00) sprite=craft_panel_inset
+PixelCraftPanel/Body/RecipeListPanel size=(100.00, 100.00) pos=(0.00, 0.00) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=craft_panel_inset
+PixelCraftPanel/Body/DetailsPanel size=(100.00, 100.00) pos=(0.00, 0.00) anchors=(0.50, 0.50)/(0.50, 0.50) sprite=craft_panel_inset
+REF m_Script = CraftingWindow
+REF _rootImage = CraftingWindow
+REF _windowPanelImage = PixelCraftPanel
+REF _tabsPanelImage = TabsPanel
+REF _leftPanelImage = RecipeListPanel
+REF _rightPanelImage = DetailsPanel
+REF _listViewportImage = Viewport
+REF _detailIconSlotImage = DetailIconSlot
+REF _canvasGroup = CraftingWindow
+REF _windowPanel = PixelCraftPanel
+REF _tabsRoot = Tabs
+REF _itemsRoot = Content
+REF _costsRoot = Costs
+REF _detailIcon = DetailIcon
+REF _detailName = DetailName
+REF _detailDescription = Description
+REF _detailRequirement = Requirement
+REF _emptyState = EmptyState
+REF _resultText = Result
+REF _craftButton = CraftButton
+REF _craftButtonImage = CraftButton
+REF _craftButtonLabel = CraftButtonLabel
+REF _overlaySprite = craft_overlay
+REF _panelSprite = craft_panel
+REF _panelInsetSprite = craft_panel_inset
+REF _slotSprite = craft_slot
+REF _slotSelectedSprite = craft_slot_selected
+REF _buttonSprite = craft_button
+REF _buttonSelectedSprite = craft_button_selected
+REF _buttonDisabledSprite = craft_button_disabled
+REF _craftButtonSprite = craft_button_green
+REF _placeholderIconSprite = craft_placeholder_icon

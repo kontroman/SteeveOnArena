@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: IronHelmet
   m_EditorClassIdentifier: 
   _name: IronHelmet
+  _displayName: "\u0416\u0435\u043B\u0435\u0437\u043D\u044B\u0439 \u0448\u043B\u0435\u043C"
   _prefab: {fileID: 0}
   _icon: {fileID: 21300000, guid: f8f3c88e5104f294d99fa452e44dd7f2, type: 3}
   _usable: 0
@@ -20,9 +21,14 @@ MonoBehaviour:
   _blockStyleIcon: 0
   _description: 
   _descriptionLocalizationKey: 
-  _craftCosts: []
+  _craftCosts: 
+  - _resource: {fileID: 11400000, guid: 70a5b21f16c7993df1d86760d1a13948, type: 2}
+    _amount: 3
+  - _resource: {fileID: 11400000, guid: d802d592708eefe055968f5ec21276d9, type: 2}
+    _amount: 1
   _price: 25
-  _resist: 2
+  _resist: 4
   _slot: 0
   _grade: 1
   _material: {fileID: 2100000, guid: 3830651655887784281a89b6613bcc69, type: 2}
+  _craftAmount: 1

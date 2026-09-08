@@ -54,9 +54,22 @@ namespace Devotion.SDK.Controllers
 #endif
 
             SaveService.Instance.Initialize().
-                Then(LocalizationService.Initialize(gameConfig.LocalizationConfig)).
-                Then(() => Debug.Log("Services Initialization Completed")
-                );
+                Then(() => LocalizationService.Initialize(gameConfig.LocalizationConfig)).
+                Then(() =>
+                {
+                    InitializeGame();
+                    return Devotion.SDK.Async.Promise.ResolveAndReturn();
+                }).
+                Catch(error =>
+                {
+                    Debug.LogException(error);
+                    if (MineArena.Platform.YandexPlatform.IsWebPlatform)
+                        MineArena.Platform.YandexPlatform.Instance.StartupError();
+                });
+        }
+
+        private void InitializeGame()
+        {
 
             foreach (var manager in _startManagers)
             {
@@ -69,7 +82,16 @@ namespace Devotion.SDK.Controllers
                 }
             }
 
+            var tutorial = GetComponent<MineArena.Managers.TutorialService>() ?? gameObject.AddComponent<MineArena.Managers.TutorialService>();
+            tutorial.Initialize();
             UIManager.ShowWindow<PlayingWindow>();
+            if (MineArena.Platform.YandexPlatform.IsWebPlatform)
+            {
+                var platform = MineArena.Platform.YandexPlatform.Instance;
+                if (platform.GetComponent<MineArena.Platform.YandexPurchases>() == null)
+                    platform.gameObject.AddComponent<MineArena.Platform.YandexPurchases>();
+                platform.Ready();
+            }
 
 #if UNITY_EDITOR || DEVOTION_GODMODE
             if (gameConfig != null)

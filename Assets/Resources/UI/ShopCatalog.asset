@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ce89514a5548ed46bb0c2925cb7d7a8, type: 3}
+  m_Name: ShopCatalog
+  m_EditorClassIdentifier: 
+  Currency: {fileID: 11400000, guid: 501e28faeabb676418a62d09f9eb6cb9, type: 2}
+  Offers:
+  - Item: {fileID: 11400000, guid: 2341848530a95b34794be486a7bc64c3, type: 2}
+    Amount: 32
+    Price: 2
+  - Item: {fileID: 11400000, guid: 4d4666ba7dbbefa47b57dbff0b891f42, type: 2}
+    Amount: 24
+    Price: 2
+  - Item: {fileID: 11400000, guid: 748b6e8fd10cc5f458155de6d72cfb74, type: 2}
+    Amount: 24
+    Price: 2
+  - Item: {fileID: 11400000, guid: 48d1784c248929f4881cb36f19b829ac, type: 2}
+    Amount: 12
+    Price: 3
+  - Item: {fileID: 11400000, guid: b00bcf18baae3cd448bfe86f83366dca, type: 2}
+    Amount: 8
+    Price: 4
+  - Item: {fileID: 11400000, guid: 82ac6cc2aac71aa468bb4bcb0fc1738c, type: 2}
+    Amount: 2
+    Price: 12
+  - Item: {fileID: 11400000, guid: 604cd629307e4a70b74e17067193f9cd, type: 2}
+    Amount: 1
+    Price: 20
+  - Item: {fileID: 11400000, guid: 3de941d949824fd1a245f760e206907e, type: 2}
+    Amount: 1
+    Price: 16
+  - Item: {fileID: 11400000, guid: 83a7dc608f7d4e0daaa6c4e6071eaa95, type: 2}
+    Amount: 1
+    Price: 30

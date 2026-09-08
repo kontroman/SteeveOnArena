@@ -24,6 +24,8 @@ namespace Devotion.SDK.UI
         [SerializeField] private TMP_Text _spinButtonText;
         [SerializeField] private TMP_Text _freeSpinTimerText;
         [SerializeField] private List<Button> _purchaseButtons = new();
+        [SerializeField] private MineArena.Items.ItemConfig _spinCurrency;
+        [SerializeField, Min(1)] private int _pricePerSpin = 5;
 
         [Header("Ad Mode")]
         [SerializeField] private Image _spinButtonModeIcon;
@@ -230,7 +232,7 @@ namespace Devotion.SDK.UI
                 _freeSpinTimerText.text = BuildFreeSpinTimerText(progress, hasSpins);
 
             if (_spinButtonText != null)
-                _spinButtonText.text = hasSpins ? "Крутить!" : "Смотреть рекламу\n+1 спин";
+                _spinButtonText.text = hasSpins ? $"Крутить! ({spins})" : "Нет вращений";
 
             if (_spinButtonModeIcon != null)
             {
@@ -239,19 +241,24 @@ namespace Devotion.SDK.UI
             }
 
             if (_spinButton != null)
-                _spinButton.interactable = controlsInteractable;
+                _spinButton.interactable = controlsInteractable && (hasSpins || MineArena.Platform.YandexPlatform.IsWebPlatform);
+
+            if (!hasSpins && MineArena.Platform.YandexPlatform.IsWebPlatform && _spinButtonText != null)
+                _spinButtonText.text = "Спин за рекламу";
 
             foreach (var button in _purchaseButtons)
             {
                 if (button != null)
-                    button.interactable = controlsInteractable;
+                    button.interactable = controlsInteractable && _spinCurrency != null &&
+                        GameRoot.GetManager<InventoryManager>().GetItemAmount(_spinCurrency.Name) >=
+                        (long)ParseFirstNumber(button.GetComponentInChildren<TMP_Text>(true)?.text) * _pricePerSpin;
             }
         }
 
         private string BuildFreeSpinTimerText(LuckyWheelProgress progress, bool hasSpins)
         {
             if (hasSpins)
-                return "Бесплатный спин доступен";
+                return $"Доступно вращений: {progress?.FortuneSpins ?? 0}";
 
             if (progress == null || progress.NextFreeSpinUtcTicks <= 0)
                 return string.Empty;
@@ -279,7 +286,8 @@ namespace Devotion.SDK.UI
 
             if (GameRoot.PlayerProgress.LuckyWheelProgress.FortuneSpins <= 0)
             {
-                RequestRewardedSpin();
+                if (MineArena.Platform.YandexPlatform.IsWebPlatform) RequestRewardedSpin();
+                else RefreshUI();
                 return;
             }
 
@@ -291,17 +299,21 @@ namespace Devotion.SDK.UI
             if (_isSpinning || _isRewardAdLoading)
                 return;
 
-            // TODO: connect project IAP/currency price validation here when prices are defined.
+            if (amount <= 0 || _pricePerSpin <= 0 || (long)amount * _pricePerSpin > int.MaxValue ||
+                (long)GameRoot.PlayerProgress.LuckyWheelProgress.FortuneSpins + amount > int.MaxValue ||
+                !GameRoot.GetManager<InventoryManager>().TrySpendExact(_spinCurrency, amount * _pricePerSpin)) return;
             AddFortuneSpins(amount);
         }
 
         private void RequestRewardedSpin()
         {
+            if (_isSpinning || _isRewardAdLoading) return;
             _isRewardAdLoading = true;
             RefreshUI();
 
-            // TODO: assign _adIcon in the prefab and replace this placeholder with real rewarded ads callback.
-            OnRewardedSpinAdFinished(true);
+            if (MineArena.Platform.YandexPlatform.IsWebPlatform)
+                MineArena.Platform.YandexPlatform.Instance.ShowRewarded(OnRewardedSpinAdFinished);
+            else OnRewardedSpinAdFinished(false);
         }
 
         private void OnRewardedSpinAdFinished(bool rewarded)

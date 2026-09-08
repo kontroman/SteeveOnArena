@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23b4dfe5a2c9bec418f415cbb49447a1, type: 3}
+  m_Name: GoldIngot
+  m_EditorClassIdentifier: 
+  _name: GoldIngot
+  _displayName: "Золотой слиток"
+  _prefab: {fileID: 1294500603521610, guid: 20fbbb48929588370c99e7d012d5ef8c, type: 3}
+  _icon: {fileID: 21300000, guid: 7cf68192dd8881947b9f930b8f379463, type: 3}
+  _usable: 0
+  _stackable: 1
+  _blockStyleIcon: 0
+  _maxStackSize: 64
+  _resourceCategory: GoldIngot
+  _description: "Золотой слиток — материал для переработки и улучшений."
+  _craftCosts: 
+  - _resource: {fileID: 11400000, guid: 501e28faeabb676418a62d09f9eb6cb9, type: 2}
+    _amount: 3
+  - _resource: {fileID: 11400000, guid: 48d1784c248929f4881cb36f19b829ac, type: 2}
+    _amount: 2
+  _craftAmount: 1

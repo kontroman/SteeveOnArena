@@ -7,12 +7,30 @@ using MineArena.Controllers;
 using MineArena.Levels;
 using MineArena.Managers;
 using UnityEngine;
+using MineArena.Windows.SelectLevel;
 
 namespace MineArena.Windows
 {
     public class SelectLevelWindow : BaseWindow
     {
         private bool _isLoading;
+        [SerializeField] private LevelSelectionView view;
+
+        private void OnEnable()
+        {
+            if (!Application.isPlaying || view == null) return;
+            view.StartRequested += OnSelectLevelButtonClicked;
+            view.CloseRequested += OnCloseClick;
+            view.Refresh(GameRoot.GameConfig != null ? GameRoot.GameConfig.Levels : null,
+                TutorialService.Active ? 0 : GameRoot.PlayerProgress?.LevelsProgress?.HighestUnlockedLevelIndex ?? 0);
+        }
+
+        private void OnDisable()
+        {
+            if (view == null) return;
+            view.StartRequested -= OnSelectLevelButtonClicked;
+            view.CloseRequested -= OnCloseClick;
+        }
 
         public override void CloseWindow()
         {
@@ -26,6 +44,8 @@ namespace MineArena.Windows
 
         public void OnSelectLevelButtonClicked(int levelIndex)
         {
+            if (TutorialService.BlocksInput) return;
+            if (!TutorialService.AllowLevel(levelIndex)) return;
             if (_isLoading || !TryGetLevelConfig(levelIndex, out var config))
                 return;
 
@@ -40,8 +60,8 @@ namespace MineArena.Windows
             if (levels == null || levelIndex < 0 || levelIndex >= levels.Count)
                 return false;
 
-            // if (!IsLevelUnlocked(levelIndex))
-            //     return false;
+            if (!IsLevelUnlocked(levelIndex))
+                return false;
 
             config = levels[levelIndex];
             return config != null && config.LevelPrefab != null;

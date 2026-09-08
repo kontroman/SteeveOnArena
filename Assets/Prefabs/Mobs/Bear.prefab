@@ -833,11 +833,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dropTable:
-  - Item: {fileID: 11400000, guid: 501e28faeabb676418a62d09f9eb6cb9, type: 2}
-    DropChance: 15
-    MinQuantity: 1
-    MaxQuantity: 1
+  - Item: {fileID: 11400000, guid: d802d592708eefe055968f5ec21276d9, type: 2}
+    DropChance: 100
+    MinQuantity: 2
+    MaxQuantity: 3
   _isOneDrop: 0
+  _dropOnDeath: 1
 --- !u!114 &6750339348415088007
 MonoBehaviour:
   m_ObjectHideFlags: 0

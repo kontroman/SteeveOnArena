@@ -30,6 +30,8 @@ namespace MineArena.Game.Health
 
         public void ChangeValue(float value)
         {
+            // Ordinary healing must not revive a dead character outside the revival flow.
+            if (_currentHealth <= 0f) return;
             SetCurrentValue(_currentHealth + value);
         }
 
@@ -48,6 +50,9 @@ namespace MineArena.Game.Health
 
         public void TakeDamage(DamageData damageData)
         {
+            if (_currentHealth <= 0f) return;
+            var deathFlow = GetComponent<PlayerDeathFlow>();
+            if (deathFlow != null && deathFlow.IsProtected) return;
 #if UNITY_EDITOR || DEVOTION_GODMODE
             var config = GameRoot.GameConfig;
             if (config != null && config.GodModeInvulnerability)
@@ -69,12 +74,15 @@ namespace MineArena.Game.Health
             if (damageToApply > 0f)
                 PlayHitVfx();
 
+            // The introductory fight teaches attacking without stranding a first-time player in the death animation.
+            if (MineArena.Managers.TutorialService.Expedition && Player.Instance != null && gameObject == Player.Instance.gameObject)
+                damageToApply = Mathf.Min(damageToApply, Mathf.Max(0, _currentHealth - 1));
             ChangeValue(-damageToApply);
         }
 
         private void PlayHitVfx()
         {
-            if (_hitVfxId == VfxId.None)
+            if (_hitVfxId == VfxId.None || GameRoot.Instance == null)
                 return;
 
             var vfxManager = GameRoot.GetManager<VFXManager>();
@@ -97,6 +105,8 @@ namespace MineArena.Game.Health
             return renderer != null ? renderer.bounds.center : transform.position;
         }
 
+        public void RestoreFullHealth() => SetCurrentValue(_maxHealth, false);
+
         protected virtual void Die()
         {
             if (Player.Instance != null && gameObject == Player.Instance.gameObject)
@@ -105,7 +115,7 @@ namespace MineArena.Game.Health
                 Player.Instance.GetComponentFromList<PlayerAttack>()?.SetComponentEnable(false);
                 Player.Instance.GetComponentFromList<PlayerAnimatorController>()?.TriggerDeath();
 
-                // Destroy(gameObject);
+                Player.Instance.GetComponent<PlayerDeathFlow>()?.BeginDeath();
                 return;
             }
 

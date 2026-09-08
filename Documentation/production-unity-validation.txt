@@ -1,0 +1,109 @@
+PASS WoodOak separate top and side sprites imported
+PASS WoodBirch separate top and side sprites imported
+PASS WoodDark separate top and side sprites imported
+PASS NetheriteOre separate top and side sprites imported
+PASS Wheat harvest mesh and collider imported
+PASS Wheat harvest scripts resolve
+PASS SugarCane harvest mesh and collider imported
+PASS SugarCane harvest scripts resolve
+PASS NetherWart harvest mesh and collider imported
+PASS NetherWart harvest scripts resolve
+PASS Wool harvest mesh and collider imported
+PASS Wool harvest scripts resolve
+PASS Glass harvest mesh and collider imported
+PASS Glass harvest scripts resolve
+PASS String icon and pickup imported (item=True, icon=True, pickup=True)
+PASS String no missing scripts
+PASS String pickup resolves its inventory item
+PASS String materials and shaders compile
+PASS Leather icon and pickup imported (item=True, icon=True, pickup=True)
+PASS Leather no missing scripts
+PASS Leather pickup resolves its inventory item
+PASS Leather materials and shaders compile
+PASS Wool icon and pickup imported (item=True, icon=True, pickup=True)
+PASS Wool no missing scripts
+PASS Wool pickup resolves its inventory item
+PASS Wool materials and shaders compile
+PASS Glass icon and pickup imported (item=True, icon=True, pickup=True)
+PASS Glass no missing scripts
+PASS Glass pickup resolves its inventory item
+PASS Glass materials and shaders compile
+PASS Wheat icon and pickup imported (item=True, icon=True, pickup=True)
+PASS Wheat no missing scripts
+PASS Wheat pickup resolves its inventory item
+PASS Wheat materials and shaders compile
+PASS SugarCane icon and pickup imported (item=True, icon=True, pickup=True)
+PASS SugarCane no missing scripts
+PASS SugarCane pickup resolves its inventory item
+PASS SugarCane materials and shaders compile
+PASS NetherWart icon and pickup imported (item=True, icon=True, pickup=True)
+PASS NetherWart no missing scripts
+PASS NetherWart pickup resolves its inventory item
+PASS NetherWart materials and shaders compile
+PASS Sugar icon and pickup imported (item=True, icon=True, pickup=True)
+PASS Sugar no missing scripts
+PASS Sugar pickup resolves its inventory item
+PASS Sugar materials and shaders compile
+PASS GlassBottle icon and pickup imported (item=True, icon=True, pickup=True)
+PASS GlassBottle no missing scripts
+PASS GlassBottle pickup resolves its inventory item
+PASS GlassBottle materials and shaders compile
+PASS MelonSlice icon and pickup imported (item=True, icon=True, pickup=True)
+PASS MelonSlice no missing scripts
+PASS MelonSlice pickup resolves its inventory item
+PASS MelonSlice materials and shaders compile
+PASS GlisteringMelon icon and pickup imported (item=True, icon=True, pickup=True)
+PASS GlisteringMelon no missing scripts
+PASS GlisteringMelon pickup resolves its inventory item
+PASS GlisteringMelon materials and shaders compile
+PASS GhastTear icon and pickup imported (item=True, icon=True, pickup=True)
+PASS GhastTear no missing scripts
+PASS GhastTear pickup resolves its inventory item
+PASS GhastTear materials and shaders compile
+PASS HealingPotion icon and pickup imported (item=True, icon=True, pickup=True)
+PASS HealingPotion no missing scripts
+PASS HealingPotion pickup resolves its inventory item
+PASS HealingPotion materials and shaders compile
+PASS RegenerationPotion icon and pickup imported (item=True, icon=True, pickup=True)
+PASS RegenerationPotion no missing scripts
+PASS RegenerationPotion pickup resolves its inventory item
+PASS RegenerationPotion materials and shaders compile
+PASS SpeedPotion icon and pickup imported (item=True, icon=True, pickup=True)
+PASS SpeedPotion no missing scripts
+PASS SpeedPotion pickup resolves its inventory item
+PASS SpeedPotion materials and shaders compile
+PASS Stick icon and pickup imported (item=True, icon=True, pickup=True)
+PASS Stick no missing scripts
+PASS Stick pickup resolves its inventory item
+PASS Stick materials and shaders compile
+PASS NetheriteScrap icon and pickup imported (item=True, icon=True, pickup=True)
+PASS NetheriteScrap no missing scripts
+PASS NetheriteScrap pickup resolves its inventory item
+PASS NetheriteScrap materials and shaders compile
+PASS IronIngot icon and pickup imported (item=True, icon=True, pickup=True)
+PASS IronIngot no missing scripts
+PASS IronIngot pickup resolves its inventory item
+PASS IronIngot materials and shaders compile
+PASS GoldIngot icon and pickup imported (item=True, icon=True, pickup=True)
+PASS GoldIngot no missing scripts
+PASS GoldIngot pickup resolves its inventory item
+PASS GoldIngot materials and shaders compile
+PASS NetheriteIngot icon and pickup imported (item=True, icon=True, pickup=True)
+PASS NetheriteIngot no missing scripts
+PASS NetheriteIngot pickup resolves its inventory item
+PASS NetheriteIngot materials and shaders compile
+PASS Empty saved job does not block future crafting
+PASS Paid craft starts
+PASS Second craft rejected; no early output
+PASS Exactly one batch of costs deducted
+PASS Craft deadline survives serialization
+PASS Progress covers zero to one
+PASS Restored completed craft granted exactly once
+PASS Offline farm capped at ten harvests without duplicate grant
+PASS Full health does not consume healing potion
+PASS Healing restores forty and consumes one potion
+PASS Repeated use cannot consume twice
+PASS Speed potion applies thirty percent bonus
+PASS Expired speed effect restores normal movement
+PASS Regeneration potion consumes successfully
+PASS Ten seconds of regeneration restores thirty including the final tick

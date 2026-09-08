@@ -1,0 +1,1040 @@
+PASS Fiber removed from assets and balance
+PASS Resin removed from assets and balance
+PASS Rope removed from assets and balance
+PASS Fabric removed from assets and balance
+PASS SteelIngot removed from assets and balance
+PASS ReinforcedPlanks removed from assets and balance
+PASS Bow costs three sticks and three strings
+PASS Netherite ingot costs four scraps and four gold ingots
+PASS String has no fabricated crafting recipe
+PASS Leather has no fabricated crafting recipe
+PASS Spider drops String
+PASS Spider death loot enabled once
+PASS Wolf drops Leather
+PASS Wolf death loot enabled once
+PASS Bear drops Leather
+PASS Bear death loot enabled once
+PASS Every inventory database reference resolves
+PASS Inventory IDs are unique
+PASS Zombie has a registered spawn pool
+PASS Zombie uses its balanced preset
+PASS Skeleton has a registered spawn pool
+PASS Skeleton uses its balanced preset
+PASS Spider has a registered spawn pool
+PASS Spider uses its balanced preset
+PASS Creeper has a registered spawn pool
+PASS Creeper uses its balanced preset
+PASS Pillager has a registered spawn pool
+PASS Pillager uses its balanced preset
+PASS ArcherPillager has a registered spawn pool
+PASS ArcherPillager uses its balanced preset
+PASS Wolf has a registered spawn pool
+PASS Wolf uses its balanced preset
+PASS Bear has a registered spawn pool
+PASS Bear uses its balanced preset
+PASS Witch has a registered spawn pool
+PASS Witch uses its balanced preset
+PASS Enderman has a registered spawn pool
+PASS Enderman uses its balanced preset
+PASS Planks registered
+PASS Planks cost WoodOak valid
+PASS Planks cost serialized WoodOak
+PASS Planks output serialized
+PASS Stick registered
+PASS Stick cost Planks valid
+PASS Stick cost serialized Planks
+PASS Stick output serialized
+PASS Wool registered
+PASS Wool cost String valid
+PASS Wool cost serialized String
+PASS Wool output serialized
+PASS NetheriteScrap registered
+PASS NetheriteScrap cost NetheriteOre valid
+PASS NetheriteScrap cost serialized NetheriteOre
+PASS NetheriteScrap cost CoalItem valid
+PASS NetheriteScrap cost serialized CoalItem
+PASS NetheriteScrap output serialized
+PASS CoalItem registered
+PASS CoalItem cost CoalOre valid
+PASS CoalItem cost serialized CoalOre
+PASS CoalItem output serialized
+PASS IronIngot registered
+PASS IronIngot cost IronOre valid
+PASS IronIngot cost serialized IronOre
+PASS IronIngot output serialized
+PASS GoldIngot registered
+PASS GoldIngot cost GoldOre valid
+PASS GoldIngot cost serialized GoldOre
+PASS GoldIngot cost CoalItem valid
+PASS GoldIngot cost serialized CoalItem
+PASS GoldIngot output serialized
+PASS NetheriteIngot registered
+PASS NetheriteIngot cost NetheriteScrap valid
+PASS NetheriteIngot cost serialized NetheriteScrap
+PASS NetheriteIngot cost GoldIngot valid
+PASS NetheriteIngot cost serialized GoldIngot
+PASS NetheriteIngot output serialized
+PASS Glass registered
+PASS Glass cost Sand valid
+PASS Glass cost serialized Sand
+PASS Glass cost CoalItem valid
+PASS Glass cost serialized CoalItem
+PASS Glass output serialized
+PASS StoneSwordItem registered
+PASS StoneSwordItem cost Stone valid
+PASS StoneSwordItem cost serialized Stone
+PASS StoneSwordItem cost Stick valid
+PASS StoneSwordItem cost serialized Stick
+PASS StoneSwordItem output serialized
+PASS IronSwordItem registered
+PASS IronSwordItem cost IronIngot valid
+PASS IronSwordItem cost serialized IronIngot
+PASS IronSwordItem cost Stick valid
+PASS IronSwordItem cost serialized Stick
+PASS IronSwordItem output serialized
+PASS GoldenSwordItem registered
+PASS GoldenSwordItem cost GoldIngot valid
+PASS GoldenSwordItem cost serialized GoldIngot
+PASS GoldenSwordItem cost IronIngot valid
+PASS GoldenSwordItem cost serialized IronIngot
+PASS GoldenSwordItem cost Stick valid
+PASS GoldenSwordItem cost serialized Stick
+PASS GoldenSwordItem output serialized
+PASS DiamondSwordItem registered
+PASS DiamondSwordItem cost DiamondOre valid
+PASS DiamondSwordItem cost serialized DiamondOre
+PASS DiamondSwordItem cost IronIngot valid
+PASS DiamondSwordItem cost serialized IronIngot
+PASS DiamondSwordItem cost Planks valid
+PASS DiamondSwordItem cost serialized Planks
+PASS DiamondSwordItem output serialized
+PASS NetheritheSwordItem registered
+PASS NetheritheSwordItem cost NetheriteIngot valid
+PASS NetheritheSwordItem cost serialized NetheriteIngot
+PASS NetheritheSwordItem cost DiamondOre valid
+PASS NetheritheSwordItem cost serialized DiamondOre
+PASS NetheritheSwordItem cost Planks valid
+PASS NetheritheSwordItem cost serialized Planks
+PASS NetheritheSwordItem output serialized
+PASS BowItem registered
+PASS BowItem cost Stick valid
+PASS BowItem cost serialized Stick
+PASS BowItem cost String valid
+PASS BowItem cost serialized String
+PASS BowItem output serialized
+PASS WoodenPickaxe registered
+PASS WoodenPickaxe cost Planks valid
+PASS WoodenPickaxe cost serialized Planks
+PASS WoodenPickaxe cost Stick valid
+PASS WoodenPickaxe cost serialized Stick
+PASS WoodenPickaxe output serialized
+PASS IronPickaxe registered
+PASS IronPickaxe cost IronIngot valid
+PASS IronPickaxe cost serialized IronIngot
+PASS IronPickaxe cost Planks valid
+PASS IronPickaxe cost serialized Planks
+PASS IronPickaxe output serialized
+PASS DiamondPickaxe registered
+PASS DiamondPickaxe cost DiamondOre valid
+PASS DiamondPickaxe cost serialized DiamondOre
+PASS DiamondPickaxe cost IronIngot valid
+PASS DiamondPickaxe cost serialized IronIngot
+PASS DiamondPickaxe cost Planks valid
+PASS DiamondPickaxe cost serialized Planks
+PASS DiamondPickaxe output serialized
+PASS NetherithePickaxe registered
+PASS NetherithePickaxe cost NetheriteIngot valid
+PASS NetherithePickaxe cost serialized NetheriteIngot
+PASS NetherithePickaxe cost DiamondOre valid
+PASS NetherithePickaxe cost serialized DiamondOre
+PASS NetherithePickaxe cost Planks valid
+PASS NetherithePickaxe cost serialized Planks
+PASS NetherithePickaxe output serialized
+PASS IronHelmet registered
+PASS IronHelmet cost IronIngot valid
+PASS IronHelmet cost serialized IronIngot
+PASS IronHelmet cost Leather valid
+PASS IronHelmet cost serialized Leather
+PASS IronHelmet output serialized
+PASS IronChestplate registered
+PASS IronChestplate cost IronIngot valid
+PASS IronChestplate cost serialized IronIngot
+PASS IronChestplate cost Leather valid
+PASS IronChestplate cost serialized Leather
+PASS IronChestplate output serialized
+PASS IronLeggings registered
+PASS IronLeggings cost IronIngot valid
+PASS IronLeggings cost serialized IronIngot
+PASS IronLeggings cost Leather valid
+PASS IronLeggings cost serialized Leather
+PASS IronLeggings output serialized
+PASS IronBoots registered
+PASS IronBoots cost IronIngot valid
+PASS IronBoots cost serialized IronIngot
+PASS IronBoots cost Leather valid
+PASS IronBoots cost serialized Leather
+PASS IronBoots output serialized
+PASS GoldenHelmet registered
+PASS GoldenHelmet cost GoldIngot valid
+PASS GoldenHelmet cost serialized GoldIngot
+PASS GoldenHelmet cost Leather valid
+PASS GoldenHelmet cost serialized Leather
+PASS GoldenHelmet output serialized
+PASS GoldenChestplate registered
+PASS GoldenChestplate cost GoldIngot valid
+PASS GoldenChestplate cost serialized GoldIngot
+PASS GoldenChestplate cost Leather valid
+PASS GoldenChestplate cost serialized Leather
+PASS GoldenChestplate output serialized
+PASS GoldenLeggings registered
+PASS GoldenLeggings cost GoldIngot valid
+PASS GoldenLeggings cost serialized GoldIngot
+PASS GoldenLeggings cost Leather valid
+PASS GoldenLeggings cost serialized Leather
+PASS GoldenLeggings output serialized
+PASS GoldenBoots registered
+PASS GoldenBoots cost GoldIngot valid
+PASS GoldenBoots cost serialized GoldIngot
+PASS GoldenBoots cost Leather valid
+PASS GoldenBoots cost serialized Leather
+PASS GoldenBoots output serialized
+PASS DiamondHelmet registered
+PASS DiamondHelmet cost DiamondOre valid
+PASS DiamondHelmet cost serialized DiamondOre
+PASS DiamondHelmet cost Leather valid
+PASS DiamondHelmet cost serialized Leather
+PASS DiamondHelmet cost IronIngot valid
+PASS DiamondHelmet cost serialized IronIngot
+PASS DiamondHelmet output serialized
+PASS DiamondChestplate registered
+PASS DiamondChestplate cost DiamondOre valid
+PASS DiamondChestplate cost serialized DiamondOre
+PASS DiamondChestplate cost Leather valid
+PASS DiamondChestplate cost serialized Leather
+PASS DiamondChestplate cost IronIngot valid
+PASS DiamondChestplate cost serialized IronIngot
+PASS DiamondChestplate output serialized
+PASS DiamondLeggings registered
+PASS DiamondLeggings cost DiamondOre valid
+PASS DiamondLeggings cost serialized DiamondOre
+PASS DiamondLeggings cost Leather valid
+PASS DiamondLeggings cost serialized Leather
+PASS DiamondLeggings cost IronIngot valid
+PASS DiamondLeggings cost serialized IronIngot
+PASS DiamondLeggings output serialized
+PASS DiamondBoots registered
+PASS DiamondBoots cost DiamondOre valid
+PASS DiamondBoots cost serialized DiamondOre
+PASS DiamondBoots cost Leather valid
+PASS DiamondBoots cost serialized Leather
+PASS DiamondBoots cost IronIngot valid
+PASS DiamondBoots cost serialized IronIngot
+PASS DiamondBoots output serialized
+PASS NetheriteHelmet registered
+PASS NetheriteHelmet cost NetheriteIngot valid
+PASS NetheriteHelmet cost serialized NetheriteIngot
+PASS NetheriteHelmet cost Leather valid
+PASS NetheriteHelmet cost serialized Leather
+PASS NetheriteHelmet cost IronIngot valid
+PASS NetheriteHelmet cost serialized IronIngot
+PASS NetheriteHelmet output serialized
+PASS NetheriteChestplate registered
+PASS NetheriteChestplate cost NetheriteIngot valid
+PASS NetheriteChestplate cost serialized NetheriteIngot
+PASS NetheriteChestplate cost Leather valid
+PASS NetheriteChestplate cost serialized Leather
+PASS NetheriteChestplate cost IronIngot valid
+PASS NetheriteChestplate cost serialized IronIngot
+PASS NetheriteChestplate output serialized
+PASS NetheriteLeggings registered
+PASS NetheriteLeggings cost NetheriteIngot valid
+PASS NetheriteLeggings cost serialized NetheriteIngot
+PASS NetheriteLeggings cost Leather valid
+PASS NetheriteLeggings cost serialized Leather
+PASS NetheriteLeggings cost IronIngot valid
+PASS NetheriteLeggings cost serialized IronIngot
+PASS NetheriteLeggings output serialized
+PASS NetheriteBoots registered
+PASS NetheriteBoots cost NetheriteIngot valid
+PASS NetheriteBoots cost serialized NetheriteIngot
+PASS NetheriteBoots cost Leather valid
+PASS NetheriteBoots cost serialized Leather
+PASS NetheriteBoots cost IronIngot valid
+PASS NetheriteBoots cost serialized IronIngot
+PASS NetheriteBoots output serialized
+PASS Sugar registered
+PASS Sugar cost SugarCane valid
+PASS Sugar cost serialized SugarCane
+PASS Sugar output serialized
+PASS GlassBottle registered
+PASS GlassBottle cost Glass valid
+PASS GlassBottle cost serialized Glass
+PASS GlassBottle output serialized
+PASS GlisteringMelon registered
+PASS GlisteringMelon cost MelonSlice valid
+PASS GlisteringMelon cost serialized MelonSlice
+PASS GlisteringMelon cost GoldIngot valid
+PASS GlisteringMelon cost serialized GoldIngot
+PASS GlisteringMelon output serialized
+PASS HealingPotion registered
+PASS HealingPotion cost GlassBottle valid
+PASS HealingPotion cost serialized GlassBottle
+PASS HealingPotion cost NetherWart valid
+PASS HealingPotion cost serialized NetherWart
+PASS HealingPotion cost GlisteringMelon valid
+PASS HealingPotion cost serialized GlisteringMelon
+PASS HealingPotion output serialized
+PASS RegenerationPotion registered
+PASS RegenerationPotion cost GlassBottle valid
+PASS RegenerationPotion cost serialized GlassBottle
+PASS RegenerationPotion cost NetherWart valid
+PASS RegenerationPotion cost serialized NetherWart
+PASS RegenerationPotion cost GhastTear valid
+PASS RegenerationPotion cost serialized GhastTear
+PASS RegenerationPotion output serialized
+PASS SpeedPotion registered
+PASS SpeedPotion cost GlassBottle valid
+PASS SpeedPotion cost serialized GlassBottle
+PASS SpeedPotion cost NetherWart valid
+PASS SpeedPotion cost serialized NetherWart
+PASS SpeedPotion cost Sugar valid
+PASS SpeedPotion cost serialized Sugar
+PASS SpeedPotion output serialized
+PASS LumberjackBuilding registered
+PASS LumberjackBuilding has expected levels
+PASS LumberjackBuilding models resolve
+PASS Planks has one owning building
+PASS Stick has one owning building
+PASS WoodenPickaxe has one owning building
+PASS BowItem has one owning building
+PASS IronPickaxe has one owning building
+PASS Wool has one owning building
+PASS Sugar has one owning building
+PASS DiamondPickaxe has one owning building
+PASS NetherithePickaxe has one owning building
+PASS SmithBuilding registered
+PASS SmithBuilding has expected levels
+PASS SmithBuilding models resolve
+PASS CoalItem has one owning building
+PASS IronIngot has one owning building
+PASS StoneSwordItem has one owning building
+PASS IronSwordItem has one owning building
+PASS IronHelmet has one owning building
+PASS IronChestplate has one owning building
+PASS IronLeggings has one owning building
+PASS IronBoots has one owning building
+PASS GoldIngot has one owning building
+PASS GoldenSwordItem has one owning building
+PASS GoldenHelmet has one owning building
+PASS GoldenChestplate has one owning building
+PASS GoldenLeggings has one owning building
+PASS GoldenBoots has one owning building
+PASS DiamondSwordItem has one owning building
+PASS DiamondHelmet has one owning building
+PASS DiamondChestplate has one owning building
+PASS DiamondLeggings has one owning building
+PASS DiamondBoots has one owning building
+PASS NetheriteScrap has one owning building
+PASS NetheriteIngot has one owning building
+PASS NetheritheSwordItem has one owning building
+PASS NetheriteHelmet has one owning building
+PASS NetheriteChestplate has one owning building
+PASS NetheriteLeggings has one owning building
+PASS NetheriteBoots has one owning building
+PASS FarmBuilding registered
+PASS FarmBuilding has expected levels
+PASS FarmBuilding models resolve
+PASS AlchemyBuilding registered
+PASS AlchemyBuilding has expected levels
+PASS AlchemyBuilding models resolve
+PASS Glass has one owning building
+PASS GlassBottle has one owning building
+PASS GlisteringMelon has one owning building
+PASS HealingPotion has one owning building
+PASS SpeedPotion has one owning building
+PASS RegenerationPotion has one owning building
+PASS StorageBuilding registered
+PASS StorageBuilding has expected levels
+PASS StorageBuilding models resolve
+PASS All 41 recipes reachable from expedition resources
+PASS Every building reaches maximum level without dependency cycles
+PASS Level1_Village exit portal assigned
+PASS Level1_Village encounter size
+PASS Level1_Village enemy lists serialized in Unity format
+PASS Level1_Village reference 41f600800be6f1842bb6cb5a88114a94 resolves
+PASS Level1_Village reference 236e1c7a09b5b8f448b1a45eb5f3f3c2 resolves
+PASS Level1_Village reference 4721b15ba15429b40896a829236a9f4d resolves
+PASS Level1_Village reference 4d4666ba7dbbefa47b57dbff0b891f42 resolves
+PASS Level1_Village reference 2341848530a95b34794be486a7bc64c3 resolves
+PASS Level1_Village reference 8d4377309a1b81045ba99f7bb848ff29 resolves
+PASS Level1_Village reference a68cd5cc21de10fb12fcf02b8923a5b8 resolves
+PASS Level1_Village reference d802d592708eefe055968f5ec21276d9 resolves
+PASS Level1_Village reference 748b6e8fd10cc5f458155de6d72cfb74 resolves
+PASS Level1_Village reference 079f8acf4ba05efc83eab37686345c0f resolves
+PASS Level1_Village reference 85a3754243d2aea4be1af73e426cd5a9 resolves
+PASS Level1_Village reference cbfc4609802435e469abad930689a627 resolves
+PASS Level1_Village reference 79c8a2040dc0ef747b153c4004dc7868 resolves
+PASS Level1_Village reference 5e34c181307af274da91e900b69084af resolves
+PASS Level1_Village reference 8c8b955f9f3e932419e1c97db03732e7 resolves
+PASS Level1_Village reference da96b5310bb3ef66dab7678a33ad9026 resolves
+PASS Level1_Village reference 9730c2488cc52afc8629bbc0f629b382 resolves
+PASS Level1_Village reference 4d4666ba7dbbefa47b57dbff0b891f42 resolves
+PASS Level1_Village reference 2341848530a95b34794be486a7bc64c3 resolves
+PASS Level1_Village reference 8d4377309a1b81045ba99f7bb848ff29 resolves
+PASS Level1_Village reference a68cd5cc21de10fb12fcf02b8923a5b8 resolves
+PASS Level1_Village reference d802d592708eefe055968f5ec21276d9 resolves
+PASS Level1_Village reference 89e9ac016df759f47a40dedfaea1ab43 resolves
+PASS Level1_Village reference 856b2a6a20e15574082dd2bdc40526f5 resolves
+PASS Level2_Sand exit portal assigned
+PASS Level2_Sand encounter size
+PASS Level2_Sand enemy lists serialized in Unity format
+PASS Level2_Sand reference 41f600800be6f1842bb6cb5a88114a94 resolves
+PASS Level2_Sand reference 56eddb6f2cca8ba41b178fcc028e5010 resolves
+PASS Level2_Sand reference 4721b15ba15429b40896a829236a9f4d resolves
+PASS Level2_Sand reference 10c265e30aa9be34685985507820bbb4 resolves
+PASS Level2_Sand reference b00bcf18baae3cd448bfe86f83366dca resolves
+PASS Level2_Sand reference 8d4377309a1b81045ba99f7bb848ff29 resolves
+PASS Level2_Sand reference a68cd5cc21de10fb12fcf02b8923a5b8 resolves
+PASS Level2_Sand reference d802d592708eefe055968f5ec21276d9 resolves
+PASS Level2_Sand reference 7bb504eba684311b6f0ba2e390d5ae5f resolves
+PASS Level2_Sand reference 9674280c6c63ca952a01262a7ee47405 resolves
+PASS Level2_Sand reference 9b4c5ebb516f2044085b965fa085bae0 resolves
+PASS Level2_Sand reference e26f4c1e328228b4d80a8887b2f721a1 resolves
+PASS Level2_Sand reference 5e34c181307af274da91e900b69084af resolves
+PASS Level2_Sand reference e2a78317b64608dd0bd4611b921c5b34 resolves
+PASS Level2_Sand reference c69f8049666a24cdf4bdc1db8bc157e3 resolves
+PASS Level2_Sand reference 10c265e30aa9be34685985507820bbb4 resolves
+PASS Level2_Sand reference b00bcf18baae3cd448bfe86f83366dca resolves
+PASS Level2_Sand reference 8d4377309a1b81045ba99f7bb848ff29 resolves
+PASS Level2_Sand reference a68cd5cc21de10fb12fcf02b8923a5b8 resolves
+PASS Level2_Sand reference d802d592708eefe055968f5ec21276d9 resolves
+PASS Level2_Sand reference ce1f5b7c1945ea74a9fd5b34c5fb7b4f resolves
+PASS Level2_Sand reference f9ec1c0318dcc3149b0e9ae62a6d8cdf resolves
+PASS Level2_Sand reference b587cb59b7e1ed44f80b882798eb0fda resolves
+PASS Level3_Mine exit portal assigned
+PASS Level3_Mine encounter size
+PASS Level3_Mine enemy lists serialized in Unity format
+PASS Level3_Mine reference 41f600800be6f1842bb6cb5a88114a94 resolves
+PASS Level3_Mine reference 2cd5b8b39a0d00c43b614d31636cb0cf resolves
+PASS Level3_Mine reference 4721b15ba15429b40896a829236a9f4d resolves
+PASS Level3_Mine reference b00bcf18baae3cd448bfe86f83366dca resolves
+PASS Level3_Mine reference 501e28faeabb676418a62d09f9eb6cb9 resolves
+PASS Level3_Mine reference 8d4377309a1b81045ba99f7bb848ff29 resolves
+PASS Level3_Mine reference 82ac6cc2aac71aa468bb4bcb0fc1738c resolves
+PASS Level3_Mine reference b73d32f9995dd7cb1d381c921c259d88 resolves
+PASS Level3_Mine reference 5e34c181307af274da91e900b69084af resolves
+PASS Level3_Mine reference e26f4c1e328228b4d80a8887b2f721a1 resolves
+PASS Level3_Mine reference 91fd697de53d53046b78e8a5ca3233ae resolves
+PASS Level3_Mine reference 9ac35cbd8ebee2241a0d54dbe7b6373c resolves
+PASS Level3_Mine reference 946fa19ad33b20284b1e45c6ffd2b587 resolves
+PASS Level3_Mine reference b00bcf18baae3cd448bfe86f83366dca resolves
+PASS Level3_Mine reference 501e28faeabb676418a62d09f9eb6cb9 resolves
+PASS Level3_Mine reference 8d4377309a1b81045ba99f7bb848ff29 resolves
+PASS Level3_Mine reference 82ac6cc2aac71aa468bb4bcb0fc1738c resolves
+PASS Level3_Mine reference c559c4ed7e16bb44894583db4d8d3c0b resolves
+PASS Level3_Mine reference c1c961cbd00909b45b34d97fd7df5cbf resolves
+PASS Level3_Mine reference 856b2a6a20e15574082dd2bdc40526f5 resolves
+PASS Level4_Forest exit portal assigned
+PASS Level4_Forest encounter size
+PASS Level4_Forest enemy lists serialized in Unity format
+PASS Level4_Forest reference 41f600800be6f1842bb6cb5a88114a94 resolves
+PASS Level4_Forest reference 5bfcf1e00595311408c8b59566b17299 resolves
+PASS Level4_Forest reference 4721b15ba15429b40896a829236a9f4d resolves
+PASS Level4_Forest reference 4d4666ba7dbbefa47b57dbff0b891f42 resolves
+PASS Level4_Forest reference a68cd5cc21de10fb12fcf02b8923a5b8 resolves
+PASS Level4_Forest reference d802d592708eefe055968f5ec21276d9 resolves
+PASS Level4_Forest reference 82ac6cc2aac71aa468bb4bcb0fc1738c resolves
+PASS Level4_Forest reference 449aab29c8aae1c4e987d0c579f28819 resolves
+PASS Level4_Forest reference ba6c444be316a2eb42b9a529124cd0d8 resolves
+PASS Level4_Forest reference 8aa06830544349949b65f4dc2dd1431c resolves
+PASS Level4_Forest reference 2341848530a95b34794be486a7bc64c3 resolves
+PASS Level4_Forest reference 8d4377309a1b81045ba99f7bb848ff29 resolves
+PASS Level4_Forest reference b00bcf18baae3cd448bfe86f83366dca resolves
+PASS Level4_Forest reference 079f8acf4ba05efc83eab37686345c0f resolves
+PASS Level4_Forest reference 7bb504eba684311b6f0ba2e390d5ae5f resolves
+PASS Level4_Forest reference b73d32f9995dd7cb1d381c921c259d88 resolves
+PASS Level4_Forest reference cbfc4609802435e469abad930689a627 resolves
+PASS Level4_Forest reference b8a4e8ef1b9079c4c9895f7f075d2508 resolves
+PASS Level4_Forest reference 79c8a2040dc0ef747b153c4004dc7868 resolves
+PASS Level4_Forest reference 5e34c181307af274da91e900b69084af resolves
+PASS Level4_Forest reference e26f4c1e328228b4d80a8887b2f721a1 resolves
+PASS Level4_Forest reference 9ac35cbd8ebee2241a0d54dbe7b6373c resolves
+PASS Level4_Forest reference a6fbe466fc47bf84cb6423974c58ef28 resolves
+PASS Level4_Forest reference da96b5310bb3ef66dab7678a33ad9026 resolves
+PASS Level4_Forest reference e2a78317b64608dd0bd4611b921c5b34 resolves
+PASS Level4_Forest reference 946fa19ad33b20284b1e45c6ffd2b587 resolves
+PASS Level4_Forest reference 4d4666ba7dbbefa47b57dbff0b891f42 resolves
+PASS Level4_Forest reference a68cd5cc21de10fb12fcf02b8923a5b8 resolves
+PASS Level4_Forest reference d802d592708eefe055968f5ec21276d9 resolves
+PASS Level4_Forest reference 82ac6cc2aac71aa468bb4bcb0fc1738c resolves
+PASS Level4_Forest reference 449aab29c8aae1c4e987d0c579f28819 resolves
+PASS Level4_Forest reference ba6c444be316a2eb42b9a529124cd0d8 resolves
+PASS Level4_Forest reference 71f5d1dff02b6054eb2254b654e556fe resolves
+PASS Level4_Forest reference f9ec1c0318dcc3149b0e9ae62a6d8cdf resolves
+PASS Level4_Forest reference 856b2a6a20e15574082dd2bdc40526f5 resolves
+PASS Assets/Prefabs/Objects/Ores/CoalOreBlock.prefab has no empty drops
+PASS Assets/Prefabs/Objects/Ores/CoalOreBlock.prefab drop resolves
+PASS Assets/Prefabs/Objects/Ores/CoalOreBlock.prefab pickup points back to its resource
+PASS Assets/Prefabs/Objects/Ores/DiamondOreBlock.prefab has no empty drops
+PASS Assets/Prefabs/Objects/Ores/DiamondOreBlock.prefab drop resolves
+PASS Assets/Prefabs/Objects/Ores/DiamondOreBlock.prefab pickup points back to its resource
+PASS Assets/Prefabs/Objects/Ores/GoldOreBlock.prefab has no empty drops
+PASS Assets/Prefabs/Objects/Ores/GoldOreBlock.prefab drop resolves
+PASS Assets/Prefabs/Objects/Ores/GoldOreBlock.prefab pickup points back to its resource
+PASS Assets/Prefabs/Objects/Ores/IronOreBlock.prefab has no empty drops
+PASS Assets/Prefabs/Objects/Ores/IronOreBlock.prefab drop resolves
+PASS Assets/Prefabs/Objects/Ores/IronOreBlock.prefab pickup points back to its resource
+PASS Assets/Prefabs/Objects/Ores/NetheriteOre.prefab has no empty drops
+PASS Assets/Prefabs/Objects/Ores/NetheriteOre.prefab drop resolves
+PASS Assets/Prefabs/Objects/Ores/NetheriteOre.prefab pickup points back to its resource
+PASS Assets/Prefabs/Objects/Ores/Sand.prefab has no empty drops
+PASS Assets/Prefabs/Objects/Ores/Sand.prefab drop resolves
+PASS Assets/Prefabs/Objects/Ores/Sand.prefab pickup points back to its resource
+PASS Assets/Prefabs/Objects/Ores/Stone.prefab has no empty drops
+PASS Assets/Prefabs/Objects/Ores/Stone.prefab drop resolves
+PASS Assets/Prefabs/Objects/Ores/Stone.prefab pickup points back to its resource
+PASS Assets/Prefabs/Objects/Ores/Wood.prefab has no empty drops
+PASS Assets/Prefabs/Objects/Ores/Wood.prefab drop resolves
+PASS Assets/Prefabs/Objects/Ores/Wood.prefab pickup points back to its resource
+PASS Assets/Prefabs/Objects/Ores/WoodBirch.prefab has no empty drops
+PASS Assets/Prefabs/Objects/Ores/WoodBirch.prefab drop resolves
+PASS Assets/Prefabs/Objects/Ores/WoodBirch.prefab pickup points back to its resource
+PASS Assets/Prefabs/Objects/Ores/WoodDark.prefab has no empty drops
+PASS Assets/Prefabs/Objects/Ores/WoodDark.prefab drop resolves
+PASS Assets/Prefabs/Objects/Ores/WoodDark.prefab pickup points back to its resource
+PASS Assets/Prefabs/Objects/Ores/WoodOak.prefab has no empty drops
+PASS Assets/Prefabs/Objects/Ores/WoodOak.prefab drop resolves
+PASS Assets/Prefabs/Objects/Ores/WoodOak.prefab pickup points back to its resource
+PASS Assets/Art/Production/Materials/GhastTear.mat reference resolves a1cdc501830a3e301231630e54d7b967
+PASS Assets/Art/Production/Materials/GhastTear.mat reference resolves aba4cfffd98834408ee6fd6440d9c2e1
+PASS Assets/Art/Production/Materials/Glass.mat reference resolves a1cdc501830a3e301231630e54d7b967
+PASS Assets/Art/Production/Materials/Glass.mat reference resolves c459019ec56c19c4aa7c6b76d80c49e9
+PASS Assets/Art/Production/Materials/GlassBottle.mat reference resolves a1cdc501830a3e301231630e54d7b967
+PASS Assets/Art/Production/Materials/GlassBottle.mat reference resolves d6eadd317c2835607dcfcb43a8fa91ee
+PASS Assets/Art/Production/Materials/GlisteringMelon.mat reference resolves a1cdc501830a3e301231630e54d7b967
+PASS Assets/Art/Production/Materials/GlisteringMelon.mat reference resolves 9914b8c5594f1734e7da49c6f63d5743
+PASS Assets/Art/Production/Materials/GoldIngot.mat reference resolves a1cdc501830a3e301231630e54d7b967
+PASS Assets/Art/Production/Materials/GoldIngot.mat reference resolves 7cf68192dd8881947b9f930b8f379463
+PASS Assets/Art/Production/Materials/HealingPotion.mat reference resolves a1cdc501830a3e301231630e54d7b967
+PASS Assets/Art/Production/Materials/HealingPotion.mat reference resolves d204e1fb42e7c47c337ac3c543b109d6
+PASS Assets/Art/Production/Materials/IronIngot.mat reference resolves a1cdc501830a3e301231630e54d7b967
+PASS Assets/Art/Production/Materials/IronIngot.mat reference resolves b6d21627d7fe4c34795d96c9e0f11c01
+PASS Assets/Art/Production/Materials/Leather.mat reference resolves a1cdc501830a3e301231630e54d7b967
+PASS Assets/Art/Production/Materials/Leather.mat reference resolves dc0d14dc446c55d52e5f575148bb1d5b
+PASS Assets/Art/Production/Materials/MelonSlice.mat reference resolves a1cdc501830a3e301231630e54d7b967
+PASS Assets/Art/Production/Materials/MelonSlice.mat reference resolves 4f85ed3c366105461ae6a4555fc1e2bd
+PASS Assets/Art/Production/Materials/NetheriteIngot.mat reference resolves a1cdc501830a3e301231630e54d7b967
+PASS Assets/Art/Production/Materials/NetheriteIngot.mat reference resolves 594028ccf2069d047a021c211fff0981
+PASS Assets/Art/Production/Materials/NetheriteScrap.mat reference resolves a1cdc501830a3e301231630e54d7b967
+PASS Assets/Art/Production/Materials/NetheriteScrap.mat reference resolves a7af047c30d8beea958ebfe88d588a53
+PASS Assets/Art/Production/Materials/NetherWart.mat reference resolves a1cdc501830a3e301231630e54d7b967
+PASS Assets/Art/Production/Materials/NetherWart.mat reference resolves feee06a7e33b0c5cc9fc82122a4c3577
+PASS Assets/Art/Production/Materials/RegenerationPotion.mat reference resolves a1cdc501830a3e301231630e54d7b967
+PASS Assets/Art/Production/Materials/RegenerationPotion.mat reference resolves ab8965b51f7cf3f4966b34c46dab9f0c
+PASS Assets/Art/Production/Materials/SpeedPotion.mat reference resolves a1cdc501830a3e301231630e54d7b967
+PASS Assets/Art/Production/Materials/SpeedPotion.mat reference resolves a2537f8d806fb1e3dc6de01227e76628
+PASS Assets/Art/Production/Materials/Stick.mat reference resolves a1cdc501830a3e301231630e54d7b967
+PASS Assets/Art/Production/Materials/Stick.mat reference resolves 9eadf7e770affd9d71a2970aba1bc038
+PASS Assets/Art/Production/Materials/String.mat reference resolves a1cdc501830a3e301231630e54d7b967
+PASS Assets/Art/Production/Materials/String.mat reference resolves e64e24fa2b02e3db140e08f321d0fd76
+PASS Assets/Art/Production/Materials/Sugar.mat reference resolves a1cdc501830a3e301231630e54d7b967
+PASS Assets/Art/Production/Materials/Sugar.mat reference resolves af0c3a785af85627565f878dd484eae2
+PASS Assets/Art/Production/Materials/SugarCane.mat reference resolves a1cdc501830a3e301231630e54d7b967
+PASS Assets/Art/Production/Materials/SugarCane.mat reference resolves 4dedf56e874804d2a8e27559d9db362b
+PASS Assets/Art/Production/Materials/Wheat.mat reference resolves a1cdc501830a3e301231630e54d7b967
+PASS Assets/Art/Production/Materials/Wheat.mat reference resolves e4ad2e9e943d58ee0c622dfb69536c8b
+PASS Assets/Art/Production/Materials/Wool.mat reference resolves a1cdc501830a3e301231630e54d7b967
+PASS Assets/Art/Production/Materials/Wool.mat reference resolves 7001e9056e2a567f4dacb664ed6bf7f0
+PASS Assets/Prefabs/Objects/Harvest/GlassHarvest.prefab reference resolves 0000000000000000e000000000000000
+PASS Assets/Prefabs/Objects/Harvest/GlassHarvest.prefab reference resolves 3e3991dbf93d0b0706e7e246d8a68958
+PASS Assets/Prefabs/Objects/Harvest/GlassHarvest.prefab reference resolves 4b36bf374172be843951afeba524bd19
+PASS Assets/Prefabs/Objects/Harvest/GlassHarvest.prefab reference resolves 180f6820cb539534ba5ed2121a0b7f19
+PASS Assets/Prefabs/Objects/Harvest/GlassHarvest.prefab reference resolves aa29556580cc7724a90243f73c3ed188
+PASS Assets/Prefabs/Objects/Harvest/GlassHarvest.prefab reference resolves 782c2eb0a020bf344980ce7eab52e94b
+PASS Assets/Prefabs/Objects/Harvest/GlassHarvest.prefab reference resolves 5ffe06965e57afc4fadc83871b7ca265
+PASS Assets/Prefabs/Objects/Harvest/GlassHarvest.prefab reference resolves 9674280c6c63ca952a01262a7ee47405
+PASS Assets/Prefabs/Objects/Harvest/GlassHarvest.prefab reference resolves 4c15f8a55a614aeabf1f802e3e8822cc
+PASS Assets/Prefabs/Objects/Harvest/NetherWartHarvest.prefab reference resolves 0000000000000000e000000000000000
+PASS Assets/Prefabs/Objects/Harvest/NetherWartHarvest.prefab reference resolves eaaef54e2e5f66fd7e9772e327ecade3
+PASS Assets/Prefabs/Objects/Harvest/NetherWartHarvest.prefab reference resolves 4b36bf374172be843951afeba524bd19
+PASS Assets/Prefabs/Objects/Harvest/NetherWartHarvest.prefab reference resolves 180f6820cb539534ba5ed2121a0b7f19
+PASS Assets/Prefabs/Objects/Harvest/NetherWartHarvest.prefab reference resolves aa29556580cc7724a90243f73c3ed188
+PASS Assets/Prefabs/Objects/Harvest/NetherWartHarvest.prefab reference resolves 782c2eb0a020bf344980ce7eab52e94b
+PASS Assets/Prefabs/Objects/Harvest/NetherWartHarvest.prefab reference resolves 5ffe06965e57afc4fadc83871b7ca265
+PASS Assets/Prefabs/Objects/Harvest/NetherWartHarvest.prefab reference resolves b73d32f9995dd7cb1d381c921c259d88
+PASS Assets/Prefabs/Objects/Harvest/NetherWartHarvest.prefab reference resolves 4c15f8a55a614aeabf1f802e3e8822cc
+PASS Assets/Prefabs/Objects/Harvest/NetherWartHarvest.prefab reference resolves c72c6126ca57c1c0400e0a49d221591f
+PASS Assets/Prefabs/Objects/Harvest/NetherWartHarvest.prefab reference resolves d4f2c7649efbf9747b6ac0b88c2b6106
+PASS Assets/Prefabs/Objects/Harvest/SugarCaneHarvest.prefab reference resolves 0000000000000000e000000000000000
+PASS Assets/Prefabs/Objects/Harvest/SugarCaneHarvest.prefab reference resolves 4bc2c9b5d10aeae79a7368f57c557c76
+PASS Assets/Prefabs/Objects/Harvest/SugarCaneHarvest.prefab reference resolves 4b36bf374172be843951afeba524bd19
+PASS Assets/Prefabs/Objects/Harvest/SugarCaneHarvest.prefab reference resolves 180f6820cb539534ba5ed2121a0b7f19
+PASS Assets/Prefabs/Objects/Harvest/SugarCaneHarvest.prefab reference resolves aa29556580cc7724a90243f73c3ed188
+PASS Assets/Prefabs/Objects/Harvest/SugarCaneHarvest.prefab reference resolves 782c2eb0a020bf344980ce7eab52e94b
+PASS Assets/Prefabs/Objects/Harvest/SugarCaneHarvest.prefab reference resolves 5ffe06965e57afc4fadc83871b7ca265
+PASS Assets/Prefabs/Objects/Harvest/SugarCaneHarvest.prefab reference resolves 7bb504eba684311b6f0ba2e390d5ae5f
+PASS Assets/Prefabs/Objects/Harvest/SugarCaneHarvest.prefab reference resolves 4c15f8a55a614aeabf1f802e3e8822cc
+PASS Assets/Prefabs/Objects/Harvest/SugarCaneHarvest.prefab reference resolves c72c6126ca57c1c0400e0a49d221591f
+PASS Assets/Prefabs/Objects/Harvest/SugarCaneHarvest.prefab reference resolves 930693863be38264b8bc52fa49a2da34
+PASS Assets/Prefabs/Objects/Harvest/WheatHarvest.prefab reference resolves 0000000000000000e000000000000000
+PASS Assets/Prefabs/Objects/Harvest/WheatHarvest.prefab reference resolves 1fb589c12ef5a0dfa75bfcecf87d9a99
+PASS Assets/Prefabs/Objects/Harvest/WheatHarvest.prefab reference resolves 4b36bf374172be843951afeba524bd19
+PASS Assets/Prefabs/Objects/Harvest/WheatHarvest.prefab reference resolves 180f6820cb539534ba5ed2121a0b7f19
+PASS Assets/Prefabs/Objects/Harvest/WheatHarvest.prefab reference resolves aa29556580cc7724a90243f73c3ed188
+PASS Assets/Prefabs/Objects/Harvest/WheatHarvest.prefab reference resolves 782c2eb0a020bf344980ce7eab52e94b
+PASS Assets/Prefabs/Objects/Harvest/WheatHarvest.prefab reference resolves 5ffe06965e57afc4fadc83871b7ca265
+PASS Assets/Prefabs/Objects/Harvest/WheatHarvest.prefab reference resolves 079f8acf4ba05efc83eab37686345c0f
+PASS Assets/Prefabs/Objects/Harvest/WheatHarvest.prefab reference resolves 4c15f8a55a614aeabf1f802e3e8822cc
+PASS Assets/Prefabs/Objects/Harvest/WheatHarvest.prefab reference resolves c72c6126ca57c1c0400e0a49d221591f
+PASS Assets/Prefabs/Objects/Harvest/WheatHarvest.prefab reference resolves 996b757937c5df340bb19ca894aa8e91
+PASS Assets/Prefabs/Objects/Harvest/WoolHarvest.prefab reference resolves 0000000000000000e000000000000000
+PASS Assets/Prefabs/Objects/Harvest/WoolHarvest.prefab reference resolves 61c3feab342ee81af79ab156670770b1
+PASS Assets/Prefabs/Objects/Harvest/WoolHarvest.prefab reference resolves 4b36bf374172be843951afeba524bd19
+PASS Assets/Prefabs/Objects/Harvest/WoolHarvest.prefab reference resolves 180f6820cb539534ba5ed2121a0b7f19
+PASS Assets/Prefabs/Objects/Harvest/WoolHarvest.prefab reference resolves aa29556580cc7724a90243f73c3ed188
+PASS Assets/Prefabs/Objects/Harvest/WoolHarvest.prefab reference resolves 782c2eb0a020bf344980ce7eab52e94b
+PASS Assets/Prefabs/Objects/Harvest/WoolHarvest.prefab reference resolves 5ffe06965e57afc4fadc83871b7ca265
+PASS Assets/Prefabs/Objects/Harvest/WoolHarvest.prefab reference resolves 85a3754243d2aea4be1af73e426cd5a9
+PASS Assets/Prefabs/Objects/Harvest/WoolHarvest.prefab reference resolves 4c15f8a55a614aeabf1f802e3e8822cc
+PASS Assets/Prefabs/Objects/ProductionDrops/GhastTearDrop.prefab reference resolves 1748f5f72bad7094d827e96983182591
+PASS Assets/Prefabs/Objects/ProductionDrops/GhastTearDrop.prefab reference resolves b4a9aa5000121404fbbc9e608de2d565
+PASS Assets/Prefabs/Objects/ProductionDrops/GhastTearDrop.prefab reference resolves b3aac348c836237429d6b7934baac5e9
+PASS Assets/Prefabs/Objects/ProductionDrops/GhastTearDrop.prefab reference resolves ba6c444be316a2eb42b9a529124cd0d8
+PASS Assets/Prefabs/Objects/ProductionDrops/GhastTearDrop.prefab reference resolves 8e8702872dd4c79a7de6041089f1101e
+PASS Assets/Prefabs/Objects/ProductionDrops/GhastTearDrop.prefab reference resolves 0000000000000000e000000000000000
+PASS Assets/Prefabs/Objects/ProductionDrops/GhastTearDrop.prefab reference resolves 0000000000000000e000000000000000
+PASS Assets/Prefabs/Objects/ProductionDrops/GhastTearDrop.prefab reference resolves 71e3e668f4a305b46a712aea42db9376
+PASS Assets/Prefabs/Objects/ProductionDrops/GhastTearDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GhastTearDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GhastTearDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GhastTearDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GhastTearDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GhastTearDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GhastTearDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GhastTearDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GhastTearDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GhastTearDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GhastTearDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GhastTearDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GhastTearDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GlassBottleDrop.prefab reference resolves 1748f5f72bad7094d827e96983182591
+PASS Assets/Prefabs/Objects/ProductionDrops/GlassBottleDrop.prefab reference resolves b4a9aa5000121404fbbc9e608de2d565
+PASS Assets/Prefabs/Objects/ProductionDrops/GlassBottleDrop.prefab reference resolves b3aac348c836237429d6b7934baac5e9
+PASS Assets/Prefabs/Objects/ProductionDrops/GlassBottleDrop.prefab reference resolves 82d1dd6c664ee96ca2e7ac98435b240a
+PASS Assets/Prefabs/Objects/ProductionDrops/GlassBottleDrop.prefab reference resolves 5a21c2e765dce27299331df442adb6f4
+PASS Assets/Prefabs/Objects/ProductionDrops/GlassBottleDrop.prefab reference resolves 0000000000000000e000000000000000
+PASS Assets/Prefabs/Objects/ProductionDrops/GlassBottleDrop.prefab reference resolves 0000000000000000e000000000000000
+PASS Assets/Prefabs/Objects/ProductionDrops/GlassBottleDrop.prefab reference resolves 71e3e668f4a305b46a712aea42db9376
+PASS Assets/Prefabs/Objects/ProductionDrops/GlassBottleDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GlassBottleDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GlassBottleDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GlassBottleDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GlassBottleDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GlassBottleDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GlassBottleDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GlassBottleDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GlassBottleDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GlassBottleDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GlassBottleDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GlassBottleDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GlassBottleDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GlassDrop.prefab reference resolves 1748f5f72bad7094d827e96983182591
+PASS Assets/Prefabs/Objects/ProductionDrops/GlassDrop.prefab reference resolves b4a9aa5000121404fbbc9e608de2d565
+PASS Assets/Prefabs/Objects/ProductionDrops/GlassDrop.prefab reference resolves b3aac348c836237429d6b7934baac5e9
+PASS Assets/Prefabs/Objects/ProductionDrops/GlassDrop.prefab reference resolves 9674280c6c63ca952a01262a7ee47405
+PASS Assets/Prefabs/Objects/ProductionDrops/GlassDrop.prefab reference resolves 3e3991dbf93d0b0706e7e246d8a68958
+PASS Assets/Prefabs/Objects/ProductionDrops/GlassDrop.prefab reference resolves 0000000000000000e000000000000000
+PASS Assets/Prefabs/Objects/ProductionDrops/GlassDrop.prefab reference resolves 0000000000000000e000000000000000
+PASS Assets/Prefabs/Objects/ProductionDrops/GlassDrop.prefab reference resolves 71e3e668f4a305b46a712aea42db9376
+PASS Assets/Prefabs/Objects/ProductionDrops/GlassDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GlassDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GlassDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GlassDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GlassDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GlassDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GlassDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GlassDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GlassDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GlassDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GlassDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GlassDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GlassDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GlisteringMelonDrop.prefab reference resolves 1748f5f72bad7094d827e96983182591
+PASS Assets/Prefabs/Objects/ProductionDrops/GlisteringMelonDrop.prefab reference resolves b4a9aa5000121404fbbc9e608de2d565
+PASS Assets/Prefabs/Objects/ProductionDrops/GlisteringMelonDrop.prefab reference resolves b3aac348c836237429d6b7934baac5e9
+PASS Assets/Prefabs/Objects/ProductionDrops/GlisteringMelonDrop.prefab reference resolves 1a916bcb2676b1493a7a0e06ea5229c4
+PASS Assets/Prefabs/Objects/ProductionDrops/GlisteringMelonDrop.prefab reference resolves 47af11843d641b51d15669165d53ce09
+PASS Assets/Prefabs/Objects/ProductionDrops/GlisteringMelonDrop.prefab reference resolves 0000000000000000e000000000000000
+PASS Assets/Prefabs/Objects/ProductionDrops/GlisteringMelonDrop.prefab reference resolves 0000000000000000e000000000000000
+PASS Assets/Prefabs/Objects/ProductionDrops/GlisteringMelonDrop.prefab reference resolves 71e3e668f4a305b46a712aea42db9376
+PASS Assets/Prefabs/Objects/ProductionDrops/GlisteringMelonDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GlisteringMelonDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GlisteringMelonDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GlisteringMelonDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GlisteringMelonDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GlisteringMelonDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GlisteringMelonDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GlisteringMelonDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GlisteringMelonDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GlisteringMelonDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GlisteringMelonDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GlisteringMelonDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GlisteringMelonDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GoldIngotDrop.prefab reference resolves 1748f5f72bad7094d827e96983182591
+PASS Assets/Prefabs/Objects/ProductionDrops/GoldIngotDrop.prefab reference resolves b4a9aa5000121404fbbc9e608de2d565
+PASS Assets/Prefabs/Objects/ProductionDrops/GoldIngotDrop.prefab reference resolves b3aac348c836237429d6b7934baac5e9
+PASS Assets/Prefabs/Objects/ProductionDrops/GoldIngotDrop.prefab reference resolves 5d35540860b8025c2228a7c3d5151682
+PASS Assets/Prefabs/Objects/ProductionDrops/GoldIngotDrop.prefab reference resolves c2b17e7d05efeaa6b4e3578487b66eb4
+PASS Assets/Prefabs/Objects/ProductionDrops/GoldIngotDrop.prefab reference resolves 0000000000000000e000000000000000
+PASS Assets/Prefabs/Objects/ProductionDrops/GoldIngotDrop.prefab reference resolves 0000000000000000e000000000000000
+PASS Assets/Prefabs/Objects/ProductionDrops/GoldIngotDrop.prefab reference resolves 71e3e668f4a305b46a712aea42db9376
+PASS Assets/Prefabs/Objects/ProductionDrops/GoldIngotDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GoldIngotDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GoldIngotDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GoldIngotDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GoldIngotDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GoldIngotDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GoldIngotDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GoldIngotDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GoldIngotDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GoldIngotDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GoldIngotDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GoldIngotDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/GoldIngotDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/HealingPotionDrop.prefab reference resolves 1748f5f72bad7094d827e96983182591
+PASS Assets/Prefabs/Objects/ProductionDrops/HealingPotionDrop.prefab reference resolves b4a9aa5000121404fbbc9e608de2d565
+PASS Assets/Prefabs/Objects/ProductionDrops/HealingPotionDrop.prefab reference resolves b3aac348c836237429d6b7934baac5e9
+PASS Assets/Prefabs/Objects/ProductionDrops/HealingPotionDrop.prefab reference resolves 7cb55deb25867839e67c61c42b2ab6fb
+PASS Assets/Prefabs/Objects/ProductionDrops/HealingPotionDrop.prefab reference resolves dd21b25bdce34a0ccc0dbfac9b5a9fef
+PASS Assets/Prefabs/Objects/ProductionDrops/HealingPotionDrop.prefab reference resolves 0000000000000000e000000000000000
+PASS Assets/Prefabs/Objects/ProductionDrops/HealingPotionDrop.prefab reference resolves 0000000000000000e000000000000000
+PASS Assets/Prefabs/Objects/ProductionDrops/HealingPotionDrop.prefab reference resolves 71e3e668f4a305b46a712aea42db9376
+PASS Assets/Prefabs/Objects/ProductionDrops/HealingPotionDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/HealingPotionDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/HealingPotionDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/HealingPotionDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/HealingPotionDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/HealingPotionDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/HealingPotionDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/HealingPotionDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/HealingPotionDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/HealingPotionDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/HealingPotionDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/HealingPotionDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/HealingPotionDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/IronIngotDrop.prefab reference resolves 1748f5f72bad7094d827e96983182591
+PASS Assets/Prefabs/Objects/ProductionDrops/IronIngotDrop.prefab reference resolves b4a9aa5000121404fbbc9e608de2d565
+PASS Assets/Prefabs/Objects/ProductionDrops/IronIngotDrop.prefab reference resolves b3aac348c836237429d6b7934baac5e9
+PASS Assets/Prefabs/Objects/ProductionDrops/IronIngotDrop.prefab reference resolves 70a5b21f16c7993df1d86760d1a13948
+PASS Assets/Prefabs/Objects/ProductionDrops/IronIngotDrop.prefab reference resolves b14f8164e59552568a8ad906e3c24240
+PASS Assets/Prefabs/Objects/ProductionDrops/IronIngotDrop.prefab reference resolves 0000000000000000e000000000000000
+PASS Assets/Prefabs/Objects/ProductionDrops/IronIngotDrop.prefab reference resolves 0000000000000000e000000000000000
+PASS Assets/Prefabs/Objects/ProductionDrops/IronIngotDrop.prefab reference resolves 71e3e668f4a305b46a712aea42db9376
+PASS Assets/Prefabs/Objects/ProductionDrops/IronIngotDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/IronIngotDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/IronIngotDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/IronIngotDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/IronIngotDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/IronIngotDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/IronIngotDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/IronIngotDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/IronIngotDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/IronIngotDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/IronIngotDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/IronIngotDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/IronIngotDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/LeatherDrop.prefab reference resolves 1748f5f72bad7094d827e96983182591
+PASS Assets/Prefabs/Objects/ProductionDrops/LeatherDrop.prefab reference resolves b4a9aa5000121404fbbc9e608de2d565
+PASS Assets/Prefabs/Objects/ProductionDrops/LeatherDrop.prefab reference resolves b3aac348c836237429d6b7934baac5e9
+PASS Assets/Prefabs/Objects/ProductionDrops/LeatherDrop.prefab reference resolves d802d592708eefe055968f5ec21276d9
+PASS Assets/Prefabs/Objects/ProductionDrops/LeatherDrop.prefab reference resolves 61cb2e78bd0e19c16255f6bbf4059692
+PASS Assets/Prefabs/Objects/ProductionDrops/LeatherDrop.prefab reference resolves 0000000000000000e000000000000000
+PASS Assets/Prefabs/Objects/ProductionDrops/LeatherDrop.prefab reference resolves 0000000000000000e000000000000000
+PASS Assets/Prefabs/Objects/ProductionDrops/LeatherDrop.prefab reference resolves 71e3e668f4a305b46a712aea42db9376
+PASS Assets/Prefabs/Objects/ProductionDrops/LeatherDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/LeatherDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/LeatherDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/LeatherDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/LeatherDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/LeatherDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/LeatherDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/LeatherDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/LeatherDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/LeatherDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/LeatherDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/LeatherDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/LeatherDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/MelonSliceDrop.prefab reference resolves 1748f5f72bad7094d827e96983182591
+PASS Assets/Prefabs/Objects/ProductionDrops/MelonSliceDrop.prefab reference resolves b4a9aa5000121404fbbc9e608de2d565
+PASS Assets/Prefabs/Objects/ProductionDrops/MelonSliceDrop.prefab reference resolves b3aac348c836237429d6b7934baac5e9
+PASS Assets/Prefabs/Objects/ProductionDrops/MelonSliceDrop.prefab reference resolves 244c43b92e131f0e4cff5cb545d5ebf8
+PASS Assets/Prefabs/Objects/ProductionDrops/MelonSliceDrop.prefab reference resolves 41b63b7bf1f8b683ebeb00bb6e42f040
+PASS Assets/Prefabs/Objects/ProductionDrops/MelonSliceDrop.prefab reference resolves 0000000000000000e000000000000000
+PASS Assets/Prefabs/Objects/ProductionDrops/MelonSliceDrop.prefab reference resolves 0000000000000000e000000000000000
+PASS Assets/Prefabs/Objects/ProductionDrops/MelonSliceDrop.prefab reference resolves 71e3e668f4a305b46a712aea42db9376
+PASS Assets/Prefabs/Objects/ProductionDrops/MelonSliceDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/MelonSliceDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/MelonSliceDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/MelonSliceDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/MelonSliceDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/MelonSliceDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/MelonSliceDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/MelonSliceDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/MelonSliceDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/MelonSliceDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/MelonSliceDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/MelonSliceDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/MelonSliceDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/NetheriteIngotDrop.prefab reference resolves 1748f5f72bad7094d827e96983182591
+PASS Assets/Prefabs/Objects/ProductionDrops/NetheriteIngotDrop.prefab reference resolves b4a9aa5000121404fbbc9e608de2d565
+PASS Assets/Prefabs/Objects/ProductionDrops/NetheriteIngotDrop.prefab reference resolves b3aac348c836237429d6b7934baac5e9
+PASS Assets/Prefabs/Objects/ProductionDrops/NetheriteIngotDrop.prefab reference resolves ff644b5741109c850b7eb9bd56c34586
+PASS Assets/Prefabs/Objects/ProductionDrops/NetheriteIngotDrop.prefab reference resolves 63db9c1471598176d8fcb11bc91852c6
+PASS Assets/Prefabs/Objects/ProductionDrops/NetheriteIngotDrop.prefab reference resolves 0000000000000000e000000000000000
+PASS Assets/Prefabs/Objects/ProductionDrops/NetheriteIngotDrop.prefab reference resolves 0000000000000000e000000000000000
+PASS Assets/Prefabs/Objects/ProductionDrops/NetheriteIngotDrop.prefab reference resolves 71e3e668f4a305b46a712aea42db9376
+PASS Assets/Prefabs/Objects/ProductionDrops/NetheriteIngotDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/NetheriteIngotDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/NetheriteIngotDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/NetheriteIngotDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/NetheriteIngotDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/NetheriteIngotDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/NetheriteIngotDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/NetheriteIngotDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/NetheriteIngotDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/NetheriteIngotDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/NetheriteIngotDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/NetheriteIngotDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/NetheriteIngotDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/NetheriteScrapDrop.prefab reference resolves 1748f5f72bad7094d827e96983182591
+PASS Assets/Prefabs/Objects/ProductionDrops/NetheriteScrapDrop.prefab reference resolves b4a9aa5000121404fbbc9e608de2d565
+PASS Assets/Prefabs/Objects/ProductionDrops/NetheriteScrapDrop.prefab reference resolves b3aac348c836237429d6b7934baac5e9
+PASS Assets/Prefabs/Objects/ProductionDrops/NetheriteScrapDrop.prefab reference resolves fbc6e63829645999c6473d016c23e9d1
+PASS Assets/Prefabs/Objects/ProductionDrops/NetheriteScrapDrop.prefab reference resolves 98409cfbcd89abb50729a84be82029d4
+PASS Assets/Prefabs/Objects/ProductionDrops/NetheriteScrapDrop.prefab reference resolves 0000000000000000e000000000000000
+PASS Assets/Prefabs/Objects/ProductionDrops/NetheriteScrapDrop.prefab reference resolves 0000000000000000e000000000000000
+PASS Assets/Prefabs/Objects/ProductionDrops/NetheriteScrapDrop.prefab reference resolves 71e3e668f4a305b46a712aea42db9376
+PASS Assets/Prefabs/Objects/ProductionDrops/NetheriteScrapDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/NetheriteScrapDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/NetheriteScrapDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/NetheriteScrapDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/NetheriteScrapDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/NetheriteScrapDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/NetheriteScrapDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/NetheriteScrapDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/NetheriteScrapDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/NetheriteScrapDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/NetheriteScrapDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/NetheriteScrapDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/NetheriteScrapDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/NetherWartDrop.prefab reference resolves 1748f5f72bad7094d827e96983182591
+PASS Assets/Prefabs/Objects/ProductionDrops/NetherWartDrop.prefab reference resolves b4a9aa5000121404fbbc9e608de2d565
+PASS Assets/Prefabs/Objects/ProductionDrops/NetherWartDrop.prefab reference resolves b3aac348c836237429d6b7934baac5e9
+PASS Assets/Prefabs/Objects/ProductionDrops/NetherWartDrop.prefab reference resolves b73d32f9995dd7cb1d381c921c259d88
+PASS Assets/Prefabs/Objects/ProductionDrops/NetherWartDrop.prefab reference resolves eaaef54e2e5f66fd7e9772e327ecade3
+PASS Assets/Prefabs/Objects/ProductionDrops/NetherWartDrop.prefab reference resolves 0000000000000000e000000000000000
+PASS Assets/Prefabs/Objects/ProductionDrops/NetherWartDrop.prefab reference resolves 0000000000000000e000000000000000
+PASS Assets/Prefabs/Objects/ProductionDrops/NetherWartDrop.prefab reference resolves 71e3e668f4a305b46a712aea42db9376
+PASS Assets/Prefabs/Objects/ProductionDrops/NetherWartDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/NetherWartDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/NetherWartDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/NetherWartDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/NetherWartDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/NetherWartDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/NetherWartDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/NetherWartDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/NetherWartDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/NetherWartDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/NetherWartDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/NetherWartDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/NetherWartDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/RegenerationPotionDrop.prefab reference resolves 1748f5f72bad7094d827e96983182591
+PASS Assets/Prefabs/Objects/ProductionDrops/RegenerationPotionDrop.prefab reference resolves b4a9aa5000121404fbbc9e608de2d565
+PASS Assets/Prefabs/Objects/ProductionDrops/RegenerationPotionDrop.prefab reference resolves b3aac348c836237429d6b7934baac5e9
+PASS Assets/Prefabs/Objects/ProductionDrops/RegenerationPotionDrop.prefab reference resolves f3597a2bb8893ae852cf2bbd2a844dc4
+PASS Assets/Prefabs/Objects/ProductionDrops/RegenerationPotionDrop.prefab reference resolves 1f793b96b0399d3f9014119ec694400c
+PASS Assets/Prefabs/Objects/ProductionDrops/RegenerationPotionDrop.prefab reference resolves 0000000000000000e000000000000000
+PASS Assets/Prefabs/Objects/ProductionDrops/RegenerationPotionDrop.prefab reference resolves 0000000000000000e000000000000000
+PASS Assets/Prefabs/Objects/ProductionDrops/RegenerationPotionDrop.prefab reference resolves 71e3e668f4a305b46a712aea42db9376
+PASS Assets/Prefabs/Objects/ProductionDrops/RegenerationPotionDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/RegenerationPotionDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/RegenerationPotionDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/RegenerationPotionDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/RegenerationPotionDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/RegenerationPotionDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/RegenerationPotionDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/RegenerationPotionDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/RegenerationPotionDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/RegenerationPotionDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/RegenerationPotionDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/RegenerationPotionDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/RegenerationPotionDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/SpeedPotionDrop.prefab reference resolves 1748f5f72bad7094d827e96983182591
+PASS Assets/Prefabs/Objects/ProductionDrops/SpeedPotionDrop.prefab reference resolves b4a9aa5000121404fbbc9e608de2d565
+PASS Assets/Prefabs/Objects/ProductionDrops/SpeedPotionDrop.prefab reference resolves b3aac348c836237429d6b7934baac5e9
+PASS Assets/Prefabs/Objects/ProductionDrops/SpeedPotionDrop.prefab reference resolves e1efa5b3e4d0915b63d9f1f8acccf7a0
+PASS Assets/Prefabs/Objects/ProductionDrops/SpeedPotionDrop.prefab reference resolves 15ef3425729c4e96454a3dd37c1d6e33
+PASS Assets/Prefabs/Objects/ProductionDrops/SpeedPotionDrop.prefab reference resolves 0000000000000000e000000000000000
+PASS Assets/Prefabs/Objects/ProductionDrops/SpeedPotionDrop.prefab reference resolves 0000000000000000e000000000000000
+PASS Assets/Prefabs/Objects/ProductionDrops/SpeedPotionDrop.prefab reference resolves 71e3e668f4a305b46a712aea42db9376
+PASS Assets/Prefabs/Objects/ProductionDrops/SpeedPotionDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/SpeedPotionDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/SpeedPotionDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/SpeedPotionDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/SpeedPotionDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/SpeedPotionDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/SpeedPotionDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/SpeedPotionDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/SpeedPotionDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/SpeedPotionDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/SpeedPotionDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/SpeedPotionDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/SpeedPotionDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/StickDrop.prefab reference resolves 1748f5f72bad7094d827e96983182591
+PASS Assets/Prefabs/Objects/ProductionDrops/StickDrop.prefab reference resolves b4a9aa5000121404fbbc9e608de2d565
+PASS Assets/Prefabs/Objects/ProductionDrops/StickDrop.prefab reference resolves b3aac348c836237429d6b7934baac5e9
+PASS Assets/Prefabs/Objects/ProductionDrops/StickDrop.prefab reference resolves 671877afcdc1868c0929b47ea795ea43
+PASS Assets/Prefabs/Objects/ProductionDrops/StickDrop.prefab reference resolves 65513fbf8f3157805fddf61107108dd7
+PASS Assets/Prefabs/Objects/ProductionDrops/StickDrop.prefab reference resolves 0000000000000000e000000000000000
+PASS Assets/Prefabs/Objects/ProductionDrops/StickDrop.prefab reference resolves 0000000000000000e000000000000000
+PASS Assets/Prefabs/Objects/ProductionDrops/StickDrop.prefab reference resolves 71e3e668f4a305b46a712aea42db9376
+PASS Assets/Prefabs/Objects/ProductionDrops/StickDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/StickDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/StickDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/StickDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/StickDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/StickDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/StickDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/StickDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/StickDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/StickDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/StickDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/StickDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/StickDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/StringDrop.prefab reference resolves 1748f5f72bad7094d827e96983182591
+PASS Assets/Prefabs/Objects/ProductionDrops/StringDrop.prefab reference resolves b4a9aa5000121404fbbc9e608de2d565
+PASS Assets/Prefabs/Objects/ProductionDrops/StringDrop.prefab reference resolves b3aac348c836237429d6b7934baac5e9
+PASS Assets/Prefabs/Objects/ProductionDrops/StringDrop.prefab reference resolves a68cd5cc21de10fb12fcf02b8923a5b8
+PASS Assets/Prefabs/Objects/ProductionDrops/StringDrop.prefab reference resolves 5c091489b5c52e1b964b6eb5faebc090
+PASS Assets/Prefabs/Objects/ProductionDrops/StringDrop.prefab reference resolves 0000000000000000e000000000000000
+PASS Assets/Prefabs/Objects/ProductionDrops/StringDrop.prefab reference resolves 0000000000000000e000000000000000
+PASS Assets/Prefabs/Objects/ProductionDrops/StringDrop.prefab reference resolves 71e3e668f4a305b46a712aea42db9376
+PASS Assets/Prefabs/Objects/ProductionDrops/StringDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/StringDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/StringDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/StringDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/StringDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/StringDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/StringDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/StringDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/StringDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/StringDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/StringDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/StringDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/StringDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/SugarCaneDrop.prefab reference resolves 1748f5f72bad7094d827e96983182591
+PASS Assets/Prefabs/Objects/ProductionDrops/SugarCaneDrop.prefab reference resolves b4a9aa5000121404fbbc9e608de2d565
+PASS Assets/Prefabs/Objects/ProductionDrops/SugarCaneDrop.prefab reference resolves b3aac348c836237429d6b7934baac5e9
+PASS Assets/Prefabs/Objects/ProductionDrops/SugarCaneDrop.prefab reference resolves 7bb504eba684311b6f0ba2e390d5ae5f
+PASS Assets/Prefabs/Objects/ProductionDrops/SugarCaneDrop.prefab reference resolves 4bc2c9b5d10aeae79a7368f57c557c76
+PASS Assets/Prefabs/Objects/ProductionDrops/SugarCaneDrop.prefab reference resolves 0000000000000000e000000000000000
+PASS Assets/Prefabs/Objects/ProductionDrops/SugarCaneDrop.prefab reference resolves 0000000000000000e000000000000000
+PASS Assets/Prefabs/Objects/ProductionDrops/SugarCaneDrop.prefab reference resolves 71e3e668f4a305b46a712aea42db9376
+PASS Assets/Prefabs/Objects/ProductionDrops/SugarCaneDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/SugarCaneDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/SugarCaneDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/SugarCaneDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/SugarCaneDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/SugarCaneDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/SugarCaneDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/SugarCaneDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/SugarCaneDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/SugarCaneDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/SugarCaneDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/SugarCaneDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/SugarCaneDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/SugarDrop.prefab reference resolves 1748f5f72bad7094d827e96983182591
+PASS Assets/Prefabs/Objects/ProductionDrops/SugarDrop.prefab reference resolves b4a9aa5000121404fbbc9e608de2d565
+PASS Assets/Prefabs/Objects/ProductionDrops/SugarDrop.prefab reference resolves b3aac348c836237429d6b7934baac5e9
+PASS Assets/Prefabs/Objects/ProductionDrops/SugarDrop.prefab reference resolves 85f883793f9ea17f3dcdf4c3fdbabfad
+PASS Assets/Prefabs/Objects/ProductionDrops/SugarDrop.prefab reference resolves b30b5fc733d16a4fcdfd7327c25c9c2e
+PASS Assets/Prefabs/Objects/ProductionDrops/SugarDrop.prefab reference resolves 0000000000000000e000000000000000
+PASS Assets/Prefabs/Objects/ProductionDrops/SugarDrop.prefab reference resolves 0000000000000000e000000000000000
+PASS Assets/Prefabs/Objects/ProductionDrops/SugarDrop.prefab reference resolves 71e3e668f4a305b46a712aea42db9376
+PASS Assets/Prefabs/Objects/ProductionDrops/SugarDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/SugarDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/SugarDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/SugarDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/SugarDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/SugarDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/SugarDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/SugarDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/SugarDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/SugarDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/SugarDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/SugarDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/SugarDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/WheatDrop.prefab reference resolves 1748f5f72bad7094d827e96983182591
+PASS Assets/Prefabs/Objects/ProductionDrops/WheatDrop.prefab reference resolves b4a9aa5000121404fbbc9e608de2d565
+PASS Assets/Prefabs/Objects/ProductionDrops/WheatDrop.prefab reference resolves b3aac348c836237429d6b7934baac5e9
+PASS Assets/Prefabs/Objects/ProductionDrops/WheatDrop.prefab reference resolves 079f8acf4ba05efc83eab37686345c0f
+PASS Assets/Prefabs/Objects/ProductionDrops/WheatDrop.prefab reference resolves 1fb589c12ef5a0dfa75bfcecf87d9a99
+PASS Assets/Prefabs/Objects/ProductionDrops/WheatDrop.prefab reference resolves 0000000000000000e000000000000000
+PASS Assets/Prefabs/Objects/ProductionDrops/WheatDrop.prefab reference resolves 0000000000000000e000000000000000
+PASS Assets/Prefabs/Objects/ProductionDrops/WheatDrop.prefab reference resolves 71e3e668f4a305b46a712aea42db9376
+PASS Assets/Prefabs/Objects/ProductionDrops/WheatDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/WheatDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/WheatDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/WheatDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/WheatDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/WheatDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/WheatDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/WheatDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/WheatDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/WheatDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/WheatDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/WheatDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/WheatDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/WoolDrop.prefab reference resolves 1748f5f72bad7094d827e96983182591
+PASS Assets/Prefabs/Objects/ProductionDrops/WoolDrop.prefab reference resolves b4a9aa5000121404fbbc9e608de2d565
+PASS Assets/Prefabs/Objects/ProductionDrops/WoolDrop.prefab reference resolves b3aac348c836237429d6b7934baac5e9
+PASS Assets/Prefabs/Objects/ProductionDrops/WoolDrop.prefab reference resolves 85a3754243d2aea4be1af73e426cd5a9
+PASS Assets/Prefabs/Objects/ProductionDrops/WoolDrop.prefab reference resolves 61c3feab342ee81af79ab156670770b1
+PASS Assets/Prefabs/Objects/ProductionDrops/WoolDrop.prefab reference resolves 0000000000000000e000000000000000
+PASS Assets/Prefabs/Objects/ProductionDrops/WoolDrop.prefab reference resolves 0000000000000000e000000000000000
+PASS Assets/Prefabs/Objects/ProductionDrops/WoolDrop.prefab reference resolves 71e3e668f4a305b46a712aea42db9376
+PASS Assets/Prefabs/Objects/ProductionDrops/WoolDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/WoolDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/WoolDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/WoolDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/WoolDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/WoolDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/WoolDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/WoolDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/WoolDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/WoolDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/WoolDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/WoolDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS Assets/Prefabs/Objects/ProductionDrops/WoolDrop.prefab reference resolves 236abdcb7a0a8d24dae143298699cb8b
+PASS String uses a flat icon
+PASS String pickup backlink correct
+PASS Leather uses a flat icon
+PASS Leather pickup backlink correct
+PASS HealingPotion uses a flat icon
+PASS HealingPotion pickup backlink correct
+PASS RegenerationPotion uses a flat icon
+PASS RegenerationPotion pickup backlink correct
+PASS SpeedPotion uses a flat icon
+PASS SpeedPotion pickup backlink correct
+PASS Wheat uses a flat icon
+PASS Wheat pickup backlink correct
+PASS SugarCane uses a flat icon
+PASS SugarCane pickup backlink correct
+PASS NetherWart uses a flat icon
+PASS NetherWart pickup backlink correct
+PASS Wool uses three-face icon
+PASS Glass uses three-face icon
+PASS WoodOak uses three-face icon
+PASS WoodBirch uses three-face icon
+PASS WoodDark uses three-face icon
+PASS NetheriteOre uses three-face icon

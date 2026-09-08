@@ -1,0 +1,83 @@
+Arena (0.00, 2.00, 0.00) scale=(100.00, 100.00, 100.00)
+SPAWN VillageSpawn1 world=(-36.00, 1.55, -38.00) local=(-0.36, 0.38, 0.00) parent=MobSpawner
+SPAWN VillageSpawn2 world=(-30.00, 2.55, -40.00) local=(-0.30, 0.40, 0.01) parent=MobSpawner
+SPAWN VillageSpawn3 world=(-22.00, 2.10, -40.00) local=(-0.22, 0.40, 0.00) parent=MobSpawner
+SPAWN VillageSpawn4 world=(-16.00, 2.55, -30.00) local=(-0.16, 0.30, 0.01) parent=MobSpawner
+SPAWN VillageSpawn5 world=(-22.00, 1.54, -18.00) local=(-0.22, 0.18, 0.00) parent=MobSpawner
+SPAWN VillageSpawn6 world=(-28.00, 0.43, -10.00) local=(-0.28, 0.10, -0.02) parent=MobSpawner
+SPAWN VillageSpawn7 world=(-18.00, 0.41, -4.00) local=(-0.18, 0.04, -0.02) parent=MobSpawner
+SPAWN VillageSpawn8 world=(-4.00, 0.38, -8.00) local=(-0.04, 0.08, -0.02) parent=MobSpawner
+SPAWN VillageSpawn9 world=(2.00, 1.56, -28.00) local=(0.02, 0.28, 0.00) parent=MobSpawner
+SPAWN VillageSpawn10 world=(4.00, 1.55, -40.00) local=(0.04, 0.40, 0.00) parent=MobSpawner
+SPAWN VillageSpawn11 world=(-34.00, 1.65, -26.00) local=(-0.34, 0.26, 0.00) parent=MobSpawner
+SPAWN VillageSpawn12 world=(-8.00, 1.55, -38.00) local=(-0.08, 0.38, 0.00) parent=MobSpawner
+SPAWN GameObject (27) world=(21.35, 3.79, -48.43) local=(0.21, 0.48, 0.02) parent=MobSpawner
+SPAWN GameObject (26) world=(16.35, 3.79, -53.43) local=(0.16, 0.53, 0.02) parent=MobSpawner
+SPAWN GameObject (25) world=(10.35, 3.79, -59.43) local=(0.10, 0.59, 0.02) parent=MobSpawner
+SPAWN GameObject (24) world=(-47.35, 1.79, -65.06) local=(-0.47, 0.65, 0.00) parent=MobSpawner
+SPAWN GameObject (23) world=(-49.35, 1.79, -51.06) local=(-0.49, 0.51, 0.00) parent=MobSpawner
+SPAWN GameObject (22) world=(-48.35, 1.79, -36.06) local=(-0.48, 0.36, 0.00) parent=MobSpawner
+SPAWN GameObject (19) world=(-31.35, 2.79, -21.06) local=(-0.31, 0.21, 0.01) parent=MobSpawner
+SPAWN GameObject (18) world=(-26.35, 2.79, -31.06) local=(-0.26, 0.31, 0.01) parent=MobSpawner
+SPAWN GameObject (17) world=(-42.35, 2.79, -72.06) local=(-0.42, 0.72, 0.01) parent=MobSpawner
+SPAWN GameObject (16) world=(-39.35, 2.79, -48.06) local=(-0.39, 0.48, 0.01) parent=MobSpawner
+SPAWN GameObject (15) world=(-34.35, 2.79, -69.06) local=(-0.34, 0.69, 0.01) parent=MobSpawner
+SPAWN GameObject (14) world=(-26.35, 2.79, -54.06) local=(-0.26, 0.54, 0.01) parent=MobSpawner
+SPAWN GameObject (13) world=(-14.35, 2.79, -57.06) local=(-0.14, 0.57, 0.01) parent=MobSpawner
+SPAWN GameObject (12) world=(-4.35, 2.79, -69.06) local=(-0.04, 0.69, 0.01) parent=MobSpawner
+SPAWN GameObject (11) world=(-5.35, 2.79, -47.06) local=(-0.05, 0.47, 0.01) parent=MobSpawner
+SPAWN GameObject (10) world=(-10.35, 2.79, -19.06) local=(-0.10, 0.19, 0.01) parent=MobSpawner
+SPAWN GameObject (9) world=(-4.35, 2.79, -34.06) local=(-0.04, 0.34, 0.01) parent=MobSpawner
+SPAWN GameObject (8) world=(11.65, 2.79, -50.06) local=(0.12, 0.50, 0.01) parent=MobSpawner
+SPAWN GameObject (7) world=(17.65, 2.79, -35.06) local=(0.18, 0.35, 0.01) parent=MobSpawner
+SPAWN GameObject (6) world=(11.65, 2.79, -15.06) local=(0.12, 0.15, 0.01) parent=MobSpawner
+SPAWN GameObject (5) world=(0.65, 2.79, -6.06) local=(0.01, 0.06, 0.01) parent=MobSpawner
+SPAWN GameObject (4) world=(-14.35, 2.79, -4.06) local=(-0.14, 0.04, 0.01) parent=MobSpawner
+SPAWN GameObject (3) world=(-26.35, 2.79, -9.06) local=(-0.26, 0.09, 0.01) parent=MobSpawner
+GROUND LocationVillage center=(0.00, 26.64, -0.50) size=(153.00, 53.13, 210.00)
+GROUND Home2 center=(-7.34, 6.45, 9.97) size=(15.69, 6.50, 8.31)
+GROUND Home2 (2) center=(-11.03, 5.45, -44.66) size=(8.31, 6.50, 15.69)
+GROUND Home2 (1) center=(-34.66, 5.45, -14.97) size=(15.69, 6.50, 8.31)
+Player=(-46.00, 2.31, -49.51) Portal=(9.00, 2.22, -50.00)
+HUD PlayerPanel
+HUD AchievementPopup
+HUD InventoryPanel
+HUD IconNavigation
+HUD GiftNavigation
+HUD CurrencyPouch
+HUD Levels
+NAV VillageSpawn1 valid=True target=(-36.00, 1.55, -38.00)
+NAV VillageSpawn2 valid=True target=(-30.00, 2.55, -40.00)
+NAV VillageSpawn3 valid=True target=(-22.00, 2.10, -40.00)
+NAV VillageSpawn4 valid=True target=(-16.00, 2.55, -30.00)
+NAV VillageSpawn5 valid=True target=(-22.00, 1.54, -18.00)
+NAV VillageSpawn6 valid=True target=(-28.00, 0.43, -10.00)
+NAV VillageSpawn7 valid=True target=(-18.00, 0.41, -4.00)
+NAV VillageSpawn8 valid=True target=(-4.00, 0.38, -8.00)
+NAV VillageSpawn9 valid=True target=(2.00, 1.56, -28.00)
+NAV VillageSpawn10 valid=True target=(4.00, 1.55, -40.00)
+NAV VillageSpawn11 valid=True target=(-34.00, 1.65, -26.00)
+NAV VillageSpawn12 valid=True target=(-8.00, 1.55, -38.00)
+NAV GameObject (27) valid=False target=(Infinity, Infinity, Infinity)
+NAV GameObject (26) valid=False target=(Infinity, Infinity, Infinity)
+NAV GameObject (25) valid=False target=(Infinity, Infinity, Infinity)
+NAV GameObject (24) valid=True target=(-47.35, 0.38, -65.06)
+NAV GameObject (23) valid=True target=(-49.35, 0.42, -51.06)
+NAV GameObject (22) valid=True target=(-48.35, 1.55, -36.06)
+NAV GameObject (19) valid=True target=(-31.35, 2.55, -21.06)
+NAV GameObject (18) valid=True target=(-26.35, 1.55, -31.06)
+NAV GameObject (17) valid=False target=(Infinity, Infinity, Infinity)
+NAV GameObject (16) valid=True target=(-39.35, 1.55, -48.06)
+NAV GameObject (15) valid=False target=(Infinity, Infinity, Infinity)
+NAV GameObject (14) valid=False target=(Infinity, Infinity, Infinity)
+NAV GameObject (13) valid=False target=(Infinity, Infinity, Infinity)
+NAV GameObject (12) valid=False target=(Infinity, Infinity, Infinity)
+NAV GameObject (11) valid=False target=(Infinity, Infinity, Infinity)
+NAV GameObject (10) valid=True target=(-10.35, 4.55, -19.06)
+NAV GameObject (9) valid=True target=(-4.35, 1.55, -34.06)
+NAV GameObject (8) valid=False target=(Infinity, Infinity, Infinity)
+NAV GameObject (7) valid=False target=(Infinity, Infinity, Infinity)
+NAV GameObject (6) valid=False target=(Infinity, Infinity, Infinity)
+NAV GameObject (5) valid=False target=(Infinity, Infinity, Infinity)
+NAV GameObject (4) valid=False target=(Infinity, Infinity, Infinity)
+NAV GameObject (3) valid=False target=(Infinity, Infinity, Infinity)

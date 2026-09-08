@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd46ea386dfc9384b99446987c3fa141, type: 3}
+  m_Name: TutorialTheme
+  m_EditorClassIdentifier: 
+  Panel: {fileID: 21300000, guid: 334e911c20fb81f48b7c7fd343573a00, type: 3}
+  Ribbon: {fileID: 21300000, guid: 42d102985e391fc4e92dab49549825bd, type: 3}
+  Button: {fileID: 21300000, guid: 75d1960f27cf2f147a8973b1a6f35492, type: 3}
+  BodyFont: {fileID: 11400000, guid: c33c935a7407290489bb7aa762c931d4, type: 2}
+  HeadingFont: {fileID: 11400000, guid: c33c935a7407290489bb7aa762c931d4, type: 2}

@@ -15,7 +15,8 @@ namespace MineArena.Items
         {
             _config = config;
             MaxStackSize = config.MaxStackSize;
-            CurrentStack = Mathf.Clamp(initialStack, 0, MaxStackSize);
+            // Inventory persists one total per resource ID, not separate capped stacks.
+            CurrentStack = Mathf.Max(0, initialStack);
         }
 
         public void AddToStack(int amount)
@@ -36,7 +37,7 @@ namespace MineArena.Items
 
         public bool CanStackWith(StackableItem other)
         {
-            return other != null && other.Name == Name && CurrentStack < MaxStackSize;
+            return other != null && other.Name == Name;
         }
     }
 }

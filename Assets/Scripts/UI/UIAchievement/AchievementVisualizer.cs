@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Achievements;
 using Devotion.SDK.Services.Localization;
 using MineArena.Basics;
@@ -32,9 +32,8 @@ namespace UI.UIAchievement
         {
             _achievement = achievement;
             MaxValue = achievement.MaxValueProgress;
-            _name.text = string.Format(LocalizationService.GetLocalizedText(achievement.Data.NameAchievementKey));
-            _task.text = string.Format(LocalizationService.GetLocalizedText(achievement.Data.TextTaskKey),
-                achievement.Data.MaxValueOnTask, achievement.Data.ItemTarget.Name);
+            _name.text = MineArena.UI.QuestJournalRow.Title(achievement);
+            _task.text = MineArena.UI.QuestJournalRow.Description(achievement);
             _button.gameObject.SetActive(false);
             _completeText.gameObject.SetActive(false);
             _completeText.text = LocalizationService.GetLocalizedText(Constants.AchievementKey.MessageCompleteKey);

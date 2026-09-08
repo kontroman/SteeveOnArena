@@ -16,12 +16,14 @@ namespace MineArena.Buildings
         [SerializeField] private BuildingCinematicCameraSettings cinematicCameraSettings = new BuildingCinematicCameraSettings();
 
         public Transform PlayerPositionOnBuild => playerPositionOnBuild;
+        public BuildingConfig Config => config;
         public BuildingCinematicCameraSettings CinematicCameraSettings => overrideCinematicCamera ? cinematicCameraSettings : null;
 
         private void OnTriggerEnter(Collider other)
         {
             if (other.IsPlayer())
             {
+                if (!MineArena.Managers.TutorialService.AllowBuilding(config)) return;
                 BuildingWindow window = (BuildingWindow)GameRoot.UIManager.OpenWindow<BuildingWindow>();
                 if (window != null)
                 {

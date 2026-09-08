@@ -17716,6 +17716,7 @@ MonoBehaviour:
     MinQuantity: 1
     MaxQuantity: 3
   _isOneDrop: 0
+  _dropOnDeath: 0
 --- !u!65 &1449183886
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -18315,8 +18316,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: New Text
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c33c935a7407290489bb7aa762c931d4, type: 2}
+  m_sharedMaterial: {fileID: -8890190815837345480, guid: c33c935a7407290489bb7aa762c931d4, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -30703,6 +30704,9 @@ MonoBehaviour:
   _emptyState: {fileID: 0}
   _resultText: {fileID: 0}
   _craftButton: {fileID: 0}
+  _batchControls: {fileID: 0}
+  _singleBatchButton: {fileID: 0}
+  _allBatchesButton: {fileID: 0}
   _craftButtonImage: {fileID: 0}
   _craftButtonLabel: {fileID: 0}
   _tabPrefab: {fileID: 0}
@@ -35145,7 +35149,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   _bowAimRaycastDistance: 500
-  _swordAttackSoundExtraDelay: 0.15
+  _meleeMovementMultiplier: 0.7
+  _bowAttackSoundDelay: 0.2
 --- !u!114 &8116718894625334555
 MonoBehaviour:
   m_ObjectHideFlags: 0

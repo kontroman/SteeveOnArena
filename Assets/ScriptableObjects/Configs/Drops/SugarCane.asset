@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23b4dfe5a2c9bec418f415cbb49447a1, type: 3}
+  m_Name: SugarCane
+  m_EditorClassIdentifier: 
+  _name: SugarCane
+  _prefab: {fileID: 1294500603521610, guid: d8e96945957861aeafe622105f9e9257, type: 3}
+  _icon: {fileID: 21300000, guid: 4dedf56e874804d2a8e27559d9db362b, type: 3}
+  _usable: 0
+  _stackable: 1
+  _blockStyleIcon: 0
+  _maxStackSize: 64
+  _resourceCategory: SugarCane
+  _craftCosts: []
+  _craftAmount: 1
+  _displayName: "Сахарный тростник"
+  _description: "Сахарный тростник"
+  _craftSeconds: 7

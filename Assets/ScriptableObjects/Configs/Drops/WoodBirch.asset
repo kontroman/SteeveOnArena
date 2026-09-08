@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: WoodBirch
   m_EditorClassIdentifier: 
   _name: WoodBirch
+  _displayName: "Берёза"
   _prefab: {fileID: 1294500603521610, guid: 03043b7672e7495488f02f2bcbe311d5, type: 3}
   _icon: {fileID: 21300000, guid: ce8140b7709ce284d8eb2920895e15ec, type: 3}
   _usable: 0
@@ -20,3 +21,5 @@ MonoBehaviour:
   _blockStyleIcon: 1
   _maxStackSize: 64
   _resourceCategory: Wood
+  _topIcon: {fileID: 21300000, guid: 6a7a53ffe3eaf36489183f1eefe47312, type: 3}
+  _sideIcon: {fileID: 21300000, guid: ce8140b7709ce284d8eb2920895e15ec, type: 3}

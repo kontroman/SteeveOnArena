@@ -283,13 +283,9 @@ MonoBehaviour:
   _dropTable:
   - Item: {fileID: 11400000, guid: 748b6e8fd10cc5f458155de6d72cfb74, type: 2}
     DropChance: 100
-    MinQuantity: 1
-    MaxQuantity: 3
-  - Item: {fileID: 11400000, guid: 810f71e127406e14eba2fe7f69697606, type: 2}
-    DropChance: 15
-    MinQuantity: 1
-    MaxQuantity: 1
-  _isOneDrop: 1
+    MinQuantity: 4
+    MaxQuantity: 7
+  _isOneDrop: 0
 --- !u!114 &6586997021342361035
 MonoBehaviour:
   m_ObjectHideFlags: 0

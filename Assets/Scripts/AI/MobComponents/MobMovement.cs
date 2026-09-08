@@ -1,4 +1,4 @@
-﻿using MineArena.Controllers;
+using MineArena.Controllers;
 using MineArena.Interfaces;
 using MineArena.PlayerSystem;
 using System.Collections;
@@ -44,6 +44,7 @@ namespace MineArena.AI
         private void OnEnable()
         {
             PlayerMovement.PlayerDied += HandlePlayerDied;
+            PlayerMovement.PlayerRevived += HandlePlayerRevived;
 
             _isDead = false;
             _isAfk = false;
@@ -59,6 +60,7 @@ namespace MineArena.AI
         private void OnDisable()
         {
             PlayerMovement.PlayerDied -= HandlePlayerDied;
+            PlayerMovement.PlayerRevived -= HandlePlayerRevived;
 
             if (_retreatRoutine != null)
             {
@@ -219,6 +221,17 @@ namespace MineArena.AI
                 return;
 
             transform.rotation = GetAxisCorrectedLookRotation(direction);
+        }
+
+        private void HandlePlayerRevived(Transform playerTransform)
+        {
+            if (_isDead) return;
+            _isAfk = false;
+            if (_retreatRoutine != null) StopCoroutine(_retreatRoutine);
+            _retreatRoutine = null;
+            _isRetreating = false;
+            _playerTransform = playerTransform;
+            if (_agent != null && _agent.enabled && _agent.isOnNavMesh) _agent.isStopped = false;
         }
 
         private void HandlePlayerDied(Transform playerTransform)

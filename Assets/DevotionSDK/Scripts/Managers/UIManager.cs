@@ -3,6 +3,8 @@ using Devotion.SDK.Base;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 namespace Devotion.SDK.Managers
 {
@@ -13,23 +15,91 @@ namespace Devotion.SDK.Managers
 
         private readonly List<BaseWindow> _openedWindows = new List<BaseWindow>();
         private readonly Dictionary<Type, BaseWindow> _cachedWindows = new Dictionary<Type, BaseWindow>();
+        private readonly Dictionary<Type, BaseWindow> _tutorialPending = new Dictionary<Type, BaseWindow>();
+        private EventSystem _fallbackInput;
+        private void OnEnable() { SceneManager.sceneLoaded += SceneLoaded; SceneManager.sceneUnloaded += SceneUnloaded; }
+        private void OnDisable() { SceneManager.sceneLoaded -= SceneLoaded; SceneManager.sceneUnloaded -= SceneUnloaded; }
+        private void SceneLoaded(Scene scene, LoadSceneMode mode) { if (Application.isPlaying) EnsureInputSystem(); }
+        private void SceneUnloaded(Scene scene) { if (_fallbackInput != null) _fallbackInput.gameObject.SetActive(false); }
+        public EventSystem EnsureInputSystem()
+        {
+            return ResolveInputSystem(FindObjectsOfType<EventSystem>());
+        }
+        private EventSystem ResolveInputSystem(EventSystem[] candidates)
+        {
+            foreach (var input in candidates)
+            {
+                if (input == _fallbackInput || !input.isActiveAndEnabled) continue;
+                if (input.GetComponent<BaseInputModule>() == null) input.gameObject.AddComponent<StandaloneInputModule>();
+                if (_fallbackInput != null) _fallbackInput.gameObject.SetActive(false);
+                if (Application.isPlaying) EventSystem.current = input;
+                return input;
+            }
+            if (_fallbackInput == null)
+            {
+                var inputObject = new GameObject("Persistent UI input");
+                inputObject.SetActive(false);
+                inputObject.transform.SetParent(transform, false);
+                _fallbackInput = inputObject.AddComponent<EventSystem>();
+                inputObject.AddComponent<StandaloneInputModule>();
+            }
+            _fallbackInput.gameObject.SetActive(true);
+            if (Application.isPlaying) EventSystem.current = _fallbackInput;
+            return _fallbackInput;
+        }
+
+        private static bool IsTransition(Type type) => type.Name == "PlayingWindow" || type.Name == "LoadingWindow" || type.Name == "BlackWindow" || type.Name == "LevelProgressWindow";
+        public void CloseTutorialDialogs()
+        {
+            foreach (var window in FindObjectsOfType<BaseWindow>())
+                if (!IsTransition(window.GetType())) window.CloseWindow();
+        }
+        private void Update()
+        {
+            if (Application.isPlaying && (EventSystem.current == null || !EventSystem.current.isActiveAndEnabled)) EnsureInputSystem();
+            if (MineArena.Managers.TutorialService.AwaitingConfirmation || _tutorialPending.Count == 0) return;
+            // CraftingWindow also has a standalone opening path, outside the cached-window list.
+            foreach (var shown in FindObjectsOfType<BaseWindow>())
+                if (!IsTransition(shown.GetType())) return;
+            var pending = new List<KeyValuePair<Type, BaseWindow>>(_tutorialPending);
+            foreach (var entry in pending)
+            {
+                _tutorialPending.Remove(entry.Key);
+                if (entry.Value == null || !MineArena.Managers.TutorialService.AllowWindow(entry.Key)) continue;
+                Activate(entry.Value);
+                break;
+            }
+        }
+        private void Activate(BaseWindow window)
+        {
+            if (MineArena.Managers.TutorialService.Active && !IsTransition(window.GetType()))
+                foreach (var other in new List<BaseWindow>(_openedWindows))
+                    if (other != null && other != window && !IsTransition(other.GetType()))
+                    { other.gameObject.SetActive(false); _openedWindows.Remove(other); }
+            if (!_openedWindows.Contains(window)) { window.gameObject.SetActive(true); _openedWindows.Add(window); }
+            window.transform.SetAsLastSibling();
+        }
 
         public BaseWindow OpenWindow<T>() where T : BaseWindow
         {
+            if (!MineArena.Managers.TutorialService.AllowWindow(typeof(T))) return null;
             if (_mainCanvas == null)
                 _mainCanvas = GameObject.FindGameObjectWithTag(Constants.GameTags.MainCanvas).GetComponent<Canvas>();
 
-            DontDestroyOnLoad(_mainCanvas.gameObject);
+            if (Application.isPlaying) DontDestroyOnLoad(_mainCanvas.gameObject);
 
             BaseWindow window = GetOrCreateWindow<T>();
 
             if (window == null) return null;
-
-            if (!_openedWindows.Contains(window))
+            if (MineArena.Managers.TutorialService.AwaitingConfirmation && !IsTransition(typeof(T)))
             {
-                window.gameObject.SetActive(true);
-                _openedWindows.Add(window);
+                // Return the inactive instance so callers can bind building data before deferred activation.
+                if (window.gameObject.activeSelf) window.gameObject.SetActive(false);
+                _openedWindows.Remove(window);
+                _tutorialPending[typeof(T)] = window;
+                return window;
             }
+            Activate(window);
 
             return window;
         }
@@ -41,6 +111,7 @@ namespace Devotion.SDK.Managers
 
         public void CloseWindow<T>() where T : BaseWindow
         {
+            _tutorialPending.Remove(typeof(T));
             for (int i = 0; i < _openedWindows.Count; i++)
             {
                 if (_openedWindows[i] is T window)
@@ -54,6 +125,7 @@ namespace Devotion.SDK.Managers
 
         public void CloseAllWindows()
         {
+            _tutorialPending.Clear();
             foreach (BaseWindow window in _openedWindows)
             {
                 if (window != null)
@@ -118,8 +190,14 @@ namespace Devotion.SDK.Managers
                 return null;
             }
 
-            var newWindow = Instantiate(windowPrefab, _mainCanvas.transform);
+            // Prevent prefab OnEnable from opening child views before its queued turn.
+            var staging = new GameObject("Inactive window staging");
+            staging.transform.SetParent(_mainCanvas.transform, false);
+            staging.SetActive(false);
+            var newWindow = Instantiate(windowPrefab, staging.transform);
             newWindow.gameObject.SetActive(false);
+            newWindow.transform.SetParent(_mainCanvas.transform, false);
+            if (Application.isPlaying) Destroy(staging); else DestroyImmediate(staging);
             _cachedWindows[type] = newWindow;
 
             return (T)newWindow;

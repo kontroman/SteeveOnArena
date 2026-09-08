@@ -15,7 +15,8 @@ namespace MineArena.Buildings.Portal
                 if (LevelController.Current != null && LevelController.Current.TryEnterSpawnedPortal(transform))
                     return;
 
-                GameRoot.UIManager.OpenWindow<SelectLevelWindow>();
+                if (LevelController.Current == null && MineArena.Managers.TutorialService.EnterPortal())
+                    GameRoot.UIManager.OpenWindow<SelectLevelWindow>();
             }
         }
 

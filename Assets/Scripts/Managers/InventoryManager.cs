@@ -19,11 +19,38 @@ namespace MineArena.Managers
 
         public IReadOnlyList<Item> Items => _items;
 
+        public int GetItemAmount(string itemId)
+        {
+            var progress = GameRoot.PlayerProgress?.InventoryProgress;
+            return progress != null && progress.SavedResources.TryGetValue(itemId, out int amount) ? amount : 0;
+        }
+
+        public bool TrySpendExact(ItemConfig currency, int amount)
+        {
+            if (currency == null || GameRoot.GameConfig?.ItemDatabase.GetItemConfig(currency.Name) != currency ||
+                GameRoot.PlayerProgress?.InventoryProgress.TrySpendExact(currency.Name, amount) != true) return false;
+            InitManager();
+            return true;
+        }
+
+        public bool TryExchange(ItemConfig currency, int price, ItemConfig item, int amount)
+        {
+            var database = GameRoot.GameConfig != null ? GameRoot.GameConfig.ItemDatabase : null;
+            if (currency == null || item == null || database == null ||
+                database.GetItemConfig(currency.Name) != currency || database.GetItemConfig(item.Name) != item) return false;
+            var progress = GameRoot.PlayerProgress?.InventoryProgress;
+            if (progress == null || !progress.TryExchange(currency.Name, price, item.Name, amount, !(item is StackableItemConfig))) return false;
+            InitManager();
+            return true;
+        }
+
         public override void InitManager()
         {
+            if (GetComponent<CraftProductionService>() == null) gameObject.AddComponent<CraftProductionService>();
             _items.Clear();
 
             var progress = GameRoot.PlayerProgress.InventoryProgress;
+            progress.MigrateLegacyMaterials();
             var savedResources = progress.SavedResources;
 
             foreach (var itemId in progress.InventoryItemOrder)
@@ -234,19 +261,18 @@ namespace MineArena.Managers
             if (requiredResources == null || requiredResources.Count == 0)
                 return true;
 
+            var totals = new Dictionary<string, long>(StringComparer.OrdinalIgnoreCase);
             foreach (var requirement in requiredResources)
             {
-                if (requirement.Amount <= 0)
-                    continue;
-
-                var resourceConfig = requirement.Resource;
-                if (resourceConfig == null)
-                    continue;
-
-                var available = GetTotalForCategory(resourceConfig.ResourceCategory);
-                if (available < requirement.Amount)
-                    return false;
+                if (requirement.Amount <= 0) continue;
+                if (requirement.Resource == null) return false;
+                var category = requirement.Resource.ResourceCategory;
+                if (string.IsNullOrWhiteSpace(category)) return false;
+                totals.TryGetValue(category, out var total);
+                totals[category] = total + requirement.Amount;
             }
+            foreach (var total in totals)
+                if (GetTotalForCategory(total.Key) < total.Value) return false;
 
             return true;
         }
@@ -265,7 +291,7 @@ namespace MineArena.Managers
 
                 var resourceConfig = requirement.Resource;
                 if (resourceConfig == null)
-                    continue;
+                    return false;
 
                 var category = resourceConfig.ResourceCategory;
                 if (string.IsNullOrWhiteSpace(category))
@@ -312,7 +338,10 @@ namespace MineArena.Managers
                     continue;
 
                 stackable.RemoveFromStack(amount);
-                GameRoot.PlayerProgress.InventoryProgress.RemoveResource(stackable.Name, amount);
+                var saved = GameRoot.PlayerProgress.InventoryProgress.SavedResources;
+                saved.TryGetValue(stackable.Name, out int owned);
+                if (owned <= amount) saved.Remove(stackable.Name);
+                else saved[stackable.Name] = owned - amount;
 
                 if (stackable.CurrentStack <= 0)
                     ClearItemSlot(stackable);

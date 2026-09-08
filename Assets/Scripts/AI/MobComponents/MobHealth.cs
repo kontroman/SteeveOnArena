@@ -15,8 +15,11 @@ namespace MineArena.AI
         private MobAnimationController _mobAnimator;
         private MobMovement _mobMovement;
         private MobCombat _mobCombat;
+        private bool _deathHandled;
 
         public static event Action<MobHealth> MobDied;
+
+        private void OnEnable() => _deathHandled = false;
 
         private void Awake()
         {
@@ -27,14 +30,20 @@ namespace MineArena.AI
         
         public void SetParameters(MobPreset preset)
         {
+            _deathHandled = false;
             _preset = preset;
             _maxHealth = preset.MaxHealth;
+            if (MineArena.Managers.TutorialService.Expedition) _maxHealth = Mathf.Min(_maxHealth, 25f);
             _currentHealth = _maxHealth;
             _mobAnimator?.SetParameters(preset);
         }
 
         protected override void Die()
         {
+            if (_deathHandled) return;
+            _deathHandled = true;
+            var drops = GetComponent<MineArena.Drop.Dropable>();
+            if (drops != null && drops.DropOnDeath) drops.DropItems();
             MobDied?.Invoke(this);
             AchievementMessages.AchievementTargetTaken.Publish((_preset, 1));
 

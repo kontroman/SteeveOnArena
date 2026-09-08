@@ -14,45 +14,43 @@ namespace MineArena.Windows.Elements
         [SerializeField] private TextMeshProUGUI _amountText;
         [SerializeField] private ResourceIcon _iconPrefab;
 
+        [SerializeField] private ResourceIcon _blockIcon;
+        [SerializeField] private TMP_Text _nameText;
+
+        private ResourceRequired _cost;
         public void Setup(ResourceRequired config)
         {
-            _amountText.gameObject.SetActive(true);
-            _resourceIcon.SetAlpha(1);
-
-            if (config.Resource.BlockStyleIcon)
-            {
-                ResourceIcon icon = Instantiate(_iconPrefab, transform);
-                icon.SetResource(config.Resource);
-                icon.transform.localPosition = Vector3.zero;
-                _resourceIcon.SetAlpha(0);
-                _amountText.text = config.Amount.ToString();
-                return;
-            }
-
-            _resourceIcon.sprite = config.Resource.Icon;
-            _amountText.text = config.Amount.ToString();
+            Setup(config.Resource, config.Amount);
+            _cost = config;
+            RefreshCost();
         }
-
+        public void RefreshCost()
+        {
+            if (_cost.Resource == null) return;
+            int owned = Devotion.SDK.Controllers.GameRoot.GetManager<MineArena.Managers.InventoryManager>()?.GetItemAmount(_cost.Resource.Name) ?? 0;
+            _amountText.text = $"Есть {owned} / нужно {_cost.Amount}";
+            _amountText.enableAutoSizing = true;
+            _amountText.fontSizeMin = 12;
+            _amountText.fontSizeMax = 16;
+            _amountText.color = owned >= _cost.Amount ? new Color(.16f, .40f, .31f) : new Color(.7f, .18f, .12f);
+        }
         public void Setup(ItemConfig item, int amount = 0)
         {
-            if (item.BlockStyleIcon)
+            _cost = default;
+            if (item == null) return;
+            bool cube = item.BlockStyleIcon && item is StackableItemConfig;
+            if (cube && _blockIcon == null && _iconPrefab != null)
+                _blockIcon = Instantiate(_iconPrefab, _resourceIcon.transform.parent);
+            if (_blockIcon != null)
             {
-                ResourceIcon icon = Instantiate(_iconPrefab, transform);
-                icon.SetResource((StackableItemConfig)item);
-                icon.transform.localPosition = Vector3.zero;
-                _resourceIcon.SetAlpha(0);
-                _amountText.text = amount.ToString();
-
-                if (amount == 0)
-                    _amountText.gameObject.SetActive(false);
-
-                return;
+                _blockIcon.gameObject.SetActive(cube);
+                if (cube) _blockIcon.SetResource((StackableItemConfig)item);
             }
-
             _resourceIcon.sprite = item.Icon;
-                
-            if(amount == 0)
-                _amountText.gameObject.SetActive(false);
+            _resourceIcon.gameObject.SetActive(!cube || _blockIcon == null);
+            _amountText.text = amount.ToString();
+            _amountText.gameObject.SetActive(amount > 0);
+            if (_nameText != null) _nameText.text = item.DisplayName;
         }
     }
 }

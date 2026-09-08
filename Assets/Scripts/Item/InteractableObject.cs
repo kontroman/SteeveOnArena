@@ -20,6 +20,7 @@ namespace MineArena.Items
         [SerializeField] private Vector3 _completeInteractionVfxOffset = new Vector3(0f, 0.5f, 0f);
 
         private bool _used;
+        public bool IsMineable => _command is MineCommand && !_used;
 
         private BillboardCanvas _canvas;
 
@@ -66,6 +67,8 @@ namespace MineArena.Items
 
         public async void ExecuteCommand()
         {
+            if (TutorialService.BlocksInput || MineArena.PlayerSystem.PlayerMovement.IsPlayerDead) return;
+            if (TutorialService.Active && (!TutorialService.Expedition || TutorialService.Progress.Step != TutorialStep.Mine || !IsMineable)) return;
             if (_used) return;
 
             _used = true;
@@ -75,6 +78,7 @@ namespace MineArena.Items
 
         public void CompleteInteraction()
         {
+            if (_command is MineCommand) TutorialService.MinedBlock();
             GameRoot.GetManager<InteractionManager>().UnregisterObject(this);
             HideInteractionPrompt();
 

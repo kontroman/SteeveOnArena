@@ -33,6 +33,24 @@ namespace MineArena.UI
 
         private void Awake()
         {
+            // Let the HUD receive drops outside the inventory panel.
+            var backdrop = GetComponent<Image>();
+            if (backdrop != null)
+            {
+                var shade = new GameObject("InventoryBackdrop", typeof(RectTransform), typeof(Image));
+                shade.transform.SetParent(transform, false);
+                shade.transform.SetAsFirstSibling();
+                var rect = (RectTransform)shade.transform;
+                rect.anchorMin = Vector2.zero;
+                rect.anchorMax = Vector2.one;
+                rect.offsetMin = new Vector2(0, 160);
+                rect.offsetMax = Vector2.zero;
+                var image = shade.GetComponent<Image>();
+                image.color = backdrop.color;
+                image.raycastTarget = false;
+                backdrop.raycastTarget = false;
+                backdrop.enabled = false;
+            }
             InitializeEquipmentSlots();
             InitializePlayerPreview();
         }
@@ -53,6 +71,7 @@ namespace MineArena.UI
             {
                 if (_inventoryManager != null)
                     _inventoryManager.InventoryUpdated -= UpdateUI;
+                _inventoryManager = null;
 
                 PlayingWindow.QuickSlotsChanged -= UpdateUI;
                 _subscribed = false;
@@ -95,13 +114,15 @@ namespace MineArena.UI
 
         private void Subscribe()
         {
-            if (_subscribed)
-                return;
+            var manager = GameRoot.GetManager<InventoryManager>();
+            if (_inventoryManager != manager)
+            {
+                if (_inventoryManager != null) _inventoryManager.InventoryUpdated -= UpdateUI;
+                _inventoryManager = manager;
+                if (_inventoryManager != null) _inventoryManager.InventoryUpdated += UpdateUI;
+            }
 
-            _inventoryManager = GameRoot.GetManager<InventoryManager>();
-            if (_inventoryManager != null)
-                _inventoryManager.InventoryUpdated += UpdateUI;
-
+            if (_subscribed) return;
             PlayingWindow.QuickSlotsChanged += UpdateUI;
             _subscribed = true;
         }

@@ -74,6 +74,9 @@ namespace MineArena.Managers
 
         private void Start()
         {
+            AudioListener.volume = PlayerPrefs.GetFloat("UI.MasterVolume", 1f);
+            SetMusicVolume(PlayerPrefs.GetFloat("UI.MusicVolume", _musicVolume));
+            SetEffectVolume(PlayerPrefs.GetFloat("UI.EffectsVolume", 1f));
             ApplySceneMusic(SceneManager.GetActiveScene().name);
         }
 
@@ -163,7 +166,7 @@ namespace MineArena.Managers
 
         public void SetEffectVolume(float volume)
         {
-            _audioMixer.SetFloat("EffectVolume", Mathf.Log10(volume) * 20);
+            if (_audioMixer != null) _audioMixer.SetFloat("EffectVolume", Mathf.Log10(Mathf.Clamp(volume, 0.0001f, 1f)) * 20);
         }
 
         private IEnumerator CrossFadeMusic(AudioClip targetClip)

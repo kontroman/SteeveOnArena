@@ -15,10 +15,10 @@ namespace MineArena.Windows.Crafting
         public Sprite CraftButton { get; private set; }
         public Sprite PlaceholderIcon { get; private set; }
 
-        public Color Text => new Color32(245, 238, 218, 255);
-        public Color MutedText => new Color32(163, 155, 135, 255);
-        public Color WarningText => new Color32(238, 104, 76, 255);
-        public Color SuccessText => new Color32(124, 210, 112, 255);
+        public Color Text => new Color32(81, 71, 55, 255);
+        public Color MutedText => new Color32(133, 119, 94, 255);
+        public Color WarningText => new Color32(166, 65, 44, 255);
+        public Color SuccessText => new Color32(89, 112, 50, 255);
         public Color DarkText => new Color32(39, 31, 26, 255);
 
         public static CraftingPixelStyle Create()

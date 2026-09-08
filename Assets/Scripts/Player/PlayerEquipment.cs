@@ -45,6 +45,10 @@ namespace MineArena.PlayerSystem
 
         private const float ArmorReductionScale = 100f;
 
+        public float DamageReduction => Mathf.Clamp01(
+            ((_helmet?.Resist ?? 0) + (_chest?.Resist ?? 0)
+             + (_leggings?.Resist ?? 0) + (_boots?.Resist ?? 0)) / ArmorReductionScale);
+
         private void Awake()
         {
             MessageService.Subscribe(this);
@@ -61,6 +65,7 @@ namespace MineArena.PlayerSystem
         {
             LoadArmorFromProgress();
             RefreshArmorVisuals();
+            NotifyAllArmorChanged();
         }
 
         private void OnDestroy()
@@ -291,13 +296,7 @@ namespace MineArena.PlayerSystem
             if (baseDamage <= 0f)
                 return 0f;
 
-            float totalArmor = (_helmet?.Resist ?? 0)
-                               + (_chest?.Resist ?? 0)
-                               + (_leggings?.Resist ?? 0)
-                               + (_boots?.Resist ?? 0);
-
-            float reductionFactor = Mathf.Clamp01(totalArmor / ArmorReductionScale);
-            float reducedDamage = baseDamage * (1f - reductionFactor);
+            float reducedDamage = baseDamage * (1f - DamageReduction);
 
             return Mathf.Max(0f, reducedDamage);
         }

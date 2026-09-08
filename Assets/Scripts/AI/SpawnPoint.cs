@@ -1,5 +1,6 @@
 using MineArena.Controllers;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace MineArena.AI
 {
@@ -27,20 +28,45 @@ namespace MineArena.AI
 
         public bool IsReadyForSpawn()
         {
-            return Time.time >= _nextSpawnTime
+            return isActiveAndEnabled && Time.time >= _nextSpawnTime
                 && IsPositionClear()
-                && !IsInCameraView();
+                && TryGetSpawnPosition(new NavMeshQueryFilter { agentTypeID = 0, areaMask = NavMesh.AllAreas }, out _)
+                && (MineArena.Managers.TutorialService.Expedition || !IsInCameraView());
+        }
+
+        private bool TryGetSpawnPosition(NavMeshQueryFilter filter, out Vector3 position)
+        {
+            position = transform.position;
+            if (!NavMesh.SamplePosition(position, out var hit, 2f, filter)) return false;
+            position = hit.position;
+            if (Player.Instance == null) return false;
+            if (!NavMesh.SamplePosition(Player.Instance.transform.position, out var player, 3f, filter)) return false;
+            var path = new NavMeshPath();
+            return NavMesh.CalculatePath(position, player.position, filter, path) && path.status == NavMeshPathStatus.PathComplete;
         }
 
         public bool TrySpawn(GameObject mobObject)
         {
             if (!IsReadyForSpawn())
                 return false;
-
-            Debug.Log(transform.position);
-            mobObject.transform.position = transform.position;
+            var agent = mobObject.GetComponent<NavMeshAgent>();
+            var position = transform.position;
+            if (agent != null)
+            {
+                var filter = new NavMeshQueryFilter { agentTypeID = agent.agentTypeID, areaMask = agent.areaMask };
+                if (!TryGetSpawnPosition(filter, out position)) return false;
+                // Pool retrieval activates the agent at its old position. Teleport its navigation state too.
+                agent.enabled = false;
+            }
+            mobObject.transform.position = position;
             mobObject.transform.LookAt(Player.Instance.transform.position);
             mobObject.SetActive(true);
+            if (agent != null)
+            {
+                agent.enabled = true;
+                if (!agent.Warp(position)) return false;
+                agent.ResetPath();
+            }
 
             _nextSpawnTime = Time.time + Mathf.Max(0f, _cooldown);
             return true;

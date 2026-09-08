@@ -6,20 +6,19 @@ namespace MineArena.Commands
 {
     public abstract class BaseCommand : ScriptableObject, ICommand
     {
-        public virtual async Task Execute(Action callback)
+        public virtual Task Execute(Action callback)
         {
-            await Task.Run(() => Execute(callback));
-            //callback?.Invoke();
+            return Task.FromException(new NotSupportedException($"{GetType().Name} does not support Execute(Action)."));
         }
 
-        public virtual async Task Execute(Component component)
+        public virtual Task Execute(Component component)
         {
-            await Task.Run(() => Execute(component));
+            return Task.FromException(new NotSupportedException($"{GetType().Name} does not support Execute(Component)."));
         }
 
-        public virtual async Task Execute(object data)
+        public virtual Task Execute(object data)
         {
-            throw new NotImplementedException();
+            return Task.FromException(new NotSupportedException($"{GetType().Name} does not support Execute(object)."));
         }
     }
 }

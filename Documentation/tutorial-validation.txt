@@ -1,0 +1,68 @@
+PASS Fresh save starts at the portal
+PASS HUD cannot bypass entering the portal
+PASS No building or crafting before the expedition
+PASS Portal permits only the first expedition
+PASS Unconfigured scene spawner cannot release preview waves
+PASS Tutorial has one enemy without changing the level asset
+PASS Enemy spawning waits for resource collection
+PASS Kill or loose pickup cannot skip the mining step
+PASS Mining plus pickup releases the combat wave
+PASS Restart in the lobby retains completed mining and restores portal guidance
+PASS Retry continues with the unfinished fight
+PASS Enemy death unlocks extraction guidance
+PASS Even an empty completion reward covers every workshop cost
+PASS Other buildings and upgrades are rejected
+PASS Guaranteed completion grant pays for the workshop with no mined resources or ads
+PASS Saved construction recovers the crafting checkpoint
+PASS Other recipes cannot consume tutorial funds
+PASS Resources left after construction pay for the first planks
+PASS Starting a craft does not complete the tutorial early
+PASS Paid tutorial craft survives save/load
+PASS Craft completion grants planks and unlocks the gift together
+PASS Gift can be claimed after the completed craft
+PASS Gift includes sixteen oak, twelve stone and two healing potions
+PASS Saved completion prevents duplicate gift grants
+PASS Free play restores normal encounters and actions
+PASS Existing expedition progress is not forced through onboarding
+PASS Existing settlement is not forced through onboarding
+PASS Tutorial arena has player, ore and extraction spawn points
+PASS First level has a mineable resource prefab
+PASS Guidance text for Portal
+PASS Guidance text for Launch
+PASS Guidance text for Mine
+PASS Guidance text for Kill
+PASS Guidance text for Exit
+PASS Guidance text for Build
+PASS Guidance text for Craft
+PASS Guidance text for Gift
+PASS Upper coach uses the shared light window frame
+PASS Distance label uses forty-point pixel font and pure yellow
+PASS Tutorial uses the project's Cyrillic font
+PASS Guidance fits the panel: Portal
+PASS Guidance fits the panel: Launch
+PASS Guidance fits the panel: Mine
+PASS Guidance fits the panel: Kill
+PASS Guidance fits the panel: Exit
+PASS Guidance fits the panel: Build
+PASS Guidance fits the panel: Craft
+PASS Guidance fits the panel: Gift
+PASS Popup uses the existing illustrated UI frame
+PASS Popup copy fits: Portal
+PASS Popup copy fits: Launch
+PASS Popup copy fits: Mine
+PASS Popup copy fits: Kill
+PASS Popup copy fits: Exit
+PASS Popup copy fits: Build
+PASS Popup copy fits: Craft
+PASS Popup copy fits: Gift
+PASS Window request returns an inactive instance while popup is pending
+PASS Repeated trigger requests are coalesced
+PASS Confirmation restores the previous clock speed and suppresses click-through
+PASS Confirming the popup releases exactly one queued window
+PASS Leaving a trigger cancels its deferred window
+PASS Outdated stage windows never reopen
+PASS Scene without EventSystem gets a persistent active input module
+PASS Step three confirmation receives the top UI raycast while time is paused: hits=Confirm,Tutorial popup,Popup backdrop; point=(960.00, 328.00); screen=640x480; depth=13
+PASS Real pointer-click handler dismisses mining popup and unpauses gameplay
+PASS Returning to a scene with its own input disables the fallback
+PASS Repeated scene changes reuse one fallback input system

@@ -1,0 +1,698 @@
+{
+  "recipes": {
+    "Planks": {
+      "cost": {
+        "WoodOak": 1
+      },
+      "output": 4
+    },
+    "Stick": {
+      "cost": {
+        "Planks": 2
+      },
+      "output": 4
+    },
+    "Wool": {
+      "cost": {
+        "String": 4
+      },
+      "output": 1
+    },
+    "NetheriteScrap": {
+      "cost": {
+        "NetheriteOre": 1,
+        "CoalItem": 1
+      },
+      "output": 1
+    },
+    "CoalItem": {
+      "cost": {
+        "CoalOre": 2
+      },
+      "output": 3
+    },
+    "IronIngot": {
+      "cost": {
+        "IronOre": 1
+      },
+      "output": 1
+    },
+    "GoldIngot": {
+      "cost": {
+        "GoldOre": 3,
+        "CoalItem": 2
+      },
+      "output": 1
+    },
+    "NetheriteIngot": {
+      "cost": {
+        "NetheriteScrap": 4,
+        "GoldIngot": 4
+      },
+      "output": 1
+    },
+    "Glass": {
+      "cost": {
+        "Sand": 3,
+        "CoalItem": 1
+      },
+      "output": 2
+    },
+    "StoneSwordItem": {
+      "cost": {
+        "Stone": 8,
+        "Stick": 1
+      },
+      "output": 1
+    },
+    "IronSwordItem": {
+      "cost": {
+        "IronIngot": 4,
+        "Stick": 1
+      },
+      "output": 1
+    },
+    "GoldenSwordItem": {
+      "cost": {
+        "GoldIngot": 4,
+        "IronIngot": 2,
+        "Stick": 1
+      },
+      "output": 1
+    },
+    "DiamondSwordItem": {
+      "cost": {
+        "DiamondOre": 6,
+        "IronIngot": 3,
+        "Planks": 2
+      },
+      "output": 1
+    },
+    "NetheritheSwordItem": {
+      "cost": {
+        "NetheriteIngot": 6,
+        "DiamondOre": 4,
+        "Planks": 3
+      },
+      "output": 1
+    },
+    "BowItem": {
+      "cost": {
+        "Stick": 3,
+        "String": 3
+      },
+      "output": 1
+    },
+    "WoodenPickaxe": {
+      "cost": {
+        "Planks": 3,
+        "Stick": 2
+      },
+      "output": 1
+    },
+    "IronPickaxe": {
+      "cost": {
+        "IronIngot": 3,
+        "Planks": 4
+      },
+      "output": 1
+    },
+    "DiamondPickaxe": {
+      "cost": {
+        "DiamondOre": 5,
+        "IronIngot": 2,
+        "Planks": 2
+      },
+      "output": 1
+    },
+    "NetherithePickaxe": {
+      "cost": {
+        "NetheriteIngot": 4,
+        "DiamondOre": 3,
+        "Planks": 3
+      },
+      "output": 1
+    },
+    "IronHelmet": {
+      "cost": {
+        "IronIngot": 3,
+        "Leather": 1
+      },
+      "output": 1
+    },
+    "IronChestplate": {
+      "cost": {
+        "IronIngot": 6,
+        "Leather": 3
+      },
+      "output": 1
+    },
+    "IronLeggings": {
+      "cost": {
+        "IronIngot": 5,
+        "Leather": 2
+      },
+      "output": 1
+    },
+    "IronBoots": {
+      "cost": {
+        "IronIngot": 2,
+        "Leather": 1
+      },
+      "output": 1
+    },
+    "GoldenHelmet": {
+      "cost": {
+        "GoldIngot": 3,
+        "Leather": 1
+      },
+      "output": 1
+    },
+    "GoldenChestplate": {
+      "cost": {
+        "GoldIngot": 6,
+        "Leather": 3
+      },
+      "output": 1
+    },
+    "GoldenLeggings": {
+      "cost": {
+        "GoldIngot": 5,
+        "Leather": 2
+      },
+      "output": 1
+    },
+    "GoldenBoots": {
+      "cost": {
+        "GoldIngot": 2,
+        "Leather": 1
+      },
+      "output": 1
+    },
+    "DiamondHelmet": {
+      "cost": {
+        "DiamondOre": 3,
+        "Leather": 1,
+        "IronIngot": 2
+      },
+      "output": 1
+    },
+    "DiamondChestplate": {
+      "cost": {
+        "DiamondOre": 6,
+        "Leather": 3,
+        "IronIngot": 2
+      },
+      "output": 1
+    },
+    "DiamondLeggings": {
+      "cost": {
+        "DiamondOre": 5,
+        "Leather": 2,
+        "IronIngot": 2
+      },
+      "output": 1
+    },
+    "DiamondBoots": {
+      "cost": {
+        "DiamondOre": 2,
+        "Leather": 1,
+        "IronIngot": 2
+      },
+      "output": 1
+    },
+    "NetheriteHelmet": {
+      "cost": {
+        "NetheriteIngot": 3,
+        "Leather": 1,
+        "IronIngot": 2
+      },
+      "output": 1
+    },
+    "NetheriteChestplate": {
+      "cost": {
+        "NetheriteIngot": 6,
+        "Leather": 3,
+        "IronIngot": 2
+      },
+      "output": 1
+    },
+    "NetheriteLeggings": {
+      "cost": {
+        "NetheriteIngot": 5,
+        "Leather": 2,
+        "IronIngot": 2
+      },
+      "output": 1
+    },
+    "NetheriteBoots": {
+      "cost": {
+        "NetheriteIngot": 2,
+        "Leather": 1,
+        "IronIngot": 2
+      },
+      "output": 1
+    },
+    "Sugar": {
+      "cost": {
+        "SugarCane": 1
+      },
+      "output": 1
+    },
+    "GlassBottle": {
+      "cost": {
+        "Glass": 3
+      },
+      "output": 3
+    },
+    "GlisteringMelon": {
+      "cost": {
+        "MelonSlice": 1,
+        "GoldIngot": 1
+      },
+      "output": 1
+    },
+    "HealingPotion": {
+      "cost": {
+        "GlassBottle": 1,
+        "NetherWart": 1,
+        "GlisteringMelon": 1
+      },
+      "output": 1
+    },
+    "RegenerationPotion": {
+      "cost": {
+        "GlassBottle": 1,
+        "NetherWart": 1,
+        "GhastTear": 1
+      },
+      "output": 1
+    },
+    "SpeedPotion": {
+      "cost": {
+        "GlassBottle": 1,
+        "NetherWart": 1,
+        "Sugar": 2
+      },
+      "output": 1
+    }
+  },
+  "buildings": {
+    "LumberjackBuilding": [
+      [
+        {
+          "WoodOak": 12,
+          "Stone": 8
+        },
+        [
+          "Planks",
+          "Stick",
+          "WoodenPickaxe"
+        ]
+      ],
+      [
+        {
+          "Planks": 24,
+          "Stone": 20,
+          "IronIngot": 3
+        },
+        [
+          "BowItem",
+          "IronPickaxe",
+          "Wool",
+          "Sugar"
+        ]
+      ],
+      [
+        {
+          "Planks": 36,
+          "IronIngot": 6
+        },
+        [
+          "DiamondPickaxe",
+          "NetherithePickaxe"
+        ]
+      ]
+    ],
+    "SmithBuilding": [
+      [
+        {
+          "WoodOak": 20,
+          "Stone": 24,
+          "CoalOre": 6
+        },
+        [
+          "CoalItem",
+          "IronIngot",
+          "StoneSwordItem",
+          "IronSwordItem",
+          "IronHelmet",
+          "IronChestplate",
+          "IronLeggings",
+          "IronBoots"
+        ]
+      ],
+      [
+        {
+          "Planks": 30,
+          "IronIngot": 10,
+          "Stone": 30
+        },
+        [
+          "GoldIngot",
+          "GoldenSwordItem",
+          "GoldenHelmet",
+          "GoldenChestplate",
+          "GoldenLeggings",
+          "GoldenBoots"
+        ]
+      ],
+      [
+        {
+          "Planks": 16,
+          "IronIngot": 12,
+          "DiamondOre": 6
+        },
+        [
+          "DiamondSwordItem",
+          "DiamondHelmet",
+          "DiamondChestplate",
+          "DiamondLeggings",
+          "DiamondBoots"
+        ]
+      ],
+      [
+        {
+          "Planks": 32,
+          "IronIngot": 24,
+          "DiamondOre": 12,
+          "GoldIngot": 8
+        },
+        [
+          "NetheriteScrap",
+          "NetheriteIngot",
+          "NetheritheSwordItem",
+          "NetheriteHelmet",
+          "NetheriteChestplate",
+          "NetheriteLeggings",
+          "NetheriteBoots"
+        ]
+      ]
+    ],
+    "FarmBuilding": [
+      [
+        {
+          "WoodOak": 16,
+          "Stone": 10
+        },
+        []
+      ],
+      [
+        {
+          "Planks": 24,
+          "IronIngot": 4,
+          "Wool": 4,
+          "Wheat": 12
+        },
+        []
+      ],
+      [
+        {
+          "Planks": 12,
+          "IronIngot": 6,
+          "Wool": 8,
+          "Wheat": 24
+        },
+        []
+      ]
+    ],
+    "AlchemyBuilding": [
+      [
+        {
+          "Planks": 20,
+          "Stone": 20,
+          "IronIngot": 4
+        },
+        [
+          "Glass",
+          "GlassBottle",
+          "GlisteringMelon",
+          "HealingPotion"
+        ]
+      ],
+      [
+        {
+          "Planks": 24,
+          "GoldIngot": 4,
+          "Glass": 10
+        },
+        [
+          "SpeedPotion"
+        ]
+      ],
+      [
+        {
+          "Planks": 12,
+          "IronIngot": 6,
+          "Glass": 20
+        },
+        [
+          "RegenerationPotion"
+        ]
+      ]
+    ],
+    "StorageBuilding": [
+      [
+        {
+          "Planks": 16,
+          "Stone": 16
+        },
+        []
+      ],
+      [
+        {
+          "Planks": 32,
+          "IronIngot": 6,
+          "Wool": 4
+        },
+        []
+      ],
+      [
+        {
+          "Planks": 16,
+          "IronIngot": 8,
+          "Wool": 8
+        },
+        []
+      ]
+    ]
+  },
+  "encounters": [
+    [
+      "Level1_Village",
+      [
+        3,
+        4,
+        5
+      ],
+      [
+        [
+          0
+        ],
+        [
+          0,
+          0,
+          7
+        ],
+        [
+          0,
+          7
+        ]
+      ],
+      {
+        "WoodOak": 13,
+        "Stone": 10,
+        "CoalOre": 5,
+        "String": 3,
+        "Leather": 2
+      },
+      0.75
+    ],
+    [
+      "Level2_Sand",
+      [
+        4,
+        5,
+        7
+      ],
+      [
+        [
+          0,
+          7
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          8
+        ]
+      ],
+      {
+        "Sand": 14,
+        "IronOre": 12,
+        "CoalOre": 8,
+        "String": 3,
+        "Leather": 2
+      },
+      0.8
+    ],
+    [
+      "Level3_Mine",
+      [
+        5,
+        7,
+        8
+      ],
+      [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2,
+          8
+        ],
+        [
+          2,
+          2,
+          9
+        ]
+      ],
+      {
+        "IronOre": 18,
+        "GoldOre": 12,
+        "CoalOre": 12,
+        "DiamondOre": 3
+      },
+      0.85
+    ],
+    [
+      "Level4_Forest",
+      [
+        6,
+        8,
+        10
+      ],
+      [
+        [
+          3,
+          7
+        ],
+        [
+          3,
+          4,
+          9
+        ],
+        [
+          4,
+          5,
+          6
+        ]
+      ],
+      {
+        "WoodOak": 24,
+        "String": 5,
+        "Leather": 6,
+        "DiamondOre": 8,
+        "NetheriteOre": 5,
+        "GhastTear": 1
+      },
+      0.9
+    ]
+  ],
+  "mobs": {
+    "Zombie": [
+      70,
+      8,
+      2.2,
+      2.6
+    ],
+    "Skeleton": [
+      65,
+      9,
+      2.5,
+      2.6
+    ],
+    "Spider": [
+      50,
+      6,
+      1.5,
+      3.5
+    ],
+    "Creeper": [
+      60,
+      28,
+      3,
+      2.8
+    ],
+    "Pillager": [
+      110,
+      12,
+      2,
+      2.8
+    ],
+    "ArcherPillager": [
+      85,
+      11,
+      2.4,
+      2.8
+    ],
+    "Wolf": [
+      80,
+      9,
+      1.6,
+      3.8
+    ],
+    "Bear": [
+      210,
+      20,
+      2.8,
+      2.5
+    ],
+    "Witch": [
+      100,
+      13,
+      2.8,
+      2.6
+    ],
+    "Enderman": [
+      160,
+      16,
+      2,
+      3.6
+    ]
+  },
+  "production": [
+    {
+      "Wheat": 3,
+      "SugarCane": 2,
+      "MelonSlice": 1
+    },
+    {
+      "Wheat": 4,
+      "SugarCane": 3,
+      "MelonSlice": 2,
+      "NetherWart": 1
+    },
+    {
+      "Wheat": 6,
+      "SugarCane": 4,
+      "MelonSlice": 3,
+      "NetherWart": 2
+    }
+  ]
+}

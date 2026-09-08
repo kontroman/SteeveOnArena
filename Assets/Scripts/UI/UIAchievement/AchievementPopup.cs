@@ -79,7 +79,7 @@ namespace UI.UIAchievement
         {
             _progressBarQuest.gameObject.SetActive(false);
             _messageTakePrize.gameObject.SetActive(true);
-            _nameQuest.text = LocalizationService.GetLocalizedText(achievement.Data.NameAchievementKey);
+            _nameQuest.text = MineArena.UI.QuestJournalRow.Title(achievement);
             _messageTakePrize.text = LocalizationService.GetLocalizedText(Constants.AchievementKey.TextMessageTakePrizeKey);
         }
 
@@ -89,7 +89,7 @@ namespace UI.UIAchievement
             _progressBarQuest.gameObject.SetActive(true);
             MaxValue = achievement.MaxValueProgress;
             CurrentValue = achievement.CurrentValueProgress;
-            _nameQuest.text = LocalizationService.GetLocalizedText(achievement.Data.NameAchievementKey);
+            _nameQuest.text = MineArena.UI.QuestJournalRow.Title(achievement);
             OnValueChanged?.Invoke(CurrentValue, MaxValue);
         }
 

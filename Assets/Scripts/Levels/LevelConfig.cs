@@ -11,11 +11,16 @@ namespace MineArena.Levels
         public static event Action<LevelConfig> ChangedInInspector;
 
         [SerializeField] private Sprite levelIcon;
+        [Header("Level selection")]
+        [SerializeField] private string displayName;
+        [SerializeField, TextArea(2, 4)] private string description;
         [SerializeField] private LevelDifficulty difficulty;
         [SerializeField] private LevelSettings settings;
         [SerializeField] private List<ItemConfig> availableResources;
         [SerializeField] private List<ResourceSpawnConfig> resourceSpawnConfigs;
         [SerializeField] private List<LevelRewards> rewardResources;
+        [SerializeField] private List<EncounterWaveConfig> encounterWaves = new List<EncounterWaveConfig>();
+        public IReadOnlyList<EncounterWaveConfig> EncounterWaves => encounterWaves;
         [SerializeField] private GameObject levelPrefab;
         [SerializeField] private Vector3 levelPrefabPosition;
         [SerializeField] private Quaternion levelPrefabRotation;
@@ -35,6 +40,8 @@ namespace MineArena.Levels
         [SerializeField] private GameObject portalPrefab;
 
         public Sprite LevelIcon {  get { return levelIcon; } }
+        public string DisplayName => string.IsNullOrWhiteSpace(displayName) ? name : displayName;
+        public string Description => description;
         public LevelDifficulty Difficulty { get { return difficulty; } }
         public LevelSettings Settings { get { return settings; } }
         public IReadOnlyList<ItemConfig> AvailableResources { get { return availableResources; } }
@@ -72,6 +79,14 @@ namespace MineArena.Levels
     }
 
     [Serializable]
+    public class EncounterWaveConfig
+    {
+        [Min(1)] public int MobCount = 3;
+        [Min(0f)] public float DelayBetweenMobs = 1.5f;
+        public List<MineArena.AI.MobTypes> MobTypes = new List<MineArena.AI.MobTypes>();
+    }
+
+    [Serializable]
     public class LevelRewards
     {
         public ItemConfig Item;
@@ -82,7 +97,7 @@ namespace MineArena.Levels
     public class ResourceSpawnConfig
     {
         [SerializeField] private GameObject resource;
-        [SerializeField, Range(0f, 1f)] private float spawnChance = 1f;
+        [SerializeField, Range(0f, 1f), Tooltip("Relative weight among valid resource prefabs. Weights are normalized when spawning.")] private float spawnChance = 1f;
 
         public GameObject Resource { get { return resource; } }
         public float SpawnChance { get { return spawnChance; } }

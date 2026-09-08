@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23b4dfe5a2c9bec418f415cbb49447a1, type: 3}
+  m_Name: String
+  m_EditorClassIdentifier: 
+  _name: String
+  _prefab: {fileID: 1294500603521610, guid: 2678c9f57345829dbb3c35b17fd964c5, type: 3}
+  _icon: {fileID: 21300000, guid: e64e24fa2b02e3db140e08f321d0fd76, type: 3}
+  _usable: 0
+  _stackable: 1
+  _blockStyleIcon: 0
+  _maxStackSize: 64
+  _resourceCategory: String
+  _craftCosts: []
+  _craftAmount: 1
+  _displayName: "Нить"
+  _description: "Нить — материал для переработки и улучшений."

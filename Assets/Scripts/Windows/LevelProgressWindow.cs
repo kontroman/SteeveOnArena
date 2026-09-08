@@ -7,6 +7,7 @@ namespace MineArena.Windows
 {
     public class LevelProgressWindow : BaseWindow
     {
+        [SerializeField] private GameObject _progressPanel;
         [SerializeField] private Slider _progressBar;
         [SerializeField] private TextMeshProUGUI _progressText;
         [SerializeField] private RectTransform _portalArrow;
@@ -23,7 +24,17 @@ namespace MineArena.Windows
 
         private void Update()
         {
+            RefreshProgressVisibility();
             UpdatePortalArrow();
+        }
+
+        private void OnEnable() => RefreshProgressVisibility();
+
+        private void RefreshProgressVisibility()
+        {
+            if (_progressPanel == null) return;
+            bool visible = !MineArena.Managers.TutorialService.Active;
+            if (_progressPanel.activeSelf != visible) _progressPanel.SetActive(visible);
         }
 
         public void SetProgress(int killedMobs, int totalMobs)

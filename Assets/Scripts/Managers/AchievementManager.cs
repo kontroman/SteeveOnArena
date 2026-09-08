@@ -16,14 +16,17 @@ namespace Managers
         private void Start() =>
             CreateQuests();
 
-        public List<Achievement> GetQuests() =>
-            _achievements;
+        public List<Achievement> GetQuests()
+        {
+            if (_achievements.Count == 0 && GameRoot.GameConfig != null) CreateQuests();
+            return _achievements;
+        }
 
         public void OnMessage(AchievementMessages.AchievementTargetTaken message)
         {
-            foreach (var achievement in _achievements)
+            foreach (var achievement in GetQuests())
             {
-                if (achievement.Data.ItemTarget == message.Model.Item1 && !achievement.CanTakePrize)
+                if (achievement.Data.ItemTarget != null && achievement.Data.ItemTarget == message.Model.Item1 && !achievement.CanTakePrize && !achievement.IsCompleted)
                 {
                     achievement.ChangeCurrentValue(message.Model.Item2);
                     GameRoot.PlayerProgress.AchievementProgress.SaveProgress(achievement);
@@ -36,19 +39,19 @@ namespace Managers
 
         private void CreateQuests()
         {
+            if (_achievements.Count > 0) return;
             for (var i = 0; i < GameRoot.GameConfig.DataAchievements.Count; i++)
             {
-                Achievement achievement = new Achievement(GameRoot.GameConfig.DataAchievements[i], i);
+                var definition = GameRoot.GameConfig.DataAchievements[i];
+                Achievement achievement = new Achievement(definition, definition.StableId >= 0 ? definition.StableId : i);
                 _achievements.Add(achievement);
 
-                if (GameRoot.PlayerProgress.AchievementProgress.Achievements.Count < GameRoot.GameConfig.DataAchievements.Count)
-                {
-                    GameRoot.PlayerProgress.AchievementProgress.AddAchievement(achievement);
-                }
-                else if (GameRoot.PlayerProgress.AchievementProgress.Achievements.TryGetValue(achievement.ID, out var data))
+                if (GameRoot.PlayerProgress.AchievementProgress.Achievements.TryGetValue(achievement.ID, out var data))
                 {
                     achievement.LoadData(data);
+                    GameRoot.PlayerProgress.AchievementProgress.SaveProgress(achievement);
                 }
+                else GameRoot.PlayerProgress.AchievementProgress.AddAchievement(achievement);
             }
         }
 

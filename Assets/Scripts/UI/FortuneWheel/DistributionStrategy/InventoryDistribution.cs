@@ -7,6 +7,7 @@ public class InventoryDistribution : IDistributionStrategy
 {
     public void Distribute(IPrize prize)
     {
-        GameRoot.GetManager<InventoryManager>().AddItem(prize.Item);
+            int amount = prize is ItemPrize itemPrize ? UnityEngine.Mathf.Max(1, itemPrize.Amount) : 1;
+            GameRoot.GetManager<InventoryManager>().AddItemById(prize.Item.Name, amount);
     }
 }

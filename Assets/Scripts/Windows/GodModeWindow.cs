@@ -639,11 +639,7 @@ namespace MineArena.Windows
             if (_uiFont != null)
                 return _uiFont;
 
-            _uiFont = Font.CreateDynamicFontFromOSFont(new[] { "Arial", "Segoe UI", "Tahoma" }, fontSize);
-            if (_uiFont != null)
-                return _uiFont;
-
-            _uiFont = Resources.GetBuiltinResource<Font>("Arial.ttf");
+            _uiFont = TMP_Settings.defaultFontAsset.sourceFontFile;
             return _uiFont;
         }
 

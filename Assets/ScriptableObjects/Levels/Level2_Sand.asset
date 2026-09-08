@@ -12,20 +12,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41f600800be6f1842bb6cb5a88114a94, type: 3}
   m_Name: Level2_Sand
   m_EditorClassIdentifier: 
-  levelIcon: {fileID: 21300000, guid: bdf8cb8d531a0a24daf8601cf13bee25, type: 3}
+  levelIcon: {fileID: 21300000, guid: 56eddb6f2cca8ba41b178fcc028e5010, type: 3}
+  displayName: "\u041F\u0435\u0441\u0447\u0430\u043D\u044B\u0439 \u043A\u0430\u0440\u044C\u0435\u0440"
+  description: "\u0421\u043E\u043B\u043D\u0435\u0447\u043D\u044B\u0439 \u043A\u0430\u0440\u044C\u0435\u0440
+    \u0441\u0440\u0435\u0434\u0438 \u043F\u0435\u0441\u0447\u0430\u043D\u044B\u0445
+    \u0442\u0435\u0440\u0440\u0430\u0441. \u0417\u0430\u043F\u0430\u0441\u0438\u0442\u0435\u0441\u044C
+    \u043C\u0430\u0442\u0435\u0440\u0438\u0430\u043B\u0430\u043C\u0438 \u0434\u043B\u044F
+    \u043D\u043E\u0432\u044B\u0445 \u043F\u043E\u0441\u0442\u0440\u043E\u0435\u043A."
   difficulty: 0
   settings: {fileID: 11400000, guid: 4721b15ba15429b40896a829236a9f4d, type: 2}
   availableResources:
-  - {fileID: 11400000, guid: 8d4377309a1b81045ba99f7bb848ff29, type: 2}
   - {fileID: 11400000, guid: 10c265e30aa9be34685985507820bbb4, type: 2}
+  - {fileID: 11400000, guid: b00bcf18baae3cd448bfe86f83366dca, type: 2}
+  - {fileID: 11400000, guid: 8d4377309a1b81045ba99f7bb848ff29, type: 2}
+  - {fileID: 11400000, guid: a68cd5cc21de10fb12fcf02b8923a5b8, type: 2}
+  - {fileID: 11400000, guid: d802d592708eefe055968f5ec21276d9, type: 2}
+  - {fileID: 11400000, guid: 7bb504eba684311b6f0ba2e390d5ae5f, type: 2}
+  - {fileID: 11400000, guid: 9674280c6c63ca952a01262a7ee47405, type: 2}
   resourceSpawnConfigs:
   - resource: {fileID: 2297095161383156283, guid: 9b4c5ebb516f2044085b965fa085bae0, type: 3}
-    spawnChance: 0.85
+    spawnChance: 0.32
+  - resource: {fileID: 2615737806694022535, guid: e26f4c1e328228b4d80a8887b2f721a1, type: 3}
+    spawnChance: 0.28
   - resource: {fileID: 6831494909658651806, guid: 5e34c181307af274da91e900b69084af, type: 3}
-    spawnChance: 0.15
+    spawnChance: 0.16
+  - resource: {fileID: 8637239530525059325, guid: e2a78317b64608dd0bd4611b921c5b34, type: 3}
+    spawnChance: 0.12
+  - resource: {fileID: 8637239530525059325, guid: c69f8049666a24cdf4bdc1db8bc157e3, type: 3}
+    spawnChance: 0.12
   rewardResources:
-  - Item: {fileID: 11400000, guid: 501e28faeabb676418a62d09f9eb6cb9, type: 2}
-    Amount: 5
+  - Item: {fileID: 11400000, guid: 10c265e30aa9be34685985507820bbb4, type: 2}
+    Amount: 14
+  - Item: {fileID: 11400000, guid: b00bcf18baae3cd448bfe86f83366dca, type: 2}
+    Amount: 12
+  - Item: {fileID: 11400000, guid: 8d4377309a1b81045ba99f7bb848ff29, type: 2}
+    Amount: 8
+  - Item: {fileID: 11400000, guid: a68cd5cc21de10fb12fcf02b8923a5b8, type: 2}
+    Amount: 3
+  - Item: {fileID: 11400000, guid: d802d592708eefe055968f5ec21276d9, type: 2}
+    Amount: 2
   levelPrefab: {fileID: 204151599868836669, guid: ce1f5b7c1945ea74a9fd5b34c5fb7b4f, type: 3}
   levelPrefabPosition: {x: 0, y: 2, z: 0}
   levelPrefabRotation: {x: -0.70710677, y: 0, z: 0, w: 0.70710677}
@@ -48,5 +73,15 @@ MonoBehaviour:
     ambientLight: {r: 0.6981132, g: 0.6981132, b: 0.6981132, a: 1}
     ambientIntensity: 1
     rainIntensity: 0.5
-  requiredKillPercentToOpenPortal: 0.7
+  requiredKillPercentToOpenPortal: 0.8
   portalPrefab: {fileID: 1847513724388157086, guid: b587cb59b7e1ed44f80b882798eb0fda, type: 3}
+  encounterWaves: 
+  - MobCount: 4
+    DelayBetweenMobs: 2
+    MobTypes: 0000000007000000
+  - MobCount: 5
+    DelayBetweenMobs: 1.7
+    MobTypes: 0000000001000000
+  - MobCount: 7
+    DelayBetweenMobs: 1.4
+    MobTypes: 000000000100000008000000

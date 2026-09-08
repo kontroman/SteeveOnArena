@@ -1,4 +1,5 @@
 using Devotion.SDK.Controllers;
+using Devotion.SDK.Helpers;
 using MineArena.Controllers;
 using MineArena.InteractableObjects;
 using MineArena.Managers;
@@ -28,11 +29,11 @@ namespace MineArena.Commands
             pa?.SetRunning(false);
             pa?.TriggerChestOpening();
 
-            await Task.Delay(TimeSpan.FromSeconds(0.8f));
+            await CoroutineHelper.DelayAsync(0.8f);
 
             chest.GetComponent<Animator>().SetTrigger("Execute");
 
-            await Task.Delay(TimeSpan.FromSeconds(2.7f));
+            await CoroutineHelper.DelayAsync(2.7f);
 
             pm.SetMovement(true);
             pa?.ResetChestOpening();

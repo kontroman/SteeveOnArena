@@ -49,8 +49,9 @@ namespace MineArena.Windows.Crafting
         public CraftingCategory Category { get; }
         public BuildingConfig SourceBuilding { get; }
         public int RequiredBuildingLevel { get; }
+        public bool IsProduction { get; internal set; }
 
-        public string DisplayName => ResolveItemName(Item);
+        public string DisplayName => ResolveItemName(Item) + (Item != null && Item.CraftAmount > 1 ? " ×" + Item.CraftAmount : string.Empty);
         public Sprite Icon => Item != null ? Item.Icon : null;
         public IReadOnlyList<ResourceRequired> Costs => Item != null ? Item.CraftCosts : null;
         public bool HasBuildingRequirement => SourceBuilding != null && RequiredBuildingLevel > 0;
@@ -60,8 +61,8 @@ namespace MineArena.Windows.Crafting
             if (item == null)
                 return string.Empty;
 
-            if (!string.IsNullOrWhiteSpace(item.Name))
-                return item.Name;
+            if (!string.IsNullOrWhiteSpace(item.DisplayName))
+                return item.DisplayName;
 
             return item.name;
         }

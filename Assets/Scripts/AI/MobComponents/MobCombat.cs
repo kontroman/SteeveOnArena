@@ -1,4 +1,4 @@
-﻿using MineArena.Commands;
+using MineArena.Commands;
 using MineArena.Controllers;
 using MineArena.Basics;
 using MineArena.Interfaces;
@@ -53,6 +53,7 @@ namespace MineArena.AI
                 _mobAnimator.AttackKeyframeReached += OnAttackKeyframe;
 
             PlayerMovement.PlayerDied += HandlePlayerDied;
+            PlayerMovement.PlayerRevived += HandlePlayerRevived;
             _isAfk = PlayerMovement.IsPlayerDead;
         }
 
@@ -64,6 +65,7 @@ namespace MineArena.AI
                 _mobAnimator.AttackKeyframeReached -= OnAttackKeyframe;
 
             PlayerMovement.PlayerDied -= HandlePlayerDied;
+            PlayerMovement.PlayerRevived -= HandlePlayerRevived;
         }
 
         private void Start()
@@ -287,6 +289,7 @@ namespace MineArena.AI
             _isDead = false;
             _mobType = preset.MobType;
             _damage = preset.Damage;
+            if (TutorialService.Expedition) _damage = Mathf.Min(_damage, 3f);
             _attackDelay = preset.AttackDelay;
             _attackRange = preset.AttackRange;
             _rotationSpeed = preset.RotationSpeed;
@@ -371,6 +374,12 @@ namespace MineArena.AI
 
             _playerTransform = Player.Instance.transform;
             _playerDamagable = Player.Instance.GetComponent<IDamageable>();
+        }
+
+        private void HandlePlayerRevived(Transform playerTransform)
+        {
+            if (_isDead) return;
+            _isAfk = false;
         }
 
         private void HandlePlayerDied(Transform playerTransform)

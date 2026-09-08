@@ -22,6 +22,7 @@ namespace MineArena.PlayerSystem
         private Vector3 _velocity;
         private bool _isGrounded;
         private bool _jumpStarted;
+        private float _airborneTime;
 
         [Header("Landing VFX")]
         [SerializeField] private VfxId _landingVfxId = VfxId.JumpLanding;
@@ -34,16 +35,17 @@ namespace MineArena.PlayerSystem
         private float _nextFootstepTime;
 
         public static event Action<Transform> PlayerDied;
+        public static event Action<Transform> PlayerRevived;
         public static bool IsPlayerDead { get; private set; }
 
         private void Awake()
         {
-            IsPlayerDead = false;
+            if (Player.Instance == null || Player.Instance.gameObject == gameObject) IsPlayerDead = false;
         }
 
         private void Start()
         {
-            _cameraTransform = Camera.main.transform;
+            _cameraTransform = Camera.main != null ? Camera.main.transform : null;
             _characterController = GetComponent<CharacterController>();
 
             _animator = Controllers.Player.Instance?.GetComponentFromList<PlayerAnimatorController>() ??
@@ -63,13 +65,14 @@ namespace MineArena.PlayerSystem
 
             if (_canMove)
             {
-                bool wasGrounded = _characterController.isGrounded;
                 Vector3 horizontalMove = GetHorizontalMovement();
                 ApplyGravityAndJump();
 
-                Vector3 totalMovement = horizontalMove * Constants.PlayerSettings.Speed + new Vector3(0, _velocity.y, 0);
+                float potionSpeed = GetComponent<PotionEffects>()?.MovementMultiplier ?? 1f;
+                float attackSpeed = _playerAttack != null ? _playerAttack.MovementMultiplier : 1f;
+                Vector3 totalMovement = horizontalMove * Constants.PlayerSettings.Speed * potionSpeed * attackSpeed + new Vector3(0, _velocity.y, 0);
                 _characterController.Move(totalMovement * Time.deltaTime);
-                HandleLanding(wasGrounded);
+                HandleAirborneAudio();
                 HandleFootsteps(horizontalMove);
 
                 RotatePlayer(horizontalMove);
@@ -78,13 +81,17 @@ namespace MineArena.PlayerSystem
             {
                 ApplyGravity();
                 _characterController.Move(new Vector3(0f, _velocity.y, 0f) * Time.deltaTime);
+                HandleAirborneAudio();
             }
         }
 
         private Vector3 GetHorizontalMovement()
         {
-            float moveX = Input.GetAxis("Horizontal");
-            float moveZ = Input.GetAxis("Vertical");
+            if (_cameraTransform == null)
+                _cameraTransform = Camera.main != null ? Camera.main.transform : null;
+
+            float moveX = Input.GetAxisRaw("Horizontal");
+            float moveZ = Input.GetAxisRaw("Vertical");
 
             Vector3 moveDirection = new Vector3(moveX, 0, moveZ);
 
@@ -93,7 +100,7 @@ namespace MineArena.PlayerSystem
                 _animator?.SetRunning(true);
                 moveDirection.Normalize();
 
-                Vector3 cameraForward = _cameraTransform.forward;
+                Vector3 cameraForward = _cameraTransform != null ? _cameraTransform.forward : Vector3.forward;
                 cameraForward.y = 0;
                 Quaternion cameraRotation = Quaternion.LookRotation(cameraForward);
                 moveDirection = cameraRotation * moveDirection;
@@ -118,8 +125,6 @@ namespace MineArena.PlayerSystem
                 if (Input.GetButtonDown("Jump"))
                 {
                     _velocity.y = Constants.PlayerSettings.JumpForce;
-                    _jumpStarted = true;
-                    GameRoot.GetManager<AudioManager>()?.PlayEffect(Constants.AudioNames.Jump);
                 }
             }
 
@@ -140,12 +145,24 @@ namespace MineArena.PlayerSystem
             _velocity.y += Constants.PlayerSettings.Gravity * Time.deltaTime;
         }
 
-        private void HandleLanding(bool wasGrounded)
+        private void HandleAirborneAudio()
         {
-            if (!_jumpStarted || wasGrounded || !_characterController.isGrounded)
+            if (!_characterController.isGrounded)
+            {
+                if (_airborneTime == 0f && _velocity.y > 0f)
+                {
+                    _jumpStarted = true;
+                    GameRoot.GetManager<AudioManager>()?.PlayEffect(Constants.AudioNames.Jump);
+                }
+                _airborneTime += Time.deltaTime;
                 return;
+            }
 
+            bool landed = _jumpStarted || _airborneTime >= 0.1f;
+            _airborneTime = 0f;
             _jumpStarted = false;
+            if (!landed) return;
+            _nextFootstepTime = Time.time + _footstepInterval;
             GameRoot.GetManager<AudioManager>()?.PlayEffect(Constants.AudioNames.Landing);
 
             if (!TryGetLandingSurface(out var hit))
@@ -200,7 +217,6 @@ namespace MineArena.PlayerSystem
         {
             if (horizontalMove.sqrMagnitude <= 0.01f || !_characterController.isGrounded)
             {
-                _nextFootstepTime = Time.time;
                 return;
             }
 
@@ -268,10 +284,15 @@ namespace MineArena.PlayerSystem
 
         public void SetAlive()
         {
+            bool wasDead = _isDead;
+            _jumpStarted = false;
+            _airborneTime = 0f;
+            _cameraTransform = Camera.main != null ? Camera.main.transform : null;
             _isDead = false;
             IsPlayerDead = false;
             _canMove = true;
             _velocity = new Vector3(0f, -2f, 0f);
+            if (wasDead) PlayerRevived?.Invoke(transform);
         }
     }
 }

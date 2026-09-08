@@ -1,0 +1,10 @@
+PASS Initial health is synchronized
+PASS Damage updates fill and numeric HP
+PASS Hidden HUD is unsubscribed
+PASS Reopened HUD immediately reads current health
+PASS Reopened HUD receives subsequent damage
+PASS Repeated HUD reopening preserves subscription
+PASS Death immediately shows zero even with smoothing enabled
+PASS Revival synchronizes full HP on HUD reopening
+PASS Actual HUD prefab uses horizontal left-to-right filled Image
+PASS Actual HUD prefab has numeric HP reference

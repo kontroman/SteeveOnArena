@@ -14,6 +14,20 @@ namespace MineArena.Managers
         private readonly Dictionary<Transform, GameObject> _activeBuildings = new();
         private readonly Dictionary<Transform, int> _buildingLevels = new();
 
+        public int ExpeditionRewardBonusPercent
+        {
+            get
+            {
+                int total = 0;
+                foreach (var config in GameRoot.GameConfig.BuildingsDatabase.AllBuildings)
+                {
+                    var level = config.GetLevelByNumber(GetBuildingLevel(config));
+                    if (level != null) total += level.ExpeditionRewardBonusPercent;
+                }
+                return Mathf.Clamp(total, 0, 50);
+            }
+        }
+
         public int GetBuildingLevel(BuildingConfig config)
         {
             if (config == null)
@@ -27,14 +41,6 @@ namespace MineArena.Managers
             {
                 return savedData.Level;
             }
-
-            var currentLevelConfig = config.GetCurrentLevel();
-            if (currentLevelConfig != null)
-                return currentLevelConfig.Level;
-
-            var levels = config.Levels;
-            if (levels != null && levels.Count > 0 && levels[0] != null)
-                return levels[0].Level;
 
             return 0;
         }
@@ -59,22 +65,30 @@ namespace MineArena.Managers
 
         private void BuildWithoutSaving(BuildingConfig config, BuildingSaveData saveData)
         {
-            if (config == null || saveData == null || saveData.transform == null)
+            if (config == null || saveData == null)
                 return;
+
+            // Unity Transform references in old saves do not survive a scene reload.
+            foreach (var zone in FindObjectsOfType<BuildingZone>(true))
+                if (zone.Config == config) { saveData.transform = zone.transform; break; }
+            if (saveData.transform == null) return;
 
             var levelConfig = config.GetLevelByNumber(saveData.Level) ?? config.GetCurrentLevel();
 
             BuildAtLocation(config, saveData.transform, levelConfig);
-            DisableBuildingPlaceCollider(saveData.transform);
+            PrepareBuiltZone(saveData.transform);
         }
 
         public bool TryBuild(BuildingConfig config, Transform buildingPlace)
         {
+            if (!TutorialService.AllowBuilding(config)) return false;
+            if (config == null || buildingPlace == null || GetBuildingLevel(config) > 0) return false;
             var levelConfig = config.GetCurrentLevel();
+            if (levelConfig == null || levelConfig.ModelPrefab == null) return false;
 
             var inventory = GameRoot.GetManager<InventoryManager>();
 
-            if (!inventory.TryConsumeResources(levelConfig.RequiredResources))
+            if (inventory == null || !inventory.TryConsumeResources(levelConfig.RequiredResources))
             {
                 Debug.Log($"BuildingManager: Not enough resources to build {config.BuildingName}");
                 return false;
@@ -85,8 +99,9 @@ namespace MineArena.Managers
             if (instance == null)
                 return false;
 
-            DisableBuildingPlaceCollider(buildingPlace);
+            PrepareBuiltZone(buildingPlace);
             SaveBuildingData(config.BuildingName, levelConfig.Level, buildingPlace);
+            TutorialService.Built(config);
             Debug.Log($"BuildingManager: build confirmed for {config.BuildingName}, instance={instance.name}, place={buildingPlace.name}.", this);
             PlayConstructionSequence(config, instance, buildingPlace);
 
@@ -95,6 +110,8 @@ namespace MineArena.Managers
 
         public bool TryUpgrade(BuildingConfig config, Transform buildingPlace)
         {
+            if (TutorialService.Active) return false;
+            if (config == null || buildingPlace == null || GetBuildingLevel(config) <= 0) return false;
             var currentLevel = GetTrackedLevel(config.BuildingName, buildingPlace);
 
             if (!config.TryGetNextLevel(currentLevel, out var nextLevelConfig) || nextLevelConfig == null)
@@ -104,6 +121,9 @@ namespace MineArena.Managers
             }
 
             var inventory = GameRoot.GetManager<InventoryManager>();
+
+            if (nextLevelConfig.ModelPrefab == null || inventory == null ||
+                !inventory.TryConsumeResources(nextLevelConfig.RequiredResources)) return false;
 
             var instance = BuildAtLocation(config, buildingPlace, nextLevelConfig);
 
@@ -147,7 +167,7 @@ namespace MineArena.Managers
                 .Catch(exception => Debug.LogError($"BuildingManager: construction cinematic failed for {config.BuildingName}. {exception.Message}", this));
         }
 
-        private void DisableBuildingPlaceCollider(Transform buildingPlace)
+        private void PrepareBuiltZone(Transform buildingPlace)
         {
             if (buildingPlace == null)
                 return;
@@ -155,7 +175,7 @@ namespace MineArena.Managers
             var collider = buildingPlace.GetComponent<Collider>();
 
             if (collider != null)
-                collider.enabled = false;
+                collider.enabled = true;
 
             var zone = buildingPlace.GetComponent<BuildingZone>();
             zone?.DestroySign();

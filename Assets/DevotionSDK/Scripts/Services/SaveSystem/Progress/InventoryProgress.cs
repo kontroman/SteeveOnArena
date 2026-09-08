@@ -16,6 +16,14 @@ namespace Devotion.SDK.Services.SaveSystem.Progress
         [SerializeField] private SerializableDictionary<string, string> equippedArmorItemIds = new();
         [SerializeField] private List<string> quickSlotItemIds = new();
         [SerializeField] private int selectedQuickSlotIndex;
+        [SerializeField] private MineArena.Managers.CraftJob pendingCraft;
+        [SerializeField] private long farmNextProductionUtcTicks;
+        public MineArena.Managers.CraftJob PendingCraft
+        {
+            get => pendingCraft != null && !string.IsNullOrWhiteSpace(pendingCraft.ItemId) && pendingCraft.Amount > 0 ? pendingCraft : null;
+            set => pendingCraft = value;
+        }
+        public long FarmNextProductionUtcTicks { get => farmNextProductionUtcTicks; set => farmNextProductionUtcTicks = value; }
 
         public SerializableDictionary<string, int> SavedResources
         {
@@ -55,6 +63,56 @@ namespace Devotion.SDK.Services.SaveSystem.Progress
 
         public InventoryProgress() { }
 
+        // Preserve resources earned with the earlier, non-Minecraft material catalog.
+        public void MigrateLegacyMaterials()
+        {
+            var replacements = new Dictionary<string, string>
+            {
+                ["Fiber"] = "String", ["Rope"] = "String", ["Fabric"] = "Leather",
+                ["SteelIngot"] = "IronIngot", ["ReinforcedPlanks"] = "Planks", ["Resin"] = "CoalItem"
+            };
+            foreach (var entry in replacements)
+            {
+                if (!SavedResources.TryGetValue(entry.Key, out int amount)) continue;
+                savedResources.TryGetValue(entry.Value, out int existing);
+                savedResources[entry.Value] = (int)Math.Min(int.MaxValue, (long)Math.Max(0, existing) + Math.Max(0, amount));
+                savedResources.Remove(entry.Key);
+                inventoryItemOrder?.RemoveAll(id => id == entry.Key);
+                if (quickSlotItemIds != null)
+                    for (int i = 0; i < quickSlotItemIds.Count; i++)
+                        if (quickSlotItemIds[i] == entry.Key) quickSlotItemIds[i] = entry.Value;
+            }
+            EnsureInventoryItemOrder();
+        }
+
+        public bool TrySpendExact(string itemId, int amount)
+        {
+            if (string.IsNullOrWhiteSpace(itemId) || amount <= 0 ||
+                !SavedResources.TryGetValue(itemId, out int owned) || owned < amount) return false;
+            EnsureInventoryItemOrder();
+            if (owned == amount) { savedResources.Remove(itemId); inventoryItemOrder.Remove(itemId); }
+            else savedResources[itemId] = owned - amount;
+            Save();
+            return true;
+        }
+
+        // Changes both sides before notifying the save system: no partially saved purchases.
+        public bool TryExchange(string currencyId, int price, string itemId, int amount, bool unique)
+        {
+            if (string.IsNullOrWhiteSpace(currencyId) || string.IsNullOrWhiteSpace(itemId) ||
+                currencyId == itemId || price <= 0 || amount <= 0 || (unique && amount != 1)) return false;
+            SavedResources.TryGetValue(currencyId, out int funds);
+            SavedResources.TryGetValue(itemId, out int owned);
+            if (funds < price || (unique && owned > 0) || (long)owned + amount > int.MaxValue) return false;
+            EnsureInventoryItemOrder();
+            if (funds == price) { savedResources.Remove(currencyId); inventoryItemOrder.Remove(currencyId); }
+            else savedResources[currencyId] = funds - price;
+            savedResources[itemId] = owned + amount;
+            AddInventoryOrderItem(itemId);
+            Save();
+            return true;
+        }
+
         public void InitializeNewPlayerInventory()
         {
             if (!SavedResources.ContainsKey(StarterSwordItemId))
@@ -82,7 +140,6 @@ namespace Devotion.SDK.Services.SaveSystem.Progress
             if (isNewItem)
                 AddInventoryOrderItem(id);
 
-            Debug.LogError("[TODO]: remove autosave");
             Save();
         }
 

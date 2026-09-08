@@ -1,0 +1,85 @@
+PASS Iron recipe is one ore to one ingot
+PASS 15 ore allows 15 batches
+PASS Single craft starts
+PASS Single craft consumes one ore
+PASS Single craft takes seven seconds
+PASS Invalid batch sizes rejected
+PASS Rejected craft changes nothing
+PASS Craft-all starts
+PASS Craft-all consumes 15 ore for 15 ingots
+PASS Second order rejected while busy
+PASS Craft-all also takes seven seconds
+PASS Save round-trip preserves batch output and deadline
+PASS Restored order awards exactly once (actual=15, pending=False)
+PASS Shared resource categories summed before calculating maximum
+PASS Fuel is the limiting ingredient for batch smelting
+PASS Batch output cannot overflow integer range
+PASS No resources means no batches
+PASS Existing output limits remaining integer capacity
+PASS Tutorial limits crafting to one batch
+PASS Level1_Village has valid positive resource weights
+PASS Level1_Village weights total one
+PASS WoodOak references prefab root
+PASS WoodOak can be harvested
+PASS Stone references prefab root
+PASS Stone can be harvested
+PASS CoalOreBlock references prefab root
+PASS CoalOreBlock can be harvested
+PASS WoodBirch references prefab root
+PASS WoodBirch can be harvested
+PASS WheatHarvest references prefab root
+PASS WheatHarvest can be harvested
+PASS WoolHarvest references prefab root
+PASS WoolHarvest can be harvested
+PASS Level3_Mine has valid positive resource weights
+PASS Level3_Mine weights total one
+PASS CoalOreBlock references prefab root
+PASS CoalOreBlock can be harvested
+PASS IronOreBlock references prefab root
+PASS IronOreBlock can be harvested
+PASS GoldOreBlock references prefab root
+PASS GoldOreBlock can be harvested
+PASS DiamondOreBlock references prefab root
+PASS DiamondOreBlock can be harvested
+PASS NetherWartHarvest references prefab root
+PASS NetherWartHarvest can be harvested
+PASS Level2_Sand has valid positive resource weights
+PASS Level2_Sand weights total one
+PASS Sand references prefab root
+PASS Sand can be harvested
+PASS IronOreBlock references prefab root
+PASS IronOreBlock can be harvested
+PASS CoalOreBlock references prefab root
+PASS CoalOreBlock can be harvested
+PASS SugarCaneHarvest references prefab root
+PASS SugarCaneHarvest can be harvested
+PASS GlassHarvest references prefab root
+PASS GlassHarvest can be harvested
+PASS Level4_Forest has valid positive resource weights
+PASS Level4_Forest weights total one
+PASS WoodOak references prefab root
+PASS WoodOak can be harvested
+PASS WoodDark references prefab root
+PASS WoodDark can be harvested
+PASS Stone references prefab root
+PASS Stone can be harvested
+PASS CoalOreBlock references prefab root
+PASS CoalOreBlock can be harvested
+PASS IronOreBlock references prefab root
+PASS IronOreBlock can be harvested
+PASS DiamondOreBlock references prefab root
+PASS DiamondOreBlock can be harvested
+PASS NetheriteOre references prefab root
+PASS NetheriteOre can be harvested
+PASS WheatHarvest references prefab root
+PASS WheatHarvest can be harvested
+PASS SugarCaneHarvest references prefab root
+PASS SugarCaneHarvest can be harvested
+PASS NetherWartHarvest references prefab root
+PASS NetherWartHarvest can be harvested
+PASS Weights totaling more than one are normalized; all entries spawn
+PASS Locked recipe rejects batch craft
+PASS Assets/Resources/Prefabs/Windows/Crafting/CraftingWindow.prefab has wired batch controls
+PASS Assets/Prefabs/Windows/Crafting/CraftingWindow.prefab has wired batch controls
+PASS UI shows expected output before craft
+PASS UI shows expected output before craft

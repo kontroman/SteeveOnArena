@@ -12,28 +12,47 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41f600800be6f1842bb6cb5a88114a94, type: 3}
   m_Name: Level1_Village
   m_EditorClassIdentifier: 
-  levelIcon: {fileID: 21300000, guid: bdf8cb8d531a0a24daf8601cf13bee25, type: 3}
+  levelIcon: {fileID: 21300000, guid: 236e1c7a09b5b8f448b1a45eb5f3f3c2, type: 3}
+  displayName: "\u041F\u043E\u0441\u0435\u043B\u0435\u043D\u0438\u0435"
+  description: "\u0422\u0438\u0445\u0430\u044F \u0434\u0435\u0440\u0435\u0432\u043D\u044F
+    \u0441\u0440\u0435\u0434\u0438 \u0445\u043E\u043B\u043C\u043E\u0432. \u0418\u0441\u0441\u043B\u0435\u0434\u0443\u0439\u0442\u0435
+    \u043E\u043A\u0440\u0435\u0441\u0442\u043D\u043E\u0441\u0442\u0438 \u0438 \u0441\u043E\u0431\u0435\u0440\u0438\u0442\u0435
+    \u043F\u0435\u0440\u0432\u044B\u0435 \u0440\u0435\u0441\u0443\u0440\u0441\u044B."
   difficulty: 0
   settings: {fileID: 11400000, guid: 4721b15ba15429b40896a829236a9f4d, type: 2}
   availableResources:
-  - {fileID: 11400000, guid: 8d4377309a1b81045ba99f7bb848ff29, type: 2}
-  - {fileID: 11400000, guid: 2341848530a95b34794be486a7bc64c3, type: 2}
-  - {fileID: 11400000, guid: 748b6e8fd10cc5f458155de6d72cfb74, type: 2}
   - {fileID: 11400000, guid: 4d4666ba7dbbefa47b57dbff0b891f42, type: 2}
+  - {fileID: 11400000, guid: 2341848530a95b34794be486a7bc64c3, type: 2}
+  - {fileID: 11400000, guid: 8d4377309a1b81045ba99f7bb848ff29, type: 2}
+  - {fileID: 11400000, guid: a68cd5cc21de10fb12fcf02b8923a5b8, type: 2}
+  - {fileID: 11400000, guid: d802d592708eefe055968f5ec21276d9, type: 2}
+  - {fileID: 11400000, guid: 748b6e8fd10cc5f458155de6d72cfb74, type: 2}
+  - {fileID: 11400000, guid: 079f8acf4ba05efc83eab37686345c0f, type: 2}
+  - {fileID: 11400000, guid: 85a3754243d2aea4be1af73e426cd5a9, type: 2}
   resourceSpawnConfigs:
-  - resource: {fileID: 6831494909658651806, guid: 5e34c181307af274da91e900b69084af, type: 3}
-    spawnChance: 0.35
-  - resource: {fileID: 8637239530525059325, guid: 79c8a2040dc0ef747b153c4004dc7868, type: 3}
-    spawnChance: 0.6
-  - resource: {fileID: 7734615867120498341, guid: 8c8b955f9f3e932419e1c97db03732e7, type: 3}
-    spawnChance: 0.4
   - resource: {fileID: 4470322958617729804, guid: cbfc4609802435e469abad930689a627, type: 3}
-    spawnChance: 0.4
+    spawnChance: 0.36
+  - resource: {fileID: 8637239530525059325, guid: 79c8a2040dc0ef747b153c4004dc7868, type: 3}
+    spawnChance: 0.3
+  - resource: {fileID: 6831494909658651806, guid: 5e34c181307af274da91e900b69084af, type: 3}
+    spawnChance: 0.16
+  - resource: {fileID: 7734615867120498341, guid: 8c8b955f9f3e932419e1c97db03732e7, type: 3}
+    spawnChance: 0.06
+  - resource: {fileID: 8637239530525059325, guid: da96b5310bb3ef66dab7678a33ad9026, type: 3}
+    spawnChance: 0.07
+  - resource: {fileID: 8637239530525059325, guid: 9730c2488cc52afc8629bbc0f629b382, type: 3}
+    spawnChance: 0.05
   rewardResources:
   - Item: {fileID: 11400000, guid: 4d4666ba7dbbefa47b57dbff0b891f42, type: 2}
-    Amount: 10
+    Amount: 13
   - Item: {fileID: 11400000, guid: 2341848530a95b34794be486a7bc64c3, type: 2}
-    Amount: 15
+    Amount: 10
+  - Item: {fileID: 11400000, guid: 8d4377309a1b81045ba99f7bb848ff29, type: 2}
+    Amount: 5
+  - Item: {fileID: 11400000, guid: a68cd5cc21de10fb12fcf02b8923a5b8, type: 2}
+    Amount: 3
+  - Item: {fileID: 11400000, guid: d802d592708eefe055968f5ec21276d9, type: 2}
+    Amount: 2
   levelPrefab: {fileID: 733385142227468889, guid: 89e9ac016df759f47a40dedfaea1ab43, type: 3}
   levelPrefabPosition: {x: 0, y: 2, z: 0}
   levelPrefabRotation: {x: -0.70710677, y: 0, z: 0, w: 0.70710677}
@@ -56,5 +75,15 @@ MonoBehaviour:
     ambientLight: {r: 0.6981132, g: 0.6981132, b: 0.6981132, a: 1}
     ambientIntensity: 1
     rainIntensity: 0.5
-  requiredKillPercentToOpenPortal: 0.7
+  requiredKillPercentToOpenPortal: 0.75
   portalPrefab: {fileID: 5969946980864186293, guid: 856b2a6a20e15574082dd2bdc40526f5, type: 3}
+  encounterWaves: 
+  - MobCount: 3
+    DelayBetweenMobs: 2
+    MobTypes: 00000000
+  - MobCount: 4
+    DelayBetweenMobs: 1.7
+    MobTypes: 000000000000000007000000
+  - MobCount: 5
+    DelayBetweenMobs: 1.4
+    MobTypes: 0000000007000000

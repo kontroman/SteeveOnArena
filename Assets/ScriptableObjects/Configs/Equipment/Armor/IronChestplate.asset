@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: IronChestplate
   m_EditorClassIdentifier: 
   _name: IronChestplate
+  _displayName: "\u0416\u0435\u043B\u0435\u0437\u043D\u044B\u0439 \u043D\u0430\u0433\u0440\u0443\u0434\u043D\u0438\u043A"
   _prefab: {fileID: 0}
   _icon: {fileID: 21300000, guid: 8b0ee193ece97fa42bc697cf6ccd228b, type: 3}
   _usable: 0
@@ -20,9 +21,14 @@ MonoBehaviour:
   _blockStyleIcon: 0
   _description: 
   _descriptionLocalizationKey: 
-  _craftCosts: []
+  _craftCosts: 
+  - _resource: {fileID: 11400000, guid: 70a5b21f16c7993df1d86760d1a13948, type: 2}
+    _amount: 6
+  - _resource: {fileID: 11400000, guid: d802d592708eefe055968f5ec21276d9, type: 2}
+    _amount: 3
   _price: 40
-  _resist: 4
+  _resist: 8
   _slot: 1
   _grade: 1
   _material: {fileID: 2100000, guid: 3830651655887784281a89b6613bcc69, type: 2}
+  _craftAmount: 1

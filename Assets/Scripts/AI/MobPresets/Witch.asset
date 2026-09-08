@@ -15,11 +15,11 @@ MonoBehaviour:
   name: 
   Icon: {fileID: 0}
   MobType: 6
-  Damage: 15
-  AttackDelay: 3
+  Damage: 13
+  AttackDelay: 2.8
   IsRangeAttack: 1
   AttackRange: 10
   Projectile: {fileID: 331499547690822219, guid: e34e9986d26c24140a357345fd2fc1a9, type: 3}
-  Speed: 2.5
+  Speed: 2.6
   RotationSpeed: 4
-  MaxHealth: 50
+  MaxHealth: 100

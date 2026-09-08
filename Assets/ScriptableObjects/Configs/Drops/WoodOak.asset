@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: WoodOak
   m_EditorClassIdentifier: 
   _name: WoodOak
+  _displayName: "Дуб"
   _prefab: {fileID: 1294500603521610, guid: 04c84bbcb59828745a04423b39f53e2b, type: 3}
   _icon: {fileID: 21300000, guid: a95a067afccf4cb42946e28b1baf738e, type: 3}
   _usable: 0
@@ -20,3 +21,5 @@ MonoBehaviour:
   _blockStyleIcon: 1
   _maxStackSize: 64
   _resourceCategory: Wood
+  _topIcon: {fileID: 21300000, guid: d6a533046274cba4cba90bb837615b62, type: 3}
+  _sideIcon: {fileID: 21300000, guid: ccd50241d65e40b44be07e8e367cc8ee, type: 3}

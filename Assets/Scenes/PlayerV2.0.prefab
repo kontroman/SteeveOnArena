@@ -817,7 +817,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _animatorController: {fileID: 0}
   _attackStateName: Attack
-  _attackLayerIndex: 0
+  _attackLayerIndex: 1
   _attackStateFailSafe: 1.5
   _bowStateName: BowShooting
   _bowLayerIndex: 1
@@ -843,7 +843,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   _bowAimRaycastDistance: 500
-  _swordAttackSoundExtraDelay: 0.15
+  _meleeMovementMultiplier: 0.7
   _bowAttackSoundDelay: 0.2
 --- !u!114 &7982167682220264229
 MonoBehaviour:

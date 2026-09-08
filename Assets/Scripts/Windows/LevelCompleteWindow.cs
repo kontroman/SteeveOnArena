@@ -6,6 +6,7 @@ using MineArena.Levels;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using MineArena.Windows.SelectLevel;
 
 namespace MineArena.Windows
 {
@@ -15,6 +16,7 @@ namespace MineArena.Windows
         [SerializeField] private Transform _resourcesRoot;
         [SerializeField] private Button _continueButton;
         [SerializeField] private Button _doubleRewardsButton;
+        [SerializeField] private LevelResourceChip _rewardPrefab;
 
         private Action _continueClicked;
         private Action _doubleRewardsClicked;
@@ -85,7 +87,8 @@ namespace MineArena.Windows
                 if (reward.Key == null || reward.Value <= 0)
                     continue;
 
-                CreateRewardRow(reward.Key.Name, reward.Value, reward.Key.Icon);
+                if (_rewardPrefab != null) Instantiate(_rewardPrefab, _resourcesRoot).Bind(reward.Key, reward.Value);
+                else CreateRewardRow(reward.Key.DisplayName, reward.Value, reward.Key.Icon);
             }
         }
 

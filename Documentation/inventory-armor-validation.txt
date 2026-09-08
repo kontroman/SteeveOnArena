@@ -1,0 +1,81 @@
+PASS Icon: CoalItem
+PASS Icon: CoalOre
+PASS Icon: DiamondArmor
+PASS Icon: DiamondOre
+PASS Icon: GhastTear
+PASS Icon: Glass
+PASS Icon: GlassBottle
+PASS Icon: GlisteringMelon
+PASS Icon: GoldIngot
+PASS Icon: GoldOre
+PASS Icon: HealingPotion
+PASS Icon: IronIngot
+PASS Icon: IronOre
+PASS Icon: Leather
+PASS Icon: MelonSlice
+PASS Icon: NetheriteIngot
+PASS Icon: NetheriteOre
+PASS Icon: NetheriteScrap
+PASS Icon: NetherWart
+PASS Icon: Planks
+PASS Icon: RegenerationPotion
+PASS Icon: Sand
+PASS Icon: SpeedPotion
+PASS Icon: Stick
+PASS Icon: Stone
+PASS Icon: String
+PASS Icon: Sugar
+PASS Icon: SugarCane
+PASS Icon: Wheat
+PASS Icon: WoodBirch
+PASS Icon: WoodDark
+PASS Icon: WoodOak
+PASS Icon: Wool
+PASS Icon: DiamondBoots
+PASS Icon: DiamondHelmet
+PASS Icon: DiamondLeggings
+PASS Icon: GoldenBoots
+PASS Icon: GoldenChestplate
+PASS Icon: GoldenHelmet
+PASS Icon: GoldenLeggings
+PASS Icon: IronBoots
+PASS Icon: IronChestplate
+PASS Icon: IronHelmet
+PASS Icon: IronLeggings
+PASS Icon: NetheriteBoots
+PASS Icon: NetheriteChestplate
+PASS Icon: NetheriteHelmet
+PASS Icon: NetheriteLeggings
+PASS Icon: BowItem
+PASS Icon: DiamondPickaxe
+PASS Icon: IronPickaxe
+PASS Icon: NetherithePickaxe
+PASS Icon: WoodenPickaxe
+PASS Icon: DiamondSwordItem
+PASS Icon: GoldenSwordItem
+PASS Icon: IronSwordItem
+PASS Icon: NetheritheSwordItem
+PASS Icon: StoneSwordItem
+PASS Icon: WoodSwordItem
+PASS Every registered inventory item has a Sprite
+PASS Every item config is registered
+PASS Player health and defense provider share a GameObject
+PASS HUD armor component attached
+PASS HUD fill and label references resolve
+PASS Leather current set mitigates at most 50%
+PASS Leather actual Health.TakeDamage: 80
+PASS Leather HUD matches damage reduction
+PASS Iron current set mitigates at most 50%
+PASS Iron actual Health.TakeDamage: 84,2
+PASS Iron HUD matches damage reduction
+PASS Gold current set mitigates at most 50%
+PASS Gold actual Health.TakeDamage: 85,6
+PASS Gold HUD matches damage reduction
+PASS Diamond current set mitigates at most 50%
+PASS Diamond actual Health.TakeDamage: 87,6
+PASS Diamond HUD matches damage reduction
+PASS Netherite current set mitigates at most 50%
+PASS Netherite actual Health.TakeDamage: 90
+PASS Netherite HUD matches damage reduction
+PASS Removing all armor clears HUD
+PASS Negative damage cannot heal through defense

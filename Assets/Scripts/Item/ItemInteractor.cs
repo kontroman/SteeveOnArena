@@ -10,6 +10,7 @@ namespace MineArena.Items
         [SerializeField] private ItemConfig _item;
 
         private Item item;
+        private bool _collected;
 
         public ItemConfig ItemConfig => _item;
 
@@ -27,9 +28,11 @@ namespace MineArena.Items
 
         public void Interact()
         {
+            if (_collected || MineArena.PlayerSystem.PlayerMovement.IsPlayerDead) return;
+            _collected = true;
             Messages.AchievementMessages.AchievementTargetTaken.Publish((_item, 1)); // test
 
-            if (_item.Usable)
+            if (_item.Usable && !(_item is PotionConfig))
             {
                 _item.Command.Execute(() => { Destroy(gameObject); });
             }

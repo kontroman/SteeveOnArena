@@ -1046,15 +1046,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dropTable:
-  - Item: {fileID: 11400000, guid: b00bcf18baae3cd448bfe86f83366dca, type: 2}
-    DropChance: 10
+  - Item: {fileID: 11400000, guid: d802d592708eefe055968f5ec21276d9, type: 2}
+    DropChance: 100
     MinQuantity: 1
-    MaxQuantity: 5
-  - Item: {fileID: 11400000, guid: 501e28faeabb676418a62d09f9eb6cb9, type: 2}
-    DropChance: 5
-    MinQuantity: 1
-    MaxQuantity: 1
+    MaxQuantity: 2
   _isOneDrop: 0
+  _dropOnDeath: 1
 --- !u!1 &8790180116748464161
 GameObject:
   m_ObjectHideFlags: 0

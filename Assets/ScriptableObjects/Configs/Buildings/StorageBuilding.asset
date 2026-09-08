@@ -16,13 +16,46 @@ MonoBehaviour:
   _levels:
   - _level: 1
     _requiredResources:
-    - _resource: {fileID: 11400000, guid: 10c265e30aa9be34685985507820bbb4, type: 2}
-      _amount: 1
-    - _resource: {fileID: 11400000, guid: 8d4377309a1b81045ba99f7bb848ff29, type: 2}
-      _amount: 1
+    - _resource: {fileID: 11400000, guid: 810f71e127406e14eba2fe7f69697606, type: 2}
+      _amount: 16
     - _resource: {fileID: 11400000, guid: 2341848530a95b34794be486a7bc64c3, type: 2}
-      _amount: 1
+      _amount: 16
     _unlocks: []
     _modelPrefab: {fileID: 299713464059821661, guid: 942ecdfa5a1507c46bc55d3cbfbf535e, type: 3}
+    _preview: {fileID: 21300000, guid: 322511bac4b37824e909cd41250f9764, type: 3}
+    _craftOutputBonus: 0
+    _expeditionRewardBonusPercent: 5
+    _production: []
+    _productionSeconds: 60
+  - _level: 2
+    _requiredResources:
+    - _resource: {fileID: 11400000, guid: 810f71e127406e14eba2fe7f69697606, type: 2}
+      _amount: 32
+    - _resource: {fileID: 11400000, guid: 70a5b21f16c7993df1d86760d1a13948, type: 2}
+      _amount: 6
+    - _resource: {fileID: 11400000, guid: 85a3754243d2aea4be1af73e426cd5a9, type: 2}
+      _amount: 4
+    _unlocks: []
+    _modelPrefab: {fileID: 299713464059821661, guid: 942ecdfa5a1507c46bc55d3cbfbf535e, type: 3}
+    _preview: {fileID: 21300000, guid: d8fef14b2c0db9240a9f8b7a4b0c237b, type: 3}
+    _craftOutputBonus: 0
+    _expeditionRewardBonusPercent: 10
+    _production: []
+    _productionSeconds: 60
+  - _level: 3
+    _requiredResources:
+    - _resource: {fileID: 11400000, guid: 810f71e127406e14eba2fe7f69697606, type: 2}
+      _amount: 16
+    - _resource: {fileID: 11400000, guid: 70a5b21f16c7993df1d86760d1a13948, type: 2}
+      _amount: 8
+    - _resource: {fileID: 11400000, guid: 85a3754243d2aea4be1af73e426cd5a9, type: 2}
+      _amount: 8
+    _unlocks: []
+    _modelPrefab: {fileID: 299713464059821661, guid: 942ecdfa5a1507c46bc55d3cbfbf535e, type: 3}
+    _preview: {fileID: 21300000, guid: cfce91dfa7d836c40815bba031675f80, type: 3}
+    _craftOutputBonus: 0
+    _expeditionRewardBonusPercent: 15
+    _production: []
+    _productionSeconds: 60
   _currentLevel: 0
   _buildingRotation: {x: -0.49999997, y: -0.49999997, z: -0.49999997, w: 0.49999997}

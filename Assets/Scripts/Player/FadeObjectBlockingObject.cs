@@ -32,7 +32,7 @@ public class FadeObjectBlockingObject : MonoBehaviour
         if(!Camera)
             Camera = Camera.main;
 
-        DontDestroyOnLoad(Camera.gameObject);
+        // Cameras belong to their scene; keeping one alive creates competing brains on return.
     }
 
     private void OnEnable()
@@ -44,6 +44,8 @@ public class FadeObjectBlockingObject : MonoBehaviour
     {
         while (true)
         {
+            if (Camera == null || !Camera.isActiveAndEnabled) Camera = UnityEngine.Camera.main;
+            if (Camera == null || Target == null) { yield return null; continue; }
             int hits = Physics.RaycastNonAlloc(
                 Camera.transform.position,
                 (Target.transform.position + TargetPositionOffset - Camera.transform.position).normalized,

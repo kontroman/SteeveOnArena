@@ -16,7 +16,7 @@ namespace MineArena.Buildings
         public int CurrentLevel => _currentLevel;
         public Quaternion BuildingRotation => _buildingRotation;
 
-        public BuildingLevelConfig GetCurrentLevel() => _levels[_currentLevel];
+        public BuildingLevelConfig GetCurrentLevel() => _levels != null && _currentLevel >= 0 && _currentLevel < _levels.Count ? _levels[_currentLevel] : null;
 
         public BuildingLevelConfig GetLevelByNumber(int level)
         {

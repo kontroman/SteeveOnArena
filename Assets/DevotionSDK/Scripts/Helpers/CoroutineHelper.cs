@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Devotion.SDK.Helpers
@@ -28,6 +29,14 @@ namespace Devotion.SDK.Helpers
         public static Coroutine Delay(float delay, Action action)
         {
             return Runner.StartCoroutine(DelayCoroutine(delay, action));
+        }
+
+        // Uses scaled Unity game time and completes on the main thread, without managed timers.
+        public static Task DelayAsync(float delay)
+        {
+            var completion = new TaskCompletionSource<bool>();
+            Delay(delay, () => completion.SetResult(true));
+            return completion.Task;
         }
 
         public static Coroutine NextFrame(Action action)

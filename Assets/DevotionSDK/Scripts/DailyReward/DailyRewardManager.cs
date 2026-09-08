@@ -80,6 +80,18 @@ namespace Devotion.SDK.DailyReward
             return true;
         }
 
+        public bool CanClaim => GetConfig() != null && GetProgress() != null &&
+            GetProgress().IsRewardAvailable(GetCurrentUtcDayNumber(), GetConfig().RewardsCount);
+
+        public void OpenRewards()
+        {
+            var config = GetConfig(); var progress = GetProgress();
+            if (config == null || progress == null || !config.HasRewards) return;
+            int index = progress.GetRewardIndexForClaim(GetCurrentUtcDayNumber(), config.RewardsCount);
+            var window = GameRoot.UIManager.OpenWindow<DailyGiftWIndow>() as DailyGiftWIndow;
+            window?.Setup(this, config, index >= 0 ? index : progress.NextRewardIndex);
+        }
+
         private void StartWaitingForProgress()
         {
             if (waitForProgressCoroutine == null && isActiveAndEnabled)

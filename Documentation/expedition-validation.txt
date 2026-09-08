@@ -1,0 +1,14 @@
+PASS Construction fade window is registered in UIManager
+PASS Building cost shows owned and required amounts
+PASS Building resource display refreshes after inventory changes
+PASS Construction moves an interior marker beyond the building footprint
+PASS Returning player is teleported to the base spawn
+PASS Movement and attacks are restored after extraction
+PASS Character controller and alive state are restored
+PASS Base camera follows the persistent player instead of a destroyed scene duplicate
+PASS Repeated returns remain stable
+PASS Persistent camera rig outside the base scene is rebound to the player
+PASS Cinemachine actually moves with the restored player
+PASS Tutorial shows quick slots but hides player panel and navigation
+PASS Finishing tutorial reveals all main HUD groups
+PASS Crafting checkpoint keeps slots visible and main HUD hidden

@@ -17,6 +17,7 @@ namespace MineArena.UI
         private CanvasGroup _iconCanvasGroup;
         private CanvasGroup _blockableCanvasGroup;
         private bool _usesBlockableIcon;
+        private bool _initialized;
 
         public Items.Item Item => _item;
         public bool HasItem => _item != null;
@@ -26,6 +27,13 @@ namespace MineArena.UI
 
         private void Awake()
         {
+            Initialize();
+        }
+
+        private void Initialize()
+        {
+            if (_initialized) return;
+            _initialized = true;
             _iconRectTransform = _icon != null ? _icon.GetComponent<RectTransform>() : null;
             _iconCanvasGroup = EnsureCanvasGroup(_iconRectTransform);
 
@@ -49,6 +57,7 @@ namespace MineArena.UI
 
         public void Setup(Items.Item item)
         {
+            Initialize();
             _item = item;
             bool useBlockableIcon = ShouldUseBlockableIcon(item);
             _usesBlockableIcon = useBlockableIcon;
@@ -102,6 +111,7 @@ namespace MineArena.UI
 
         public void Clear()
         {
+            Initialize();
             _item = null;
             _usesBlockableIcon = false;
 

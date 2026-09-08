@@ -10,6 +10,8 @@ namespace Devotion.SDK.Services.SaveSystem.Progress
     public class PlayerProgress : BaseProgress
     {
         [SerializeField] private string _id;
+        [SerializeField] private MineArena.Managers.TutorialProgress tutorialProgress;
+        public MineArena.Managers.TutorialProgress TutorialProgress => tutorialProgress ??= new MineArena.Managers.TutorialProgress();
 
         [SerializeField] private InventoryProgress inventoryProgress;
         [SerializeField] private BuildingProgress buildingsProgress;
@@ -20,6 +22,8 @@ namespace Devotion.SDK.Services.SaveSystem.Progress
         [SerializeField] private DailyRewardProgress dailyRewardProgress;
         [SerializeField] private PlayerDataProgress playerDataProgress;
         [SerializeField] private AchievementProgress achievementProgress;
+        [SerializeField] private PlaytimeGiftProgress playtimeGiftProgress;
+        public PlaytimeGiftProgress PlaytimeGiftProgress => playtimeGiftProgress ??= new PlaytimeGiftProgress();
 
         public InventoryProgress InventoryProgress
         {
@@ -42,7 +46,7 @@ namespace Devotion.SDK.Services.SaveSystem.Progress
                 return levelsProgress;
             }
         }
-        public PurchasesProgress PurchasesProgress => purchasesProgress;
+        public PurchasesProgress PurchasesProgress => purchasesProgress ??= new PurchasesProgress();
         public AdsProgress AdsProgress => adsProgress;
         public LuckyWheelProgress LuckyWheelProgress
         {

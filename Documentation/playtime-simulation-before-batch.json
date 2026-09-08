@@ -1,0 +1,1131 @@
+{
+  "assumptions": {
+    "combat": "Single-target hit counts only, no animation/navigation/dodge/survival simulation",
+    "economy": "Aggregate crafting dependencies with batch rounding. No ads, daily rewards, death losses, enemy drops, or equipment salvage. Allocations minimize trips, not time; progression order is not enforced. Starter kit and tutorial reward are not deducted. Wheat supplied by passive farm.",
+    "routes": "Sequential cautious gearing route; full clear, 75% expected enemy loot collected. Expected mining yields, not random rolls. Per-run minutes are explicit assumptions including travel/UI/loading, all crafting waits charged separately (no overlap), no failures or ads/gifts. Farm uses average wheat rate; one-time tutorial assumed 5 minutes. Aggregate allocations above exclude enemy loot and do not enforce route order."
+  },
+  "levels": [
+    {
+      "name": "Level1_Village.asset",
+      "rewards": {
+        "WoodOak": 16,
+        "Stone": 12,
+        "CoalOre": 6,
+        "String": 3,
+        "Leather": 2
+      },
+      "arenaPath": "Assets/Prefabs/Arenas/LocationVillage.prefab",
+      "points": 21,
+      "spawns": [
+        {
+          "path": "Assets/Prefabs/Objects/Ores/CoalOreBlock.prefab",
+          "configured": 0.35,
+          "probability": 0.35,
+          "drops": {
+            "CoalOre": 4
+          }
+        },
+        {
+          "path": "Assets/Prefabs/Objects/Ores/Stone.prefab",
+          "configured": 0.6,
+          "probability": 0.6,
+          "drops": {
+            "Stone": 5.5
+          }
+        },
+        {
+          "path": "Assets/Prefabs/Objects/Ores/WoodBirch.prefab",
+          "configured": 0.4,
+          "probability": 0.050000000000000044,
+          "drops": {
+            "WoodBirch": 5.5
+          }
+        },
+        {
+          "path": "Assets/Prefabs/Objects/Ores/WoodOak.prefab",
+          "configured": 0.4,
+          "probability": 0,
+          "drops": {
+            "WoodOak": 5.5
+          }
+        },
+        {
+          "path": "Assets/Prefabs/Objects/Harvest/WheatHarvest.prefab",
+          "configured": 0.15,
+          "probability": 0,
+          "drops": {
+            "Wheat": 3
+          }
+        },
+        {
+          "path": "Assets/Prefabs/Objects/Harvest/WoolHarvest.prefab",
+          "configured": 0.15,
+          "probability": 0,
+          "drops": {
+            "Wool": 1.5
+          }
+        }
+      ],
+      "mining": {
+        "CoalOre": 29.4,
+        "Stone": 69.3,
+        "WoodBirch": 5.775000000000005,
+        "WoodOak": 0,
+        "Wheat": 0,
+        "Wool": 0
+      },
+      "enemyDrops": {
+        "String": 5.75
+      },
+      "waves": [
+        {
+          "count": 3,
+          "delay": 2,
+          "types": [
+            "Zombie"
+          ]
+        },
+        {
+          "count": 4,
+          "delay": 1.7,
+          "types": [
+            "Zombie",
+            "Zombie",
+            "Spider"
+          ]
+        },
+        {
+          "count": 5,
+          "delay": 1.4,
+          "types": [
+            "Zombie",
+            "Spider"
+          ]
+        }
+      ],
+      "total": 12,
+      "required": 9,
+      "earliestThresholdSpawnSeconds": 38.49999999999999,
+      "lastSpawnSeconds": 42.69999999999999,
+      "expectedTotalHp": 763.3333333333334,
+      "expectedSingleTargetHits": {
+        "DiamondSword": 20.166666666666668,
+        "GoldenSword": 20.166666666666668,
+        "IronSword": 24,
+        "NetheritheSword": 12,
+        "StoneSword": 32.166666666666664,
+        "WoodSword": 44.166666666666664
+      }
+    },
+    {
+      "name": "Level2_Sand.asset",
+      "rewards": {
+        "Sand": 18,
+        "IronOre": 15,
+        "CoalOre": 10,
+        "String": 4,
+        "Leather": 3
+      },
+      "arenaPath": "Assets/Prefabs/Arenas/DesertLocation.prefab",
+      "points": 34,
+      "spawns": [
+        {
+          "path": "Assets/Prefabs/Objects/Ores/Sand.prefab",
+          "configured": 0.85,
+          "probability": 0.85,
+          "drops": {
+            "Sand": 5.5
+          }
+        },
+        {
+          "path": "Assets/Prefabs/Objects/Ores/CoalOreBlock.prefab",
+          "configured": 0.15,
+          "probability": 0.15000000000000002,
+          "drops": {
+            "CoalOre": 4
+          }
+        },
+        {
+          "path": "Assets/Prefabs/Objects/Harvest/SugarCaneHarvest.prefab",
+          "configured": 0.15,
+          "probability": 0,
+          "drops": {
+            "SugarCane": 2.5
+          }
+        },
+        {
+          "path": "Assets/Prefabs/Objects/Harvest/GlassHarvest.prefab",
+          "configured": 0.15,
+          "probability": 0,
+          "drops": {
+            "Glass": 1.5
+          }
+        }
+      ],
+      "mining": {
+        "Sand": 158.95,
+        "CoalOre": 20.400000000000002,
+        "SugarCane": 0,
+        "Glass": 0
+      },
+      "enemyDrops": {
+        "String": 3
+      },
+      "waves": [
+        {
+          "count": 4,
+          "delay": 2,
+          "types": [
+            "Zombie",
+            "Spider"
+          ]
+        },
+        {
+          "count": 5,
+          "delay": 1.7,
+          "types": [
+            "Zombie",
+            "Skeleton"
+          ]
+        },
+        {
+          "count": 7,
+          "delay": 1.4,
+          "types": [
+            "Zombie",
+            "Skeleton",
+            "Creeper"
+          ]
+        }
+      ],
+      "total": 16,
+      "required": 13,
+      "earliestThresholdSpawnSeconds": 44.99999999999999,
+      "lastSpawnSeconds": 49.19999999999999,
+      "expectedTotalHp": 1032.5,
+      "expectedSingleTargetHits": {
+        "DiamondSword": 22.833333333333336,
+        "GoldenSword": 30,
+        "IronSword": 32,
+        "NetheritheSword": 16,
+        "StoneSword": 43.66666666666667,
+        "WoodSword": 54.83333333333333
+      }
+    },
+    {
+      "name": "Level3_Mine.asset",
+      "rewards": {
+        "IronOre": 24,
+        "GoldOre": 15,
+        "CoalOre": 16,
+        "DiamondOre": 4
+      },
+      "arenaPath": "Assets/Prefabs/Arenas/LocationMine.prefab",
+      "points": 39,
+      "spawns": [
+        {
+          "path": "Assets/Prefabs/Objects/Ores/CoalOreBlock.prefab",
+          "configured": 0.4,
+          "probability": 0.4,
+          "drops": {
+            "CoalOre": 4
+          }
+        },
+        {
+          "path": "Assets/Prefabs/Objects/Ores/IronOreBlock.prefab",
+          "configured": 0.5,
+          "probability": 0.5,
+          "drops": {
+            "IronOre": 4
+          }
+        },
+        {
+          "path": "Assets/Prefabs/Objects/Ores/GoldOreBlock.prefab",
+          "configured": 0.3,
+          "probability": 0.09999999999999998,
+          "drops": {
+            "GoldOre": 3
+          }
+        },
+        {
+          "path": "Assets/Prefabs/Objects/Ores/DiamondOreBlock.prefab",
+          "configured": 0.15,
+          "probability": 0,
+          "drops": {
+            "DiamondOre": 2
+          }
+        },
+        {
+          "path": "Assets/Prefabs/Objects/Harvest/NetherWartHarvest.prefab",
+          "configured": 0.15,
+          "probability": 0,
+          "drops": {
+            "NetherWart": 1.5
+          }
+        }
+      ],
+      "mining": {
+        "CoalOre": 62.400000000000006,
+        "IronOre": 78,
+        "GoldOre": 11.699999999999998,
+        "DiamondOre": 0,
+        "NetherWart": 0
+      },
+      "enemyDrops": {},
+      "waves": [
+        {
+          "count": 5,
+          "delay": 2,
+          "types": [
+            "Zombie",
+            "Skeleton"
+          ]
+        },
+        {
+          "count": 7,
+          "delay": 1.7,
+          "types": [
+            "Skeleton",
+            "Pillager",
+            "Creeper"
+          ]
+        },
+        {
+          "count": 8,
+          "delay": 1.4,
+          "types": [
+            "Pillager",
+            "Pillager",
+            "ArcherPillager"
+          ]
+        }
+      ],
+      "total": 20,
+      "required": 17,
+      "earliestThresholdSpawnSeconds": 51.8,
+      "lastSpawnSeconds": 56,
+      "expectedTotalHp": 1699.1666666666667,
+      "expectedSingleTargetHits": {
+        "DiamondSword": 32.833333333333336,
+        "GoldenSword": 47.666666666666664,
+        "IronSword": 50.33333333333333,
+        "NetheritheSword": 30.333333333333336,
+        "StoneSword": 65.33333333333333,
+        "WoodSword": 80.5
+      }
+    },
+    {
+      "name": "Level4_Forest.asset",
+      "rewards": {
+        "WoodOak": 30,
+        "String": 6,
+        "Leather": 8,
+        "DiamondOre": 10,
+        "NetheriteOreDrop": 6,
+        "GhastTear": 1
+      },
+      "arenaPath": "Assets/Prefabs/Arenas/LocationForest.prefab",
+      "points": 41,
+      "spawns": [
+        {
+          "path": "Assets/Prefabs/Objects/Ores/WoodOak.prefab",
+          "configured": 0.6,
+          "probability": 0.6,
+          "drops": {
+            "WoodOak": 5.5
+          }
+        },
+        {
+          "path": "Assets/Prefabs/Objects/Ores/WoodDark.prefab",
+          "configured": 0.6,
+          "probability": 0.4,
+          "drops": {
+            "WoodDark": 6.5
+          }
+        },
+        {
+          "path": "Assets/Prefabs/Objects/Ores/WoodBirch.prefab",
+          "configured": 0.6,
+          "probability": 0,
+          "drops": {
+            "WoodBirch": 5.5
+          }
+        },
+        {
+          "path": "Assets/Prefabs/Objects/Ores/Stone.prefab",
+          "configured": 0.5,
+          "probability": 0,
+          "drops": {
+            "Stone": 5.5
+          }
+        },
+        {
+          "path": "Assets/Prefabs/Objects/Ores/CoalOreBlock.prefab",
+          "configured": 0.15,
+          "probability": 0,
+          "drops": {
+            "CoalOre": 4
+          }
+        },
+        {
+          "path": "Assets/Prefabs/Objects/Ores/IronOreBlock.prefab",
+          "configured": 0.1,
+          "probability": 0,
+          "drops": {
+            "IronOre": 4
+          }
+        },
+        {
+          "path": "Assets/Prefabs/Objects/Harvest/WheatHarvest.prefab",
+          "configured": 0.15,
+          "probability": 0,
+          "drops": {
+            "Wheat": 3
+          }
+        },
+        {
+          "path": "Assets/Prefabs/Objects/Harvest/SugarCaneHarvest.prefab",
+          "configured": 0.15,
+          "probability": 0,
+          "drops": {
+            "SugarCane": 2.5
+          }
+        },
+        {
+          "path": "Assets/Prefabs/Objects/Harvest/NetherWartHarvest.prefab",
+          "configured": 0.15,
+          "probability": 0,
+          "drops": {
+            "NetherWart": 1.5
+          }
+        }
+      ],
+      "mining": {
+        "WoodOak": 135.29999999999998,
+        "WoodDark": 106.60000000000001,
+        "WoodBirch": 0,
+        "Stone": 0,
+        "CoalOre": 0,
+        "IronOre": 0,
+        "Wheat": 0,
+        "SugarCane": 0,
+        "NetherWart": 0
+      },
+      "enemyDrops": {
+        "Leather": 23.5,
+        "String": 4.5
+      },
+      "waves": [
+        {
+          "count": 6,
+          "delay": 2,
+          "types": [
+            "Wolf",
+            "Spider"
+          ]
+        },
+        {
+          "count": 8,
+          "delay": 1.7,
+          "types": [
+            "Wolf",
+            "Bear",
+            "ArcherPillager"
+          ]
+        },
+        {
+          "count": 10,
+          "delay": 1.4,
+          "types": [
+            "Bear",
+            "Enderman",
+            "Witch"
+          ]
+        }
+      ],
+      "total": 24,
+      "required": 22,
+      "earliestThresholdSpawnSeconds": 59.699999999999996,
+      "lastSpawnSeconds": 62.5,
+      "expectedTotalHp": 2956.666666666667,
+      "expectedSingleTargetHits": {
+        "DiamondSword": 60.33333333333333,
+        "GoldenSword": 69.66666666666666,
+        "IronSword": 78.66666666666667,
+        "NetheritheSword": 45.33333333333333,
+        "StoneSword": 106.33333333333333,
+        "WoodSword": 145.66666666666669
+      }
+    }
+  ],
+  "mobs": {
+    "Zombie": {
+      "hp": 70,
+      "damage": 8,
+      "delay": 2.2,
+      "speed": 2.6
+    },
+    "Skeleton": {
+      "hp": 65,
+      "damage": 9,
+      "delay": 2.5,
+      "speed": 2.6
+    },
+    "Pillager": {
+      "hp": 110,
+      "damage": 12,
+      "delay": 2,
+      "speed": 2.8
+    },
+    "Wolf": {
+      "hp": 80,
+      "damage": 9,
+      "delay": 1.6,
+      "speed": 3.8
+    },
+    "Bear": {
+      "hp": 210,
+      "damage": 20,
+      "delay": 2.8,
+      "speed": 2.5
+    },
+    "Enderman": {
+      "hp": 160,
+      "damage": 16,
+      "delay": 2,
+      "speed": 3.6
+    },
+    "Witch": {
+      "hp": 100,
+      "damage": 13,
+      "delay": 2.8,
+      "speed": 2.6
+    },
+    "Spider": {
+      "hp": 50,
+      "damage": 6,
+      "delay": 1.5,
+      "speed": 3.5
+    },
+    "Creeper": {
+      "hp": 60,
+      "damage": 28,
+      "delay": 3,
+      "speed": 2.8
+    },
+    "ArcherPillager": {
+      "hp": 85,
+      "damage": 11,
+      "delay": 2.4,
+      "speed": 2.8
+    }
+  },
+  "weapons": {
+    "DiamondSword": {
+      "damage": 65,
+      "cooldown": 0.2
+    },
+    "GoldenSword": {
+      "damage": 50,
+      "cooldown": 0.3
+    },
+    "IronSword": {
+      "damage": 42,
+      "cooldown": 0.3
+    },
+    "NetheritheSword": {
+      "damage": 82,
+      "cooldown": 0.1
+    },
+    "StoneSword": {
+      "damage": 30,
+      "cooldown": 0.3
+    },
+    "WoodSword": {
+      "damage": 22,
+      "cooldown": 0.3
+    }
+  },
+  "armor": {
+    "Iron": 21,
+    "Golden": 28,
+    "Diamond": 38,
+    "Netherite": 50
+  },
+  "milestones": {
+    "iron": {
+      "raw": {
+        "WoodOak": 40,
+        "Stone": 52,
+        "CoalOre": 24,
+        "IronOre": 78,
+        "Leather": 7
+      },
+      "buildings": {
+        "SmithBuilding": 1,
+        "LumberjackBuilding": 2
+      },
+      "jobs": {
+        "IronSword": 1,
+        "IronIngot": 26,
+        "CoalItem": 9,
+        "Stick": 1,
+        "Planks": 8,
+        "IronPickaxe": 1,
+        "IronHelmet": 1,
+        "IronChestplate": 1,
+        "IronLeggings": 1,
+        "IronBoots": 1
+      },
+      "craftJobs": 50,
+      "craftMinutes": 5.833333333333333,
+      "allocations": {
+        "0": {
+          "runs": [
+            5,
+            6,
+            0,
+            0
+          ],
+          "trips": 11,
+          "farmOnly": {}
+        },
+        "1": {
+          "runs": [
+            2,
+            6,
+            0,
+            0
+          ],
+          "trips": 8,
+          "farmOnly": {}
+        },
+        "0.5": {
+          "runs": [
+            3,
+            6,
+            0,
+            0
+          ],
+          "trips": 9,
+          "farmOnly": {}
+        }
+      }
+    },
+    "diamond": {
+      "raw": {
+        "WoodOak": 61,
+        "Stone": 82,
+        "CoalOre": 52,
+        "IronOre": 201,
+        "Leather": 14,
+        "DiamondOre": 33
+      },
+      "buildings": {
+        "SmithBuilding": 3,
+        "LumberjackBuilding": 3
+      },
+      "jobs": {
+        "IronSword": 1,
+        "IronIngot": 67,
+        "CoalItem": 23,
+        "Stick": 1,
+        "Planks": 29,
+        "IronPickaxe": 1,
+        "IronHelmet": 1,
+        "IronChestplate": 1,
+        "IronLeggings": 1,
+        "IronBoots": 1,
+        "DiamondSword": 1,
+        "DiamondPickaxe": 1,
+        "Diamond Helmet": 1,
+        "Diamond Armor": 1,
+        "Diamond Leggings": 1,
+        "Diamond Boots": 1
+      },
+      "craftJobs": 132,
+      "craftMinutes": 15.4,
+      "allocations": {
+        "0": {
+          "runs": [
+            7,
+            1,
+            8,
+            1
+          ],
+          "trips": 17,
+          "farmOnly": {}
+        },
+        "1": {
+          "runs": [
+            2,
+            1,
+            2,
+            3
+          ],
+          "trips": 8,
+          "farmOnly": {}
+        },
+        "0.5": {
+          "runs": [
+            2,
+            1,
+            4,
+            2
+          ],
+          "trips": 9,
+          "farmOnly": {}
+        }
+      }
+    },
+    "netherite": {
+      "raw": {
+        "WoodOak": 126,
+        "Stone": 128,
+        "CoalOre": 330,
+        "IronOre": 399,
+        "GoldOre": 348,
+        "Sand": 45,
+        "String": 96,
+        "Wheat": 36,
+        "DiamondOre": 52,
+        "Leather": 21,
+        "NetheriteOreDrop": 104
+      },
+      "buildings": {
+        "AlchemyBuilding": 3,
+        "LumberjackBuilding": 3,
+        "SmithBuilding": 4,
+        "FarmBuilding": 3,
+        "StorageBuilding": 3
+      },
+      "jobs": {
+        "Planks": 78,
+        "IronIngot": 133,
+        "CoalItem": 162,
+        "GoldIngot": 116,
+        "Glass": 15,
+        "Wool": 24,
+        "IronSword": 1,
+        "Stick": 1,
+        "IronPickaxe": 1,
+        "IronHelmet": 1,
+        "IronChestplate": 1,
+        "IronLeggings": 1,
+        "IronBoots": 1,
+        "DiamondSword": 1,
+        "DiamondPickaxe": 1,
+        "Diamond Helmet": 1,
+        "Diamond Armor": 1,
+        "Diamond Leggings": 1,
+        "Diamond Boots": 1,
+        "NetheritheSword": 1,
+        "NetheriteIngot": 26,
+        "NetheriteScrap": 104,
+        "NetherithePickaxe": 1,
+        "NetheriteHelmet": 1,
+        "NetheriteChestplate": 1,
+        "NetheriteLeggings": 1,
+        "NetheriteBoots": 1
+      },
+      "craftJobs": 677,
+      "craftMinutes": 78.98333333333333,
+      "allocations": {
+        "0": {
+          "runs": [
+            11,
+            3,
+            24,
+            18
+          ],
+          "trips": 56,
+          "farmOnly": {
+            "Wheat": 36
+          }
+        },
+        "1": {
+          "runs": [
+            2,
+            1,
+            14,
+            18
+          ],
+          "trips": 35,
+          "farmOnly": {
+            "Wheat": 36
+          }
+        },
+        "0.5": {
+          "runs": [
+            3,
+            1,
+            17,
+            18
+          ],
+          "trips": 39,
+          "farmOnly": {
+            "Wheat": 36
+          }
+        }
+      }
+    },
+    "buildings": {
+      "raw": {
+        "WoodOak": 122,
+        "Stone": 128,
+        "CoalOre": 92,
+        "IronOre": 267,
+        "GoldOre": 36,
+        "Sand": 45,
+        "String": 96,
+        "Wheat": 36,
+        "DiamondOre": 18
+      },
+      "buildings": {
+        "AlchemyBuilding": 3,
+        "LumberjackBuilding": 3,
+        "SmithBuilding": 4,
+        "FarmBuilding": 3,
+        "StorageBuilding": 3
+      },
+      "jobs": {
+        "Planks": 74,
+        "IronIngot": 89,
+        "CoalItem": 43,
+        "GoldIngot": 12,
+        "Glass": 15,
+        "Wool": 24
+      },
+      "craftJobs": 257,
+      "craftMinutes": 29.983333333333334,
+      "allocations": {
+        "0": {
+          "runs": [
+            11,
+            13,
+            3,
+            2
+          ],
+          "trips": 29,
+          "farmOnly": {
+            "Wheat": 36
+          }
+        },
+        "1": {
+          "runs": [
+            2,
+            6,
+            2,
+            11
+          ],
+          "trips": 21,
+          "farmOnly": {
+            "Wheat": 36
+          }
+        },
+        "0.5": {
+          "runs": [
+            3,
+            1,
+            4,
+            14
+          ],
+          "trips": 22,
+          "farmOnly": {
+            "Wheat": 36
+          }
+        }
+      }
+    }
+  },
+  "routes": {
+    "rush": {
+      "fraction": 0,
+      "lootFraction": 0.75,
+      "runMinutes": [
+        2,
+        2.5,
+        3,
+        4
+      ],
+      "checkpoints": {
+        "tutorial": {
+          "minutes": 5.5,
+          "runs": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "trips": 1,
+          "craftJobs": 1,
+          "craftMinutes": 0.1
+        },
+        "iron": {
+          "minutes": 35,
+          "runs": [
+            5,
+            6,
+            0,
+            0
+          ],
+          "trips": 11,
+          "craftJobs": 51,
+          "craftMinutes": 5.9
+        },
+        "forestReady": {
+          "minutes": 56.1,
+          "runs": [
+            8,
+            6,
+            3,
+            0
+          ],
+          "trips": 17,
+          "craftJobs": 97,
+          "craftMinutes": 11.3
+        },
+        "allLevelsCompleted": {
+          "minutes": 60.1,
+          "runs": [
+            8,
+            6,
+            3,
+            1
+          ],
+          "trips": 18,
+          "craftJobs": 97,
+          "craftMinutes": 11.3
+        },
+        "diamond": {
+          "minutes": 74.7,
+          "runs": [
+            8,
+            6,
+            5,
+            2
+          ],
+          "trips": 21,
+          "craftJobs": 134,
+          "craftMinutes": 15.6
+        },
+        "allBuildings": {
+          "minutes": 129.2,
+          "runs": [
+            12,
+            6,
+            12,
+            2
+          ],
+          "trips": 32,
+          "craftJobs": 322,
+          "craftMinutes": 37.6
+        },
+        "netherite": {
+          "minutes": 264.7,
+          "runs": [
+            12,
+            6,
+            22,
+            18
+          ],
+          "trips": 58,
+          "craftJobs": 678,
+          "craftMinutes": 79.1
+        }
+      }
+    },
+    "gatherer": {
+      "fraction": 0.5,
+      "lootFraction": 0.75,
+      "runMinutes": [
+        4,
+        5,
+        6,
+        7
+      ],
+      "checkpoints": {
+        "tutorial": {
+          "minutes": 5.5,
+          "runs": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "trips": 1,
+          "craftJobs": 1,
+          "craftMinutes": 0.1
+        },
+        "iron": {
+          "minutes": 50,
+          "runs": [
+            3,
+            6,
+            0,
+            0
+          ],
+          "trips": 9,
+          "craftJobs": 51,
+          "craftMinutes": 5.9
+        },
+        "forestReady": {
+          "minutes": 74.1,
+          "runs": [
+            3,
+            6,
+            3,
+            0
+          ],
+          "trips": 12,
+          "craftJobs": 97,
+          "craftMinutes": 11.3
+        },
+        "allLevelsCompleted": {
+          "minutes": 81.1,
+          "runs": [
+            3,
+            6,
+            3,
+            1
+          ],
+          "trips": 13,
+          "craftJobs": 97,
+          "craftMinutes": 11.3
+        },
+        "diamond": {
+          "minutes": 99.7,
+          "runs": [
+            3,
+            6,
+            3,
+            3
+          ],
+          "trips": 15,
+          "craftJobs": 134,
+          "craftMinutes": 15.6
+        },
+        "allBuildings": {
+          "minutes": 145.2,
+          "runs": [
+            5,
+            6,
+            5,
+            3
+          ],
+          "trips": 19,
+          "craftJobs": 322,
+          "craftMinutes": 37.6
+        },
+        "netherite": {
+          "minutes": 357.7,
+          "runs": [
+            5,
+            6,
+            16,
+            18
+          ],
+          "trips": 45,
+          "craftJobs": 678,
+          "craftMinutes": 79.1
+        }
+      }
+    },
+    "thorough": {
+      "fraction": 1,
+      "lootFraction": 0.75,
+      "runMinutes": [
+        6,
+        7,
+        8,
+        10
+      ],
+      "checkpoints": {
+        "tutorial": {
+          "minutes": 5.5,
+          "runs": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "trips": 1,
+          "craftJobs": 1,
+          "craftMinutes": 0.1
+        },
+        "iron": {
+          "minutes": 66,
+          "runs": [
+            3,
+            6,
+            0,
+            0
+          ],
+          "trips": 9,
+          "craftJobs": 51,
+          "craftMinutes": 5.9
+        },
+        "forestReady": {
+          "minutes": 96.1,
+          "runs": [
+            3,
+            6,
+            3,
+            0
+          ],
+          "trips": 12,
+          "craftJobs": 97,
+          "craftMinutes": 11.3
+        },
+        "allLevelsCompleted": {
+          "minutes": 106.1,
+          "runs": [
+            3,
+            6,
+            3,
+            1
+          ],
+          "trips": 13,
+          "craftJobs": 97,
+          "craftMinutes": 11.3
+        },
+        "diamond": {
+          "minutes": 130.7,
+          "runs": [
+            3,
+            6,
+            3,
+            3
+          ],
+          "trips": 15,
+          "craftJobs": 134,
+          "craftMinutes": 15.6
+        },
+        "allBuildings": {
+          "minutes": 178.2,
+          "runs": [
+            5,
+            6,
+            3,
+            4
+          ],
+          "trips": 18,
+          "craftJobs": 322,
+          "craftMinutes": 37.6
+        },
+        "netherite": {
+          "minutes": 439.7,
+          "runs": [
+            5,
+            6,
+            13,
+            18
+          ],
+          "trips": 42,
+          "craftJobs": 678,
+          "craftMinutes": 79.1
+        }
+      }
+    }
+  }
+}

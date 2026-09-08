@@ -16,7 +16,7 @@ MonoBehaviour:
   Icon: {fileID: 0}
   MobType: 8
   AttackType: 2
-  Damage: 100
+  Damage: 28
   AttackDelay: 3
   IsRangeAttack: 0
   AttackRange: 1
@@ -26,6 +26,6 @@ MonoBehaviour:
   ExplosionTargetMask:
     serializedVersion: 2
     m_Bits: 1023
-  Speed: 1.5
+  Speed: 2.8
   RotationSpeed: 3
-  MaxHealth: 75
+  MaxHealth: 60

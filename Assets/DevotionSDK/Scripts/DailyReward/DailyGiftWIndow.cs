@@ -15,8 +15,11 @@ namespace Devotion.SDK.UI
             [SerializeField] private GameObject root;
             [SerializeField] private Image background;
             [SerializeField] private Image icon;
+            [SerializeField] private MineArena.UI.ResourceIcon blockIcon;
             [SerializeField] private TMP_Text dayText;
             [SerializeField] private TMP_Text amountText;
+            [SerializeField] private TMP_Text statusText;
+            [SerializeField] private TMP_Text itemText;
 
             public void ResolveReferences()
             {
@@ -49,7 +52,7 @@ namespace Devotion.SDK.UI
                 ResolveReferences();
             }
 
-            public void Refresh(int index, DailyRewardConfig config, int currentRewardIndex, Color claimedColor, Color currentColor, Color futureColor)
+            public void Refresh(int index, DailyRewardConfig config, int currentRewardIndex, Color claimedColor, Color currentColor, Color futureColor, bool canClaim)
             {
                 var active = config != null && index < config.RewardsCount;
                 if (root != null)
@@ -64,7 +67,9 @@ namespace Devotion.SDK.UI
                     background.color = GetStateColor(index, currentRewardIndex, claimedColor, currentColor, futureColor);
 
                 if (dayText != null)
-                    dayText.text = $"Day {index + 1}";
+                    dayText.text = $"День {index + 1}";
+                if (itemText != null) itemText.text = reward?.DisplayName;
+                if (statusText != null) statusText.text = index < currentRewardIndex ? "ПОЛУЧЕНО" : index == currentRewardIndex ? (canClaim ? "СЕГОДНЯ" : "СЛЕДУЮЩИЙ") : "СКОРО";
 
                 if (amountText != null)
                     amountText.text = reward != null ? $"x{reward.Amount}" : string.Empty;
@@ -74,6 +79,7 @@ namespace Devotion.SDK.UI
                     icon.sprite = reward?.Icon;
                     icon.enabled = icon.sprite != null;
                 }
+                ShowBlock(icon, blockIcon, reward?.ItemConfig);
             }
 
             private static Color GetStateColor(int index, int currentRewardIndex, Color claimedColor, Color currentColor, Color futureColor)
@@ -94,6 +100,7 @@ namespace Devotion.SDK.UI
         [SerializeField] private Color currentSlotColor = new(0.96f, 0.78f, 0.25f, 1f);
         [SerializeField] private Color futureSlotColor = new(0.18f, 0.2f, 0.24f, 1f);
         [SerializeField] private Image rewardIcon;
+        [SerializeField] private MineArena.UI.ResourceIcon rewardBlockIcon;
         [SerializeField] private TMP_Text titleText;
         [SerializeField] private TMP_Text rewardText;
         [SerializeField] private Button claimButton;
@@ -159,7 +166,7 @@ namespace Devotion.SDK.UI
         private void Refresh()
         {
             if (titleText != null)
-                titleText.text = "Daily Reward";
+                titleText.text = "Ежедневный подарок";
 
             if (config == null || rewardIndex < 0)
             {
@@ -168,6 +175,7 @@ namespace Devotion.SDK.UI
 
                 if (rewardIcon != null)
                     rewardIcon.enabled = false;
+                if (rewardBlockIcon != null) rewardBlockIcon.gameObject.SetActive(false);
 
                 if (claimButton != null)
                     claimButton.interactable = false;
@@ -185,11 +193,23 @@ namespace Devotion.SDK.UI
                 rewardIcon.sprite = reward?.Icon;
                 rewardIcon.enabled = rewardIcon.sprite != null;
             }
+            ShowBlock(rewardIcon, rewardBlockIcon, reward?.ItemConfig);
 
             if (claimButton != null)
-                claimButton.interactable = reward != null && reward.IsValid;
+                claimButton.interactable = reward != null && reward.IsValid && manager != null && manager.CanClaim;
 
             RefreshRewardSlots();
+        }
+
+        private static void ShowBlock(Image flat, MineArena.UI.ResourceIcon block, MineArena.Items.ItemConfig item)
+        {
+            bool cube = item != null && item.BlockStyleIcon && item is MineArena.Items.StackableItemConfig && block != null;
+            if (block != null)
+            {
+                block.gameObject.SetActive(cube);
+                if (cube) block.SetResource((MineArena.Items.StackableItemConfig)item);
+            }
+            if (flat != null) flat.gameObject.SetActive(!cube);
         }
 
         private void RefreshRewardSlots()
@@ -203,7 +223,7 @@ namespace Devotion.SDK.UI
                 if (slot == null)
                     continue;
 
-                slot.Refresh(i, config, rewardIndex, claimedSlotColor, currentSlotColor, futureSlotColor);
+                slot.Refresh(i, config, rewardIndex, claimedSlotColor, currentSlotColor, futureSlotColor, manager != null && manager.CanClaim);
             }
         }
 

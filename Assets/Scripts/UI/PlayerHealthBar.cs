@@ -58,6 +58,8 @@ namespace MineArena.Game.UI
 
             if (_health != null)
                 _health.OnHealthChanged -= UpdateHealth;
+            _health = null;
+            _hasDisplayedHealth = false;
 
             if (_fillCoroutine != null)
             {
@@ -79,8 +81,12 @@ namespace MineArena.Game.UI
 
         private void UpdateHealth(float currentValue, float maxValue)
         {
-            if (!_hasDisplayedHealth)
+            if (!_hasDisplayedHealth || currentValue <= 0f || (!_smoothFill && !_smoothTextValue))
             {
+                if (_fillCoroutine != null) StopCoroutine(_fillCoroutine);
+                _fillCoroutine = null;
+                ResetAnimatedHeight();
+                ResetAnimatedTextScale();
                 _displayedCurrentValue = currentValue;
                 _displayedMaxValue = maxValue;
                 _hasDisplayedHealth = true;
@@ -124,7 +130,7 @@ namespace MineArena.Game.UI
                 if (_fillImage != null)
                 {
                     _fillImage.fillAmount = _smoothFill
-                        ? Mathf.Lerp(_fillImage.fillAmount, targetFill, Constants.UISettings.SpeedFillProgressBar * Time.deltaTime)
+                        ? Mathf.Lerp(_fillImage.fillAmount, targetFill, Constants.UISettings.SpeedFillProgressBar * Time.unscaledDeltaTime)
                         : targetFill;
                 }
 
@@ -133,12 +139,12 @@ namespace MineArena.Game.UI
                     _displayedCurrentValue = Mathf.Lerp(
                         _displayedCurrentValue,
                         targetCurrentValue,
-                        _textValueAnimationSpeed * Time.deltaTime);
+                        _textValueAnimationSpeed * Time.unscaledDeltaTime);
 
                     _displayedMaxValue = Mathf.Lerp(
                         _displayedMaxValue,
                         targetMaxValue,
-                        _textValueAnimationSpeed * Time.deltaTime);
+                        _textValueAnimationSpeed * Time.unscaledDeltaTime);
                 }
                 else
                 {
@@ -151,12 +157,12 @@ namespace MineArena.Game.UI
                 SetAnimatedHeight(Mathf.Lerp(
                     GetAnimatedHeight(),
                     _baseHeight + _animatedHeightOffset,
-                    _heightAnimationSpeed * Time.deltaTime));
+                    _heightAnimationSpeed * Time.unscaledDeltaTime));
 
                 SetAnimatedTextScale(Vector3.Lerp(
                     GetAnimatedTextScale(),
                     GetIncreasedTextScale(),
-                    _textAnimationSpeed * Time.deltaTime));
+                    _textAnimationSpeed * Time.unscaledDeltaTime));
 
                 yield return null;
             }
@@ -173,12 +179,12 @@ namespace MineArena.Game.UI
                 SetAnimatedHeight(Mathf.Lerp(
                     GetAnimatedHeight(),
                     _baseHeight,
-                    _heightAnimationSpeed * Time.deltaTime));
+                    _heightAnimationSpeed * Time.unscaledDeltaTime));
 
                 SetAnimatedTextScale(Vector3.Lerp(
                     GetAnimatedTextScale(),
                     _baseTextScale,
-                    _textAnimationSpeed * Time.deltaTime));
+                    _textAnimationSpeed * Time.unscaledDeltaTime));
 
                 yield return null;
             }
@@ -195,13 +201,13 @@ namespace MineArena.Game.UI
 
         private bool IsFillAtTarget(float targetFill)
         {
-            return _fillImage == null || Mathf.Approximately(_fillImage.fillAmount, targetFill);
+            return _fillImage == null || Mathf.Abs(_fillImage.fillAmount - targetFill) <= 0.001f;
         }
 
         private bool IsTextValueAtTarget(float currentValue, float maxValue)
         {
-            return Mathf.Approximately(_displayedCurrentValue, currentValue)
-                   && Mathf.Approximately(_displayedMaxValue, maxValue);
+            return Mathf.Abs(_displayedCurrentValue - currentValue) <= 0.01f
+                   && Mathf.Abs(_displayedMaxValue - maxValue) <= 0.01f;
         }
 
         private void ResolveAnimatedRect()
@@ -308,7 +314,7 @@ namespace MineArena.Game.UI
             if (player == null)
                 return false;
 
-            _health = player.GetComponentFromList<PlayerHealth>();
+            _health = player.GetComponent<PlayerHealth>();
 
             if (_health == null)
                 _health = player.GetComponentInChildren<PlayerHealth>();

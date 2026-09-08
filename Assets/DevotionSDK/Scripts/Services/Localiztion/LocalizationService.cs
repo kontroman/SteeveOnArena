@@ -48,6 +48,12 @@ namespace Devotion.SDK.Services.Localization
             return Promise.ResolveAndReturn();
         }
 
+        public static bool TryGetLocalizedText(string key, out string text)
+        {
+            text = null;
+            return !string.IsNullOrEmpty(key) && _localizationDictionary.TryGetValue(key, out text) && !string.IsNullOrWhiteSpace(text);
+        }
+
         public static string GetLocalizedText(string key)
         {
             if (_localizationDictionary.TryGetValue(key, out string value))

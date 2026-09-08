@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: IronSwordItem
   m_EditorClassIdentifier: 
   _name: IronSword
+  _displayName: "\u0416\u0435\u043B\u0435\u0437\u043D\u044B\u0439 \u043C\u0435\u0447"
   _prefab: {fileID: 0}
   _icon: {fileID: 21300000, guid: 7f9e3d71f39891443986c9e8bd173073, type: 3}
   _usable: 0
@@ -20,8 +21,13 @@ MonoBehaviour:
   _blockStyleIcon: 0
   _description: 
   _descriptionLocalizationKey: 
-  _craftCosts: []
+  _craftCosts: 
+  - _resource: {fileID: 11400000, guid: 70a5b21f16c7993df1d86760d1a13948, type: 2}
+    _amount: 4
+  - _resource: {fileID: 11400000, guid: 671877afcdc1868c0929b47ea795ea43, type: 2}
+    _amount: 1
   _price: 30
   _kind: 0
   _attackConfig: {fileID: 11400000, guid: 1b7c3691d387c49408b45a99951f3b3a, type: 2}
   _material: {fileID: 2100000, guid: 1f5c71b00a792ab4d930e013b0ead428, type: 2}
+  _craftAmount: 1

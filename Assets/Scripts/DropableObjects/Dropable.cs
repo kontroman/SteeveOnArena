@@ -4,6 +4,7 @@ using Devotion.SDK.Controllers;
 using MineArena.Items;
 using MineArena.Managers;
 using MineArena.Basics;
+using MineArena.Messages;
 
 namespace MineArena.Drop
 {
@@ -24,21 +25,36 @@ namespace MineArena.Drop
 
         [Header("Drop only one or more items")]
         [SerializeField] private bool _isOneDrop;
+        [SerializeField] private bool _dropOnDeath;
+        public bool DropOnDeath => _dropOnDeath;
 
         public void DropItems()
         {
             foreach (var dropEntry in _dropTable)
             {
-                if (RollChance(dropEntry.DropChance))
+                if (dropEntry.Item == null) continue;
+                bool tutorialDrop = TutorialService.Expedition && TutorialService.Progress.Step == TutorialStep.Mine && GetComponent<InteractableObject>() != null;
+                if (tutorialDrop || RollChance(dropEntry.DropChance))
                 {
                     var cout = Random.Range(dropEntry.MinQuantity, dropEntry.MaxQuantity + 1);
+                    if (tutorialDrop) cout = Mathf.Max(1, cout);
+
+                    // Materials without a world pickup are collected directly.
+                    if (dropEntry.Item.Prefab == null)
+                    {
+                        GameRoot.GetManager<InventoryManager>().AddItemById(dropEntry.Item.Name, cout);
+                        MineArena.Controllers.LevelController.Current?.RegisterCollectedResource(dropEntry.Item, cout);
+                        AchievementMessages.AchievementTargetTaken.Publish((dropEntry.Item, cout));
+                        if (_isOneDrop) break;
+                        continue;
+                    }
 
                     for (int i = 0; i < cout; i++)
                     {
-                        var obj = Instantiate(dropEntry.Item.Prefab);
-                        obj.transform.position = transform.position;
+                        Instantiate(dropEntry.Item.Prefab, transform.position + Vector3.up * 0.35f, Quaternion.identity);
                         GameRoot.GetManager<AudioManager>().PlayEffect(Constants.AudioNames.DropResource);
                     }
+                    if (_isOneDrop) break;
                 }
             }
         }

@@ -30,14 +30,45 @@ namespace Devotion.SDK.UI
         private InventoryManager _inventoryManager;
         private ResourceIcon _resourceIconPrefab;
         private bool _initialized;
+        private bool? _fullHudVisible;
+        public RectTransform QuickAccessPanel => _inventoryPanel as RectTransform;
+        public void RefreshTutorialVisibility()
+        {
+            var progress = GameRoot.PlayerProgress?.TutorialProgress;
+            bool show = progress != null && progress.Initialized && progress.Step == TutorialStep.Complete;
+            if (_fullHudVisible == show) return;
+            _fullHudVisible = show;
+            foreach (string name in new[] { "PlayerPanel", "IconNavigation", "GiftNavigation", "CurrencyPouch", "Levels", "AchievementPopup" })
+            {
+                var group = transform.Find(name);
+                if (group != null) group.gameObject.SetActive(show);
+            }
+            if (_inventoryPanel != null) _inventoryPanel.gameObject.SetActive(true);
+        }
 
         private void Awake()
         {
             InitializeInventoryPanel();
+            InitializePortrait();
+        }
+
+        private void InitializePortrait()
+        {
+            var portrait = FindChildByName(transform, "PlayerIcon");
+            if (portrait == null || portrait.Find("PixelFace") != null) return;
+            var face = new GameObject("PixelFace", typeof(RectTransform), typeof(PixelPortraitGraphic));
+            face.transform.SetParent(portrait, false);
+            var rect = (RectTransform)face.transform;
+            rect.anchorMin = new Vector2(0.1f, 0.1f);
+            rect.anchorMax = new Vector2(0.9f, 0.9f);
+            rect.offsetMin = rect.offsetMax = Vector2.zero;
+            face.GetComponent<PixelPortraitGraphic>().raycastTarget = false;
         }
 
         private void OnEnable()
         {
+            _fullHudVisible = null;
+            RefreshTutorialVisibility();
             InitializeInventoryPanel();
             SubscribeInventory();
             RefreshInventorySlots();
@@ -55,6 +86,9 @@ namespace Devotion.SDK.UI
 
         private void Update()
         {
+            RefreshTutorialVisibility();
+            RefreshPotionButton();
+            if (Input.GetKeyDown(KeyCode.R)) PotionEffects.TryDrinkSelected();
             for (int i = 0; i < SlotCount; i++)
             {
                 if (Input.GetKeyDown((KeyCode)((int)KeyCode.Alpha1 + i)) ||
@@ -62,6 +96,44 @@ namespace Devotion.SDK.UI
                 {
                     SelectInventorySlot(i);
                 }
+            }
+        }
+
+        private Button _potionButton;
+        private TMPro.TMP_Text _potionLabel;
+        private void RefreshPotionButton()
+        {
+            var potion = PotionEffects.SelectedPotion;
+            if (_potionButton == null && potion != null)
+            {
+                var go = new GameObject("DrinkPotion", typeof(RectTransform), typeof(Image), typeof(Button));
+                go.transform.SetParent(transform, false);
+                var rect = go.GetComponent<RectTransform>();
+                rect.anchorMin = rect.anchorMax = new Vector2(0.5f, 0f);
+                rect.pivot = new Vector2(0.5f, 0f);
+                rect.anchoredPosition = new Vector2(0, 125f);
+                rect.sizeDelta = new Vector2(320f, 44f);
+                go.GetComponent<Image>().color = new Color32(94, 116, 62, 245);
+                _potionButton = go.GetComponent<Button>();
+                _potionButton.onClick.AddListener(() => PotionEffects.TryDrinkSelected());
+                var label = new GameObject("Label", typeof(RectTransform), typeof(TMPro.TextMeshProUGUI));
+                label.transform.SetParent(go.transform, false);
+                _potionLabel = label.GetComponent<TMPro.TMP_Text>();
+                var existingFont = GetComponentInChildren<TMPro.TMP_Text>();
+                if (existingFont != null) _potionLabel.font = existingFont.font;
+                _potionLabel.fontSize = 18;
+                _potionLabel.alignment = TMPro.TextAlignmentOptions.Center;
+                _potionLabel.raycastTarget = false;
+                _potionLabel.rectTransform.anchorMin = Vector2.zero;
+                _potionLabel.rectTransform.anchorMax = Vector2.one;
+                _potionLabel.rectTransform.offsetMin = _potionLabel.rectTransform.offsetMax = Vector2.zero;
+            }
+            if (_potionButton == null) return;
+            _potionButton.gameObject.SetActive(potion != null);
+            if (potion != null)
+            {
+                _potionLabel.text = potion.DisplayName + " · Выпить [R]";
+                _potionButton.interactable = _inventoryManager != null && _inventoryManager.GetItemAmount(potion.Name) > 0;
             }
         }
 
@@ -423,4 +495,57 @@ namespace Devotion.SDK.UI
         }
     }
 
+    public sealed class PixelPortraitGraphic : MaskableGraphic
+    {
+        private static readonly string[] Pixels = {
+            "....########....",
+            "..############..",
+            ".##HHHHHHHHHH##.",
+            ".#HHHHHHHHHHHH#.",
+            ".#HHHSSSSSHHHH#.",
+            ".#HHSSSSSSSSHH#.",
+            ".#HSSSSSSSSSSH#.",
+            ".#SWWEESSWWEES#.",
+            ".#SWWEESSWWEES#.",
+            ".#SSSSSNNSSSSS#.",
+            "..#SSSSNNSSSS#..",
+            "..#SSMMMMMMSS#..",
+            "...#SSSLLSSS#...",
+            "....#SSSSSS#....",
+            "..###TTTTTT###..",
+            ".##TTTTTTTTTT##."
+        };
+
+        protected override void OnPopulateMesh(VertexHelper vh)
+        {
+            vh.Clear();
+            var r = rectTransform.rect;
+            float unit = Mathf.Min(r.width, r.height) / 16f;
+            for (int y = 0; y < 16; y++)
+            for (int x = 0; x < Pixels[y].Length; x++)
+            {
+                char pixel = Pixels[y][x];
+                if (pixel == '.') continue;
+                Color32 tint = pixel switch {
+                    '#' => new Color32(39, 35, 42, 255),
+                    'H' => new Color32(91, 56, 38, 255),
+                    'S' => new Color32(226, 167, 116, 255),
+                    'W' => new Color32(255, 245, 218, 255),
+                    'E' => new Color32(43, 91, 105, 255),
+                    'N' => new Color32(190, 127, 83, 255),
+                    'M' => new Color32(106, 63, 47, 255),
+                    'L' => new Color32(246, 195, 145, 255),
+                    _ => new Color32(56, 141, 149, 255)
+                };
+                var p = r.center + new Vector2(x - 8, 7 - y) * unit;
+                int start = vh.currentVertCount;
+                vh.AddVert(p, tint, Vector2.zero);
+                vh.AddVert(p + Vector2.right * unit, tint, Vector2.zero);
+                vh.AddVert(p + Vector2.one * unit, tint, Vector2.zero);
+                vh.AddVert(p + Vector2.up * unit, tint, Vector2.zero);
+                vh.AddTriangle(start, start + 1, start + 2);
+                vh.AddTriangle(start, start + 2, start + 3);
+            }
+        }
+    }
 }

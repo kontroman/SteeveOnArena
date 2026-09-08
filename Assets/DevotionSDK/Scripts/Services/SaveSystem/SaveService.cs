@@ -47,7 +47,7 @@ namespace Devotion.SDK.Services.SaveSystem
 
             ServiceLocator.Register<ISaveService>(this);
 
-#if DEVOTION_YANDEX
+#if DEVOTION_YANDEX || (UNITY_WEBGL && !UNITY_EDITOR)
             _platformProvider = new YandexSaveProvider();
 #elif DEVOTION_CRAZYGAMES
             _platformProvider = new CrazyGamesProvider();
@@ -80,6 +80,7 @@ namespace Devotion.SDK.Services.SaveSystem
 
         public IPromise Save()
         {
+            if (!IsLoaded) return Promise.RejectAndReturn(new Exception("Progress has not loaded; refusing to overwrite saves."));
             var progress = EnsurePlayerProgress();
 
             if (progress == null)
@@ -160,7 +161,7 @@ namespace Devotion.SDK.Services.SaveSystem
             }
             catch (Exception ex)
             {
-                Debug.LogError($"[SaveService] Failed to deserialize player progress: {ex}");
+                throw new InvalidOperationException("Saved progress is invalid; refusing to replace it with an empty save.", ex);
             }
         }
     }

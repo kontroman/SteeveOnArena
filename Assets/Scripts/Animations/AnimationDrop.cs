@@ -1,6 +1,5 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace MineArena.Items
 {
@@ -40,8 +39,15 @@ namespace MineArena.Items
 
         public void StartAnimation()
         {
+            _isGround = false;
+            _collider.isTrigger = false;
+            _rigidbody.isKinematic = false;
+            _rigidbody.useGravity = true;
+            _rigidbody.velocity = Vector3.zero;
+            _rigidbody.angularVelocity = Vector3.zero;
+            _rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
             _rigidbody.AddForce((_directions[Random.Range(0, _directions.Length)] *
-                Random.Range(_forseHorizontal.x, _forseHorizontal.y)) + Vector3.up * Random.Range(_forseVertical.x, _forseVertical.y));
+                Random.Range(_forseHorizontal.x, _forseHorizontal.y)) + Vector3.up * Random.Range(_forseVertical.x, _forseVertical.y), ForceMode.Force);
         }
 
         private void OnCollisionEnter(Collision collision)
@@ -50,12 +56,28 @@ namespace MineArena.Items
             {
                 if (_isGround == false)
                 {
-                    _isGround = true;
-                    _collider.isTrigger = true;
-                    _animationIDEL.StartAnimation();
-                    GetComponent<Collider>().isTrigger = true;
+                    Land();
                 }
             }
+        }
+
+        private void FixedUpdate()
+        {
+            if (_isGround || _rigidbody.velocity.y > 0f) return;
+            var bounds = _collider.bounds;
+            if (Physics.Raycast(bounds.center, Vector3.down, bounds.extents.y + 0.08f,
+                1 << _numberLayerGround, QueryTriggerInteraction.Ignore)) Land();
+        }
+
+        private void Land()
+        {
+            _isGround = true;
+            _rigidbody.velocity = Vector3.zero;
+            _rigidbody.angularVelocity = Vector3.zero;
+            _rigidbody.collisionDetectionMode = CollisionDetectionMode.Discrete;
+            _rigidbody.isKinematic = true;
+            _collider.isTrigger = true;
+            _animationIDEL.StartAnimation();
         }
     }
 }

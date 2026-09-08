@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23b4dfe5a2c9bec418f415cbb49447a1, type: 3}
+  m_Name: Glass
+  m_EditorClassIdentifier: 
+  _name: Glass
+  _displayName: "Стекло"
+  _prefab: {fileID: 1294500603521610, guid: b9f3b81a4c6d64391284a3e10f1be4e9, type: 3}
+  _icon: {fileID: 21300000, guid: c459019ec56c19c4aa7c6b76d80c49e9, type: 3}
+  _usable: 0
+  _stackable: 1
+  _blockStyleIcon: 1
+  _maxStackSize: 64
+  _resourceCategory: Glass
+  _description: "Стекло — материал для переработки и улучшений."
+  _craftCosts: 
+  - _resource: {fileID: 11400000, guid: 10c265e30aa9be34685985507820bbb4, type: 2}
+    _amount: 3
+  - _resource: {fileID: 11400000, guid: 48d1784c248929f4881cb36f19b829ac, type: 2}
+    _amount: 1
+  _craftAmount: 2

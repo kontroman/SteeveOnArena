@@ -20,9 +20,14 @@ MonoBehaviour:
   _blockStyleIcon: 0
   _description: 
   _descriptionLocalizationKey: 
-  _craftCosts: []
+  _craftCosts: 
+  - _resource: {fileID: 11400000, guid: 5d35540860b8025c2228a7c3d5151682, type: 2}
+    _amount: 5
+  - _resource: {fileID: 11400000, guid: d802d592708eefe055968f5ec21276d9, type: 2}
+    _amount: 2
   _price: 35
-  _resist: 2
+  _resist: 8
   _slot: 2
   _grade: 2
   _material: {fileID: 2100000, guid: 4ab31120fc63313408e8ebbb057471b0, type: 2}
+  _craftAmount: 1

@@ -9,6 +9,7 @@ using MineArena.Managers;
 using MineArena.Buildings;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using MineArena.Items;
 using MineArena.PlayerSystem;
@@ -39,6 +40,13 @@ namespace MineArena.Controllers
 
         private void Awake()
         {
+            // The scene contains an editor preview arena. The selected level supplies the runtime arena.
+            foreach (var root in gameObject.scene.GetRootGameObjects())
+            foreach (var arena in root.GetComponentsInChildren<Arena>(true))
+            {
+                arena.gameObject.SetActive(false);
+                Destroy(arena.gameObject);
+            }
             if (Current != null && Current != this)
             {
                 Debug.LogWarning("Multiple LevelController instances detected. Overwriting current instance reference.");
@@ -69,6 +77,7 @@ namespace MineArena.Controllers
         {
             var promise = new Promise();
             _currentConfig = config;
+            TutorialService.BeginLevel();
             _waveSpawner = null;
             _progressWindow = null;
             _spawnedPortal = null;
@@ -157,14 +166,18 @@ namespace MineArena.Controllers
                     return promise;
                 }
 
-                foreach (var spawnPoint in spawnPoints)
+                var tutorialResource = TutorialService.Expedition ? resourceConfigs.FirstOrDefault(r => r?.Resource != null && r.Resource.GetComponent<InteractableObject>()?.IsMineable == true) : null;
+                IEnumerable<Transform> selectedPoints = spawnPoints;
+                if (TutorialService.Expedition && Player.Instance != null)
+                    selectedPoints = spawnPoints.Where(p => p != null).OrderBy(p => (p.position - Player.Instance.transform.position).sqrMagnitude).Take(3);
+                foreach (var spawnPoint in selectedPoints)
                 {
                     if (spawnPoint == null)
                     {
                         continue;
                     }
 
-                    var resourceConfig = SelectResourceByChance(resourceConfigs);
+                    var resourceConfig = tutorialResource ?? SelectResourceByChance(resourceConfigs);
                     if (resourceConfig == null)
                     {
                         continue;
@@ -213,6 +226,7 @@ namespace MineArena.Controllers
             {
                 _collectedResources[resource] = amount;
             }
+            TutorialService.CollectedResource(resource);
         }
 
         public void ResetCollectedResources()
@@ -228,6 +242,7 @@ namespace MineArena.Controllers
             if (_waveSpawner == null)
                 Debug.LogWarning($"{nameof(LevelController)}: {nameof(WaveSpawner)} was not found. Level progress will use 0 total mobs.");
 
+            if (_waveSpawner != null) _waveSpawner.Configure(_currentConfig.EncounterWaves);
             _totalMobs = _waveSpawner != null ? _waveSpawner.TotalMobCount : 0;
             _killedMobs = 0;
 
@@ -257,6 +272,7 @@ namespace MineArena.Controllers
                 return;
 
             _killedMobs = Mathf.Min(_killedMobs + 1, Mathf.Max(_totalMobs, _killedMobs + 1));
+            TutorialService.EnemyKilled();
 
             if (_progressWindow != null)
                 _progressWindow.SetProgress(_killedMobs, _totalMobs);
@@ -266,6 +282,7 @@ namespace MineArena.Controllers
 
         private void TrySpawnPortal()
         {
+            if (TutorialService.Expedition && TutorialService.Progress.Step != TutorialStep.Exit) return;
             if (_portalSpawned || _currentConfig == null)
                 return;
 
@@ -340,10 +357,19 @@ namespace MineArena.Controllers
 
         private void HandlePortalEntered()
         {
+            if (PlayerMovement.IsPlayerDead) return;
+            if (TutorialService.Expedition && TutorialService.Progress.Step != TutorialStep.Exit) return;
             if (_levelCompleteOpened)
                 return;
 
             _levelCompleteOpened = true;
+            var levels = GameRoot.GameConfig != null ? GameRoot.GameConfig.Levels : null;
+            if (levels != null && _currentConfig != null)
+            {
+                int completedIndex = levels.IndexOf(_currentConfig);
+                if (completedIndex >= 0 && completedIndex + 1 < levels.Count)
+                    GameRoot.PlayerProgress?.LevelsProgress?.UnlockNextLevel(completedIndex);
+            }
             DisablePlayerControl();
 
             var completeWindow = OpenOrCreateWindow<LevelCompleteWindow>();
@@ -353,18 +379,22 @@ namespace MineArena.Controllers
                 return;
             }
 
-            completeWindow.Setup(BuildDisplayedRewardTotals(), ContinueLevel, DoubleRewards, HasRewardedAdsProvider());
+            completeWindow.Setup(BuildDisplayedRewardTotals(), ContinueLevel, DoubleRewards, !TutorialService.Active && HasRewardedAdsProvider());
         }
 
         private void ContinueLevel()
         {
             ApplyRewardsOnce(1);
-            ReturnToLobby();
+            if (MineArena.Platform.YandexPlatform.IsWebPlatform && !TutorialService.Active)
+                MineArena.Platform.YandexPlatform.Instance.ShowInterstitial(ReturnToLobby);
+            else ReturnToLobby();
         }
 
         private void DoubleRewards()
         {
             var provider = _rewardedAdsProviderBehaviour as ILevelRewardedAdsProvider;
+            if (provider == null && MineArena.Platform.YandexPlatform.IsWebPlatform)
+                provider = MineArena.Platform.YandexPlatform.Instance;
             if (provider == null)
             {
                 Debug.LogWarning($"{nameof(LevelController)}: rewarded ads provider is not assigned. Implement {nameof(ILevelRewardedAdsProvider)} on a component and assign it here.");
@@ -395,16 +425,9 @@ namespace MineArena.Controllers
 
             int safeMultiplier = Mathf.Max(1, multiplier);
 
-            if (_currentConfig != null && _currentConfig.RewardResources != null)
-            {
-                foreach (var reward in _currentConfig.RewardResources)
-                {
-                    if (reward == null || reward.Item == null || reward.Amount <= 0)
-                        continue;
-
-                    inventoryManager.AddItemById(reward.Item.Name, reward.Amount * safeMultiplier);
-                }
-            }
+            foreach (var reward in CompletionRewards())
+                inventoryManager.AddItemById(reward.Key.Name, reward.Value * safeMultiplier);
+            if (TutorialService.Expedition) TutorialService.SetStep(TutorialStep.Build);
 
             if (safeMultiplier > 1)
             {
@@ -425,16 +448,27 @@ namespace MineArena.Controllers
             foreach (var resource in _collectedResources)
                 AddReward(rewards, resource.Key, resource.Value);
 
-            if (_currentConfig != null && _currentConfig.RewardResources != null)
-            {
-                foreach (var reward in _currentConfig.RewardResources)
-                {
-                    if (reward != null)
-                        AddReward(rewards, reward.Item, reward.Amount);
-                }
-            }
+            foreach (var reward in CompletionRewards()) AddReward(rewards, reward.Key, reward.Value);
 
             return rewards;
+        }
+
+        private Dictionary<ItemConfig, int> CompletionRewards()
+        {
+            var rewards = new Dictionary<ItemConfig, int>();
+            if (_currentConfig?.RewardResources != null)
+                foreach (var reward in _currentConfig.RewardResources)
+                    if (reward != null) AddReward(rewards, reward.Item, GetCompletionRewardAmount(reward.Amount));
+            if (TutorialService.Expedition && GameRoot.GameConfig?.Levels.IndexOf(_currentConfig) == 0)
+                TutorialService.EnsureFirstBuildingReward(rewards);
+            return rewards;
+        }
+
+        private int GetCompletionRewardAmount(int amount)
+        {
+            var buildings = GameRoot.GetManager<BuildingManager>();
+            int bonus = buildings != null ? buildings.ExpeditionRewardBonusPercent : 0;
+            return amount + Mathf.FloorToInt(amount * bonus / 100f);
         }
 
         private static void AddReward(Dictionary<ItemConfig, int> rewards, ItemConfig item, int amount)
@@ -450,7 +484,7 @@ namespace MineArena.Controllers
 
         private bool HasRewardedAdsProvider()
         {
-            return _rewardedAdsProviderBehaviour is ILevelRewardedAdsProvider;
+            return _rewardedAdsProviderBehaviour is ILevelRewardedAdsProvider || MineArena.Platform.YandexPlatform.IsWebPlatform;
         }
 
         private void DisablePlayerControl()
@@ -531,13 +565,18 @@ namespace MineArena.Controllers
                 return null;
             }
 
-            float randomValue = UnityEngine.Random.value;
+            float totalWeight = 0f;
+            foreach (var config in resourceConfigs)
+                if (config != null && config.Resource != null && config.SpawnChance > 0f)
+                    totalWeight += config.SpawnChance;
+            if (totalWeight <= 0f) return null;
+            float randomValue = UnityEngine.Random.value * totalWeight;
             float cumulativeChance = 0f;
 
             for (int i = 0; i < resourceConfigs.Count; i++)
             {
                 var config = resourceConfigs[i];
-                if (config == null || config.SpawnChance <= 0f)
+                if (config == null || config.Resource == null || config.SpawnChance <= 0f)
                 {
                     continue;
                 }

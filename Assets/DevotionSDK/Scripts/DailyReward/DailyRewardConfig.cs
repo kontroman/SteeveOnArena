@@ -33,7 +33,7 @@ namespace Devotion.SDK.DailyReward
         public ItemConfig ItemConfig => itemConfig;
         public int Amount => Mathf.Max(1, amount);
         public string ItemId => itemConfig != null ? itemConfig.Name : string.Empty;
-        public string DisplayName => itemConfig != null ? itemConfig.Name : "Empty";
+        public string DisplayName => itemConfig != null ? itemConfig.DisplayName : "Empty";
         public Sprite Icon => itemConfig != null ? itemConfig.Icon : null;
         public bool IsValid => itemConfig != null && !string.IsNullOrWhiteSpace(itemConfig.Name);
     }
