@@ -1,0 +1,17 @@
+PASS Bear: exactly one shared enemy healthbar
+PASS Creeper: exactly one shared enemy healthbar
+PASS endermen: exactly one shared enemy healthbar
+PASS Pillager: exactly one shared enemy healthbar
+PASS Skeleton: exactly one shared enemy healthbar
+PASS Spider: exactly one shared enemy healthbar
+PASS Vindicator: exactly one shared enemy healthbar
+PASS Witch: exactly one shared enemy healthbar
+PASS Wolf: exactly one shared enemy healthbar
+PASS Zombie: exactly one shared enemy healthbar
+PASS HealthBar: fill is separate from persistent frame
+PASS HealthBar: empty track stays opaque
+PASS ArmorBar: fill is separate from persistent frame
+PASS ArmorBar: empty track stays opaque
+PASS Drop settles on a Default-layer floor, not only Ground
+PASS Landed pickup bobs and rotates even from a 180-degree starting pose
+PASS Relaunch stops idle tweens and restores physical flight

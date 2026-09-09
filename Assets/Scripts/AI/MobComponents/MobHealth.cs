@@ -1,4 +1,4 @@
-﻿using MineArena.Game.Health;
+using MineArena.Game.Health;
 using MineArena.Interfaces;
 using MineArena.ObjectPools;
 using System.Collections;
@@ -21,6 +21,12 @@ namespace MineArena.AI
 
         private void OnEnable() => _deathHandled = false;
 
+        private void OnDisable()
+        {
+            if (_mobAnimator != null)
+                _mobAnimator.DeathSequenceFinished -= HandleDeathSequenceFinished;
+        }
+
         private void Awake()
         {
             _mobAnimator = GetComponent<MobAnimationController>();
@@ -34,7 +40,7 @@ namespace MineArena.AI
             _preset = preset;
             _maxHealth = preset.MaxHealth;
             if (MineArena.Managers.TutorialService.Expedition) _maxHealth = Mathf.Min(_maxHealth, 25f);
-            _currentHealth = _maxHealth;
+            SetCurrentValue(_maxHealth, false);
             _mobAnimator?.SetParameters(preset);
         }
 
@@ -42,6 +48,7 @@ namespace MineArena.AI
         {
             if (_deathHandled) return;
             _deathHandled = true;
+            GetComponent<MobFeedback>()?.Death();
             var drops = GetComponent<MineArena.Drop.Dropable>();
             if (drops != null && drops.DropOnDeath) drops.DropItems();
             MobDied?.Invoke(this);
@@ -68,7 +75,6 @@ namespace MineArena.AI
             if (_mobAnimator != null)
                 _mobAnimator.DeathSequenceFinished -= HandleDeathSequenceFinished;
 
-            _currentHealth = _maxHealth;
             ObjectPoolsManager.Instance.Release<Mob>(gameObject);
         }
     }

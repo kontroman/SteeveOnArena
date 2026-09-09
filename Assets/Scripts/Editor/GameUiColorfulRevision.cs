@@ -235,7 +235,7 @@ namespace MineArena.Editor
                 int count = new[] { 1, 3, 5, 10 }[i]; var button = Find(root.transform, "BuySpin" + count).GetComponent<Button>();
                 button.GetComponent<Image>().sprite = AccentSprite("wheel-buy-" + i, new[] { "D9E7D9", "CDE3E0", "DBD5E7", "ECD6A6" }[i], "B3A382");
             }
-            var pointer = Find(root.transform, "Pointer").GetComponent<TMP_Text>(); pointer.color = C("D2983F");
+            var pointer = Find(root.transform, "Pointer").GetComponent<Graphic>(); pointer.color = C("D2983F");
             var hint = Find(root.transform, "Hint").GetComponent<TMP_Text>(); hint.text = "Крутите колесо и собирайте добычу!\nПредметы попадут в инвентарь.";
             Save(root, UI + "FortuneWheelWindow.prefab");
         }
@@ -243,7 +243,7 @@ namespace MineArena.Editor
         {
             // Rebuild this window only; inventory and crafting retain the approved layout.
             var root = Edit<SettingsWindow>(UI + "SettingsWindow.prefab");
-            var frame = Window(root, "Настройки", 1040, 820);
+            var frame = Window(root, "Настройки", 1040, 920);
             Text("Intro", frame, "Звук и управление камерой", 22, 38, 112, 960, 38);
             var master = SettingSlider(frame, "Общая громкость", 185);
             var music = SettingSlider(frame, "Музыка", 272);
@@ -258,6 +258,8 @@ namespace MineArena.Editor
             var hint = Panel("Controls", frame, "inset"); Box(hint, 38, 662, 964, 114);
             Text("Keys", hint, "WASD — движение   •   1–5 — быстрые слоты\nНаведите курсор на иконку меню, чтобы увидеть подсказку.", 20, 20, 19, 920, 76).enableWordWrapping = true;
             Set(root.GetComponent<SettingsWindow>(), "master", master, "music", music, "effects", effects, "sensitivity", sensitivity, "sensitivityValue", value);
+            var language = Button("Language", frame, "Язык: Русский  ›", 38, 802, 964, 64);
+            Set(root.GetComponent<SettingsWindow>(), "languageButton", language, "languageLabel", language.GetComponentInChildren<TMP_Text>());
             Save(root, UI + "SettingsWindow.prefab");
         }
         private static void AccentOtherWindows()

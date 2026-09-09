@@ -147,10 +147,10 @@ namespace MineArena.Editor
             void Check(bool ok, string message) { if (!ok) throw new Exception(message); checks.Add("PASS " + message); }
             var config = AssetDatabase.LoadAssetAtPath<GameConfig>("Assets/ScriptableObjects/GameConfig.asset");
             var data = config.DataAchievements;
-            Check(data.Count == 40, "40 quests registered (4 original + 36 new)");
-            Check(data.Select(d => d.StableId).Distinct().Count() == 40, "Persistent quest IDs are unique");
+            Check(data.Count == 41, "41 quests registered (4 original + 36 tiered + chest collection)");
+            Check(data.Select(d => d.StableId).Distinct().Count() == 41, "Persistent quest IDs are unique");
             Check(data.Take(4).Select(d => d.StableId).SequenceEqual(new[]{0,1,2,3}), "Original quest IDs remain 0 through 3");
-            Check(data.Skip(4).GroupBy(d => d.Difficulty).All(g => g.Count() == 12), "12 new quests per difficulty");
+            Check(data.Where(d => d.StableId >= 1000 && d.StableId < 2000).GroupBy(d => d.Difficulty).All(g => g.Count() == 12), "12 new quests per difficulty");
             foreach (var d in data)
             {
                 Check(d.ItemTarget != null && d.MaxValueOnTask > 0 && d.QuestIcon != null, "Target, goal and generated icon: " + d.StableId);
@@ -181,7 +181,7 @@ namespace MineArena.Editor
                 managers[typeof(global::Managers.AchievementManager)] = manager;
                 MessageService.Subscribe(manager);
                 var quests = manager.GetQuests();
-                Check(quests.Count == 40 && manager.GetQuests().Count == 40, "Manager initialization is idempotent");
+                Check(quests.Count == 41 && manager.GetQuests().Count == 41, "Manager initialization is idempotent");
                 Check(quests.Single(q => q.ID == 0).CurrentValueProgress == 1, "Legacy saved progress survives catalog expansion");
                 var q = quests.Single(x => x.ID == 1000);
                 string reward = q.Data.ItemPrize.Name;

@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: StoneSwordItem
   m_EditorClassIdentifier: 
   _name: StoneSword
+  _displayName: "Каменный меч"
   _prefab: {fileID: 0}
-  _icon: {fileID: 21300000, guid: 7f9e3d71f39891443986c9e8bd173073, type: 3}
+  _icon: {fileID: 21300000, guid: 8830bc2cf643482ea122d3ae0c6d0e19, type: 3}
   _usable: 0
   _stackable: 0
   _blockStyleIcon: 0
@@ -28,5 +29,5 @@ MonoBehaviour:
   _price: 15
   _kind: 0
   _attackConfig: {fileID: 11400000, guid: 5f363212cef64b19a1ce3f24dd238866, type: 2}
-  _material: {fileID: 2100000, guid: 1f5c71b00a792ab4d930e013b0ead428, type: 2}
+  _material: {fileID: 2100000, guid: 26a5261f9aca45c2b7311698d38a4e8c, type: 2}
   _craftAmount: 1

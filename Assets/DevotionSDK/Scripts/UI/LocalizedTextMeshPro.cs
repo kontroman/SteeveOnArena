@@ -26,6 +26,7 @@ namespace MineArena.SDK.UI
         private void OnEnable()
         {
             MessageService.Subscribe(this);
+            if (_textMeshPro != null) UpdateLocalizedText();
         }
 
         private void OnDisable()
@@ -35,7 +36,7 @@ namespace MineArena.SDK.UI
 
         private void UpdateLocalizedText()
         {
-            _textMeshPro.text = LocalizationService.GetLocalizedText(_localizationKey);
+            if (LocalizationService.TryGetLocalizedText(_localizationKey, out var value)) _textMeshPro.text = value;
         }
 
         public void OnMessage(Messages.Game.LanguageChanged message)

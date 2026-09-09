@@ -37,6 +37,16 @@ namespace Managers
         public void OnMessage(AchievementMessages.AchievementCompleted message) =>
             GameRoot.PlayerProgress.AchievementProgress.SaveProgress(message.Model);
 
+        public void RefreshChestProgress()
+        {
+            foreach (var quest in GetQuests())
+                if (quest.Data.ItemTarget is ChestCollectionTarget target)
+                {
+                    quest.ChangeCurrentValue(target.CountFound(GameRoot.PlayerProgress.AchievementProgress) - quest.CurrentValueProgress);
+                    GameRoot.PlayerProgress.AchievementProgress.SaveProgress(quest);
+                }
+        }
+
         private void CreateQuests()
         {
             if (_achievements.Count > 0) return;
@@ -53,6 +63,7 @@ namespace Managers
                 }
                 else GameRoot.PlayerProgress.AchievementProgress.AddAchievement(achievement);
             }
+            RefreshChestProgress();
         }
 
         private void OnEnable() =>

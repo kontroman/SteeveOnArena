@@ -13,15 +13,20 @@ namespace MineArena.Items
 
         public void StartAnimation()
         {
-            OnDisable();
-            _moveTween = transform.DOMove(transform.position + _step, _duration).SetLoops(_repeats, LoopType.Yoyo).SetEase(Ease.Linear);
-            _rotationTween = transform.DORotate(_rotation, _duration).SetLoops(_repeats, LoopType.Incremental).SetEase(Ease.Linear);
+            StopAnimation();
+            float duration = Mathf.Max(0.1f, _duration);
+            _moveTween = transform.DOMove(transform.position + _step, duration).SetLoops(_repeats, LoopType.Yoyo).SetEase(Ease.InOutSine);
+            _rotationTween = transform.DORotate(_rotation, duration, RotateMode.FastBeyond360).SetRelative()
+                .SetLoops(_repeats, LoopType.Incremental).SetEase(Ease.Linear);
         }
 
-        private void OnDisable()
+        public void StopAnimation()
         {
             _moveTween?.Kill();
             _rotationTween?.Kill();
+            _moveTween = _rotationTween = null;
         }
+
+        private void OnDisable() => StopAnimation();
     }
 }

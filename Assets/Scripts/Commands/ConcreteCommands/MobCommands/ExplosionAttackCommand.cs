@@ -25,7 +25,13 @@ namespace MineArena.Commands
                 if (hit == null)
                     continue;
 
-                if (explosionData.Owner != null && hit.transform.root.gameObject == explosionData.Owner)
+                if (explosionData.Owner != null && (hit.transform == explosionData.Owner.transform ||
+                    hit.transform.IsChildOf(explosionData.Owner.transform)))
+                    continue;
+
+                if (!MineArena.AI.CombatTargeting.HasLineOfSight(explosionData.Position + Vector3.up * 0.1f,
+                    hit.bounds.center, explosionData.Owner != null ? explosionData.Owner.transform : null,
+                    hit.GetComponentInParent<IDamageable>() is Component target ? target.transform : hit.transform))
                     continue;
 
                 var damageable = hit.GetComponentInParent<IDamageable>();

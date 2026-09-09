@@ -1151,6 +1151,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
+  - component: {fileID: 8632568916085456208}
   - component: {fileID: 2577497694787473592}
   - component: {fileID: 5180993128834359407}
   - component: {fileID: 5202223972746309376}
@@ -1673,3 +1674,15 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &8632568916085456208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6915950433496960537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc3ef974efe1e204b9e94c536f66621d, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:

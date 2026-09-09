@@ -13,12 +13,19 @@ namespace MineArena.Windows
         [SerializeField] private Slider effects;
         [SerializeField] private Slider sensitivity;
         [SerializeField] private TMPro.TMP_Text sensitivityValue;
+        [SerializeField] private Button languageButton;
+        [SerializeField] private TMPro.TMP_Text languageLabel;
+        private static readonly SystemLanguage[] Languages = { SystemLanguage.Russian, SystemLanguage.English,
+            SystemLanguage.German, SystemLanguage.Spanish, SystemLanguage.Italian, SystemLanguage.French,
+            SystemLanguage.Portuguese, SystemLanguage.Turkish, SystemLanguage.Indonesian };
+        private static readonly string[] LanguageNames = { "Русский", "English", "Deutsch", "Español", "Italiano", "Français", "Português", "Türkçe", "Bahasa Indonesia" };
         private void Awake()
         {
             master.onValueChanged.AddListener(value => { AudioListener.volume = value; PlayerPrefs.SetFloat("UI.MasterVolume", value); });
             music.onValueChanged.AddListener(value => { GameRoot.GetManager<AudioManager>()?.SetMusicVolume(value); PlayerPrefs.SetFloat("UI.MusicVolume", value); });
             effects.onValueChanged.AddListener(value => { GameRoot.GetManager<AudioManager>()?.SetEffectVolume(value); PlayerPrefs.SetFloat("UI.EffectsVolume", value); });
             if (sensitivity != null) sensitivity.onValueChanged.AddListener(SetSensitivity);
+            if (languageButton != null) languageButton.onClick.AddListener(NextLanguage);
         }
         private void OnEnable()
         {
@@ -27,6 +34,18 @@ namespace MineArena.Windows
             effects.SetValueWithoutNotify(PlayerPrefs.GetFloat("UI.EffectsVolume", 1));
             if (sensitivity != null) sensitivity.SetValueWithoutNotify(MineArena.UI.CameraSensitivity.Value);
             RefreshSensitivityLabel();
+            RefreshLanguageLabel();
+        }
+        private void NextLanguage()
+        {
+            int index = System.Array.IndexOf(Languages, Devotion.SDK.Services.Localization.LocalizationService.CurrentLanguage);
+            Devotion.SDK.Services.Localization.LocalizationService.SetLanguage(Languages[(index + 1) % Languages.Length]);
+            RefreshLanguageLabel();
+        }
+        private void RefreshLanguageLabel()
+        {
+            int index = System.Array.IndexOf(Languages, Devotion.SDK.Services.Localization.LocalizationService.CurrentLanguage);
+            if (languageLabel != null) languageLabel.text = "Язык: " + LanguageNames[Mathf.Max(0, index)] + "  ›";
         }
         private void SetSensitivity(float value)
         {

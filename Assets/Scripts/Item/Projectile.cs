@@ -17,6 +17,13 @@ namespace MineArena
         [SerializeField] private float destroyDelay = 10f;
         [SerializeField] private float stickDepth = 0.08f;
         [SerializeField] private float stuckLifetime = 2f;
+        [SerializeField, Min(0f)] private float enemySpeed = 18f;
+        [SerializeField, Min(0f)] private float gravity;
+        [SerializeField, Min(0f)] private float splashRadius;
+        [SerializeField, Min(0.01f)] private float sweepRadius = 0.08f;
+
+        private Vector3 _velocity;
+        private bool _enemyShot;
 
         private Transform _target;
         private DamageData _damageData;
@@ -27,21 +34,32 @@ namespace MineArena
         private bool _stickOnCollision;
         private string _networkWeaponId;
 
-        public void SetParameters(Transform target, DamageData damageData)
+        public void SetParameters(Transform target, DamageData damageData, Transform owner = null)
         {
             CancelInvoke(nameof(ReturnToPool));
             _damageData = damageData;
             _target = target;
+            _enemyShot = true;
             _attackableLayers = default;
-            _owner = null;
+            _owner = owner;
             _hasHit = false;
             _isMoving = true;
-            _stickOnCollision = false;
+            _stickOnCollision = splashRadius <= 0f;
             _networkWeaponId = null;
             SetCollidersEnabled(true);
 
             if (_target != null)
-                transform.LookAt(_target);
+            {
+                Vector3 delta = AI.CombatTargeting.AimPoint(_target) - transform.position;
+                float launchSpeed = enemySpeed > 0 ? enemySpeed : speed;
+                if (gravity > 0)
+                {
+                    float flightTime = Mathf.Max(0.25f, new Vector2(delta.x, delta.z).magnitude / launchSpeed);
+                    _velocity = delta / flightTime + Vector3.up * (0.5f * gravity * flightTime);
+                }
+                else _velocity = delta.normalized * launchSpeed;
+                if (_velocity.sqrMagnitude > 0.001f) transform.rotation = Quaternion.LookRotation(_velocity);
+            }
 
             Invoke(nameof(ReturnToPool), destroyDelay);
         }
@@ -56,6 +74,7 @@ namespace MineArena
             CancelInvoke(nameof(ReturnToPool));
             _damageData = damageData;
             _target = null;
+            _enemyShot = false;
             _attackableLayers = attackableLayers;
             _owner = owner;
             _hasHit = false;
@@ -67,27 +86,68 @@ namespace MineArena
             if (direction.sqrMagnitude > 0.0001f)
                 transform.rotation = Quaternion.LookRotation(direction.normalized);
 
+            _velocity = transform.forward * speed;
+
             Invoke(nameof(ReturnToPool), destroyDelay);
         }
 
         private void Update()
         {
+            Step(Time.deltaTime);
+        }
+
+        private void Step(float deltaTime)
+        {
             if (!_isMoving)
                 return;
-
-            transform.position += transform.forward * speed * Time.deltaTime;
+            if (_enemyShot && (_target == null || !_target.gameObject.activeInHierarchy))
+            {
+                ReturnToPool();
+                return;
+            }
+            // Substeps also follow the potion's arc during a long frame.
+            int steps = Mathf.Max(1, Mathf.CeilToInt(deltaTime / 0.02f));
+            float dt = deltaTime / steps;
+            for (int i = 0; i < steps && _isMoving; i++)
+            {
+                Vector3 acceleration = _target != null ? Vector3.down * gravity : Vector3.zero;
+                Vector3 delta = _velocity * dt + acceleration * (0.5f * dt * dt);
+                _velocity += acceleration * dt;
+                Vector3 origin = transform.position;
+                foreach (var body in Physics.OverlapSphere(origin, sweepRadius, ~0, QueryTriggerInteraction.Collide))
+                {
+                    OnTriggerEnter(body);
+                    if (_hasHit || !_isMoving) return;
+                }
+                var hits = Physics.SphereCastAll(origin, sweepRadius, delta.normalized, delta.magnitude, ~0, QueryTriggerInteraction.Collide);
+                Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
+                foreach (var hit in hits)
+                {
+                    transform.position = origin + delta.normalized * hit.distance;
+                    OnTriggerEnter(hit.collider);
+                    if (_hasHit || !_isMoving) return;
+                }
+                transform.position = origin + delta;
+                if (_velocity.sqrMagnitude > 0.001f) transform.rotation = Quaternion.LookRotation(_velocity);
+            }
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            if (_hasHit || IsOwner(other.transform))
+            if (!_isMoving || _hasHit || other == null || IsOwner(other.transform) || other.GetComponentInParent<Projectile>() != null)
                 return;
 
             if (_target != null)
             {
                 var otherTransform = other.transform;
-                if (otherTransform == _target || otherTransform.IsChildOf(_target))
-                    OnHit(other);
+                bool hitTarget = otherTransform == _target || otherTransform.IsChildOf(_target);
+                if (!hitTarget && other.isTrigger) return;
+                if (splashRadius > 0f)
+                {
+                    Splash(other);
+                }
+                else if (hitTarget) OnHit(other);
+                else TryStickToCollider(other);
 
                 return;
             }
@@ -161,8 +221,7 @@ namespace MineArena
             if (target != null)
                 _damageData = new DamageData(_damageData.Damage, target);
 
-            var damageCommand = ScriptableObject.CreateInstance<DamageCommand>();
-            damageCommand.Execute(_damageData);
+            _damageData.Target?.TakeDamage(_damageData);
 
             if (_stickOnCollision && TryStickToCollider(hitCollider))
                 return;
@@ -187,7 +246,14 @@ namespace MineArena
 
         private void ReturnToPool()
         {
+            _isMoving = false;
+            _hasHit = true;
             CancelInvoke(nameof(ReturnToPool));
+            Release();
+        }
+
+        protected virtual void Release()
+        {
             var projectileType = GetType();
 
             if (ObjectPoolsManager.Instance != null && ObjectPoolsManager.Instance.HasPool(projectileType))
@@ -198,6 +264,8 @@ namespace MineArena
 
             Destroy(gameObject);
         }
+
+        protected virtual void OnImpact() { }
 
         private void OnDisable()
         {
@@ -210,6 +278,7 @@ namespace MineArena
             _isMoving = false;
             _stickOnCollision = false;
             _networkWeaponId = null;
+            _velocity = Vector3.zero;
             transform.SetParent(null, true);
             SetCollidersEnabled(true);
         }
@@ -217,6 +286,24 @@ namespace MineArena
         private bool IsOwner(Transform other)
         {
             return _owner != null && (other == _owner || other.IsChildOf(_owner));
+        }
+
+        private void Splash(Collider hitCollider)
+        {
+            _hasHit = true;
+            _isMoving = false;
+            bool direct = hitCollider.transform == _target || hitCollider.transform.IsChildOf(_target);
+            foreach (var body in _target.GetComponentsInChildren<Collider>())
+            {
+                if (!body.enabled || !body.gameObject.activeInHierarchy) continue;
+                Vector3 point = body.ClosestPoint(transform.position);
+                if (!direct && (Vector3.Distance(point, transform.position) > splashRadius ||
+                    !AI.CombatTargeting.HasLineOfSight(transform.position, AI.CombatTargeting.AimPoint(_target), transform, _target))) continue;
+                _damageData.Target?.TakeDamage(_damageData);
+                break; // Multiple player colliders still receive only one hit.
+            }
+            OnImpact();
+            ReturnToPool();
         }
 
         private static bool IsInLayerMask(int layer, LayerMask layerMask)

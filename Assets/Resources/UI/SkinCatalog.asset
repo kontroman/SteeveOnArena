@@ -1,0 +1,141 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b91e414d00f297848a308e9771deff77, type: 3}
+  m_Name: SkinCatalog
+  m_EditorClassIdentifier: 
+  Building: {fileID: 11400000, guid: 2b0216686e3457e4fa01723ec4ef5565, type: 2}
+  Skins:
+  - Id: default
+    DisplayName: "\u041F\u0443\u0442\u0435\u0448\u0435\u0441\u0442\u0432\u0435\u043D\u043D\u0438\u0446\u0430"
+    Texture: {fileID: 0}
+    Preview: {fileID: 21300000, guid: 4ae5e4579d305734f89ab66937f56315, type: 3}
+    Source: 0
+    Currency: {fileID: 0}
+    Price: 1
+    QuestId: -1
+    SourceDescription: "\u0422\u0432\u043E\u0439 \u043F\u0435\u0440\u0432\u044B\u0439
+      \u043E\u0431\u0440\u0430\u0437. \u0414\u043E\u0441\u0442\u0443\u043F\u0435\u043D
+      \u0441 \u043D\u0430\u0447\u0430\u043B\u0430 \u0438\u0433\u0440\u044B."
+    ProductId: 
+    RewardId: 
+  - Id: skin_01
+    DisplayName: "\u0421\u0442\u0440\u0430\u043D\u043D\u0438\u043A"
+    Texture: {fileID: 2800000, guid: e84592d63f56c19489bf71b3187b0ef5, type: 3}
+    Preview: {fileID: 21300000, guid: 14a0c5853a7762046bd21b046c7fe883, type: 3}
+    Source: 1
+    Currency: {fileID: 11400000, guid: 501e28faeabb676418a62d09f9eb6cb9, type: 2}
+    Price: 20
+    QuestId: 1
+    SourceDescription: "\u041F\u043E\u0441\u0442\u043E\u044F\u043D\u043D\u044B\u0439
+      \u043E\u0431\u0440\u0430\u0437 \u0437\u0430 \u0438\u0433\u0440\u043E\u0432\u0443\u044E
+      \u0432\u0430\u043B\u044E\u0442\u0443. \u041F\u043E\u0441\u043B\u0435 \u043F\u043E\u043A\u0443\u043F\u043A\u0438
+      \u043C\u043E\u0436\u043D\u043E \u043C\u0435\u043D\u044F\u0442\u044C \u0431\u0435\u0441\u043F\u043B\u0430\u0442\u043D\u043E."
+    ProductId: 
+    RewardId: 
+  - Id: skin_02
+    DisplayName: "\u0421\u043E\u043B\u043D\u0435\u0447\u043D\u044B\u0439 \u0443\u0442\u0451\u043D\u043E\u043A"
+    Texture: {fileID: 2800000, guid: 9a69bd104fe5d054a86032a5e470c3a6, type: 3}
+    Preview: {fileID: 21300000, guid: 5ff1dc0a46c707244a48f4f477702c21, type: 3}
+    Source: 3
+    Currency: {fileID: 0}
+    Price: 30
+    QuestId: 1
+    SourceDescription: "\u041D\u0430\u0433\u0440\u0430\u0434\u0430 \u0437\u0430 \u043F\u043E\u043B\u043D\u044B\u0439
+      \u0446\u0438\u043A\u043B \u0435\u0436\u0435\u0434\u043D\u0435\u0432\u043D\u044B\u0445
+      \u043F\u043E\u0434\u0430\u0440\u043A\u043E\u0432."
+    ProductId: 
+    RewardId: daily_cycle_complete
+  - Id: skin_03
+    DisplayName: "\u041A\u0430\u043C\u0435\u043D\u043D\u044B\u0439"
+    Texture: {fileID: 2800000, guid: 150d45e72fb24654e9bb25b10479eee9, type: 3}
+    Preview: {fileID: 21300000, guid: 3f71177b1382fa04583ecc00d458beda, type: 3}
+    Source: 1
+    Currency: {fileID: 11400000, guid: 501e28faeabb676418a62d09f9eb6cb9, type: 2}
+    Price: 40
+    QuestId: 1
+    SourceDescription: "\u041F\u043E\u0441\u0442\u043E\u044F\u043D\u043D\u044B\u0439
+      \u043E\u0431\u0440\u0430\u0437 \u0437\u0430 \u0438\u0433\u0440\u043E\u0432\u0443\u044E
+      \u0432\u0430\u043B\u044E\u0442\u0443. \u041F\u043E\u0441\u043B\u0435 \u043F\u043E\u043A\u0443\u043F\u043A\u0438
+      \u043C\u043E\u0436\u043D\u043E \u043C\u0435\u043D\u044F\u0442\u044C \u0431\u0435\u0441\u043F\u043B\u0430\u0442\u043D\u043E."
+    ProductId: 
+    RewardId: 
+  - Id: skin_04
+    DisplayName: "\u0410\u043B\u0445\u0438\u043C\u0438\u043A"
+    Texture: {fileID: 2800000, guid: df99d64ec60708444868914fa3b24861, type: 3}
+    Preview: {fileID: 21300000, guid: 603745ab71090334a8d967b9379655c4, type: 3}
+    Source: 2
+    Currency: {fileID: 0}
+    Price: 50
+    QuestId: 0
+    SourceDescription: "\u0417\u0430\u0432\u0435\u0440\u0448\u0438 \u0438 \u0437\u0430\u0431\u0435\u0440\u0438
+      \u043D\u0430\u0433\u0440\u0430\u0434\u0443 \u043F\u0435\u0440\u0432\u043E\u0433\u043E
+      \u0437\u0430\u0434\u0430\u043D\u0438\u044F \u043D\u0430 \u0434\u043E\u0431\u044B\u0447\u0443.
+      \u0417\u0430\u0442\u0435\u043C \u043F\u043E\u043B\u0443\u0447\u0438 \u044D\u0442\u043E\u0442
+      \u043E\u0431\u0440\u0430\u0437 \u0437\u0434\u0435\u0441\u044C."
+    ProductId: 
+    RewardId: 
+  - Id: skin_05
+    DisplayName: "\u041A\u0430\u043F\u0438\u0442\u0430\u043D"
+    Texture: {fileID: 2800000, guid: 8fee9b538b06e6745852070a1a4b23ae, type: 3}
+    Preview: {fileID: 21300000, guid: 7c1cc71d520c014498f595094bc62e03, type: 3}
+    Source: 2
+    Currency: {fileID: 0}
+    Price: 60
+    QuestId: 1
+    SourceDescription: "\u0417\u0430\u0432\u0435\u0440\u0448\u0438 \u0438 \u0437\u0430\u0431\u0435\u0440\u0438
+      \u043D\u0430\u0433\u0440\u0430\u0434\u0443 \u0432\u0442\u043E\u0440\u043E\u0433\u043E
+      \u0437\u0430\u0434\u0430\u043D\u0438\u044F \u043D\u0430 \u0434\u043E\u0431\u044B\u0447\u0443.
+      \u0417\u0430\u0442\u0435\u043C \u043F\u043E\u043B\u0443\u0447\u0438 \u044D\u0442\u043E\u0442
+      \u043E\u0431\u0440\u0430\u0437 \u0437\u0434\u0435\u0441\u044C."
+    ProductId: 
+    RewardId: 
+  - Id: skin_06
+    DisplayName: "\u0422\u0435\u043D\u044C"
+    Texture: {fileID: 2800000, guid: 75bc614e487286d4b9473b988f181f51, type: 3}
+    Preview: {fileID: 21300000, guid: 40256cbacbb4d1441a9eeac8ec6fa613, type: 3}
+    Source: 4
+    Currency: {fileID: 0}
+    Price: 70
+    QuestId: 1
+    SourceDescription: "\u041E\u0431\u0440\u0430\u0437 \u0438\u0437 \u043F\u0440\u0435\u043C\u0438\u0430\u043B\u044C\u043D\u043E\u0439
+      \u043A\u043E\u043B\u043B\u0435\u043A\u0446\u0438\u0438. \u041F\u0440\u0438\u043E\u0431\u0440\u0435\u0442\u0430\u0435\u0442\u0441\u044F
+      \u043E\u0442\u0434\u0435\u043B\u044C\u043D\u043E."
+    ProductId: skin_shadow
+    RewardId: 
+  - Id: skin_07
+    DisplayName: "\u041F\u0438\u043B\u043E\u0442"
+    Texture: {fileID: 2800000, guid: e9c0e1089f3844c41951bd7ecb4e4bfd, type: 3}
+    Preview: {fileID: 21300000, guid: 2190edfb8508f9044a2a632e1bbc8f0c, type: 3}
+    Source: 5
+    Currency: {fileID: 0}
+    Price: 80
+    QuestId: 1
+    SourceDescription: "\u0412\u0445\u043E\u0434\u0438\u0442 \u0432 \u043D\u0430\u0431\u043E\u0440
+      \xAB\u0421\u0442\u0438\u043B\u044C \u043F\u0438\u043B\u043E\u0442\u0430\xBB
+      \u0432\u043C\u0435\u0441\u0442\u0435 \u0441 \u0438\u0433\u0440\u043E\u0432\u043E\u0439
+      \u0432\u0430\u043B\u044E\u0442\u043E\u0439."
+    ProductId: pilot_style_bundle
+    RewardId: 
+  - Id: skin_08
+    DisplayName: "\u041B\u0435\u0441\u043D\u043E\u0439"
+    Texture: {fileID: 2800000, guid: e391d18ab19c6b24fb66a6838c7463bf, type: 3}
+    Preview: {fileID: 21300000, guid: b0a65c7f4f7897f4c8962b5d6ccbf7fd, type: 3}
+    Source: 1
+    Currency: {fileID: 11400000, guid: 501e28faeabb676418a62d09f9eb6cb9, type: 2}
+    Price: 90
+    QuestId: 1
+    SourceDescription: "\u041F\u043E\u0441\u0442\u043E\u044F\u043D\u043D\u044B\u0439
+      \u043E\u0431\u0440\u0430\u0437 \u0437\u0430 \u0438\u0433\u0440\u043E\u0432\u0443\u044E
+      \u0432\u0430\u043B\u044E\u0442\u0443. \u041F\u043E\u0441\u043B\u0435 \u043F\u043E\u043A\u0443\u043F\u043A\u0438
+      \u043C\u043E\u0436\u043D\u043E \u043C\u0435\u043D\u044F\u0442\u044C \u0431\u0435\u0441\u043F\u043B\u0430\u0442\u043D\u043E."
+    ProductId: 
+    RewardId: 

@@ -86,6 +86,59 @@ namespace MineArena.Windows.Crafting
         private Coroutine _openAnimation;
         private bool _layoutReady;
         private bool _usesPrefabLayout;
+        private Button _buildingButton;
+        private TextMeshProUGUI _buildingButtonLabel;
+
+        private void RefreshBuildingButton()
+        {
+            if (_buildingButton == null)
+            {
+                _buildingButton = CreateButton("UpgradeBuilding", _windowPanel, _style.Button, out _);
+                var rect = (RectTransform)_buildingButton.transform;
+                rect.anchorMin = rect.anchorMax = new Vector2(1f, 1f);
+                rect.pivot = new Vector2(1f, 1f);
+                rect.anchoredPosition = new Vector2(-110f, -32f);
+                rect.sizeDelta = new Vector2(320f, 54f);
+                if (_usesPrefabLayout)
+                {
+                    var title = _windowPanel.Find("Title") as RectTransform;
+                    if (title != null) title.sizeDelta = new Vector2(650f, title.sizeDelta.y);
+                }
+                else
+                {
+                    // Reserve space in the generated header as well as in the prefab layout.
+                    var header = _windowPanel.Find("Header") as RectTransform;
+                    if (header != null) header.offsetMax = new Vector2(-450f, header.offsetMax.y);
+                }
+                _buildingButtonLabel = CreateText("Label", rect, string.Empty, 20f, FontStyles.Bold, TextAlignmentOptions.Center);
+                Stretch(_buildingButtonLabel.rectTransform, 8f);
+                _buildingButtonLabel.enableAutoSizing = true;
+                _buildingButtonLabel.fontSizeMin = 12f;
+                _buildingButtonLabel.fontSizeMax = 20f;
+                _buildingButton.onClick.AddListener(OpenBuildingUpgrade);
+            }
+
+            var building = _selectedCategory?.Recipes.FirstOrDefault(r => r.SourceBuilding != null)?.SourceBuilding;
+            _buildingButton.gameObject.SetActive(building != null);
+            if (building == null) return;
+            int level = _adapter.GetBuildingLevel(building);
+            bool canUpgrade = building.TryGetNextLevel(level, out var next);
+            _buildingButtonLabel.text = level == 0 ? "Построить здание"
+                : canUpgrade ? $"Улучшить · ур. {level} → {next.Level}" : $"Максимальный уровень · {level}";
+            _buildingButton.interactable = !MineArena.Managers.TutorialService.Active && (level == 0 || canUpgrade) &&
+                FindObjectsOfType<BuildingZone>().Any(zone => zone.Config == building);
+        }
+
+        private void OpenBuildingUpgrade()
+        {
+            var building = _selectedCategory?.Recipes.FirstOrDefault(r => r.SourceBuilding != null)?.SourceBuilding;
+            var zone = FindObjectsOfType<BuildingZone>().FirstOrDefault(candidate => candidate.Config == building);
+            if (building == null || zone == null || MineArena.Managers.TutorialService.Active) return;
+            var window = GameRoot.UIManager.OpenWindow<BuildingWindow>() as BuildingWindow;
+            if (window == null) return;
+            window.InitializeBuilding(building, zone.transform);
+            CloseWindow();
+        }
 
         public static CraftingWindow Open(BuildingConfig initialBuilding = null)
         {
@@ -222,6 +275,7 @@ namespace MineArena.Windows.Crafting
 
             _categories = _adapter.BuildCatalog() ?? Array.Empty<CraftingCategory>();
             _selectedCategory = null;
+            if (_buildingButton != null) _buildingButton.gameObject.SetActive(false);
             _selectedRecipe = null;
             _resultText.text = string.Empty;
 
@@ -667,6 +721,7 @@ namespace MineArena.Windows.Crafting
         private void SelectCategory(CraftingCategory category, bool selectFirstRecipe)
         {
             _selectedCategory = category;
+            RefreshBuildingButton();
             _resultText.text = string.Empty;
 
             foreach (var tab in _tabs)
@@ -735,12 +790,12 @@ namespace MineArena.Windows.Crafting
 
                 if (view.Recipe.HasBuildingRequirement && !unlocked)
                 {
-                    view.Meta.text = $"Требуется {view.Recipe.SourceBuilding.BuildingName} Lv {view.Recipe.RequiredBuildingLevel}";
+                    view.Meta.text = $"Требуется {view.Recipe.SourceBuilding.BuildingName} ур. {view.Recipe.RequiredBuildingLevel}";
                     view.Meta.color = _style.WarningText;
                 }
                 else if (view.Recipe.HasBuildingRequirement)
                 {
-                    view.Meta.text = $"{view.Recipe.SourceBuilding.BuildingName} Lv {view.Recipe.RequiredBuildingLevel}";
+                    view.Meta.text = $"{view.Recipe.SourceBuilding.BuildingName} ур. {view.Recipe.RequiredBuildingLevel}";
                     view.Meta.color = _style.MutedText;
                 }
                 else
@@ -803,6 +858,9 @@ namespace MineArena.Windows.Crafting
 
         private void RebuildCosts(IReadOnlyList<ResourceRequired> costs)
         {
+            // Three complete ingredient rows fit the 144px details viewport.
+            var list = _costsRoot.GetComponent<VerticalLayoutGroup>();
+            if (list != null) list.spacing = 6f;
             var hasAnyCost = false;
 
             if (costs != null)
@@ -828,7 +886,7 @@ namespace MineArena.Windows.Crafting
         private void CreateCostRow(ResourceRequired cost)
         {
             var row = CreatePanel($"Cost_{cost.Resource.Name}", _costsRoot, _style.Slot);
-            row.sizeDelta = new Vector2(0f, 64f);
+            row.sizeDelta = new Vector2(0f, 44f);
 
             var layout = row.gameObject.AddComponent<HorizontalLayoutGroup>();
             layout.padding = new RectOffset(8, 10, 6, 6);
@@ -840,9 +898,9 @@ namespace MineArena.Windows.Crafting
             layout.childForceExpandHeight = true;
 
             var iconSlot = CreateRect("IconSlot", row);
-            iconSlot.sizeDelta = new Vector2(52f, 52f);
+            iconSlot.sizeDelta = new Vector2(32f, 32f);
             var iconLayout = iconSlot.gameObject.AddComponent<LayoutElement>();
-            iconLayout.minWidth = iconLayout.preferredWidth = 52f;
+            iconLayout.minWidth = iconLayout.preferredWidth = 32f;
             iconLayout.flexibleWidth = 0;
 
             var icon = CreateImage("Icon", iconSlot, cost.Resource.Icon != null ? cost.Resource.Icon : _style.PlaceholderIcon);
@@ -1008,6 +1066,12 @@ namespace MineArena.Windows.Crafting
                 return;
 
             ClearChildren(_costsRoot);
+            var scroll = _costsRoot.GetComponentInParent<ScrollRect>();
+            if (scroll != null && scroll.content == _costsRoot)
+            {
+                scroll.StopMovement();
+                _costsRoot.anchoredPosition = Vector2.zero;
+            }
         }
 
         private static string ResolveResultMessage(CraftingResult result)

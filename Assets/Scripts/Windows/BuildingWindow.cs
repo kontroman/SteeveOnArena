@@ -83,7 +83,13 @@ namespace MineArena.Windows
                 var label = _buildButton.GetComponentInChildren<TMP_Text>(true);
                 if (label != null) label.text = _upgrade ? "Улучшить" : "Построить";
             }
-            if (_unlocksEmpty != null) _unlocksEmpty.gameObject.SetActive(_targetLevel == null || _targetLevel.Unlocks == null || _targetLevel.Unlocks.Count == 0);
+            if (_unlocksEmpty != null)
+            {
+                _unlocksEmpty.gameObject.SetActive(_targetLevel == null || _targetLevel.Unlocks == null || _targetLevel.Unlocks.Count == 0);
+                _unlocksEmpty.text = MineArena.Cosmetics.SkinCatalog.Load()?.Building == config
+                    ? "Коллекция скинов и гардероб. Покупай образы за валюту, получай за задания и награды. Скины меняют только внешний вид."
+                    : "У этого здания нет новых рецептов.";
+            }
             if (_targetLevel != null)
             {
                 foreach (var cost in _targetLevel.RequiredResources) Instantiate(_pricePrefab, _priceTransform).Setup(cost);

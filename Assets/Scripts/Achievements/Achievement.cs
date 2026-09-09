@@ -1,4 +1,4 @@
-﻿using MineArena.Messages;
+using MineArena.Messages;
 using MineArena.UI.FortuneWheel;
 using Structs;
 
@@ -57,6 +57,9 @@ namespace Achievements
             _isCompleted = true;
             AchievementMessages.AchievementCompleted.Publish(this);
             _itemPrize.GiveTo();
+            MineArena.Cosmetics.SkinService.GrantQuestRewards(_id);
+            if (Data.ItemTarget is ChestCollectionTarget)
+                Devotion.SDK.Messages.Player.SavePlayerProgress.Publish();
         }
 
         public void LoadData(AchievementSaveData data)

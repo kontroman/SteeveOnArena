@@ -1,0 +1,142 @@
+PASS Pool covers all ten mob types
+PASS Bear: unique preset
+PASS Bear: one health/combat/agent owner
+PASS Bear: valid balance values
+PASS Bear: reachable by player weapon layer mask
+PASS Bear: receives exactly one wooden-sword hit
+PASS Bear: dead health ignores further damage
+PASS Bear: respawn restores preset health
+PASS Bear: movement preset works before Start
+PASS Bear: melee hits once per cycle
+PASS Bear: no out-of-range hit
+PASS Bear: wall blocks melee
+PASS Bear: dead mob cannot attack
+BALANCE Bear: HP=210, damage=20, interval=2,8s, nominal DPS=7,14, wood hits=10
+PASS Creeper: unique preset
+PASS Creeper: one health/combat/agent owner
+PASS Creeper: valid balance values
+PASS Creeper: reachable by player weapon layer mask
+PASS Creeper: receives exactly one wooden-sword hit
+PASS Creeper: dead health ignores further damage
+PASS Creeper: respawn restores preset health
+PASS Creeper: movement preset works before Start
+BALANCE Creeper: HP=60, damage=28, interval=3,0s, nominal DPS=9,33, wood hits=3
+PASS endermen: unique preset
+PASS endermen: one health/combat/agent owner
+PASS endermen: valid balance values
+PASS endermen: reachable by player weapon layer mask
+PASS endermen: receives exactly one wooden-sword hit
+PASS endermen: dead health ignores further damage
+PASS endermen: respawn restores preset health
+PASS endermen: movement preset works before Start
+PASS Enderman: melee hits once per cycle
+PASS Enderman: no out-of-range hit
+PASS Enderman: wall blocks melee
+PASS Enderman: dead mob cannot attack
+BALANCE Enderman: HP=160, damage=16, interval=2,0s, nominal DPS=8,00, wood hits=8
+PASS Pillager: unique preset
+PASS Pillager: one health/combat/agent owner
+PASS Pillager: valid balance values
+PASS Pillager: reachable by player weapon layer mask
+PASS Pillager: receives exactly one wooden-sword hit
+PASS Pillager: dead health ignores further damage
+PASS Pillager: respawn restores preset health
+PASS Pillager: movement preset works before Start
+PASS Pillager: melee hits once per cycle
+PASS Pillager: no out-of-range hit
+PASS Pillager: wall blocks melee
+PASS Pillager: dead mob cannot attack
+BALANCE Pillager: HP=110, damage=12, interval=2,0s, nominal DPS=6,00, wood hits=5
+PASS Skeleton: unique preset
+PASS Skeleton: one health/combat/agent owner
+PASS Skeleton: valid balance values
+PASS Skeleton: reachable by player weapon layer mask
+PASS Skeleton: projectile and fire point wired
+PASS Skeleton: projectile materials and shaders resolve
+PASS Skeleton: actual ranged command launches exactly one configured projectile
+PASS Skeleton: launching causes no instant damage
+PASS Skeleton: launch passes shooter for collision exclusion
+PASS Skeleton: receives exactly one wooden-sword hit
+PASS Skeleton: dead health ignores further damage
+PASS Skeleton: respawn restores preset health
+PASS Skeleton: movement preset works before Start
+BALANCE Skeleton: HP=65, damage=9, interval=2,5s, nominal DPS=3,60, wood hits=3
+PASS Spider: unique preset
+PASS Spider: one health/combat/agent owner
+PASS Spider: valid balance values
+PASS Spider: reachable by player weapon layer mask
+PASS Spider: receives exactly one wooden-sword hit
+PASS Spider: dead health ignores further damage
+PASS Spider: respawn restores preset health
+PASS Spider: movement preset works before Start
+PASS Spider: melee hits once per cycle
+PASS Spider: no out-of-range hit
+PASS Spider: wall blocks melee
+PASS Spider: dead mob cannot attack
+BALANCE Spider: HP=50, damage=6, interval=1,5s, nominal DPS=4,00, wood hits=3
+PASS Vindicator: unique preset
+PASS Vindicator: one health/combat/agent owner
+PASS Vindicator: valid balance values
+PASS Vindicator: reachable by player weapon layer mask
+PASS Vindicator: projectile and fire point wired
+PASS Vindicator: projectile materials and shaders resolve
+PASS ArcherPillager: actual ranged command launches exactly one configured projectile
+PASS ArcherPillager: launching causes no instant damage
+PASS ArcherPillager: launch passes shooter for collision exclusion
+PASS Vindicator: receives exactly one wooden-sword hit
+PASS Vindicator: dead health ignores further damage
+PASS Vindicator: respawn restores preset health
+PASS Vindicator: movement preset works before Start
+BALANCE ArcherPillager: HP=85, damage=11, interval=2,4s, nominal DPS=4,58, wood hits=4
+PASS Witch: unique preset
+PASS Witch: one health/combat/agent owner
+PASS Witch: valid balance values
+PASS Witch: reachable by player weapon layer mask
+PASS Witch: projectile and fire point wired
+PASS Witch: projectile materials and shaders resolve
+PASS Witch: actual ranged command launches exactly one configured projectile
+PASS Witch: launching causes no instant damage
+PASS Witch: launch passes shooter for collision exclusion
+PASS Witch: receives exactly one wooden-sword hit
+PASS Witch: dead health ignores further damage
+PASS Witch: respawn restores preset health
+PASS Witch: movement preset works before Start
+BALANCE Witch: HP=100, damage=13, interval=2,8s, nominal DPS=4,64, wood hits=5
+PASS Wolf: unique preset
+PASS Wolf: one health/combat/agent owner
+PASS Wolf: valid balance values
+PASS Wolf: reachable by player weapon layer mask
+PASS Wolf: receives exactly one wooden-sword hit
+PASS Wolf: dead health ignores further damage
+PASS Wolf: respawn restores preset health
+PASS Wolf: movement preset works before Start
+PASS Wolf: melee hits once per cycle
+PASS Wolf: no out-of-range hit
+PASS Wolf: wall blocks melee
+PASS Wolf: dead mob cannot attack
+BALANCE Wolf: HP=80, damage=9, interval=1,6s, nominal DPS=5,63, wood hits=4
+PASS Zombie: unique preset
+PASS Zombie: one health/combat/agent owner
+PASS Zombie: valid balance values
+PASS Zombie: reachable by player weapon layer mask
+PASS Zombie: receives exactly one wooden-sword hit
+PASS Zombie: dead health ignores further damage
+PASS Zombie: respawn restores preset health
+PASS Zombie: movement preset works before Start
+PASS Zombie: melee hits once per cycle
+PASS Zombie: no out-of-range hit
+PASS Zombie: wall blocks melee
+PASS Zombie: dead mob cannot attack
+BALANCE Zombie: HP=70, damage=8, interval=2,2s, nominal DPS=3,64, wood hits=4
+PASS Arrow: owner ignored, trigger/child hitboxes hit exactly once even across a one-second frame
+PASS Arrow: thin wall blocks damage without tunnelling
+PASS Potion: shatters on wall without damaging through it
+PASS Potion: visible ballistic arc
+PASS Potion: lands at aim point and applies one hit
+PASS Arrow: target can dodge, projectile does not home
+PASS Potion: nearby ground impact splashes player once (HP=87, impact=(0.00, -0.38, 8.49))
+PASS Invalid damage cannot heal or corrupt health
+PASS Creeper: one damage application per target and one self-death
+PASS Creeper: solid cover blocks blast
+PASS Rendered both actual projectile prefabs to Documentation/UI/EnemyProjectiles.png
+ALL CHECKS PASSED (Editor physics and real combat methods; not a gameplay playtest).

@@ -1,0 +1,1351 @@
+{
+  "ПЕРВЫЕ ШАГИ   •   {0} / 8": [
+    "Assets\\Scripts\\Managers\\TutorialService.cs"
+  ],
+  "Мастерская [B]": [
+    "Assets\\Scripts\\Managers\\TutorialService.cs"
+  ],
+  "ПЕРВЫЕ ШАГИ  •  ": [
+    "Assets\\Scripts\\Managers\\TutorialService.cs"
+  ],
+  "Забрать подарок": [
+    "Assets\\Scripts\\Managers\\TutorialService.cs",
+    "Assets\\Scripts\\Managers\\TutorialService.cs",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\PlaytimeGiftWindow.prefab"
+  ],
+  "Понятно!": [
+    "Assets\\Scripts\\Managers\\TutorialService.cs"
+  ],
+  " м": [
+    "Assets\\Scripts\\Managers\\TutorialService.cs"
+  ],
+  "Добро пожаловать! Подойди к порталу.\nWASD — движение. Жёлтый указатель покажет путь.": [
+    "Assets\\Scripts\\Managers\\TutorialService.cs"
+  ],
+  "Выбери первый уровень и нажми «Начать».\nУчебная экспедиция: добыча ресурсов и один зомби.": [
+    "Assets\\Scripts\\Managers\\TutorialService.cs"
+  ],
+  "Подойди к блоку и нажми E, чтобы добыть его.\nЗатем подбери выпавшие ресурсы.": [
+    "Assets\\Scripts\\Managers\\TutorialService.cs"
+  ],
+  "Теперь победи зомби.\nЛевая кнопка мыши — атака. Меч уже в быстром слоте.": [
+    "Assets\\Scripts\\Managers\\TutorialService.cs"
+  ],
+  "Отлично! Войди в появившийся портал.\nЗабери награду и вернись на базу — хватит на мастерскую!": [
+    "Assets\\Scripts\\Managers\\TutorialService.cs"
+  ],
+  "Подойди к участку мастерской и нажми «Построить».\nДерево и камень для постройки уже у тебя.": [
+    "Assets\\Scripts\\Managers\\TutorialService.cs"
+  ],
+  "После «Понятно» откроется мастерская. Создай доски.\nДождись заполнения полосы: первый крафт занимает 7 секунд.": [
+    "Assets\\Scripts\\Managers\\TutorialService.cs"
+  ],
+  "Обучение завершено! Твой подарок:\n16 дуба, 12 камня и 2 зелья лечения. Дальше — твои приключения!": [
+    "Assets\\Scripts\\Managers\\TutorialService.cs"
+  ],
+  "Покупка получена": [
+    "Assets\\Scripts\\Platform\\YandexPurchases.cs"
+  ],
+  "Покупка не завершена. Попробуй восстановить покупки.": [
+    "Assets\\Scripts\\Platform\\YandexPurchases.cs"
+  ],
+  "Реклама недоступна. Можно вернуться в деревню.": [
+    "Assets\\Scripts\\Player\\PlayerDeathFlow.cs"
+  ],
+  "Ожидание награды за рекламу…": [
+    "Assets\\Scripts\\Player\\PlayerDeathFlow.cs"
+  ],
+  "Награда не получена. Повторите попытку или вернитесь в деревню.": [
+    "Assets\\Scripts\\Player\\PlayerDeathFlow.cs"
+  ],
+  "Не удалось загрузить деревню. Попробуйте ещё раз.": [
+    "Assets\\Scripts\\Player\\PlayerDeathFlow.cs"
+  ],
+  "Реклама сейчас недоступна. Вернитесь в деревню и попробуйте снова позже.": [
+    "Assets\\Scripts\\Player\\PlayerDeathFlow.cs"
+  ],
+  "Сложное": [
+    "Assets\\Scripts\\Structs\\DataAchievement.cs"
+  ],
+  "Среднее": [
+    "Assets\\Scripts\\Structs\\DataAchievement.cs"
+  ],
+  "Лёгкое": [
+    "Assets\\Scripts\\Structs\\DataAchievement.cs"
+  ],
+  "Награда получена": [
+    "Assets\\Scripts\\UI\\QuestJournalRow.cs",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\InfoPopupWindow.prefab"
+  ],
+  "Можно забрать награду": [
+    "Assets\\Scripts\\UI\\QuestJournalRow.cs"
+  ],
+  "В работе": [
+    "Assets\\Scripts\\UI\\QuestJournalRow.cs",
+    "Assets\\Prefabs\\Windows\\WindowAchievements.prefab"
+  ],
+  "Добыча: ": [
+    "Assets\\Scripts\\UI\\QuestJournalRow.cs"
+  ],
+  "Поручение №": [
+    "Assets\\Scripts\\UI\\QuestJournalRow.cs"
+  ],
+  "цель задания": [
+    "Assets\\Scripts\\UI\\QuestJournalRow.cs"
+  ],
+  "Соберите «": [
+    "Assets\\Scripts\\UI\\QuestJournalRow.cs"
+  ],
+  "Купить": [
+    "Assets\\Scripts\\UI\\ShopOfferView.cs",
+    "Assets\\Scripts\\UI\\ShopOfferView.cs",
+    "Assets\\Resources\\UI\\ShopOffer.prefab",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\ShopWindow.prefab",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\ShopWindow.prefab",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\ShopWindow.prefab",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\ShopWindow.prefab",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\ShopWindow.prefab",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\ShopWindow.prefab",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\ShopWindow.prefab",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\ShopWindow.prefab",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\ShopWindow.prefab"
+  ],
+  "Подождите…": [
+    "Assets\\Scripts\\UI\\ShopOfferView.cs"
+  ],
+  "Уже есть": [
+    "Assets\\Scripts\\UI\\ShopOfferView.cs"
+  ],
+  "Не хватает ресурсов": [
+    "Assets\\Scripts\\UI\\ShopOfferView.cs"
+  ],
+  "Есть {0} / нужно {1}": [
+    "Assets\\Scripts\\Windows\\BuildingPriceElement.cs"
+  ],
+  "Достигнут максимальный уровень": [
+    "Assets\\Scripts\\Windows\\BuildingWindow.cs"
+  ],
+  "Все ресурсы собраны": [
+    "Assets\\Scripts\\Windows\\BuildingWindow.cs"
+  ],
+  "Нужно добыть ещё ресурсов": [
+    "Assets\\Scripts\\Windows\\BuildingWindow.cs"
+  ],
+  "УРОЖАЙ": [
+    "Assets\\Scripts\\Windows\\BuildingWindow.cs"
+  ],
+  "ОТКРЫВАЕТ": [
+    "Assets\\Scripts\\Windows\\BuildingWindow.cs",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\BuildingWindow.prefab"
+  ],
+  "Уровень ": [
+    "Assets\\Scripts\\Windows\\BuildingWindow.cs",
+    "Assets\\Scripts\\Windows\\BuildingWindow.cs",
+    "Assets\\Scripts\\Windows\\SelectLevelWindow\\LevelSelectionView.cs"
+  ],
+  "Улучшение: ": [
+    "Assets\\Scripts\\Windows\\BuildingWindow.cs"
+  ],
+  " к выходу каждого крафта": [
+    "Assets\\Scripts\\Windows\\BuildingWindow.cs"
+  ],
+  "\nУрожай каждые ": [
+    "Assets\\Scripts\\Windows\\BuildingWindow.cs"
+  ],
+  " с": [
+    "Assets\\Scripts\\Windows\\BuildingWindow.cs"
+  ],
+  "\nНаграды экспедиции +": [
+    "Assets\\Scripts\\Windows\\BuildingWindow.cs"
+  ],
+  "Улучшить": [
+    "Assets\\Scripts\\Windows\\BuildingWindow.cs"
+  ],
+  "Построить": [
+    "Assets\\Scripts\\Windows\\BuildingWindow.cs",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\BuildingWindow.prefab"
+  ],
+  "Урожай через {0} с: {1}": [
+    "Assets\\Scripts\\Windows\\BuildingWindow.cs"
+  ],
+  "читы прогресса": [
+    "Assets\\Scripts\\Windows\\GodModeWindow.cs"
+  ],
+  "Кол-во предметов": [
+    "Assets\\Scripts\\Windows\\GodModeWindow.cs"
+  ],
+  "все предметы": [
+    "Assets\\Scripts\\Windows\\GodModeWindow.cs"
+  ],
+  "Опыт": [
+    "Assets\\Scripts\\Windows\\GodModeWindow.cs"
+  ],
+  "+спин": [
+    "Assets\\Scripts\\Windows\\GodModeWindow.cs"
+  ],
+  "Уровни": [
+    "Assets\\Scripts\\Windows\\GodModeWindow.cs"
+  ],
+  "открыть уровни": [
+    "Assets\\Scripts\\Windows\\GodModeWindow.cs"
+  ],
+  "очистить инвентарь": [
+    "Assets\\Scripts\\Windows\\GodModeWindow.cs"
+  ],
+  "Уровень: {0} | Опыт: {1}/{2}": [
+    "Assets\\Scripts\\Windows\\GodModeWindow.cs",
+    "Assets\\Scripts\\Windows\\GodModeWindow.cs"
+  ],
+  "Прогресс игрока ещё не загружен": [
+    "Assets\\Scripts\\Windows\\GodModeWindow.cs"
+  ],
+  "Русский": [
+    "Assets\\Scripts\\Windows\\SettingsWindow.cs"
+  ],
+  "Язык: ": [
+    "Assets\\Scripts\\Windows\\SettingsWindow.cs"
+  ],
+  "Покупки сразу попадают в инвентарь": [
+    "Assets\\Scripts\\Windows\\ShopWindow.cs",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\ShopWindow.prefab"
+  ],
+  "Магазин готовится к открытию": [
+    "Assets\\Scripts\\Windows\\ShopWindow.cs"
+  ],
+  "Восстановить покупки": [
+    "Assets\\Scripts\\Windows\\ShopWindow.cs"
+  ],
+  "Куплено: ": [
+    "Assets\\Scripts\\Windows\\ShopWindow.cs"
+  ],
+  "Покупка недоступна: проверьте баланс и инвентарь": [
+    "Assets\\Scripts\\Windows\\ShopWindow.cs"
+  ],
+  "Занято ячеек: ": [
+    "Assets\\Scripts\\Windows\\StorageWindow.cs"
+  ],
+  "Выполнено ": [
+    "Assets\\Scripts\\Windows\\WindowAchievements.cs"
+  ],
+  "   •   Наград к получению: ": [
+    "Assets\\Scripts\\Windows\\WindowAchievements.cs"
+  ],
+  "В работе  ": [
+    "Assets\\Scripts\\Windows\\WindowAchievements.cs"
+  ],
+  "Можно забрать  ": [
+    "Assets\\Scripts\\Windows\\WindowAchievements.cs"
+  ],
+  "Завершено  ": [
+    "Assets\\Scripts\\Windows\\WindowAchievements.cs"
+  ],
+  "Пока нет наград к получению.\nПродолжайте задания во вкладке «В работе».": [
+    "Assets\\Scripts\\Windows\\WindowAchievements.cs"
+  ],
+  "Здесь появятся выполненные задания.": [
+    "Assets\\Scripts\\Windows\\WindowAchievements.cs"
+  ],
+  "Все поручения выполнены!": [
+    "Assets\\Scripts\\Windows\\WindowAchievements.cs"
+  ],
+  "Добыча ресурсов": [
+    "Assets\\Scripts\\Windows\\WindowAchievements.cs"
+  ],
+  "Охота на врагов": [
+    "Assets\\Scripts\\Windows\\WindowAchievements.cs"
+  ],
+  "Награда уже в инвентаре": [
+    "Assets\\Scripts\\Windows\\WindowAchievements.cs"
+  ],
+  "Задание выполнено — заберите награду": [
+    "Assets\\Scripts\\Windows\\WindowAchievements.cs"
+  ],
+  "Награда откроется после выполнения": [
+    "Assets\\Scripts\\Windows\\WindowAchievements.cs"
+  ],
+  "Урожай через {0} с": [
+    "Assets\\Scripts\\Windows\\Crafting\\CraftingWindow.cs"
+  ],
+  "Нужна ферма ур. {0}": [
+    "Assets\\Scripts\\Windows\\Crafting\\CraftingWindow.cs"
+  ],
+  "Урожай автоматически поступит в инвентарь": [
+    "Assets\\Scripts\\Windows\\Crafting\\CraftingWindow.cs"
+  ],
+  "Постройте или улучшите ферму на участке": [
+    "Assets\\Scripts\\Windows\\Crafting\\CraftingWindow.cs"
+  ],
+  "Готово! Предмет добавлен в инвентарь.": [
+    "Assets\\Scripts\\Windows\\Crafting\\CraftingWindow.cs"
+  ],
+  "Готовится · {0} с": [
+    "Assets\\Scripts\\Windows\\Crafting\\CraftingWindow.cs"
+  ],
+  "В работе: {0} ×{1}": [
+    "Assets\\Scripts\\Windows\\Crafting\\CraftingWindow.cs"
+  ],
+  "Создать ×{0} · {1} с": [
+    "Assets\\Scripts\\Windows\\Crafting\\CraftingWindow.cs"
+  ],
+  "Нет доступных рецептов": [
+    "Assets\\Scripts\\Windows\\Crafting\\CraftingWindow.cs",
+    "Assets\\Resources\\Prefabs\\Windows\\Crafting\\CraftingWindow.prefab",
+    "Assets\\Prefabs\\Windows\\Crafting\\CraftingWindow.prefab"
+  ],
+  "Стоимость": [
+    "Assets\\Scripts\\Windows\\Crafting\\CraftingWindow.cs"
+  ],
+  "В этой категории нет рецептов": [
+    "Assets\\Scripts\\Windows\\Crafting\\CraftingWindow.cs"
+  ],
+  "Требуется {0} ур. {1}": [
+    "Assets\\Scripts\\Windows\\Crafting\\CraftingWindow.cs"
+  ],
+  "{0} ур. {1}": [
+    "Assets\\Scripts\\Windows\\Crafting\\CraftingWindow.cs"
+  ],
+  "Выберите рецепт": [
+    "Assets\\Scripts\\Windows\\Crafting\\CraftingWindow.cs",
+    "Assets\\Resources\\Prefabs\\Windows\\Crafting\\CraftingWindow.prefab",
+    "Assets\\Prefabs\\Windows\\Crafting\\CraftingWindow.prefab"
+  ],
+  "ВЫРАЩИВАНИЕ": [
+    "Assets\\Scripts\\Windows\\Crafting\\CraftingWindow.cs"
+  ],
+  "НУЖНЫЕ РЕСУРСЫ": [
+    "Assets\\Scripts\\Windows\\Crafting\\CraftingWindow.cs"
+  ],
+  "Посадка и сбор автоматические.\nЗа время отсутствия накапливается до 10 урожаев.": [
+    "Assets\\Scripts\\Windows\\Crafting\\CraftingWindow.cs"
+  ],
+  "Нет стоимости": [
+    "Assets\\Scripts\\Windows\\Crafting\\CraftingWindow.cs"
+  ],
+  "Крафт начат": [
+    "Assets\\Scripts\\Windows\\Crafting\\CraftingWindow.cs"
+  ],
+  "Всё · ": [
+    "Assets\\Scripts\\Windows\\Crafting\\CraftingWindow.cs"
+  ],
+  "Рецепт закрыт": [
+    "Assets\\Scripts\\Windows\\Crafting\\CraftingWindow.cs"
+  ],
+  "Недостаточно ресурсов": [
+    "Assets\\Scripts\\Windows\\Crafting\\CraftingWindow.cs"
+  ],
+  "Инвентарь недоступен": [
+    "Assets\\Scripts\\Windows\\Crafting\\CraftingWindow.cs"
+  ],
+  "Рецепт не найден": [
+    "Assets\\Scripts\\Windows\\Crafting\\CraftingWindow.cs"
+  ],
+  "Не удалось создать": [
+    "Assets\\Scripts\\Windows\\Crafting\\CraftingWindow.cs"
+  ],
+  "Дождитесь завершения текущего крафта.": [
+    "Assets\\Scripts\\Windows\\Crafting\\ProjectCraftingAdapter.cs"
+  ],
+  "Недостаточно ресурсов.": [
+    "Assets\\Scripts\\Windows\\Crafting\\ProjectCraftingAdapter.cs"
+  ],
+  "Урожай: {0} шт. каждые {1} с.\nРастёт на ферме. Сбор автоматический.": [
+    "Assets\\Scripts\\Windows\\Crafting\\ProjectCraftingAdapter.cs"
+  ],
+  "Закрыт": [
+    "Assets\\Scripts\\Windows\\SelectLevelWindow\\LevelSelectionCard.cs",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\SelectLevelWindow.prefab",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\SelectLevelWindow.prefab",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\SelectLevelWindow.prefab"
+  ],
+  "Открыто {0} из {1}": [
+    "Assets\\Scripts\\Windows\\SelectLevelWindow\\LevelSelectionView.cs"
+  ],
+  "Нет уровней": [
+    "Assets\\Scripts\\Windows\\SelectLevelWindow\\LevelSelectionView.cs"
+  ],
+  "Уровни пока не добавлены": [
+    "Assets\\Scripts\\Windows\\SelectLevelWindow\\LevelSelectionView.cs"
+  ],
+  "Сложность: ": [
+    "Assets\\Scripts\\Windows\\SelectLevelWindow\\LevelSelectionView.cs"
+  ],
+  "Уровень закрыт": [
+    "Assets\\Scripts\\Windows\\SelectLevelWindow\\LevelSelectionView.cs"
+  ],
+  "Начать экспедицию": [
+    "Assets\\Scripts\\Windows\\SelectLevelWindow\\LevelSelectionView.cs",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\SelectLevelWindow.prefab"
+  ],
+  "Скоро": [
+    "Assets\\Scripts\\Windows\\SelectLevelWindow\\LevelSelectionView.cs"
+  ],
+  "Уровень открыт • можно отправляться": [
+    "Assets\\Scripts\\Windows\\SelectLevelWindow\\LevelSelectionView.cs",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\SelectLevelWindow.prefab"
+  ],
+  "Этот уровень ещё готовится": [
+    "Assets\\Scripts\\Windows\\SelectLevelWindow\\LevelSelectionView.cs"
+  ],
+  "Пройдите «": [
+    "Assets\\Scripts\\Windows\\SelectLevelWindow\\LevelSelectionView.cs"
+  ],
+  "Лёгкая": [
+    "Assets\\Scripts\\Windows\\SelectLevelWindow\\LevelSelectionView.cs",
+    "Assets\\Prefabs\\Windows\\SelectLevelWindow\\LevelCard.prefab",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\SelectLevelWindow.prefab"
+  ],
+  "Средняя": [
+    "Assets\\Scripts\\Windows\\SelectLevelWindow\\LevelSelectionView.cs"
+  ],
+  "Сложная": [
+    "Assets\\Scripts\\Windows\\SelectLevelWindow\\LevelSelectionView.cs"
+  ],
+  "Экстремальная": [
+    "Assets\\Scripts\\Windows\\SelectLevelWindow\\LevelSelectionView.cs"
+  ],
+  "День {0}": [
+    "Assets\\DevotionSDK\\Scripts\\DailyReward\\DailyGiftWIndow.cs"
+  ],
+  "ПОЛУЧЕНО": [
+    "Assets\\DevotionSDK\\Scripts\\DailyReward\\DailyGiftWIndow.cs",
+    "Assets\\DevotionSDK\\Scripts\\DailyReward\\DailyGiftWIndow.cs",
+    "Assets\\DevotionSDK\\Scripts\\UI\\PlaytimeGiftWindow.cs"
+  ],
+  "СЕГОДНЯ": [
+    "Assets\\DevotionSDK\\Scripts\\DailyReward\\DailyGiftWIndow.cs"
+  ],
+  "СЛЕДУЮЩИЙ": [
+    "Assets\\DevotionSDK\\Scripts\\DailyReward\\DailyGiftWIndow.cs"
+  ],
+  "СКОРО": [
+    "Assets\\DevotionSDK\\Scripts\\DailyReward\\DailyGiftWIndow.cs"
+  ],
+  "Ежедневный подарок": [
+    "Assets\\DevotionSDK\\Scripts\\DailyReward\\DailyGiftWIndow.cs",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\DailyGiftWindow.prefab"
+  ],
+  "Пусто": [
+    "Assets\\DevotionSDK\\Scripts\\DailyReward\\DailyRewardConfig.cs"
+  ],
+  "Незеритовый шлем": [
+    "Assets\\DevotionSDK\\Scripts\\UI\\FortuneWheelWindow.cs",
+    "Assets\\ScriptableObjects\\Configs\\Equipment\\Armor\\NetheriteHelmet.asset"
+  ],
+  "Железо x15": [
+    "Assets\\DevotionSDK\\Scripts\\UI\\FortuneWheelWindow.cs"
+  ],
+  "Алмазный меч": [
+    "Assets\\DevotionSDK\\Scripts\\UI\\FortuneWheelWindow.cs",
+    "Assets\\ScriptableObjects\\Configs\\Equipment\\Swords\\DiamondSwordItem.asset"
+  ],
+  "Золото x10": [
+    "Assets\\DevotionSDK\\Scripts\\UI\\FortuneWheelWindow.cs"
+  ],
+  "Алмазная броня": [
+    "Assets\\DevotionSDK\\Scripts\\UI\\FortuneWheelWindow.cs",
+    "Assets\\Scenes\\SampleScene.unity"
+  ],
+  "Алмазы x5": [
+    "Assets\\DevotionSDK\\Scripts\\UI\\FortuneWheelWindow.cs"
+  ],
+  "Крутить! ({0})": [
+    "Assets\\DevotionSDK\\Scripts\\UI\\FortuneWheelWindow.cs"
+  ],
+  "Нет вращений": [
+    "Assets\\DevotionSDK\\Scripts\\UI\\FortuneWheelWindow.cs"
+  ],
+  "Спин за рекламу": [
+    "Assets\\DevotionSDK\\Scripts\\UI\\FortuneWheelWindow.cs"
+  ],
+  "Доступно вращений: {0}": [
+    "Assets\\DevotionSDK\\Scripts\\UI\\FortuneWheelWindow.cs"
+  ],
+  "Бесплатный спин доступен": [
+    "Assets\\DevotionSDK\\Scripts\\UI\\FortuneWheelWindow.cs"
+  ],
+  "До бесплатного спина: {0}": [
+    "Assets\\DevotionSDK\\Scripts\\UI\\FortuneWheelWindow.cs"
+  ],
+  "Алмазы x{0}": [
+    "Assets\\DevotionSDK\\Scripts\\UI\\FortuneWheelWindow.cs"
+  ],
+  " · Выпить [R]": [
+    "Assets\\DevotionSDK\\Scripts\\UI\\PlayingWindow.cs"
+  ],
+  "{0} МИНУТ ИГРЫ": [
+    "Assets\\DevotionSDK\\Scripts\\UI\\PlaytimeGiftWindow.cs"
+  ],
+  "Спасибо за игру!": [
+    "Assets\\DevotionSDK\\Scripts\\UI\\PlaytimeGiftWindow.cs"
+  ],
+  "Через ": [
+    "Assets\\DevotionSDK\\Scripts\\UI\\PlaytimeGiftWindow.cs"
+  ],
+  "Доступна сейчас": [
+    "Assets\\DevotionSDK\\Scripts\\UI\\PlaytimeGiftWindow.cs"
+  ],
+  "НЕДОСТУПНО": [
+    "Assets\\DevotionSDK\\Scripts\\UI\\PlaytimeGiftWindow.cs"
+  ],
+  "МОЖНО ЗАБРАТЬ": [
+    "Assets\\DevotionSDK\\Scripts\\UI\\PlaytimeGiftWindow.cs"
+  ],
+  "СКОРО ОТКРОЕТСЯ": [
+    "Assets\\DevotionSDK\\Scripts\\UI\\PlaytimeGiftWindow.cs"
+  ],
+  "Получено подарков: ": [
+    "Assets\\DevotionSDK\\Scripts\\UI\\PlaytimeGiftWindow.cs"
+  ],
+  "Все подарки получены!": [
+    "Assets\\DevotionSDK\\Scripts\\UI\\PlaytimeGiftWindow.cs"
+  ],
+  "Подарок пока недоступен": [
+    "Assets\\DevotionSDK\\Scripts\\UI\\PlaytimeGiftWindow.cs"
+  ],
+  "Подарок готов — забирайте!": [
+    "Assets\\DevotionSDK\\Scripts\\UI\\PlaytimeGiftWindow.cs"
+  ],
+  "Следующий подарок через ": [
+    "Assets\\DevotionSDK\\Scripts\\UI\\PlaytimeGiftWindow.cs"
+  ],
+  "Заголовок инфо": [
+    "Assets\\Scenes\\PlayerV2.0.prefab"
+  ],
+  "Скажи мне, друг. Когда Саруман Мудрый успел променять мудрость на безумие!?": [
+    "Assets\\Scenes\\PlayerV2.0.prefab"
+  ],
+  "Создать": [
+    "Assets\\Scenes\\SampleScene.unity",
+    "Assets\\Resources\\Prefabs\\Windows\\Crafting\\CraftingWindow.prefab",
+    "Assets\\Prefabs\\Windows\\Crafting\\CraftingWindow.prefab"
+  ],
+  "Увеличивает броню на 1 ед.": [
+    "Assets\\Scenes\\SampleScene.unity"
+  ],
+  "Запас дров": [
+    "Assets\\ScriptableObjects\\GameConfig.asset"
+  ],
+  "Соберите дубовую древесину: {0}.\nПомогите деревне запасти стройматериалы.": [
+    "Assets\\ScriptableObjects\\GameConfig.asset",
+    "Assets\\ScriptableObjects\\GameConfig.asset",
+    "Assets\\ScriptableObjects\\GameConfig.asset"
+  ],
+  "Лесной поставщик": [
+    "Assets\\ScriptableObjects\\GameConfig.asset"
+  ],
+  "Хозяин лесосеки": [
+    "Assets\\ScriptableObjects\\GameConfig.asset"
+  ],
+  "Первый фундамент": [
+    "Assets\\ScriptableObjects\\GameConfig.asset"
+  ],
+  "Соберите камень: {0}.\nКрепким постройкам нужен надёжный фундамент.": [
+    "Assets\\ScriptableObjects\\GameConfig.asset",
+    "Assets\\ScriptableObjects\\GameConfig.asset",
+    "Assets\\ScriptableObjects\\GameConfig.asset"
+  ],
+  "Каменное дело": [
+    "Assets\\ScriptableObjects\\GameConfig.asset"
+  ],
+  "Опора деревни": [
+    "Assets\\ScriptableObjects\\GameConfig.asset"
+  ],
+  "Разжечь горн": [
+    "Assets\\ScriptableObjects\\GameConfig.asset"
+  ],
+  "Соберите угольную руду: {0}.\nКузнице нужен запас топлива.": [
+    "Assets\\ScriptableObjects\\GameConfig.asset",
+    "Assets\\ScriptableObjects\\GameConfig.asset",
+    "Assets\\ScriptableObjects\\GameConfig.asset"
+  ],
+  "Чёрное золото": [
+    "Assets\\ScriptableObjects\\GameConfig.asset"
+  ],
+  "Жар большой кузни": [
+    "Assets\\ScriptableObjects\\GameConfig.asset"
+  ],
+  "Железная жила": [
+    "Assets\\ScriptableObjects\\GameConfig.asset"
+  ],
+  "Соберите железную руду: {0}.\nОбеспечьте мастеров материалом для снаряжения.": [
+    "Assets\\ScriptableObjects\\GameConfig.asset",
+    "Assets\\ScriptableObjects\\GameConfig.asset",
+    "Assets\\ScriptableObjects\\GameConfig.asset"
+  ],
+  "Рудный караван": [
+    "Assets\\ScriptableObjects\\GameConfig.asset"
+  ],
+  "Стальной характер": [
+    "Assets\\ScriptableObjects\\GameConfig.asset"
+  ],
+  "Золотая находка": [
+    "Assets\\ScriptableObjects\\GameConfig.asset"
+  ],
+  "Соберите золотую руду: {0}.\nИщите ценные залежи в экспедициях.": [
+    "Assets\\ScriptableObjects\\GameConfig.asset",
+    "Assets\\ScriptableObjects\\GameConfig.asset",
+    "Assets\\ScriptableObjects\\GameConfig.asset"
+  ],
+  "Старатель": [
+    "Assets\\ScriptableObjects\\GameConfig.asset"
+  ],
+  "Золотой запас": [
+    "Assets\\ScriptableObjects\\GameConfig.asset"
+  ],
+  "Синий огонёк": [
+    "Assets\\ScriptableObjects\\GameConfig.asset"
+  ],
+  "Соберите алмазы: {0}.\nИсследуйте редкие залежи в глубине шахты.": [
+    "Assets\\ScriptableObjects\\GameConfig.asset",
+    "Assets\\ScriptableObjects\\GameConfig.asset",
+    "Assets\\ScriptableObjects\\GameConfig.asset"
+  ],
+  "Алмазный след": [
+    "Assets\\ScriptableObjects\\GameConfig.asset"
+  ],
+  "Сокровища глубин": [
+    "Assets\\ScriptableObjects\\GameConfig.asset"
+  ],
+  "Ночной дозор": [
+    "Assets\\ScriptableObjects\\GameConfig.asset"
+  ],
+  "Победите зомби: {0}.\nЗащитите окрестности от нежити.": [
+    "Assets\\ScriptableObjects\\GameConfig.asset",
+    "Assets\\ScriptableObjects\\GameConfig.asset",
+    "Assets\\ScriptableObjects\\GameConfig.asset"
+  ],
+  "Страж деревни": [
+    "Assets\\ScriptableObjects\\GameConfig.asset"
+  ],
+  "Гроза нежити": [
+    "Assets\\ScriptableObjects\\GameConfig.asset"
+  ],
+  "Костяной патруль": [
+    "Assets\\ScriptableObjects\\GameConfig.asset"
+  ],
+  "Победите скелетов: {0}.\nСократите ряды вражеских стрелков.": [
+    "Assets\\ScriptableObjects\\GameConfig.asset",
+    "Assets\\ScriptableObjects\\GameConfig.asset",
+    "Assets\\ScriptableObjects\\GameConfig.asset"
+  ],
+  "Сломанные стрелы": [
+    "Assets\\ScriptableObjects\\GameConfig.asset"
+  ],
+  "Тишина в склепе": [
+    "Assets\\ScriptableObjects\\GameConfig.asset"
+  ],
+  "Паутина на тропе": [
+    "Assets\\ScriptableObjects\\GameConfig.asset"
+  ],
+  "Победите пауков: {0}.\nОсвободите лесные тропы от опасных обитателей.": [
+    "Assets\\ScriptableObjects\\GameConfig.asset",
+    "Assets\\ScriptableObjects\\GameConfig.asset",
+    "Assets\\ScriptableObjects\\GameConfig.asset"
+  ],
+  "Чистые тропы": [
+    "Assets\\ScriptableObjects\\GameConfig.asset"
+  ],
+  "Конец паучьей стаи": [
+    "Assets\\ScriptableObjects\\GameConfig.asset"
+  ],
+  "Волчий след": [
+    "Assets\\ScriptableObjects\\GameConfig.asset"
+  ],
+  "Победите волков: {0}.\nСдержите хищников в диких землях.": [
+    "Assets\\ScriptableObjects\\GameConfig.asset",
+    "Assets\\ScriptableObjects\\GameConfig.asset",
+    "Assets\\ScriptableObjects\\GameConfig.asset"
+  ],
+  "Охотник на стаю": [
+    "Assets\\ScriptableObjects\\GameConfig.asset"
+  ],
+  "Хозяин чащи": [
+    "Assets\\ScriptableObjects\\GameConfig.asset"
+  ],
+  "Дать отпор": [
+    "Assets\\ScriptableObjects\\GameConfig.asset"
+  ],
+  "Победите разбойников с топорами: {0}.\nЛучники-разбойники не входят в эту цель.": [
+    "Assets\\ScriptableObjects\\GameConfig.asset",
+    "Assets\\ScriptableObjects\\GameConfig.asset",
+    "Assets\\ScriptableObjects\\GameConfig.asset"
+  ],
+  "Сорвать набег": [
+    "Assets\\ScriptableObjects\\GameConfig.asset"
+  ],
+  "Щит поселения": [
+    "Assets\\ScriptableObjects\\GameConfig.asset"
+  ],
+  "Первое заклятие": [
+    "Assets\\ScriptableObjects\\GameConfig.asset"
+  ],
+  "Победите ведьм: {0}.\nОстерегайтесь их зелий в опасных экспедициях.": [
+    "Assets\\ScriptableObjects\\GameConfig.asset",
+    "Assets\\ScriptableObjects\\GameConfig.asset",
+    "Assets\\ScriptableObjects\\GameConfig.asset"
+  ],
+  "Охота на ведьм": [
+    "Assets\\ScriptableObjects\\GameConfig.asset"
+  ],
+  "Рассеять проклятие": [
+    "Assets\\ScriptableObjects\\GameConfig.asset"
+  ],
+  "Поселение": [
+    "Assets\\ScriptableObjects\\Levels\\Level1_Village.asset",
+    "Assets\\Prefabs\\Windows\\SelectLevelWindow\\LevelCard.prefab",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\SelectLevelWindow.prefab",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\SelectLevelWindow.prefab"
+  ],
+  "Тихая деревня среди холмов. Исследуйте окрестности и соберите первые ресурсы.": [
+    "Assets\\ScriptableObjects\\Levels\\Level1_Village.asset",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\SelectLevelWindow.prefab"
+  ],
+  "Песчаный карьер": [
+    "Assets\\ScriptableObjects\\Levels\\Level2_Sand.asset",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\SelectLevelWindow.prefab"
+  ],
+  "Солнечный карьер среди песчаных террас. Запаситесь материалами для новых построек.": [
+    "Assets\\ScriptableObjects\\Levels\\Level2_Sand.asset"
+  ],
+  "Заброшенная шахта": [
+    "Assets\\ScriptableObjects\\Levels\\Level3_Mine.asset",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\SelectLevelWindow.prefab"
+  ],
+  "Спуститесь к залежам руды. Победите обитателей шахты и найдите выход.": [
+    "Assets\\ScriptableObjects\\Levels\\Level3_Mine.asset"
+  ],
+  "Лесная чаща": [
+    "Assets\\ScriptableObjects\\Levels\\Level4_Forest.asset",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\SelectLevelWindow.prefab"
+  ],
+  "Тропы среди густого леса. Исследуйте поляну и соберите полезные ресурсы.": [
+    "Assets\\ScriptableObjects\\Levels\\Level4_Forest.asset"
+  ],
+  "Алхимическая лаборатория": [
+    "Assets\\ScriptableObjects\\Configs\\Buildings\\AlchemyBuilding.asset"
+  ],
+  "Ферма": [
+    "Assets\\ScriptableObjects\\Configs\\Buildings\\FarmBuilding.asset"
+  ],
+  "Мастерская": [
+    "Assets\\ScriptableObjects\\Configs\\Buildings\\LumberjackBuilding.asset",
+    "Assets\\Resources\\Prefabs\\Windows\\Crafting\\CraftingWindow.prefab",
+    "Assets\\Prefabs\\Windows\\Crafting\\CraftingWindow.prefab",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\PlayingWindow.prefab"
+  ],
+  "Кузница": [
+    "Assets\\ScriptableObjects\\Configs\\Buildings\\SmithBuilding.asset"
+  ],
+  "Хранилище": [
+    "Assets\\ScriptableObjects\\Configs\\Buildings\\StorageBuilding.asset",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\StorageWindow.prefab"
+  ],
+  "Уголь": [
+    "Assets\\ScriptableObjects\\Configs\\Drops\\CoalItem.asset",
+    "Assets\\ScriptableObjects\\Configs\\Drops\\CoalOre.asset",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\DailyGiftWindow.prefab",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\SelectLevelWindow.prefab",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\ShopWindow.prefab"
+  ],
+  "Алмазный нагрудник": [
+    "Assets\\ScriptableObjects\\Configs\\Drops\\DiamondArmor.asset"
+  ],
+  "Алмазная руда": [
+    "Assets\\ScriptableObjects\\Configs\\Drops\\DiamondOre.asset",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\DailyGiftWindow.prefab",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\DailyGiftWindow.prefab",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\ShopWindow.prefab"
+  ],
+  "Слеза гаста": [
+    "Assets\\ScriptableObjects\\Configs\\Drops\\GhastTear.asset",
+    "Assets\\ScriptableObjects\\Configs\\Drops\\GhastTear.asset"
+  ],
+  "Стекло": [
+    "Assets\\ScriptableObjects\\Configs\\Drops\\Glass.asset"
+  ],
+  "Стекло — материал для переработки и улучшений.": [
+    "Assets\\ScriptableObjects\\Configs\\Drops\\Glass.asset"
+  ],
+  "Пузырёк": [
+    "Assets\\ScriptableObjects\\Configs\\Drops\\GlassBottle.asset",
+    "Assets\\ScriptableObjects\\Configs\\Drops\\GlassBottle.asset"
+  ],
+  "Сверкающий ломтик арбуза": [
+    "Assets\\ScriptableObjects\\Configs\\Drops\\GlisteringMelon.asset",
+    "Assets\\ScriptableObjects\\Configs\\Drops\\GlisteringMelon.asset"
+  ],
+  "Золотой слиток": [
+    "Assets\\ScriptableObjects\\Configs\\Drops\\GoldIngot.asset"
+  ],
+  "Золотой слиток — материал для переработки и улучшений.": [
+    "Assets\\ScriptableObjects\\Configs\\Drops\\GoldIngot.asset"
+  ],
+  "Золотая руда": [
+    "Assets\\ScriptableObjects\\Configs\\Drops\\GoldOre.asset",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\DailyGiftWindow.prefab",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\PlaytimeGiftWindow.prefab"
+  ],
+  "Зелье лечения": [
+    "Assets\\ScriptableObjects\\Configs\\Drops\\HealingPotion.asset"
+  ],
+  "Восстанавливает 40 здоровья. Выберите в быстром слоте и нажмите R, ЛКМ или «Выпить». При полном здоровье не расходуется.": [
+    "Assets\\ScriptableObjects\\Configs\\Drops\\HealingPotion.asset"
+  ],
+  "Железный слиток": [
+    "Assets\\ScriptableObjects\\Configs\\Drops\\IronIngot.asset"
+  ],
+  "1 руда → 1 слиток. Один таймер: 7 с.": [
+    "Assets\\ScriptableObjects\\Configs\\Drops\\IronIngot.asset"
+  ],
+  "Железная руда": [
+    "Assets\\ScriptableObjects\\Configs\\Drops\\IronOre.asset",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\DailyGiftWindow.prefab",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\ShopWindow.prefab"
+  ],
+  "Кожа": [
+    "Assets\\ScriptableObjects\\Configs\\Drops\\Leather.asset"
+  ],
+  "Кожа — материал для переработки и улучшений.": [
+    "Assets\\ScriptableObjects\\Configs\\Drops\\Leather.asset"
+  ],
+  "Ломтик арбуза": [
+    "Assets\\ScriptableObjects\\Configs\\Drops\\MelonSlice.asset",
+    "Assets\\ScriptableObjects\\Configs\\Drops\\MelonSlice.asset"
+  ],
+  "Незеритовый слиток": [
+    "Assets\\ScriptableObjects\\Configs\\Drops\\NetheriteIngot.asset"
+  ],
+  "Незеритовый слиток — материал для переработки и улучшений.": [
+    "Assets\\ScriptableObjects\\Configs\\Drops\\NetheriteIngot.asset"
+  ],
+  "Незерит": [
+    "Assets\\ScriptableObjects\\Configs\\Drops\\NetheriteOre.asset"
+  ],
+  "Незеритовый обломок": [
+    "Assets\\ScriptableObjects\\Configs\\Drops\\NetheriteScrap.asset"
+  ],
+  "Незеритовый обломок — материал для переработки и улучшений.": [
+    "Assets\\ScriptableObjects\\Configs\\Drops\\NetheriteScrap.asset"
+  ],
+  "Адский нарост": [
+    "Assets\\ScriptableObjects\\Configs\\Drops\\NetherWart.asset",
+    "Assets\\ScriptableObjects\\Configs\\Drops\\NetherWart.asset"
+  ],
+  "Доски": [
+    "Assets\\ScriptableObjects\\Configs\\Drops\\Planks.asset"
+  ],
+  "Зелье регенерации": [
+    "Assets\\ScriptableObjects\\Configs\\Drops\\RegenerationPotion.asset"
+  ],
+  "Восстанавливает 3 здоровья в секунду в течение 10 с. R / ЛКМ / «Выпить». Повторный приём обновляет длительность.": [
+    "Assets\\ScriptableObjects\\Configs\\Drops\\RegenerationPotion.asset"
+  ],
+  "Песок": [
+    "Assets\\ScriptableObjects\\Configs\\Drops\\Sand.asset",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\DailyGiftWindow.prefab"
+  ],
+  "Зелье скорости": [
+    "Assets\\ScriptableObjects\\Configs\\Drops\\SpeedPotion.asset"
+  ],
+  "Скорость передвижения +30% на 20 с. R / ЛКМ / «Выпить». Эффекты скорости не складываются.": [
+    "Assets\\ScriptableObjects\\Configs\\Drops\\SpeedPotion.asset"
+  ],
+  "Палка": [
+    "Assets\\ScriptableObjects\\Configs\\Drops\\Stick.asset"
+  ],
+  "Палка — материал для переработки и улучшений.": [
+    "Assets\\ScriptableObjects\\Configs\\Drops\\Stick.asset"
+  ],
+  "Камень": [
+    "Assets\\ScriptableObjects\\Configs\\Drops\\Stone.asset",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\DailyGiftWindow.prefab",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\PlaytimeGiftWindow.prefab",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\SelectLevelWindow.prefab",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\SelectLevelWindow.prefab",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\ShopWindow.prefab"
+  ],
+  "Нить": [
+    "Assets\\ScriptableObjects\\Configs\\Drops\\String.asset"
+  ],
+  "Нить — материал для переработки и улучшений.": [
+    "Assets\\ScriptableObjects\\Configs\\Drops\\String.asset"
+  ],
+  "Сахар": [
+    "Assets\\ScriptableObjects\\Configs\\Drops\\Sugar.asset",
+    "Assets\\ScriptableObjects\\Configs\\Drops\\Sugar.asset"
+  ],
+  "Сахарный тростник": [
+    "Assets\\ScriptableObjects\\Configs\\Drops\\SugarCane.asset",
+    "Assets\\ScriptableObjects\\Configs\\Drops\\SugarCane.asset"
+  ],
+  "Пшеница": [
+    "Assets\\ScriptableObjects\\Configs\\Drops\\Wheat.asset",
+    "Assets\\ScriptableObjects\\Configs\\Drops\\Wheat.asset"
+  ],
+  "Берёза": [
+    "Assets\\ScriptableObjects\\Configs\\Drops\\WoodBirch.asset",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\SelectLevelWindow.prefab",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\ShopWindow.prefab"
+  ],
+  "Тёмный дуб": [
+    "Assets\\ScriptableObjects\\Configs\\Drops\\WoodDark.asset"
+  ],
+  "Дуб": [
+    "Assets\\ScriptableObjects\\Configs\\Drops\\WoodOak.asset",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\PlaytimeGiftWindow.prefab",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\SelectLevelWindow.prefab",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\SelectLevelWindow.prefab",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\ShopWindow.prefab"
+  ],
+  "Шерсть": [
+    "Assets\\ScriptableObjects\\Configs\\Drops\\Wool.asset"
+  ],
+  "Шерсть — материал для переработки и улучшений.": [
+    "Assets\\ScriptableObjects\\Configs\\Drops\\Wool.asset"
+  ],
+  "Лук": [
+    "Assets\\ScriptableObjects\\Configs\\Equipment\\BowItem.asset"
+  ],
+  "Алмазные ботинки": [
+    "Assets\\ScriptableObjects\\Configs\\Equipment\\Armor\\DiamondBoots.asset"
+  ],
+  "Алмазный шлем": [
+    "Assets\\ScriptableObjects\\Configs\\Equipment\\Armor\\DiamondHelmet.asset"
+  ],
+  "Алмазные поножи": [
+    "Assets\\ScriptableObjects\\Configs\\Equipment\\Armor\\DiamondLeggings.asset"
+  ],
+  "Золотые ботинки": [
+    "Assets\\ScriptableObjects\\Configs\\Equipment\\Armor\\GoldenBoots.asset"
+  ],
+  "Золотой нагрудник": [
+    "Assets\\ScriptableObjects\\Configs\\Equipment\\Armor\\GoldenChestplate.asset"
+  ],
+  "Золотой шлем": [
+    "Assets\\ScriptableObjects\\Configs\\Equipment\\Armor\\GoldenHelmet.asset"
+  ],
+  "Золотые поножи": [
+    "Assets\\ScriptableObjects\\Configs\\Equipment\\Armor\\GoldenLeggings.asset"
+  ],
+  "Железные ботинки": [
+    "Assets\\ScriptableObjects\\Configs\\Equipment\\Armor\\IronBoots.asset"
+  ],
+  "Железный нагрудник": [
+    "Assets\\ScriptableObjects\\Configs\\Equipment\\Armor\\IronChestplate.asset",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\ShopWindow.prefab"
+  ],
+  "Железный шлем": [
+    "Assets\\ScriptableObjects\\Configs\\Equipment\\Armor\\IronHelmet.asset",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\ShopWindow.prefab"
+  ],
+  "Железные поножи": [
+    "Assets\\ScriptableObjects\\Configs\\Equipment\\Armor\\IronLeggings.asset"
+  ],
+  "Незеритовые ботинки": [
+    "Assets\\ScriptableObjects\\Configs\\Equipment\\Armor\\NetheriteBoots.asset"
+  ],
+  "Незеритовый нагрудник": [
+    "Assets\\ScriptableObjects\\Configs\\Equipment\\Armor\\NetheriteChestplate.asset"
+  ],
+  "Незеритовые поножи": [
+    "Assets\\ScriptableObjects\\Configs\\Equipment\\Armor\\NetheriteLeggings.asset"
+  ],
+  "Алмазная кирка": [
+    "Assets\\ScriptableObjects\\Configs\\Equipment\\Pickaxe\\DiamondPickaxe.asset"
+  ],
+  "Железная кирка": [
+    "Assets\\ScriptableObjects\\Configs\\Equipment\\Pickaxe\\IronPickaxe.asset"
+  ],
+  "Незеритовая кирка": [
+    "Assets\\ScriptableObjects\\Configs\\Equipment\\Pickaxe\\NetherithePickaxe.asset"
+  ],
+  "Деревянная кирка": [
+    "Assets\\ScriptableObjects\\Configs\\Equipment\\Pickaxe\\WoodenPickaxe.asset"
+  ],
+  "Золотой меч": [
+    "Assets\\ScriptableObjects\\Configs\\Equipment\\Swords\\GoldenSwordItem.asset"
+  ],
+  "Железный меч": [
+    "Assets\\ScriptableObjects\\Configs\\Equipment\\Swords\\IronSwordItem.asset",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\ShopWindow.prefab"
+  ],
+  "Незеритовый меч": [
+    "Assets\\ScriptableObjects\\Configs\\Equipment\\Swords\\NetheritheSwordItem.asset"
+  ],
+  "Каменный меч": [
+    "Assets\\ScriptableObjects\\Configs\\Equipment\\Swords\\StoneSwordItem.asset"
+  ],
+  "Деревянный меч": [
+    "Assets\\ScriptableObjects\\Configs\\Equipment\\Swords\\WoodSwordItem.asset"
+  ],
+  "После возрождения — 3 секунды защиты": [
+    "Assets\\Resources\\UI\\DeathWindow.prefab"
+  ],
+  "ВОЗРОДИТЬСЯ ЗА РЕКЛАМУ": [
+    "Assets\\Resources\\UI\\DeathWindow.prefab"
+  ],
+  "Продолжите сражение или вернитесь в деревню.": [
+    "Assets\\Resources\\UI\\DeathWindow.prefab"
+  ],
+  "Посмотрите рекламу, чтобы продолжить бой\nс полным здоровьем на месте гибели.": [
+    "Assets\\Resources\\UI\\DeathWindow.prefab"
+  ],
+  "ВЫ ПОГИБЛИ": [
+    "Assets\\Resources\\UI\\DeathWindow.prefab"
+  ],
+  "ВЕРНУТЬСЯ В ДЕРЕВНЮ": [
+    "Assets\\Resources\\UI\\DeathWindow.prefab"
+  ],
+  "ЕЩЁ ОДИН ШАНС": [
+    "Assets\\Resources\\UI\\DeathWindow.prefab"
+  ],
+  "Ресурс": [
+    "Assets\\Resources\\UI\\ShopOffer.prefab",
+    "Assets\\Prefabs\\Windows\\WindowAchievements.prefab",
+    "Assets\\Prefabs\\Windows\\WindowAchievements.prefab",
+    "Assets\\Prefabs\\Windows\\SelectLevelWindow\\ResourceChip.prefab"
+  ],
+  "Цена": [
+    "Assets\\Resources\\UI\\ShopOffer.prefab"
+  ],
+  "Вкладка": [
+    "Assets\\Resources\\Prefabs\\Windows\\Crafting\\CraftingTabButton.prefab",
+    "Assets\\Prefabs\\Windows\\Crafting\\CraftingTabButton.prefab"
+  ],
+  "РЕЦЕПТЫ": [
+    "Assets\\Resources\\Prefabs\\Windows\\Crafting\\CraftingWindow.prefab",
+    "Assets\\Prefabs\\Windows\\Crafting\\CraftingWindow.prefab"
+  ],
+  "Один таймер": [
+    "Assets\\Resources\\Prefabs\\Windows\\Crafting\\CraftingWindow.prefab",
+    "Assets\\Prefabs\\Windows\\Crafting\\CraftingWindow.prefab"
+  ],
+  "Доступность зависит от уровня здания": [
+    "Assets\\Resources\\Prefabs\\Windows\\Crafting\\CraftingWindow.prefab",
+    "Assets\\Prefabs\\Windows\\Crafting\\CraftingWindow.prefab"
+  ],
+  "НУЖНЫ РЕСУРСЫ": [
+    "Assets\\Resources\\Prefabs\\Windows\\Crafting\\CraftingWindow.prefab",
+    "Assets\\Prefabs\\Windows\\Crafting\\CraftingWindow.prefab",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\BuildingWindow.prefab"
+  ],
+  "Всё": [
+    "Assets\\Resources\\Prefabs\\Windows\\Crafting\\CraftingWindow.prefab",
+    "Assets\\Prefabs\\Windows\\Crafting\\CraftingWindow.prefab"
+  ],
+  "Создавайте снаряжение из добытых ресурсов": [
+    "Assets\\Resources\\Prefabs\\Windows\\Crafting\\CraftingWindow.prefab",
+    "Assets\\Prefabs\\Windows\\Crafting\\CraftingWindow.prefab"
+  ],
+  "Получить": [
+    "Assets\\Prefabs\\Achievements\\AchievementItem.prefab"
+  ],
+  "Нужно больше железа": [
+    "Assets\\Prefabs\\Achievements\\AchievementItem.prefab"
+  ],
+  "Выполнено!": [
+    "Assets\\Prefabs\\Achievements\\AchievementItem.prefab"
+  ],
+  "Добыть 2 угля": [
+    "Assets\\Prefabs\\Achievements\\AchievementItem.prefab"
+  ],
+  "Название задания": [
+    "Assets\\Prefabs\\Achievements\\AchievementPopup.prefab"
+  ],
+  "Е": [
+    "Assets\\Prefabs\\Camera\\BillboardCanvas.prefab"
+  ],
+  "ВАША НАГРАДА": [
+    "Assets\\Prefabs\\Windows\\WindowAchievements.prefab"
+  ],
+  "Завершено": [
+    "Assets\\Prefabs\\Windows\\WindowAchievements.prefab"
+  ],
+  "Можно забрать": [
+    "Assets\\Prefabs\\Windows\\WindowAchievements.prefab"
+  ],
+  "Выберите поручение": [
+    "Assets\\Prefabs\\Windows\\WindowAchievements.prefab"
+  ],
+  "Забрать награду": [
+    "Assets\\Prefabs\\Windows\\WindowAchievements.prefab"
+  ],
+  "Журнал заданий": [
+    "Assets\\Prefabs\\Windows\\WindowAchievements.prefab",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\PlayingWindow.prefab"
+  ],
+  "Ваши цели, прогресс и награды": [
+    "Assets\\Prefabs\\Windows\\WindowAchievements.prefab"
+  ],
+  "Начать": [
+    "Assets\\Prefabs\\Windows\\SelectLevelWindow\\LevelDiscription.prefab"
+  ],
+  "Награда за прохождение:": [
+    "Assets\\Prefabs\\Windows\\SelectLevelWindow\\LevelDiscription.prefab"
+  ],
+  "Добыча:": [
+    "Assets\\Prefabs\\Windows\\SelectLevelWindow\\LevelDiscription.prefab"
+  ],
+  "Легко": [
+    "Assets\\Prefabs\\Windows\\SelectLevelWindow\\LevelDiscription.prefab"
+  ],
+  "Внешний вид здания": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\BuildingWindow.prefab"
+  ],
+  "Выберите здание": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\BuildingWindow.prefab"
+  ],
+  "У этого здания нет новых рецептов.": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\BuildingWindow.prefab"
+  ],
+  "Выберите здание на участке": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\BuildingWindow.prefab"
+  ],
+  "Строительство": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\BuildingWindow.prefab"
+  ],
+  "Заходите каждый день — собирайте всю неделю наград": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\DailyGiftWindow.prefab"
+  ],
+  "День 6": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\DailyGiftWindow.prefab"
+  ],
+  "День 2": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\DailyGiftWindow.prefab"
+  ],
+  "Забрать": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\DailyGiftWindow.prefab"
+  ],
+  "День 1": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\DailyGiftWindow.prefab"
+  ],
+  "День 4": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\DailyGiftWindow.prefab"
+  ],
+  "День 7": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\DailyGiftWindow.prefab"
+  ],
+  "День 5": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\DailyGiftWindow.prefab"
+  ],
+  "День 3": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\DailyGiftWindow.prefab"
+  ],
+  "Награда за новый день": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\DailyGiftWindow.prefab"
+  ],
+  "3 вращ.  •  15 зол. руды": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\FortuneWheelWindow.prefab"
+  ],
+  "ДОПОЛНИТЕЛЬНЫЕ ПОПЫТКИ": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\FortuneWheelWindow.prefab"
+  ],
+  "5 вращ.  •  25 зол. руды": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\FortuneWheelWindow.prefab"
+  ],
+  "Золотая руда: 0": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\FortuneWheelWindow.prefab",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\ShopWindow.prefab"
+  ],
+  "Первое вращение бесплатно": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\FortuneWheelWindow.prefab"
+  ],
+  "Колесо удачи": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\FortuneWheelWindow.prefab",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\PlayingWindow.prefab"
+  ],
+  "Крутить!": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\FortuneWheelWindow.prefab"
+  ],
+  "Крутите колесо и собирайте добычу!\nПредметы попадут в инвентарь.": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\FortuneWheelWindow.prefab"
+  ],
+  "10 вращ.  •  50 зол. руды": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\FortuneWheelWindow.prefab"
+  ],
+  "1 вращ.  •  5 зол. руды": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\FortuneWheelWindow.prefab"
+  ],
+  "Ваншот": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\GodModeWindow.prefab"
+  ],
+  "Вариант": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\GodModeWindow.prefab",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\GodModeWindow.prefab"
+  ],
+  "Неуязвиомость": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\GodModeWindow.prefab"
+  ],
+  "Отлично!": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\InfoPopupWindow.prefab"
+  ],
+  "Ваши ресурсы ждут в инвентаре": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\InfoPopupWindow.prefab"
+  ],
+  "Перетаскивайте предметы в слоты экипировки и на панель быстрого доступа.": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\InventoryWindow.prefab"
+  ],
+  "Инвентарь": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\InventoryWindow.prefab"
+  ],
+  "СНАРЯЖЕНИЕ": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\InventoryWindow.prefab"
+  ],
+  "РЮКЗАК": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\InventoryWindow.prefab"
+  ],
+  "Награды добавятся в инвентарь при возвращении": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\LevelCompleteWindow.prefab"
+  ],
+  "Добыча и награда за прохождение": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\LevelCompleteWindow.prefab"
+  ],
+  "Экспедиция завершена": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\LevelCompleteWindow.prefab"
+  ],
+  "Забрать и вернуться": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\LevelCompleteWindow.prefab"
+  ],
+  "Удвоить • реклама": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\LevelCompleteWindow.prefab"
+  ],
+  "ЗАЧИСТКА": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\LevelProgressWindow.prefab"
+  ],
+  "Готовим экспедицию": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\LoadingWindow.prefab"
+  ],
+  "Загружаем мир и размещаем ресурсы…": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\LoadingWindow.prefab"
+  ],
+  "Настройки": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\PlayingWindow.prefab",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\SettingsWindow.prefab"
+  ],
+  "Подарок за время игры": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\PlayingWindow.prefab"
+  ],
+  "Рюкзак": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\PlayingWindow.prefab"
+  ],
+  "Магазин": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\PlayingWindow.prefab"
+  ],
+  "Выбор экспедиции": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\PlayingWindow.prefab"
+  ],
+  "Подарок за новый день": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\PlayingWindow.prefab"
+  ],
+  "Подарки за время": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\PlaytimeGiftWindow.prefab"
+  ],
+  "Больше времени в игре — больше подарков!": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\PlaytimeGiftWindow.prefab"
+  ],
+  "МОЖНО ДОБЫТЬ": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\SelectLevelWindow.prefab"
+  ],
+  "Новые экспедиции появятся здесь": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\SelectLevelWindow.prefab"
+  ],
+  "Дополнительная награда не предусмотрена": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\SelectLevelWindow.prefab"
+  ],
+  "На этом уровне нет добываемых ресурсов": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\SelectLevelWindow.prefab"
+  ],
+  "Выбор уровня": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\SelectLevelWindow.prefab"
+  ],
+  "КАРТА МИРА": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\SelectLevelWindow.prefab"
+  ],
+  "Сложность: Лёгкая": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\SelectLevelWindow.prefab"
+  ],
+  "Открыто 1 из 4": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\SelectLevelWindow.prefab"
+  ],
+  "НАГРАДА ЗА ПРОХОЖДЕНИЕ": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\SelectLevelWindow.prefab"
+  ],
+  "Выберите маршрут. Добывайте ресурсы. Открывайте новые земли.": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\SelectLevelWindow.prefab"
+  ],
+  "MINE ARENA / ЭКСПЕДИЦИИ": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\SelectLevelWindow.prefab"
+  ],
+  "Звук и управление камерой": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\SettingsWindow.prefab"
+  ],
+  "Звуковые эффекты": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\SettingsWindow.prefab"
+  ],
+  "Скорость приближения камеры колёсиком мыши. 1× — обычная.": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\SettingsWindow.prefab"
+  ],
+  "WASD — движение   • 1–5 — быстрые слоты\nНаведите курсор на иконку меню, чтобы увидеть подсказку.": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\SettingsWindow.prefab"
+  ],
+  "Язык: Русский ›": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\SettingsWindow.prefab"
+  ],
+  "Музыка": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\SettingsWindow.prefab"
+  ],
+  "Чувствительность\nприближения": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\SettingsWindow.prefab"
+  ],
+  "КАМЕРА": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\SettingsWindow.prefab"
+  ],
+  "Общая громкость": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\SettingsWindow.prefab"
+  ],
+  "2 × Золотая руда": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\ShopWindow.prefab",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\ShopWindow.prefab",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\ShopWindow.prefab"
+  ],
+  "16 × Золотая руда": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\ShopWindow.prefab"
+  ],
+  "4 × Золотая руда": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\ShopWindow.prefab"
+  ],
+  "30 × Золотая руда": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\ShopWindow.prefab"
+  ],
+  "12 × Золотая руда": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\ShopWindow.prefab"
+  ],
+  "Лавка торговца": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\ShopWindow.prefab"
+  ],
+  "20 × Золотая руда": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\ShopWindow.prefab"
+  ],
+  "3 × Золотая руда": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\ShopWindow.prefab"
+  ],
+  "ИНВЕНТАРЬ ИГРОКА": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\StorageWindow.prefab"
+  ],
+  "Вещи игрока и запасы хранилища": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\StorageWindow.prefab"
+  ],
+  "Занято ячеек: 0": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\StorageWindow.prefab",
+    "Assets\\DevotionSDK\\Prefabs\\UI\\StorageWindow.prefab"
+  ],
+  "СКЛАД": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\StorageWindow.prefab"
+  ],
+  "Блоки, материалы и снаряжение": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\StorageWindow.prefab"
+  ],
+  "Склад пока пуст": [
+    "Assets\\DevotionSDK\\Prefabs\\UI\\StorageWindow.prefab"
+  ]
+}

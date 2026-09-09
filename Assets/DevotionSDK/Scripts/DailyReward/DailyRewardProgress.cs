@@ -9,10 +9,12 @@ namespace Devotion.SDK.Services.SaveSystem.Progress
         [SerializeField] private bool initialized;
         [SerializeField] private long lastClaimedUtcDayNumber = -1;
         [SerializeField] private int nextRewardIndex;
+        [SerializeField] private bool completedCycle;
 
         public bool Initialized => initialized;
         public long LastClaimedUtcDayNumber => lastClaimedUtcDayNumber;
         public int NextRewardIndex => Mathf.Max(0, nextRewardIndex);
+        public bool CompletedCycle => completedCycle;
 
         public bool RegisterFirstSession(long todayUtcDayNumber)
         {
@@ -56,6 +58,7 @@ namespace Devotion.SDK.Services.SaveSystem.Progress
             initialized = true;
             lastClaimedUtcDayNumber = todayUtcDayNumber;
             nextRewardIndex = NormalizeRewardIndex(rewardIndex + 1, rewardsCount);
+            completedCycle = rewardIndex == rewardsCount - 1;
             Save();
         }
 

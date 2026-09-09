@@ -648,6 +648,19 @@ MonoBehaviour:
       \u044D\u043A\u0441\u043F\u0435\u0434\u0438\u0446\u0438\u044F\u0445."
     _questIcon: {fileID: -860046576579008605, guid: b4b3fbe7bfb2b6a47b8f761862bae600, type: 3}
     _difficulty: 2
+  - _itemPrize:
+      _itemConfig: {fileID: 11400000, guid: 174503acdfa447a5a7db10fed8ae85f6, type: 2}
+      distributionType: 0
+      _amountInStack: 1
+    _itemTarget: {fileID: 11400000, guid: 6fa471d2a97042dbb039372e99cd1ff8, type: 2}
+    _nameAchievementKey: quest.2000.title
+    _textTaskKey: quest.2000.description
+    _maxValueOnTask: 3
+    _stableId: 2000
+    _title: "Treasure Hunter"
+    _description: "Open all {0} chests: one in the village, desert and forest. Claim the ultra-rare Treasure Keeper sword (110 damage) in the journal."
+    _questIcon: {fileID: 21300000, guid: dda86073899eb07448c55eb25b05424f, type: 3}
+    _difficulty: 2
   localizationConfig: {fileID: 11400000, guid: 1ea6a81e3921a1740bd34a6c4435b870, type: 2}
   itemDatabase: {fileID: 11400000, guid: 613dcb0f0f8ad3b4e900c16847fb622e, type: 2}
   buildingsDatabase: {fileID: 11400000, guid: 2bef7509768102a459fb5ec5e4a7ac16, type: 2}

@@ -10,6 +10,8 @@ namespace Devotion.SDK.Services.SaveSystem.Progress
     public class PlayerProgress : BaseProgress
     {
         [SerializeField] private string _id;
+        [SerializeField] private MineArena.Cosmetics.CosmeticsProgress cosmeticsProgress;
+        public MineArena.Cosmetics.CosmeticsProgress CosmeticsProgress => cosmeticsProgress ??= new MineArena.Cosmetics.CosmeticsProgress();
         [SerializeField] private MineArena.Managers.TutorialProgress tutorialProgress;
         public MineArena.Managers.TutorialProgress TutorialProgress => tutorialProgress ??= new MineArena.Managers.TutorialProgress();
 

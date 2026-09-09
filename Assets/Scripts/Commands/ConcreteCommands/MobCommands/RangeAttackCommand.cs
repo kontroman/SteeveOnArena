@@ -15,12 +15,14 @@ namespace MineArena.Commands
     {
         private Transform firePoint;
         private GameObject projectilePrefab;
+        private Transform owner;
         public override Task Execute(object data)
         {
             if (data is RangeAttackData rangeAttackData)
             {
                 firePoint = rangeAttackData.FirePoint;
                 projectilePrefab  = rangeAttackData.ProjectilePrefab;
+                owner = rangeAttackData.Owner;
                 
                 SpawnProjectile(rangeAttackData.Target, rangeAttackData.DamageData);
             }
@@ -40,7 +42,7 @@ namespace MineArena.Commands
             Projectile projectileScript = projectile.GetComponent<Projectile>();
             if (projectileScript != null)
             {
-                projectileScript.SetParameters(target, damageData);
+                projectileScript.SetParameters(target, damageData, owner);
             }
         }
 
@@ -54,7 +56,9 @@ namespace MineArena.Commands
             }
 
             Type projectileType = projectileComponent.GetType();
-            return ObjectPoolsManager.Instance.Get(projectileType);
+            return ObjectPoolsManager.Instance != null && ObjectPoolsManager.Instance.HasPool(projectileType)
+                ? ObjectPoolsManager.Instance.Get(projectileType)
+                : Instantiate(projectilePrefab);
         }
     }
 }

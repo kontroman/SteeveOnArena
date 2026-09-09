@@ -14,9 +14,8 @@ namespace MineArena.Commands
     {
         public override Task Execute(object data)
         {
-            var damageCommand = ScriptableObject.CreateInstance<DamageCommand>();
-
-            damageCommand.Execute(data);
+            if (data is DamageData damageData)
+                damageData.Target?.TakeDamage(damageData);
 
             return Task.CompletedTask;
         }

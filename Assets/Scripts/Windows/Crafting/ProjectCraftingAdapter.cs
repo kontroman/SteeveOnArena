@@ -176,7 +176,24 @@ namespace MineArena.Windows.Crafting
             if (!string.IsNullOrWhiteSpace(item.Description))
                 return item.Description;
 
-            return item.DisplayName;
+            if (item is ArmorConfig armor)
+                return FormatDescription("Даёт +{0} к броне.", armor.Resist);
+
+            if (item is WeaponItemConfig weapon && weapon.AttackConfig != null)
+                return FormatDescription("Урон: {0:0.##}.", weapon.AttackConfig.BaseDamage);
+
+            if (item is PickaxeConfig pickaxe)
+                return FormatDescription("Время добычи: {0:0.##} с.", pickaxe.MiningDuration * Mathf.Max(1, pickaxe.MiningLoops));
+
+            return string.Empty;
+        }
+
+        private static string FormatDescription(string template, params object[] values)
+        {
+            if (LocalizationService.TryGetLocalizedText(template, out var localized))
+                template = localized;
+
+            return string.Format(System.Globalization.CultureInfo.InvariantCulture, template, values);
         }
 
         private CraftingCategory BuildBuildingCategory(BuildingConfig building, HashSet<ItemConfig> categorizedItems)

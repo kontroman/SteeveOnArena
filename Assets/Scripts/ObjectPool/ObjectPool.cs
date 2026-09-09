@@ -52,7 +52,7 @@ namespace MineArena.ObjectPools
 
         private void OnRemove(GameObject obj)
         {
-            Destroy(gameObject);
+            Destroy(obj);
         }
 
         public void ClearPool()

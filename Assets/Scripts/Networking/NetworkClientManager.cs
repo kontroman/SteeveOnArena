@@ -189,6 +189,7 @@ namespace MineArena.Networking
             connectStartedAt = Time.unscaledTime;
             lastPacketReceivedAt = Time.unscaledTime;
 
+            customization.skinId = MineArena.Cosmetics.SkinService.Progress?.Equipped ?? "default";
             var request = new ConnectRequest
             {
                 name = string.IsNullOrEmpty(playerName) ? SystemInfo.deviceName : playerName,
@@ -382,6 +383,7 @@ namespace MineArena.Networking
 
         public void SendCustomization()
         {
+            customization.skinId = MineArena.Cosmetics.SkinService.Progress?.Equipped ?? "default";
             if (!isConnected)
                 return;
 

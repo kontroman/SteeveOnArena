@@ -340,7 +340,7 @@ namespace MineArena.UI
 
         private void RemoveInventoryItem(Item item)
         {
-            if (_inventoryManager == null || item == null)
+            if (_inventoryManager == null || !InventoryManager.CanDiscard(item))
                 return;
 
             var amount = item is StackableItem stackableItem ? stackableItem.CurrentStack : 1;

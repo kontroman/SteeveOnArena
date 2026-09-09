@@ -24,20 +24,17 @@ namespace MineArena.AI
         [SerializeField] private float _explosionDelay = 1f;
         [SerializeField] private float _explosionRadius = 2f;
         [SerializeField] private LayerMask _explosionTargetMask = ~0;
-        [SerializeField, Min(0f)] private float _witchPotionSoundDelay = 0.2f;
 
         private bool _isAttack;
         private MobMovement _mobMovement;
         private MobAnimationController _mobAnimator;
         private MobTypes _mobType;
-        private ICommand _damageCommand;
         private ICommand _attackCommand;
         private IDamageable _playerDamagable;
         private DamageData _damageData;
         private Transform _playerTransform;
         private Coroutine _attackRoutine;
         private Coroutine _hitFallbackRoutine;
-        private Coroutine _attackSoundRoutine;
         private int _attackCycleId;
         private bool _attackHitApplied;
         private float _nextAttackTime;
@@ -71,7 +68,6 @@ namespace MineArena.AI
         private void Start()
         {
             _mobMovement = GetComponent<MobMovement>();
-            _damageCommand = ScriptableObject.CreateInstance<DamageCommand>();
 
             TryResolvePlayer();
 
@@ -99,9 +95,10 @@ namespace MineArena.AI
                 _damageData = new DamageData(_damage, _playerDamagable);
             }
 
-            if (!_isAttack && _mobMovement.IsInAttackRange(_playerTransform, _attackRange))
+            bool canAttack = _mobMovement.IsInAttackRange(_playerTransform, _attackRange) && HasClearAttackPath();
+            if (!_isAttack && canAttack)
                 StartAttack();
-            if (_isAttack && !_mobMovement.IsInAttackRange(_playerTransform, _attackRange))
+            if (_isAttack && !canAttack)
                 StopAttack();
 
             if (_isAttack)
@@ -139,6 +136,7 @@ namespace MineArena.AI
         private void StopAttackInternal(bool resumeMovement)
         {
             _isAttack = false;
+            GetComponent<MobFeedback>()?.CancelFuse();
 
             if (_attackRoutine != null)
             {
@@ -150,12 +148,6 @@ namespace MineArena.AI
             {
                 StopCoroutine(_hitFallbackRoutine);
                 _hitFallbackRoutine = null;
-            }
-
-            if (_attackSoundRoutine != null)
-            {
-                StopCoroutine(_attackSoundRoutine);
-                _attackSoundRoutine = null;
             }
 
             if (resumeMovement && !_isDead)
@@ -174,7 +166,7 @@ namespace MineArena.AI
                 }
 
                 _mobAnimator?.PlayAttack();
-                PlayAttackSound();
+
 
                 if (_attackType == MobAttackType.Explosion)
                 {
@@ -197,6 +189,7 @@ namespace MineArena.AI
 
         private IEnumerator RunExplosionAttack()
         {
+            GetComponent<MobFeedback>()?.Fuse(_explosionDelay);
             _attackHitApplied = false;
 
             if (_explosionDelay > 0f)
@@ -235,7 +228,8 @@ namespace MineArena.AI
 
         private void ApplyAttackHit()
         {
-            if (_isAfk || _isDead)
+            if (_isAfk || _isDead || !_isAttack || _attackHitApplied || _playerTransform == null ||
+                _mobMovement == null || !_mobMovement.IsInAttackRange(_playerTransform, _attackRange) || !HasClearAttackPath())
                 return;
 
             _attackHitApplied = true;
@@ -244,11 +238,12 @@ namespace MineArena.AI
             {
                 if (_projectilePrefab == null || _firePoint == null)
                 {
-                    (_damageCommand ??= ScriptableObject.CreateInstance<DamageCommand>()).Execute(_damageData);
+                    Debug.LogError($"Ranged mob {name} has no projectile or fire point.", this);
                     return;
                 }
 
-                var rangeAttackData = new RangeAttackData(_damageData, _projectilePrefab, _playerTransform, _firePoint);
+                var rangeAttackData = new RangeAttackData(_damageData, _projectilePrefab, _playerTransform, _firePoint) { Owner = transform };
+                GetComponent<MobFeedback>()?.Attack();
                 _attackCommand.Execute(rangeAttackData);
                 return;
             }
@@ -262,10 +257,12 @@ namespace MineArena.AI
                     _explosionTargetMask,
                     gameObject);
 
+                GetComponent<MobFeedback>()?.Explode(_explosionRadius);
                 _attackCommand.Execute(explosionData);
                 return;
             }
 
+            GetComponent<MobFeedback>()?.Attack();
             _attackCommand.Execute(_damageData);
         }
 
@@ -286,11 +283,15 @@ namespace MineArena.AI
 
         public void SetParameters(MobPreset preset)
         {
+            StopAttackInternal(false);
+            _nextAttackTime = Time.time;
+            _attackHitApplied = false;
+            _mobMovement = GetComponent<MobMovement>();
             _isDead = false;
             _mobType = preset.MobType;
             _damage = preset.Damage;
             if (TutorialService.Expedition) _damage = Mathf.Min(_damage, 3f);
-            _attackDelay = preset.AttackDelay;
+            _attackDelay = Mathf.Max(0.1f, preset.AttackDelay);
             _attackRange = preset.AttackRange;
             _rotationSpeed = preset.RotationSpeed;
             _projectilePrefab = preset.Projectile;
@@ -306,38 +307,12 @@ namespace MineArena.AI
             _damageData = new DamageData(_damage, _playerDamagable);
         }
 
-        private void PlayAttackSound()
+        private bool HasClearAttackPath()
         {
-            if (_attackSoundRoutine != null)
-                StopCoroutine(_attackSoundRoutine);
-
-            _attackSoundRoutine = StartCoroutine(PlayAttackSoundRoutine());
-        }
-
-        private IEnumerator PlayAttackSoundRoutine()
-        {
-            string soundName = null;
-            float delay = 0f;
-
-            switch (_mobType)
-            {
-                case MobTypes.Skeleton:
-                    soundName = Constants.AudioNames.Skeleton;
-                    break;
-                case MobTypes.Witch:
-                    soundName = Constants.AudioNames.WitchPotion;
-                    delay = _witchPotionSoundDelay;
-                    break;
-            }
-
-            if (string.IsNullOrWhiteSpace(soundName))
-                yield break;
-
-            if (delay > 0f)
-                yield return new WaitForSeconds(delay);
-
-            if (_isAttack && !_isDead && !_isAfk)
-                GameRoot.GetManager<AudioManager>()?.PlayEffect(soundName);
+            if (_playerTransform == null) return false;
+            Vector3 origin = _attackType == MobAttackType.Range && _firePoint != null
+                ? _firePoint.position : CombatTargeting.AimPoint(transform);
+            return CombatTargeting.HasLineOfSight(origin, CombatTargeting.AimPoint(_playerTransform), transform, _playerTransform);
         }
 
         private static MobAttackType ResolveAttackType(MobPreset preset)
@@ -350,6 +325,10 @@ namespace MineArena.AI
 
         private void UpdateAttackCommand()
         {
+            bool matches = _attackType == MobAttackType.Range ? _attackCommand is RangeAttackCommand :
+                _attackType == MobAttackType.Explosion ? _attackCommand is ExplosionAttackCommand : _attackCommand is MeleeAttackCommand;
+            if (matches) return;
+            if (_attackCommand is UnityEngine.Object oldCommand) Destroy(oldCommand);
             switch (_attackType)
             {
                 case MobAttackType.Range:
@@ -365,6 +344,11 @@ namespace MineArena.AI
                         _attackCommand = ScriptableObject.CreateInstance<MeleeAttackCommand>();
                     break;
             }
+        }
+
+        private void OnDestroy()
+        {
+            if (_attackCommand is UnityEngine.Object command) Destroy(command);
         }
 
         private void TryResolvePlayer()

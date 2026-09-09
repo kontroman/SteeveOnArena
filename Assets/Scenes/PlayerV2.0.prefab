@@ -628,6 +628,7 @@ GameObject:
   - component: {fileID: 7982167682220264229}
   - component: {fileID: 842852265324155065}
   - component: {fileID: 3171768292838922867}
+  - component: {fileID: 5197430067527654882}
   m_Layer: 0
   m_Name: PlayerV2.0
   m_TagString: Player
@@ -832,7 +833,7 @@ MonoBehaviour:
   includeBehindPlayerCircle: 1
   nearPlayerRadius: 0.8
   _defaultBowAttack: {fileID: 0}
-  _arrowProjectilePrefab: {fileID: 0}
+  _arrowProjectilePrefab: {fileID: 331499547690822219, guid: ceb94708b22db9346854be84b8326430, type: 3}
   _bowFirePoint: {fileID: 0}
   _arrowResourcePath: Prefabs/Objects/Projectile/Arrow
   _bowFallbackDamage: 25
@@ -946,6 +947,19 @@ MonoBehaviour:
   _miningStateName: PlayerMiningAnimation
   _miningLayer: 0
   _health: {fileID: 1861242208323939462}
+--- !u!114 &5197430067527654882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2964385685650872449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a52573bf1f9c17498058f5d3f9b23eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  body: {fileID: 9001126088327614023}
 --- !u!1 &3123651990063931757
 GameObject:
   m_ObjectHideFlags: 0

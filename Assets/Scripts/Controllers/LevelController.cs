@@ -151,7 +151,7 @@ namespace MineArena.Controllers
 
             try
             {
-                if (_currentArena == null || _currentConfig == null)
+                if (_currentArena == null || _currentConfig == null || _currentArena.UseAuthoredResources)
                 {
                     promise.Resolve();
                     return promise;
@@ -501,6 +501,31 @@ namespace MineArena.Controllers
         {
             GameRoot.UIManager.CloseAllWindows();
             GameRoot.GetManager<UnitySceneLoader>()?.LoadSceneAsync(Constants.SceneNames.PlayerBaseScene);
+        }
+
+        public bool CanAbandon => !_levelCompleteOpened && !PlayerMovement.IsPlayerDead;
+
+        public void AbandonLevel()
+        {
+            if (!CanAbandon) return;
+            _levelCompleteOpened = true;
+            DisablePlayerControl();
+            DiscardCollectedResources();
+            ReturnToLobby();
+        }
+
+        private void DiscardCollectedResources()
+        {
+            var inventory = GameRoot.PlayerProgress?.InventoryProgress;
+            if (inventory != null)
+            {
+                foreach (var resource in _collectedResources)
+                    if (resource.Key != null && resource.Value > 0 &&
+                        inventory.SavedResources.TryGetValue(resource.Key.Name, out int owned))
+                        inventory.TrySpendExact(resource.Key.Name, Mathf.Min(owned, resource.Value));
+                GameRoot.GetManager<InventoryManager>()?.InitManager();
+            }
+            ResetCollectedResources();
         }
 
         private T OpenOrCreateWindow<T>() where T : BaseWindow

@@ -20,6 +20,7 @@ namespace MineArena.Items
         private Collider _collider;
 
         private Rigidbody _rigidbody;
+        private float _launchedAt;
         private Vector3[] _directions = new Vector3[] {
         Vector3.forward, Vector3.back, Vector3.right, Vector3.left};
 
@@ -39,6 +40,10 @@ namespace MineArena.Items
 
         public void StartAnimation()
         {
+            if (_collider == null || _rigidbody == null) Awake();
+            if (_collider == null || _rigidbody == null) return;
+            _animationIDEL?.StopAnimation();
+            _launchedAt = Time.time;
             _isGround = false;
             _collider.isTrigger = false;
             _rigidbody.isKinematic = false;
@@ -52,21 +57,34 @@ namespace MineArena.Items
 
         private void OnCollisionEnter(Collision collision)
         {
-            if (collision.gameObject.layer == _numberLayerGround)
-            {
-                if (_isGround == false)
-                {
-                    Land();
-                }
-            }
+            TryLand(collision);
+        }
+
+        private void OnCollisionStay(Collision collision) => TryLand(collision);
+
+        private void TryLand(Collision collision)
+        {
+            if (_isGround || Time.time - _launchedAt < 0.12f || !IsSupport(collision.collider)) return;
+            foreach (var contact in collision.contacts)
+                if (contact.normal.y > 0.5f) { Land(); return; }
+        }
+
+        private bool IsSupport(Collider surface)
+        {
+            if (surface == null || surface.isTrigger || surface.transform == transform || surface.transform.IsChildOf(transform)) return false;
+            if (surface.GetComponentInParent<ItemInteractor>() != null ||
+                surface.GetComponentInParent<MineArena.Interfaces.IDamageable>() != null ||
+                surface.GetComponentInParent<Projectile>() != null) return false;
+            return surface.gameObject.layer == _numberLayerGround || surface.attachedRigidbody == null || surface.attachedRigidbody.isKinematic;
         }
 
         private void FixedUpdate()
         {
-            if (_isGround || _rigidbody.velocity.y > 0f) return;
+            if (_isGround || _rigidbody == null || _collider == null || Time.time - _launchedAt < 0.12f || _rigidbody.velocity.y > 0f) return;
             var bounds = _collider.bounds;
-            if (Physics.Raycast(bounds.center, Vector3.down, bounds.extents.y + 0.08f,
-                1 << _numberLayerGround, QueryTriggerInteraction.Ignore)) Land();
+            foreach (var hit in Physics.RaycastAll(bounds.center, Vector3.down, bounds.extents.y + 0.08f,
+                ~0, QueryTriggerInteraction.Ignore))
+                if (hit.normal.y > 0.5f && IsSupport(hit.collider)) { Land(); return; }
         }
 
         private void Land()
@@ -77,7 +95,7 @@ namespace MineArena.Items
             _rigidbody.collisionDetectionMode = CollisionDetectionMode.Discrete;
             _rigidbody.isKinematic = true;
             _collider.isTrigger = true;
-            _animationIDEL.StartAnimation();
+            _animationIDEL?.StartAnimation();
         }
     }
 }

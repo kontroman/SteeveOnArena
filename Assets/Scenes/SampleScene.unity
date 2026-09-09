@@ -2033,6 +2033,51 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2722023727240127021, guid: ec6609ffc1195534a887b8a07da20b9a, type: 3}
   m_PrefabInstance: {fileID: 167070925}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &168742542
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 168742544}
+  - component: {fileID: 168742543}
+  m_Layer: 0
+  m_Name: Auto-generatedMineArena.ObjectPools.ObjectPoolsManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &168742543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 168742542}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 932d10beef42eb34daba790b87304269, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _preset: {fileID: 0}
+--- !u!4 &168742544
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 168742542}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &175497476 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6521870537688794176, guid: b60a18048ed53104fb56d608d204f558, type: 3}
@@ -32782,6 +32827,22 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1.0000527, z: 16.8}
   m_Center: {x: 0, y: -5.000014, z: -1.4211038e-14}
+--- !u!1001 &735860000001
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5884299098758324799, guid: bb77331b96a779b40835e9b21fefb227, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
+  m_SourcePrefab: {fileID: 100100000, guid: bb77331b96a779b40835e9b21fefb227, type: 3}
 --- !u!1 &51025073613994439
 GameObject:
   m_ObjectHideFlags: 0
@@ -35138,7 +35199,7 @@ MonoBehaviour:
   includeBehindPlayerCircle: 1
   nearPlayerRadius: 0.8
   _defaultBowAttack: {fileID: 0}
-  _arrowProjectilePrefab: {fileID: 0}
+  _arrowProjectilePrefab: {fileID: 331499547690822219, guid: ceb94708b22db9346854be84b8326430, type: 3}
   _bowFirePoint: {fileID: 0}
   _arrowResourcePath: Prefabs/Objects/Projectile/Arrow
   _bowFallbackDamage: 25
@@ -35523,3 +35584,5 @@ SceneRoots:
   - {fileID: 5629099960224387048}
   - {fileID: 137395348}
   - {fileID: 413250880}
+  - {fileID: 735860000001}
+  - {fileID: 168742544}

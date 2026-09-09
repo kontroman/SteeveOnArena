@@ -31,17 +31,20 @@ namespace Devotion.SDK.UI
         private ResourceIcon _resourceIconPrefab;
         private bool _initialized;
         private bool? _fullHudVisible;
+        private bool _arenaHud;
         public RectTransform QuickAccessPanel => _inventoryPanel as RectTransform;
         public void RefreshTutorialVisibility()
         {
             var progress = GameRoot.PlayerProgress?.TutorialProgress;
             bool show = progress != null && progress.Initialized && progress.Step == TutorialStep.Complete;
-            if (_fullHudVisible == show) return;
+            bool arena = LevelController.Current != null;
+            if (_fullHudVisible == show && _arenaHud == arena) return;
             _fullHudVisible = show;
+            _arenaHud = arena;
             foreach (string name in new[] { "PlayerPanel", "IconNavigation", "GiftNavigation", "CurrencyPouch", "Levels", "AchievementPopup" })
             {
                 var group = transform.Find(name);
-                if (group != null) group.gameObject.SetActive(show);
+                if (group != null) group.gameObject.SetActive(show && (name != "GiftNavigation" || !arena));
             }
             if (_inventoryPanel != null) _inventoryPanel.gameObject.SetActive(true);
         }

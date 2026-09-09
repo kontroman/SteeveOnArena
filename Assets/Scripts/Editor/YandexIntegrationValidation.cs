@@ -38,7 +38,7 @@ namespace MineArena.Editor
             if (!File.Exists("Assets/Plugins/WebGL/MineArenaPlatform.jslib")) throw new Exception("Missing JavaScript library");
             var catalog = Resources.Load<YandexPurchaseCatalog>("UI/YandexPurchaseCatalog");
             if (catalog == null) throw new Exception("Missing purchase mapping catalog");
-            if (catalog.Products.Any(p => p == null || string.IsNullOrWhiteSpace(p.ProductId) || p.Item == null || p.Amount <= 0)
+            if (catalog.Products.Any(p => p == null || !p.IsValid)
                 || catalog.Products.Select(p => p.ProductId).Distinct().Count() != catalog.Products.Count)
                 throw new Exception("Invalid or duplicate purchase mapping");
             var progress = new Devotion.SDK.Services.SaveSystem.Progress.PlayerProgress("test");

@@ -91,6 +91,18 @@ namespace MineArena.Items
             }
         }
 
+        public void SetMiningPrompt(bool mining)
+        {
+            _canvas.SetMining(mining);
+            ShowInteractionPrompt();
+        }
+
+        public void CancelInteraction()
+        {
+            _used = false;
+            SetMiningPrompt(false);
+        }
+
         private void PlayCompleteInteractionVfx()
         {
             if (_completeInteractionVfxId == VfxId.None)

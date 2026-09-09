@@ -1,0 +1,1705 @@
+{
+  "items": [
+    {
+      "key": "Title",
+      "value": "Testtitel"
+    },
+    {
+      "key": "[Achievement]Name_1",
+      "value": "Zuhause"
+    },
+    {
+      "key": "[Achievement]Name_2",
+      "value": "Steinzeit"
+    },
+    {
+      "key": "[Achievement]Name_3",
+      "value": "Brauche mehr Eisen"
+    },
+    {
+      "key": "[Achievement]Name_4",
+      "value": "Finden Sie selten"
+    },
+    {
+      "key": "[Achievement]ExtractOre",
+      "value": "Holen Sie sich {0} {1}"
+    },
+    {
+      "key": "[Achievement]KillMonster",
+      "value": "Töte {0} {1}"
+    },
+    {
+      "key": "[Achievement]Create",
+      "value": "Erstellen: {0} {1}"
+    },
+    {
+      "key": "[Achievement]Build",
+      "value": "Build: {0} {1}"
+    },
+    {
+      "key": "[Achievement]TakePrize",
+      "value": "Die Quest ist abgeschlossen. Du kannst die Belohnung annehmen"
+    },
+    {
+      "key": "Completed",
+      "value": "Abgeschlossen"
+    },
+    {
+      "key": "[Achievement]WindowName",
+      "value": "Quests"
+    },
+    {
+      "key": "[Achievement]ButtonGet",
+      "value": "Erhalten"
+    },
+    {
+      "key": "Build",
+      "value": "Bauen"
+    },
+    {
+      "key": "Opens",
+      "value": "Öffnet:"
+    },
+    {
+      "key": "ПЕРВЫЕ ШАГИ   •   {0} / 8",
+      "value": "ERSTE SCHRITTE • {0} / 8"
+    },
+    {
+      "key": "Мастерская [B]",
+      "value": "Workshop [B]"
+    },
+    {
+      "key": "ПЕРВЫЕ ШАГИ  •  ",
+      "value": "ERSTE SCHRITTE •  "
+    },
+    {
+      "key": "Забрать подарок",
+      "value": "Geschenk abholen"
+    },
+    {
+      "key": "Понятно!",
+      "value": "Verstanden!"
+    },
+    {
+      "key": " м",
+      "value": " m"
+    },
+    {
+      "key": "Добро пожаловать! Подойди к порталу.\nWASD — движение. Жёлтый указатель покажет путь.",
+      "value": "Willkommen! Nähern Sie sich dem Portal.\nWASD – Bewegung. Ein gelbes Schild weist den Weg."
+    },
+    {
+      "key": "Выбери первый уровень и нажми «Начать».\nУчебная экспедиция: добыча ресурсов и один зомби.",
+      "value": "Wählen Sie die erste Ebene aus und klicken Sie auf „Start“.\nTrainingsexpedition: Ressourcengewinnung und ein Zombie."
+    },
+    {
+      "key": "Подойди к блоку и нажми E, чтобы добыть его.\nЗатем подбери выпавшие ресурсы.",
+      "value": "Nähern Sie sich dem Block und drücken Sie E, um ihn abzubauen.\nDann sammle die fallengelassenen Ressourcen ein."
+    },
+    {
+      "key": "Теперь победи зомби.\nЛевая кнопка мыши — атака. Меч уже в быстром слоте.",
+      "value": "Besiege nun die Zombies.\nLinke Maustaste – Angriff. Das Schwert befindet sich bereits im Schnellschlitz."
+    },
+    {
+      "key": "Отлично! Войди в появившийся портал.\nЗабери награду и вернись на базу — хватит на мастерскую!",
+      "value": "Großartig! Betreten Sie das angezeigte Portal.\nNimm die Belohnung und kehre zur Basis zurück – genug für den Workshop!"
+    },
+    {
+      "key": "Подойди к участку мастерской и нажми «Построить».\nДерево и камень для постройки уже у тебя.",
+      "value": "Gehen Sie zur Workshop-Site und klicken Sie auf „Build“.\nSie haben bereits das Holz und den Stein, um es zu bauen."
+    },
+    {
+      "key": "После «Понятно» откроется мастерская. Создай доски.\nДождись заполнения полосы: первый крафт занимает 7 секунд.",
+      "value": "Nach „Ich verstehe“ wird der Workshop eröffnet. Erstellen Sie Boards.\nWarten Sie, bis sich die Leiste füllt: Das erste Handwerk dauert 7 Sekunden."
+    },
+    {
+      "key": "Обучение завершено! Твой подарок:\n16 дуба, 12 камня и 2 зелья лечения. Дальше — твои приключения!",
+      "value": "Ausbildung abgeschlossen! Ihr Geschenk:\n16 Eichen-, 12 Stein- und 2 Heiltränke. Als nächstes kommen deine Abenteuer!"
+    },
+    {
+      "key": "Покупка получена",
+      "value": "Kauf erhalten"
+    },
+    {
+      "key": "Покупка не завершена. Попробуй восстановить покупки.",
+      "value": "Der Kauf ist nicht abgeschlossen. Versuchen Sie, Ihre Einkäufe wiederherzustellen."
+    },
+    {
+      "key": "Реклама недоступна. Можно вернуться в деревню.",
+      "value": "Werbung ist nicht verfügbar. Sie können ins Dorf zurückkehren."
+    },
+    {
+      "key": "Ожидание награды за рекламу…",
+      "value": "Warten auf eine Werbeprämie..."
+    },
+    {
+      "key": "Награда не получена. Повторите попытку или вернитесь в деревню.",
+      "value": "Keine Belohnung erhalten. Versuchen Sie es erneut oder kehren Sie ins Dorf zurück."
+    },
+    {
+      "key": "Не удалось загрузить деревню. Попробуйте ещё раз.",
+      "value": "Dorf konnte nicht geladen werden. Versuchen Sie es erneut."
+    },
+    {
+      "key": "Реклама сейчас недоступна. Вернитесь в деревню и попробуйте снова позже.",
+      "value": "Werbung ist derzeit nicht verfügbar. Kehren Sie ins Dorf zurück und versuchen Sie es später noch einmal."
+    },
+    {
+      "key": "Сложное",
+      "value": "Schwer"
+    },
+    {
+      "key": "Среднее",
+      "value": "Mittel"
+    },
+    {
+      "key": "Лёгкое",
+      "value": "Leicht"
+    },
+    {
+      "key": "Награда получена",
+      "value": "Belohnung erhalten"
+    },
+    {
+      "key": "Можно забрать награду",
+      "value": "Sie können Ihre Belohnung abholen"
+    },
+    {
+      "key": "В работе",
+      "value": "In Bearbeitung"
+    },
+    {
+      "key": "Добыча: ",
+      "value": "Beute: "
+    },
+    {
+      "key": "Поручение №",
+      "value": "Bestell-Nr."
+    },
+    {
+      "key": "цель задания",
+      "value": "Ziel der Aufgabe"
+    },
+    {
+      "key": "Соберите «",
+      "value": "Sammeln“"
+    },
+    {
+      "key": "Купить",
+      "value": "Kaufen"
+    },
+    {
+      "key": "Подождите…",
+      "value": "Warte..."
+    },
+    {
+      "key": "Уже есть",
+      "value": "Habe ich schon"
+    },
+    {
+      "key": "Не хватает ресурсов",
+      "value": "Nicht genügend Ressourcen"
+    },
+    {
+      "key": "Есть {0} / нужно {1}",
+      "value": "Vorhanden {0} / benötigt {1}"
+    },
+    {
+      "key": "Достигнут максимальный уровень",
+      "value": "Maximales Level erreicht"
+    },
+    {
+      "key": "Все ресурсы собраны",
+      "value": "Alle Ressourcen gesammelt"
+    },
+    {
+      "key": "Нужно добыть ещё ресурсов",
+      "value": "Es müssen mehr Ressourcen beschafft werden"
+    },
+    {
+      "key": "УРОЖАЙ",
+      "value": "ERNTE"
+    },
+    {
+      "key": "ОТКРЫВАЕТ",
+      "value": "SCHALTET FREI"
+    },
+    {
+      "key": "Уровень ",
+      "value": "Ebene "
+    },
+    {
+      "key": "Улучшение: ",
+      "value": "Verbesserung: "
+    },
+    {
+      "key": " к выходу каждого крафта",
+      "value": " pro Herstellung"
+    },
+    {
+      "key": "\nУрожай каждые ",
+      "value": "\nErnte alle "
+    },
+    {
+      "key": " с",
+      "value": " s"
+    },
+    {
+      "key": "\nНаграды экспедиции +",
+      "value": "\nExpeditionsbelohnungen +"
+    },
+    {
+      "key": "Улучшить",
+      "value": "Verbessern"
+    },
+    {
+      "key": "Построить",
+      "value": "Bauen"
+    },
+    {
+      "key": "Урожай через {0} с: {1}",
+      "value": "Ernte in {0} s: {1}"
+    },
+    {
+      "key": "читы прогресса",
+      "value": "Fortschritts-Cheats"
+    },
+    {
+      "key": "Кол-во предметов",
+      "value": "Anzahl der Artikel"
+    },
+    {
+      "key": "все предметы",
+      "value": "alle Artikel"
+    },
+    {
+      "key": "Опыт",
+      "value": "Erfahrung"
+    },
+    {
+      "key": "+спин",
+      "value": "+drehen"
+    },
+    {
+      "key": "Уровни",
+      "value": "Ebenen"
+    },
+    {
+      "key": "открыть уровни",
+      "value": "offene Ebenen"
+    },
+    {
+      "key": "очистить инвентарь",
+      "value": "übersichtliches Inventar"
+    },
+    {
+      "key": "Покупки сразу попадают в инвентарь",
+      "value": "Einkäufe gehen sofort in den Lagerbestand"
+    },
+    {
+      "key": "Магазин готовится к открытию",
+      "value": "Der Laden bereitet sich auf die Eröffnung vor"
+    },
+    {
+      "key": "Восстановить покупки",
+      "value": "Einkäufe wiederherstellen"
+    },
+    {
+      "key": "Куплено: ",
+      "value": "Gekauft: "
+    },
+    {
+      "key": "Покупка недоступна: проверьте баланс и инвентарь",
+      "value": "Kauf nicht verfügbar: Überprüfen Sie den Kontostand und den Lagerbestand"
+    },
+    {
+      "key": "Занято ячеек: ",
+      "value": "Belegte Plätze: "
+    },
+    {
+      "key": "Выполнено ",
+      "value": "Fertig "
+    },
+    {
+      "key": "   •   Наград к получению: ",
+      "value": "   • Zu erhaltende Belohnungen: "
+    },
+    {
+      "key": "В работе  ",
+      "value": "In Bearbeitung  "
+    },
+    {
+      "key": "Можно забрать  ",
+      "value": "Kann abgeholt werden  "
+    },
+    {
+      "key": "Завершено  ",
+      "value": "Abgeschlossen  "
+    },
+    {
+      "key": "Пока нет наград к получению.\nПродолжайте задания во вкладке «В работе».",
+      "value": "Es sind noch keine Belohnungen verfügbar.\nSetzen Sie die Aufgaben im Reiter „In Bearbeitung“ fort."
+    },
+    {
+      "key": "Здесь появятся выполненные задания.",
+      "value": "Abgeschlossene Aufgaben werden hier angezeigt."
+    },
+    {
+      "key": "Все поручения выполнены!",
+      "value": "Alle Bestellungen abgeschlossen!"
+    },
+    {
+      "key": "Добыча ресурсов",
+      "value": "Ressourcengewinnung"
+    },
+    {
+      "key": "Охота на врагов",
+      "value": "Jagd auf Feinde"
+    },
+    {
+      "key": "Награда уже в инвентаре",
+      "value": "Die Belohnung befindet sich bereits in Ihrem Inventar"
+    },
+    {
+      "key": "Задание выполнено — заберите награду",
+      "value": "Mission abgeschlossen – sammle deine Belohnung ein"
+    },
+    {
+      "key": "Награда откроется после выполнения",
+      "value": "Die Belohnung wird nach Abschluss geöffnet"
+    },
+    {
+      "key": "Урожай через {0} с",
+      "value": "Ernte in {0} s"
+    },
+    {
+      "key": "Нужна ферма ур. {0}",
+      "value": "Brauche ein Farmlevel. {0}"
+    },
+    {
+      "key": "Урожай автоматически поступит в инвентарь",
+      "value": "Die Ernte wird automatisch ins Inventar aufgenommen"
+    },
+    {
+      "key": "Постройте или улучшите ферму на участке",
+      "value": "Bauen oder verbessern Sie eine Farm auf Ihrem Grundstück"
+    },
+    {
+      "key": "Готово! Предмет добавлен в инвентарь.",
+      "value": "Fertig! Der Artikel wurde dem Inventar hinzugefügt."
+    },
+    {
+      "key": "Готовится · {0} с",
+      "value": "Vorbereitung · {0} s"
+    },
+    {
+      "key": "В работе: {0} ×{1}",
+      "value": "In Arbeit: {0} ×{1}"
+    },
+    {
+      "key": "Создать ×{0} · {1} с",
+      "value": "Herstellen ×{0} · {1} s"
+    },
+    {
+      "key": "Нет доступных рецептов",
+      "value": "Keine Rezepte verfügbar"
+    },
+    {
+      "key": "Стоимость",
+      "value": "Kosten"
+    },
+    {
+      "key": "В этой категории нет рецептов",
+      "value": "In dieser Kategorie sind keine Rezepte vorhanden"
+    },
+    {
+      "key": "Требуется {0} Lv {1}",
+      "value": "Benötigt {0} Lv {1}"
+    },
+    {
+      "key": "Выберите рецепт",
+      "value": "Wählen Sie ein Rezept aus"
+    },
+    {
+      "key": "ВЫРАЩИВАНИЕ",
+      "value": "WACHSEN"
+    },
+    {
+      "key": "НУЖНЫЕ РЕСУРСЫ",
+      "value": "RESSOURCEN, DIE SIE BENÖTIGEN"
+    },
+    {
+      "key": "Посадка и сбор автоматические.\nЗа время отсутствия накапливается до 10 урожаев.",
+      "value": "Das Pflanzen und Pflücken erfolgt automatisch.\nWährend der Abwesenheit fallen bis zu 10 Ernten an."
+    },
+    {
+      "key": "Нет стоимости",
+      "value": "Keine Kosten"
+    },
+    {
+      "key": "Крафт начат",
+      "value": "Das Basteln hat begonnen"
+    },
+    {
+      "key": "Всё · ",
+      "value": "Alles · "
+    },
+    {
+      "key": "Рецепт закрыт",
+      "value": "Rezept geschlossen"
+    },
+    {
+      "key": "Недостаточно ресурсов",
+      "value": "Unzureichende Ressourcen"
+    },
+    {
+      "key": "Инвентарь недоступен",
+      "value": "Inventar nicht verfügbar"
+    },
+    {
+      "key": "Рецепт не найден",
+      "value": "Rezept nicht gefunden"
+    },
+    {
+      "key": "Не удалось создать",
+      "value": "Fehler beim Erstellen"
+    },
+    {
+      "key": "Дождитесь завершения текущего крафта.",
+      "value": "Warten Sie, bis das aktuelle Handwerk abgeschlossen ist."
+    },
+    {
+      "key": "Недостаточно ресурсов.",
+      "value": "Unzureichende Ressourcen."
+    },
+    {
+      "key": "Урожай: {0} шт. каждые {1} с.\nРастёт на ферме. Сбор автоматический.",
+      "value": "Ernte: {0} Stk. alle {1} s.\nAufgewachsen auf einem Bauernhof. Die Sammlung erfolgt automatisch."
+    },
+    {
+      "key": "Закрыт",
+      "value": "Geschlossen"
+    },
+    {
+      "key": "Открыто {0} из {1}",
+      "value": "Öffnen Sie {0} von {1}"
+    },
+    {
+      "key": "Нет уровней",
+      "value": "Keine Level"
+    },
+    {
+      "key": "Уровни пока не добавлены",
+      "value": "Es wurden noch keine Level hinzugefügt"
+    },
+    {
+      "key": "Сложность: ",
+      "value": "Schwierigkeit: "
+    },
+    {
+      "key": "Уровень закрыт",
+      "value": "Ebene geschlossen"
+    },
+    {
+      "key": "Начать экспедицию",
+      "value": "Starten Sie eine Expedition"
+    },
+    {
+      "key": "Скоро",
+      "value": "Kommt bald"
+    },
+    {
+      "key": "Уровень открыт • можно отправляться",
+      "value": "Ebene ist geöffnet • Sie können gehen"
+    },
+    {
+      "key": "Этот уровень ещё готовится",
+      "value": "Dieses Level befindet sich noch in der Vorbereitung"
+    },
+    {
+      "key": "Пройдите «",
+      "value": "Gehen Sie durch \""
+    },
+    {
+      "key": "Лёгкая",
+      "value": "Leicht"
+    },
+    {
+      "key": "Средняя",
+      "value": "Mittel"
+    },
+    {
+      "key": "Сложная",
+      "value": "Schwer"
+    },
+    {
+      "key": "Экстремальная",
+      "value": "Extrem"
+    },
+    {
+      "key": "День {0}",
+      "value": "Tag {0}"
+    },
+    {
+      "key": "ПОЛУЧЕНО",
+      "value": "ABGEHOLT"
+    },
+    {
+      "key": "СЕГОДНЯ",
+      "value": "HEUTE"
+    },
+    {
+      "key": "СЛЕДУЮЩИЙ",
+      "value": "WEITER"
+    },
+    {
+      "key": "СКОРО",
+      "value": "KOMMT BALD"
+    },
+    {
+      "key": "Ежедневный подарок",
+      "value": "Tägliches Geschenk"
+    },
+    {
+      "key": "Незеритовый шлем",
+      "value": "Netherit-Helm"
+    },
+    {
+      "key": "Железо x15",
+      "value": "Eisen x15"
+    },
+    {
+      "key": "Алмазный меч",
+      "value": "Diamantschwert"
+    },
+    {
+      "key": "Золото x10",
+      "value": "Gold x10"
+    },
+    {
+      "key": "Алмазная броня",
+      "value": "Diamantrüstung"
+    },
+    {
+      "key": "Алмазы x5",
+      "value": "Diamanten x5"
+    },
+    {
+      "key": "Крутить! ({0})",
+      "value": "Dreh! ({0})"
+    },
+    {
+      "key": "Нет вращений",
+      "value": "Keine Drehungen"
+    },
+    {
+      "key": "Спин за рекламу",
+      "value": "Werbung ansehen und drehen"
+    },
+    {
+      "key": "Доступно вращений: {0}",
+      "value": "Verfügbare Spins: {0}"
+    },
+    {
+      "key": "Бесплатный спин доступен",
+      "value": "Kostenlose Spins verfügbar"
+    },
+    {
+      "key": "До бесплатного спина: {0}",
+      "value": "Bis zum Gratisdreh: {0}"
+    },
+    {
+      "key": "Алмазы x{0}",
+      "value": "Diamanten x{0}"
+    },
+    {
+      "key": " · Выпить [R]",
+      "value": " · Trinken [R]"
+    },
+    {
+      "key": "{0} МИНУТ ИГРЫ",
+      "value": "{0} SPIELMINUTEN"
+    },
+    {
+      "key": "Спасибо за игру!",
+      "value": "Danke fürs Spielen!"
+    },
+    {
+      "key": "Через ",
+      "value": "In "
+    },
+    {
+      "key": "Доступна сейчас",
+      "value": "Jetzt verfügbar"
+    },
+    {
+      "key": "НЕДОСТУПНО",
+      "value": "NICHT VERFÜGBAR"
+    },
+    {
+      "key": "МОЖНО ЗАБРАТЬ",
+      "value": "SIE KÖNNEN ABHOLEN"
+    },
+    {
+      "key": "СКОРО ОТКРОЕТСЯ",
+      "value": "BALD ERÖFFNET"
+    },
+    {
+      "key": "Получено подарков: ",
+      "value": "Erhaltene Geschenke: "
+    },
+    {
+      "key": "Все подарки получены!",
+      "value": "Alle Geschenke sind eingegangen!"
+    },
+    {
+      "key": "Подарок пока недоступен",
+      "value": "Das Geschenk ist noch nicht verfügbar"
+    },
+    {
+      "key": "Подарок готов — забирайте!",
+      "value": "Das Geschenk ist fertig – nimm es!"
+    },
+    {
+      "key": "Следующий подарок через ",
+      "value": "Nächstes Geschenk "
+    },
+    {
+      "key": "Заголовок инфо",
+      "value": "Überschrifteninfo"
+    },
+    {
+      "key": "Скажи мне, друг. Когда Саруман Мудрый успел променять мудрость на безумие!?",
+      "value": "Sag es mir, Freund. Wann hat Saruman der Weise es geschafft, Weisheit gegen Wahnsinn einzutauschen!?"
+    },
+    {
+      "key": "Создать",
+      "value": "Erstellen"
+    },
+    {
+      "key": "Увеличивает броню на 1 ед.",
+      "value": "Erhöht die Rüstung um 1 Einheit."
+    },
+    {
+      "key": "Запас дров",
+      "value": "Brennholzversorgung"
+    },
+    {
+      "key": "Соберите дубовую древесину: {0}.\nПомогите деревне запасти стройматериалы.",
+      "value": "Sammle Eichenholz: {0}.\nHelfen Sie dem Dorf, sich mit Baumaterialien einzudecken."
+    },
+    {
+      "key": "Лесной поставщик",
+      "value": "Forstlieferant"
+    },
+    {
+      "key": "Хозяин лесосеки",
+      "value": "Der Besitzer des Schneidbereichs"
+    },
+    {
+      "key": "Первый фундамент",
+      "value": "Erste Gründung"
+    },
+    {
+      "key": "Соберите камень: {0}.\nКрепким постройкам нужен надёжный фундамент.",
+      "value": "Sammle Stein: {0}.\nStarke Gebäude brauchen ein zuverlässiges Fundament."
+    },
+    {
+      "key": "Каменное дело",
+      "value": "Mauerwerk"
+    },
+    {
+      "key": "Опора деревни",
+      "value": "Unterstützung des Dorfes"
+    },
+    {
+      "key": "Разжечь горн",
+      "value": "Zünde die Schmiede an"
+    },
+    {
+      "key": "Соберите угольную руду: {0}.\nКузнице нужен запас топлива.",
+      "value": "Sammle Kohleerz: {0}.\nDie Schmiede benötigt einen Vorrat an Treibstoff."
+    },
+    {
+      "key": "Чёрное золото",
+      "value": "Schwarzes Gold"
+    },
+    {
+      "key": "Жар большой кузни",
+      "value": "Die Hitze der großen Schmiede"
+    },
+    {
+      "key": "Железная жила",
+      "value": "Eisenader"
+    },
+    {
+      "key": "Соберите железную руду: {0}.\nОбеспечьте мастеров материалом для снаряжения.",
+      "value": "Sammle Eisenerz: {0}.\nStellen Sie Handwerkern Materialien für die Ausrüstung zur Verfügung."
+    },
+    {
+      "key": "Рудный караван",
+      "value": "Erzkarawane"
+    },
+    {
+      "key": "Стальной характер",
+      "value": "Stahlcharakter"
+    },
+    {
+      "key": "Золотая находка",
+      "value": "Goldfund"
+    },
+    {
+      "key": "Соберите золотую руду: {0}.\nИщите ценные залежи в экспедициях.",
+      "value": "Sammle Golderz: {0}.\nSuchen Sie auf Expeditionen nach wertvollen Vorkommen."
+    },
+    {
+      "key": "Старатель",
+      "value": "Prospektor"
+    },
+    {
+      "key": "Золотой запас",
+      "value": "Goldreserve"
+    },
+    {
+      "key": "Синий огонёк",
+      "value": "Blaues Licht"
+    },
+    {
+      "key": "Соберите алмазы: {0}.\nИсследуйте редкие залежи в глубине шахты.",
+      "value": "Sammle Diamanten: {0}.\nErkunden Sie seltene Vorkommen tief in der Mine."
+    },
+    {
+      "key": "Алмазный след",
+      "value": "Diamantenpfad"
+    },
+    {
+      "key": "Сокровища глубин",
+      "value": "Schätze der Tiefe"
+    },
+    {
+      "key": "Ночной дозор",
+      "value": "Nachtwache"
+    },
+    {
+      "key": "Победите зомби: {0}.\nЗащитите окрестности от нежити.",
+      "value": "Besiege Zombies: {0}.\nSchütze die Umgebung vor den Untoten."
+    },
+    {
+      "key": "Страж деревни",
+      "value": "Dorfwächter"
+    },
+    {
+      "key": "Гроза нежити",
+      "value": "Sturm der Untoten"
+    },
+    {
+      "key": "Костяной патруль",
+      "value": "Knochenpatrouille"
+    },
+    {
+      "key": "Победите скелетов: {0}.\nСократите ряды вражеских стрелков.",
+      "value": "Besiege die Skelette: {0}.\nReduzieren Sie die Anzahl der feindlichen Schützen."
+    },
+    {
+      "key": "Сломанные стрелы",
+      "value": "Gebrochene Pfeile"
+    },
+    {
+      "key": "Тишина в склепе",
+      "value": "Stille in der Krypta"
+    },
+    {
+      "key": "Паутина на тропе",
+      "value": "Spinnennetz auf dem Weg"
+    },
+    {
+      "key": "Победите пауков: {0}.\nОсвободите лесные тропы от опасных обитателей.",
+      "value": "Besiege die Spinnen: {0}.\nBefreien Sie die Waldwege von gefährlichen Bewohnern."
+    },
+    {
+      "key": "Чистые тропы",
+      "value": "Saubere Wege"
+    },
+    {
+      "key": "Конец паучьей стаи",
+      "value": "Das Ende des Spinnenschwarms"
+    },
+    {
+      "key": "Волчий след",
+      "value": "Wolfsspur"
+    },
+    {
+      "key": "Победите волков: {0}.\nСдержите хищников в диких землях.",
+      "value": "Besiege die Wölfe: {0}.\nHalten Sie Raubtiere in den wilden Ländern zurück."
+    },
+    {
+      "key": "Охотник на стаю",
+      "value": "Rudeljäger"
+    },
+    {
+      "key": "Хозяин чащи",
+      "value": "Meister des Dickichts"
+    },
+    {
+      "key": "Дать отпор",
+      "value": "Schlagen Sie zurück"
+    },
+    {
+      "key": "Победите разбойников с топорами: {0}.\nЛучники-разбойники не входят в эту цель.",
+      "value": "Besiege die axtschwingenden Räuber: {0}.\nSchurkenbogenschützen sind in diesem Ziel nicht enthalten."
+    },
+    {
+      "key": "Сорвать набег",
+      "value": "Unterbrechen Sie den Überfall"
+    },
+    {
+      "key": "Щит поселения",
+      "value": "Siedlungsschild"
+    },
+    {
+      "key": "Первое заклятие",
+      "value": "Erster Zauber"
+    },
+    {
+      "key": "Победите ведьм: {0}.\nОстерегайтесь их зелий в опасных экспедициях.",
+      "value": "Besiege die Hexen: {0}.\nHüten Sie sich auf gefährlichen Expeditionen vor ihren Tränken."
+    },
+    {
+      "key": "Охота на ведьм",
+      "value": "Hexenjagd"
+    },
+    {
+      "key": "Рассеять проклятие",
+      "value": "Zerstreue den Fluch"
+    },
+    {
+      "key": "Поселение",
+      "value": "Siedlung"
+    },
+    {
+      "key": "Тихая деревня среди холмов. Исследуйте окрестности и соберите первые ресурсы.",
+      "value": "Ruhiges Dorf zwischen den Hügeln. Erkunden Sie die Umgebung und sammeln Sie die ersten Ressourcen."
+    },
+    {
+      "key": "Песчаный карьер",
+      "value": "Sandsteinbruch"
+    },
+    {
+      "key": "Солнечный карьер среди песчаных террас. Запаситесь материалами для новых построек.",
+      "value": "Sonniger Steinbruch zwischen Sandterrassen. Besorgen Sie sich Material für Neubauten."
+    },
+    {
+      "key": "Заброшенная шахта",
+      "value": "Verlassene Mine"
+    },
+    {
+      "key": "Спуститесь к залежам руды. Победите обитателей шахты и найдите выход.",
+      "value": "Gehen Sie hinunter zu den Erzvorkommen. Besiege die Bewohner der Mine und finde den Ausgang."
+    },
+    {
+      "key": "Лесная чаща",
+      "value": "Walddickicht"
+    },
+    {
+      "key": "Тропы среди густого леса. Исследуйте поляну и соберите полезные ресурсы.",
+      "value": "Wege durch dichten Wald. Erkunde die Lichtung und sammle nützliche Ressourcen."
+    },
+    {
+      "key": "Алхимическая лаборатория",
+      "value": "Alchemielabor"
+    },
+    {
+      "key": "Ферма",
+      "value": "Bauernhof"
+    },
+    {
+      "key": "Мастерская",
+      "value": "Werkstatt"
+    },
+    {
+      "key": "Кузница",
+      "value": "Schmiede"
+    },
+    {
+      "key": "Хранилище",
+      "value": "Lagerung"
+    },
+    {
+      "key": "Уголь",
+      "value": "Kohle"
+    },
+    {
+      "key": "Алмазная руда",
+      "value": "Diamanterz"
+    },
+    {
+      "key": "Слеза гаста",
+      "value": "Grässliche Träne"
+    },
+    {
+      "key": "Стекло",
+      "value": "Glas"
+    },
+    {
+      "key": "Стекло — материал для переработки и улучшений.",
+      "value": "Glas ist ein Material zum Recycling und zur Verbesserung."
+    },
+    {
+      "key": "Пузырёк",
+      "value": "Blase"
+    },
+    {
+      "key": "Сверкающий ломтик арбуза",
+      "value": "Funkelnde Wassermelonenscheibe"
+    },
+    {
+      "key": "Золотой слиток",
+      "value": "Goldbarren"
+    },
+    {
+      "key": "Золотой слиток — материал для переработки и улучшений.",
+      "value": "Goldbarren sind ein Material zur Verarbeitung und Veredelung."
+    },
+    {
+      "key": "Золотая руда",
+      "value": "Golderz"
+    },
+    {
+      "key": "Зелье лечения",
+      "value": "Trank der Heilung"
+    },
+    {
+      "key": "Восстанавливает 40 здоровья. Выберите в быстром слоте и нажмите R, ЛКМ или «Выпить». При полном здоровье не расходуется.",
+      "value": "Stellt 40 Gesundheit wieder her. Wählen Sie im Quick-Slot aus und drücken Sie R, LMB oder Trinken. Bei voller Gesundheit wird es nicht verzehrt."
+    },
+    {
+      "key": "Железный слиток",
+      "value": "Eisenbarren"
+    },
+    {
+      "key": "1 руда → 1 слиток. Один таймер: 7 с.",
+      "value": "1 Erz → 1 Barren. Ein Timer: 7 s."
+    },
+    {
+      "key": "Железная руда",
+      "value": "Eisenerz"
+    },
+    {
+      "key": "Кожа",
+      "value": "Leder"
+    },
+    {
+      "key": "Кожа — материал для переработки и улучшений.",
+      "value": "Leder ist ein Material zur Verarbeitung und Verbesserung."
+    },
+    {
+      "key": "Ломтик арбуза",
+      "value": "Wassermelonenscheibe"
+    },
+    {
+      "key": "Незеритовый слиток",
+      "value": "Netheritbarren"
+    },
+    {
+      "key": "Незеритовый слиток — материал для переработки и улучшений.",
+      "value": "Netheritbarren sind ein Material zur Verarbeitung und Verbesserung."
+    },
+    {
+      "key": "Незерит",
+      "value": "Netherit"
+    },
+    {
+      "key": "Незеритовый обломок",
+      "value": "Netherit-Trümmer"
+    },
+    {
+      "key": "Незеритовый обломок — материал для переработки и улучшений.",
+      "value": "Netherit-Trümmer sind ein Material zur Verarbeitung und Verbesserung."
+    },
+    {
+      "key": "Адский нарост",
+      "value": "Höllisches Wachstum"
+    },
+    {
+      "key": "Зелье регенерации",
+      "value": "Regenerationstrank"
+    },
+    {
+      "key": "Восстанавливает 3 здоровья в секунду в течение 10 с. R / ЛКМ / «Выпить». Повторный приём обновляет длительность.",
+      "value": "Stellt 10 Sekunden lang 3 Gesundheit pro Sekunde wieder her. R / LMB / „Trinken“. Eine erneute Einnahme aktualisiert die Dauer."
+    },
+    {
+      "key": "Песок",
+      "value": "Sand"
+    },
+    {
+      "key": "Зелье скорости",
+      "value": "Geschwindigkeitstrank"
+    },
+    {
+      "key": "Скорость передвижения +30% на 20 с. R / ЛКМ / «Выпить». Эффекты скорости не складываются.",
+      "value": "Bewegungsgeschwindigkeit +30 % für 20 s. R / LMB / „Trinken“. Geschwindigkeitseffekte sind nicht stapelbar."
+    },
+    {
+      "key": "Палка",
+      "value": "Stock"
+    },
+    {
+      "key": "Палка — материал для переработки и улучшений.",
+      "value": "Stick ist ein Material zur Verarbeitung und Verbesserung."
+    },
+    {
+      "key": "Камень",
+      "value": "Stein"
+    },
+    {
+      "key": "Нить",
+      "value": "Thread"
+    },
+    {
+      "key": "Нить — материал для переработки и улучшений.",
+      "value": "Faden ist ein Material zur Verarbeitung und Verbesserung."
+    },
+    {
+      "key": "Сахар",
+      "value": "Zucker"
+    },
+    {
+      "key": "Сахарный тростник",
+      "value": "Zuckerrohr"
+    },
+    {
+      "key": "Пшеница",
+      "value": "Weizen"
+    },
+    {
+      "key": "Берёза",
+      "value": "Birke"
+    },
+    {
+      "key": "Дуб",
+      "value": "Eiche"
+    },
+    {
+      "key": "Шерсть",
+      "value": "Wolle"
+    },
+    {
+      "key": "Шерсть — материал для переработки и улучшений.",
+      "value": "Wolle ist ein Material zur Verarbeitung und Verbesserung."
+    },
+    {
+      "key": "Железный нагрудник",
+      "value": "Eiserner Brustpanzer"
+    },
+    {
+      "key": "Железный шлем",
+      "value": "Eisenhelm"
+    },
+    {
+      "key": "Железный меч",
+      "value": "Eisenschwert"
+    },
+    {
+      "key": "После возрождения — 3 секунды защиты",
+      "value": "Nach der Wiederbelebung - 3 Sekunden Schutz"
+    },
+    {
+      "key": "ВОЗРОДИТЬСЯ ЗА РЕКЛАМУ",
+      "value": "WIEDERGEBURT DER WERBUNG"
+    },
+    {
+      "key": "Продолжите сражение или вернитесь в деревню.",
+      "value": "Setzen Sie den Kampf fort oder kehren Sie ins Dorf zurück."
+    },
+    {
+      "key": "Посмотрите рекламу, чтобы продолжить бой\nс полным здоровьем на месте гибели.",
+      "value": "Sehen Sie sich die Anzeige an, um den Kampf fortzusetzen\nbei voller Gesundheit am Sterbeort."
+    },
+    {
+      "key": "ВЫ ПОГИБЛИ",
+      "value": "DU BIST TOT"
+    },
+    {
+      "key": "ВЕРНУТЬСЯ В ДЕРЕВНЮ",
+      "value": "Kehre ins Dorf zurück"
+    },
+    {
+      "key": "ЕЩЁ ОДИН ШАНС",
+      "value": "EINE WEITERE CHANCE"
+    },
+    {
+      "key": "Ресурс",
+      "value": "Ressource"
+    },
+    {
+      "key": "Цена",
+      "value": "Preis"
+    },
+    {
+      "key": "РЕЦЕПТЫ",
+      "value": "REZEPTE"
+    },
+    {
+      "key": "Один таймер",
+      "value": "Ein Timer"
+    },
+    {
+      "key": "Доступность зависит от уровня здания",
+      "value": "Die Verfügbarkeit hängt von der Gebäudeebene ab"
+    },
+    {
+      "key": "НУЖНЫ РЕСУРСЫ",
+      "value": "BENÖTIGTE RESSOURCEN"
+    },
+    {
+      "key": "Всё",
+      "value": "Alles"
+    },
+    {
+      "key": "Создавайте снаряжение из добытых ресурсов",
+      "value": "Stelle Ausrüstung aus abgebauten Ressourcen her"
+    },
+    {
+      "key": "Получить",
+      "value": "Erhalten"
+    },
+    {
+      "key": "Нужно больше железа",
+      "value": "Brauche mehr Eisen"
+    },
+    {
+      "key": "Выполнено!",
+      "value": "Fertig!"
+    },
+    {
+      "key": "Добыть 2 угля",
+      "value": "Baue 2 Kohlen ab"
+    },
+    {
+      "key": "Е",
+      "value": "E"
+    },
+    {
+      "key": "ВАША НАГРАДА",
+      "value": "IHRE BELOHNUNG"
+    },
+    {
+      "key": "Завершено",
+      "value": "Abgeschlossen"
+    },
+    {
+      "key": "Можно забрать",
+      "value": "Kann abgeholt werden"
+    },
+    {
+      "key": "Выберите поручение",
+      "value": "Wählen Sie eine Bestellung aus"
+    },
+    {
+      "key": "Забрать награду",
+      "value": "Holen Sie sich Ihre Belohnung"
+    },
+    {
+      "key": "Журнал заданий",
+      "value": "Questprotokoll"
+    },
+    {
+      "key": "Ваши цели, прогресс и награды",
+      "value": "Ihre Ziele, Fortschritte und Belohnungen"
+    },
+    {
+      "key": "Начать",
+      "value": "Starten"
+    },
+    {
+      "key": "Награда за прохождение:",
+      "value": "Belohnung für den Abschluss:"
+    },
+    {
+      "key": "Добыча:",
+      "value": "Produktion:"
+    },
+    {
+      "key": "Легко",
+      "value": "Einfach"
+    },
+    {
+      "key": "Внешний вид здания",
+      "value": "Außenansicht des Gebäudes"
+    },
+    {
+      "key": "Выберите здание",
+      "value": "Wählen Sie ein Gebäude aus"
+    },
+    {
+      "key": "У этого здания нет новых рецептов.",
+      "value": "Dieses Gebäude hat keine neuen Rezepte."
+    },
+    {
+      "key": "Выберите здание на участке",
+      "value": "Wählen Sie ein Gebäude auf der Website aus"
+    },
+    {
+      "key": "Строительство",
+      "value": "Bau"
+    },
+    {
+      "key": "Заходите каждый день — собирайте всю неделю наград",
+      "value": "Melden Sie sich jeden Tag an, um die ganze Woche über Belohnungen zu sammeln"
+    },
+    {
+      "key": "День 6",
+      "value": "Tag 6"
+    },
+    {
+      "key": "День 2",
+      "value": "Tag 2"
+    },
+    {
+      "key": "Забрать",
+      "value": "Abholen"
+    },
+    {
+      "key": "День 1",
+      "value": "Tag 1"
+    },
+    {
+      "key": "День 4",
+      "value": "Tag 4"
+    },
+    {
+      "key": "День 7",
+      "value": "Tag 7"
+    },
+    {
+      "key": "День 5",
+      "value": "Tag 5"
+    },
+    {
+      "key": "День 3",
+      "value": "Tag 3"
+    },
+    {
+      "key": "Награда за новый день",
+      "value": "Belohnung für einen neuen Tag"
+    },
+    {
+      "key": "3 вращ.  •  15 зол. руды",
+      "value": "3 Drehungen • 15 Gold. Erz"
+    },
+    {
+      "key": "ДОПОЛНИТЕЛЬНЫЕ ПОПЫТКИ",
+      "value": "ZUSÄTZLICHER VERSUCH"
+    },
+    {
+      "key": "5 вращ.  •  25 зол. руды",
+      "value": "5 Drehungen • 25 Gold. Erz"
+    },
+    {
+      "key": "Золотая руда: 0",
+      "value": "Golderz: 0"
+    },
+    {
+      "key": "Первое вращение бесплатно",
+      "value": "Der erste Spin ist kostenlos"
+    },
+    {
+      "key": "Колесо удачи",
+      "value": "Glücksrad"
+    },
+    {
+      "key": "Крутить!",
+      "value": "Dreh!"
+    },
+    {
+      "key": "Крутите колесо и собирайте добычу!\nПредметы попадут в инвентарь.",
+      "value": "Drehe das Rad und sammle Beute!\nDie Artikel werden in das Inventar aufgenommen."
+    },
+    {
+      "key": "10 вращ.  •  50 зол. руды",
+      "value": "10 Drehungen • 50 Gold. Erz"
+    },
+    {
+      "key": "1 вращ.  •  5 зол. руды",
+      "value": "1 Drehung • 5 Golderz"
+    },
+    {
+      "key": "Отлично!",
+      "value": "Großartig!"
+    },
+    {
+      "key": "Ваши ресурсы ждут в инвентаре",
+      "value": "Ihre Ressourcen warten in Ihrem Inventar"
+    },
+    {
+      "key": "Перетаскивайте предметы в слоты экипировки и на панель быстрого доступа.",
+      "value": "Ziehen Sie Gegenstände in Ausrüstungssteckplätze und in das Schnellzugriffsfeld."
+    },
+    {
+      "key": "Инвентарь",
+      "value": "Inventar"
+    },
+    {
+      "key": "СНАРЯЖЕНИЕ",
+      "value": "AUSRÜSTUNG"
+    },
+    {
+      "key": "РЮКЗАК",
+      "value": "RUCKSACK"
+    },
+    {
+      "key": "Награды добавятся в инвентарь при возвращении",
+      "value": "Bei der Rückgabe werden die Belohnungen dem Inventar hinzugefügt"
+    },
+    {
+      "key": "Добыча и награда за прохождение",
+      "value": "Beute und Belohnung für den Abschluss"
+    },
+    {
+      "key": "Экспедиция завершена",
+      "value": "Expedition abgeschlossen"
+    },
+    {
+      "key": "Забрать и вернуться",
+      "value": "Abholung und Rückgabe"
+    },
+    {
+      "key": "Удвоить • реклама",
+      "value": "Doppelte • Werbung"
+    },
+    {
+      "key": "ЗАЧИСТКА",
+      "value": "RÄUMUNG"
+    },
+    {
+      "key": "Готовим экспедицию",
+      "value": "Wir bereiten eine Expedition vor"
+    },
+    {
+      "key": "Загружаем мир и размещаем ресурсы…",
+      "value": "Die Welt laden und Ressourcen platzieren..."
+    },
+    {
+      "key": "Настройки",
+      "value": "Einstellungen"
+    },
+    {
+      "key": "Подарок за время игры",
+      "value": "Geschenk zum Spielen"
+    },
+    {
+      "key": "Рюкзак",
+      "value": "Rucksack"
+    },
+    {
+      "key": "Магазин",
+      "value": "Speichern"
+    },
+    {
+      "key": "Выбор экспедиции",
+      "value": "Eine Expedition auswählen"
+    },
+    {
+      "key": "Подарок за новый день",
+      "value": "Geschenk für einen neuen Tag"
+    },
+    {
+      "key": "Подарки за время",
+      "value": "Geschenke für die Zeit"
+    },
+    {
+      "key": "Больше времени в игре — больше подарков!",
+      "value": "Mehr Zeit im Spiel – mehr Geschenke!"
+    },
+    {
+      "key": "МОЖНО ДОБЫТЬ",
+      "value": "Kann abgebaut werden"
+    },
+    {
+      "key": "Новые экспедиции появятся здесь",
+      "value": "Neue Expeditionen werden hier erscheinen"
+    },
+    {
+      "key": "Дополнительная награда не предусмотрена",
+      "value": "Keine zusätzliche Belohnung vorgesehen"
+    },
+    {
+      "key": "На этом уровне нет добываемых ресурсов",
+      "value": "Auf dieser Ebene gibt es keine abgebauten Ressourcen"
+    },
+    {
+      "key": "Выбор уровня",
+      "value": "Levelauswahl"
+    },
+    {
+      "key": "КАРТА МИРА",
+      "value": "WELTKARTE"
+    },
+    {
+      "key": "Сложность: Лёгкая",
+      "value": "Schwierigkeit: Einfach"
+    },
+    {
+      "key": "Открыто 1 из 4",
+      "value": "Öffnen Sie 1 von 4"
+    },
+    {
+      "key": "НАГРАДА ЗА ПРОХОЖДЕНИЕ",
+      "value": "BELOHNUNG FÜR DEN ABSCHLUSS"
+    },
+    {
+      "key": "Выберите маршрут. Добывайте ресурсы. Открывайте новые земли.",
+      "value": "Wählen Sie eine Route. Holen Sie sich Ressourcen. Entdecken Sie neue Länder."
+    },
+    {
+      "key": "MINE ARENA / ЭКСПЕДИЦИИ",
+      "value": "MINE ARENA / EXPEDITIONEN"
+    },
+    {
+      "key": "Звук и управление камерой",
+      "value": "Ton- und Kamerasteuerung"
+    },
+    {
+      "key": "Звуковые эффекты",
+      "value": "Soundeffekte"
+    },
+    {
+      "key": "Скорость приближения камеры колёсиком мыши. 1× — обычная.",
+      "value": "Zoomgeschwindigkeit der Kamera mit dem Mausrad. 1× - regulär."
+    },
+    {
+      "key": "WASD — движение   • 1–5 — быстрые слоты\nНаведите курсор на иконку меню, чтобы увидеть подсказку.",
+      "value": "WASD – Bewegung • 1–5 – schnelle Slots\nBewegen Sie den Mauszeiger über das Menüsymbol, um einen Tooltip anzuzeigen."
+    },
+    {
+      "key": "Музыка",
+      "value": "Musik"
+    },
+    {
+      "key": "Чувствительность\nприближения",
+      "value": "Zoom-\nEmpfindlichkeit"
+    },
+    {
+      "key": "КАМЕРА",
+      "value": "KAMERA"
+    },
+    {
+      "key": "Общая громкость",
+      "value": "Gesamtlautstärke"
+    },
+    {
+      "key": "2 × Золотая руда",
+      "value": "2 × Golderz"
+    },
+    {
+      "key": "16 × Золотая руда",
+      "value": "16 × Golderz"
+    },
+    {
+      "key": "4 × Золотая руда",
+      "value": "4 × Golderz"
+    },
+    {
+      "key": "30 × Золотая руда",
+      "value": "30 × Golderz"
+    },
+    {
+      "key": "12 × Золотая руда",
+      "value": "12 × Golderz"
+    },
+    {
+      "key": "Лавка торговца",
+      "value": "Händlerladen"
+    },
+    {
+      "key": "20 × Золотая руда",
+      "value": "20 × Golderz"
+    },
+    {
+      "key": "3 × Золотая руда",
+      "value": "3 × Golderz"
+    },
+    {
+      "key": "ИНВЕНТАРЬ ИГРОКА",
+      "value": "SPIELERINVENTAR"
+    },
+    {
+      "key": "Вещи игрока и запасы хранилища",
+      "value": "Spielergegenstände und Lagerbedarf"
+    },
+    {
+      "key": "Занято ячеек: 0",
+      "value": "Belegte Plätze: 0"
+    },
+    {
+      "key": "СКЛАД",
+      "value": "LAGER"
+    },
+    {
+      "key": "Блоки, материалы и снаряжение",
+      "value": "Blöcke, Materialien und Ausrüstung"
+    },
+    {
+      "key": "Склад пока пуст",
+      "value": "Das Lager ist noch leer"
+    },
+    {
+      "key": "Алмазный нагрудник",
+      "value": "Diamant-Brustpanzer"
+    },
+    {
+      "key": "Доски",
+      "value": "Bretter"
+    },
+    {
+      "key": "Тёмный дуб",
+      "value": "Dunkle Eiche"
+    },
+    {
+      "key": "Лук",
+      "value": "Verbeuge dich"
+    },
+    {
+      "key": "Алмазные ботинки",
+      "value": "Diamantstiefel"
+    },
+    {
+      "key": "Алмазный шлем",
+      "value": "Diamanthelm"
+    },
+    {
+      "key": "Алмазные поножи",
+      "value": "Diamant-Leggings"
+    },
+    {
+      "key": "Золотые ботинки",
+      "value": "Goldene Stiefel"
+    },
+    {
+      "key": "Золотой нагрудник",
+      "value": "Goldener Brustpanzer"
+    },
+    {
+      "key": "Золотой шлем",
+      "value": "Goldener Helm"
+    },
+    {
+      "key": "Золотые поножи",
+      "value": "Goldene Leggings"
+    },
+    {
+      "key": "Железные ботинки",
+      "value": "Eisenstiefel"
+    },
+    {
+      "key": "Железные поножи",
+      "value": "Eisengamaschen"
+    },
+    {
+      "key": "Незеритовые ботинки",
+      "value": "Netherit-Stiefel"
+    },
+    {
+      "key": "Незеритовый нагрудник",
+      "value": "Netherit-Brustharnisch"
+    },
+    {
+      "key": "Незеритовые поножи",
+      "value": "Netherit-Gamaschen"
+    },
+    {
+      "key": "Алмазная кирка",
+      "value": "Diamantspitzhacke"
+    },
+    {
+      "key": "Железная кирка",
+      "value": "Eisenspitzhacke"
+    },
+    {
+      "key": "Незеритовая кирка",
+      "value": "Netherit-Spitzhacke"
+    },
+    {
+      "key": "Деревянная кирка",
+      "value": "Spitzhacke aus Holz"
+    },
+    {
+      "key": "Золотой меч",
+      "value": "Goldenes Schwert"
+    },
+    {
+      "key": "Незеритовый меч",
+      "value": "Netherit-Schwert"
+    },
+    {
+      "key": "Каменный меч",
+      "value": "Steinschwert"
+    },
+    {
+      "key": "Деревянный меч",
+      "value": "Holzschwert"
+    },
+    {
+      "key": "Русский",
+      "value": "Russisch"
+    },
+    {
+      "key": "Язык: ",
+      "value": "Sprache: "
+    },
+    {
+      "key": "Язык: Русский ›",
+      "value": "Sprache: Russisch ›"
+    },
+    {
+      "key": "Уровень: {0} | Опыт: {1}/{2}",
+      "value": "Level: {0} | Erfahrung: {1}/{2}"
+    },
+    {
+      "key": "Прогресс игрока ещё не загружен",
+      "value": "Der Spielerfortschritt wurde noch nicht geladen"
+    },
+    {
+      "key": "Ваншот",
+      "value": "Oneshot"
+    },
+    {
+      "key": "Неуязвиомость",
+      "value": "Unverwundbarkeit"
+    },
+    {
+      "key": "Требуется {0} ур. {1}",
+      "value": "Erfordert Level {0}. {1}"
+    },
+    {
+      "key": "{0} ур. {1}",
+      "value": "{0} Stufe. {1}"
+    },
+    {
+      "key": "Пусто",
+      "value": "Leer"
+    },
+    {
+      "key": "Вкладка",
+      "value": "Tab"
+    },
+    {
+      "key": "Название задания",
+      "value": "Berufsbezeichnung"
+    },
+    {
+      "key": "Вариант",
+      "value": "Option"
+    },
+    {"key": "???? +{0} ? ?????.", "value": "Gew?hrt +{0} R?stung."},
+    {"key": "????: {0:0.##}.", "value": "Schaden: {0:0.##}."},
+    {"key": "????? ??????: {0:0.##} ?.", "value": "Abbauzeit: {0:0.##} s."},
+    {"key":"Arena.GoToPortal","value":"Geh zum Portal"},
+    {"key":"Arena.Exit","value":"Arena verlassen"},
+    {"key":"Arena.ExitTitle","value":"Arena verlassen?"},
+    {"key":"Arena.ExitWarning","value":"Wenn du die Arena vorzeitig ohne das Portal verlässt, verlierst du alle hier gesammelten Ressourcen."},
+    {"key":"Arena.Stay","value":"Bleiben"},
+    {"key":"Arena.ConfirmExit","value":"Gehen und Beute verlieren"}
+  ]
+}

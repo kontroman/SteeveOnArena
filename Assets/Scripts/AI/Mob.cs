@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using MineArena.ObjectPools;
 using MineArena.Controllers;
 using MineArena.Interfaces;
@@ -18,16 +18,18 @@ namespace MineArena.AI
         [SerializeField] private MobAnimationController _mobAnimation;
         [SerializeField] private MobPreset _preset;
 
-        public void Start()
+        private void OnEnable()
         {
-            _playerTransform = Player.Instance.GetComponentFromList<Transform>();
-            SetPresetParameters(_preset);
+            if (_preset != null) SetPresetParameters(_preset);
         }
 
         public void SetPresetParameters(MobPreset preset)
         {
+            if (preset == null) return;
             _preset = preset;
             _type = preset.MobType;
+            var feedback = GetComponent<MobFeedback>() ?? gameObject.AddComponent<MobFeedback>();
+            feedback.Configure(_type);
             _mobCombat.SetParameters(preset);
             _mobMovement.SetParameters(preset);
             _mobHealth.SetParameters(preset);

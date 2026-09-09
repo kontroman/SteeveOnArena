@@ -1,0 +1,9 @@
+Spawn (2.34, 0.91, -7.48) scale (100.00, 100.00, 100.00) rotation (270.02, 270.00, 0.00)
+Portal ForestPortal(Clone) bounds Center: (2.34, 3.91, -7.48), Extents: (4.50, 3.00, 1.50)
+Portal PortalEffect (1) bounds Center: (2.29, 2.82, -6.43), Extents: (1.74, 2.16, 0.13)
+Ground LocationMine(Clone) (2.34, 0.91, -7.48) normal (0.00, 1.00, 0.00)
+PASS: starter pickaxe absent from recipes/unlocks, removal blocked; other tools remain discardable.
+PASS: stone sword has its own icon and matching material texture.
+PASS: stop icon switches/restores and disabling interaction cancels exactly once.
+PASS: portal upright and grounded within 3 cm.
+Unity editor checks; full gameplay playtest still required.

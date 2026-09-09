@@ -75,6 +75,8 @@ namespace Devotion.SDK.DailyReward
 
             inventory.AddItemById(reward.ItemId, reward.Amount);
             progress.MarkRewardClaimed(todayUtcDayNumber, config.RewardsCount);
+            if (rewardIndex == config.RewardsCount - 1)
+                MineArena.Cosmetics.SkinService.GrantReward("daily_cycle_complete");
 
             Debug.Log($"[DailyRewardManager] Claimed daily reward: {reward.ItemId} x{reward.Amount}.");
             return true;
@@ -82,6 +84,16 @@ namespace Devotion.SDK.DailyReward
 
         public bool CanClaim => GetConfig() != null && GetProgress() != null &&
             GetProgress().IsRewardAvailable(GetCurrentUtcDayNumber(), GetConfig().RewardsCount);
+
+        public bool IsRewardClaimed(int index)
+        {
+            var config = GetConfig();
+            var progress = GetProgress();
+            if (config == null || progress == null) return false;
+            if (CanClaim)
+                return index < progress.GetRewardIndexForClaim(GetCurrentUtcDayNumber(), config.RewardsCount);
+            return index < (progress.CompletedCycle ? config.RewardsCount : progress.NextRewardIndex);
+        }
 
         public void OpenRewards()
         {

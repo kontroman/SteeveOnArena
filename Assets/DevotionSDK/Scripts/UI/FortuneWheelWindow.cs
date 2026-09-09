@@ -83,6 +83,8 @@ namespace Devotion.SDK.UI
         {
             _spinTween?.Kill();
             _pointerTween?.Kill();
+            if (_isSpinning)
+                CompleteSpin();
             _isSpinning = false;
             _isRewardAdLoading = false;
         }
@@ -330,6 +332,13 @@ namespace Devotion.SDK.UI
         {
             EnsureRewards();
 
+            if (GameRoot.GetManager<InventoryManager>() == null || GameRoot.GameConfig?.ItemDatabase == null ||
+                _rewards.Any(reward => GameRoot.GameConfig.ItemDatabase.GetItemConfig(reward.Id) == null))
+            {
+                Debug.LogError("[FortuneWheelWindow] Inventory or reward configuration is unavailable.");
+                return;
+            }
+
             if (_rewards.Count == 0)
             {
                 Debug.LogError("[FortuneWheelWindow] Rewards list is empty.");
@@ -456,7 +465,7 @@ namespace Devotion.SDK.UI
 
         private void UpdatePointer(float spinProgress)
         {
-            if (_pointerTransform == null || _rewards.Count == 0)
+            if (_rewards.Count == 0)
                 return;
 
             var sectorAngle = 360f / _rewards.Count;
@@ -466,6 +475,9 @@ namespace Devotion.SDK.UI
                 return;
 
             _lastPointerSectorStep = sectorStep;
+            GameRoot.GetManager<AudioManager>()?.PlayEffect(MineArena.Basics.Constants.AudioNames.UIClick);
+            if (_pointerTransform == null)
+                return;
             var amplitude = Mathf.Lerp(_pointerMaxAngle, _pointerMaxAngle * 0.25f, Mathf.Clamp01(spinProgress));
             var returnDuration = Mathf.Lerp(_pointerReturnDuration * 0.6f, _pointerReturnDuration * 1.4f, Mathf.Clamp01(spinProgress));
 
@@ -478,13 +490,17 @@ namespace Devotion.SDK.UI
 
         private void CompleteSpin()
         {
-            LogSpinResult(_pendingSectorReward, _pendingResolvedReward);
-            GiveReward(_pendingResolvedReward);
+            if (!_isSpinning)
+                return;
+            var sectorReward = _pendingSectorReward;
+            var issuedReward = _pendingResolvedReward;
             _pendingSectorReward = null;
             _pendingResolvedReward = null;
             _isSpinning = false;
+            LogSpinResult(sectorReward, issuedReward);
+            GiveReward(issuedReward);
 
-            if (_pointerTransform != null)
+            if (_pointerTransform != null && isActiveAndEnabled)
                 _pointerTransform.DOLocalRotate(Vector3.zero, _pointerReturnDuration).SetUpdate(true);
 
             RefreshFreeSpinState(false);

@@ -61,7 +61,31 @@ MonoBehaviour:
   overrideCameraZoomLimits: 0
   cameraMinDistance: 8
   cameraMaxDistance: 28
-  weatherPresets: []
+  weatherPresets:
+  - presetName: Village_ClearDay
+    enableRain: 0
+    sunRotation: {x: 50, y: -110, z: 0}
+    sunIntensity: 1.05
+    sunColor: {r: 1.0, g: 0.96, b: 0.86, a: 1}
+    skyboxMaterial: {fileID: 2100000, guid: 133347283e115d147a5fcce7f47a538f, type: 2}
+    fogColor: {r: 0.7, g: 0.8, b: 0.88, a: 1}
+    fogDensity: 0.003
+    fogEnabled: 1
+    ambientLight: {r: 0.7, g: 0.8, b: 0.88, a: 1}
+    ambientIntensity: 1.0
+    rainIntensity: 0
+  - presetName: Village_Sunrise
+    enableRain: 0
+    sunRotation: {x: 23, y: -110, z: 0}
+    sunIntensity: 0.75
+    sunColor: {r: 1.0, g: 0.79, b: 0.60, a: 1}
+    skyboxMaterial: {fileID: 2100000, guid: 8162517b6ec2309499f99e303b29f146, type: 2}
+    fogColor: {r: 0.82, g: 0.68, b: 0.6, a: 1}
+    fogDensity: 0.009
+    fogEnabled: 1
+    ambientLight: {r: 0.82, g: 0.68, b: 0.6, a: 1}
+    ambientIntensity: 0.8
+    rainIntensity: 0
   weatherPreset:
     presetName: Sunday
     enableRain: 0

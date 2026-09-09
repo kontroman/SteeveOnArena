@@ -17,7 +17,9 @@ namespace MineArena.PlayerSystem
 
     public class PlayerDeathFlow : MonoBehaviour
     {
-        private enum State { Alive, Choosing, Advertising, Returning }
+        private enum State { Alive, Dying, Choosing, Advertising, Returning }
+        [SerializeField, Min(0f)] private float _deathWindowDelay = 1.25f;
+        private float _showWindowAt;
         private State _state;
         private int _request;
         private float _protectedUntil, _adDeadline;
@@ -31,6 +33,7 @@ namespace MineArena.PlayerSystem
         {
             SceneManager.sceneLoaded -= SceneLoaded;
             ++_request;
+            if (_state == State.Dying) _state = State.Alive;
             if (_window != null) Destroy(_window);
         }
         private void SceneLoaded(Scene scene, LoadSceneMode mode)
@@ -42,17 +45,22 @@ namespace MineArena.PlayerSystem
         }
         private void Update()
         {
+            if (_state == State.Dying && Time.time >= _showWindowAt)
+            {
+                _state = State.Choosing;
+                BuildWindow();
+            }
             if (_state == State.Advertising && Time.realtimeSinceStartup >= _adDeadline)
                 FinishAd(_request, false);
         }
         public void BeginDeath()
         {
             if (_state != State.Alive) return;
-            _state = State.Choosing;
+            _state = State.Dying;
+            _showWindowAt = Time.time + _deathWindowDelay;
             ++_request;
             GameRoot.UIManager?.CloseAllWindows();
             GameRoot.UIManager?.EnsureInputSystem();
-            BuildWindow();
         }
         private IReviveAdsProvider FindProvider()
         {

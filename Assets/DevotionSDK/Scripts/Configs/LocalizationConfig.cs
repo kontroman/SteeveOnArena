@@ -15,8 +15,10 @@ namespace Devotion.SDK.Confgs
             SystemLanguage.Turkish,
             SystemLanguage.German,
             SystemLanguage.Spanish,
-            SystemLanguage.Japanese,
-            SystemLanguage.ChineseSimplified
+            SystemLanguage.Italian,
+            SystemLanguage.French,
+            SystemLanguage.Portuguese,
+            SystemLanguage.Indonesian
         };
     }
 }

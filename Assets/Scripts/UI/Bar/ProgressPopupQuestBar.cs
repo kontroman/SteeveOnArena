@@ -25,6 +25,6 @@ public class ProgressPopupQuestBar : AbstractBar<AchievementPopup>
     private void OnDestroy()
     {
         if (TargetSystem != null)
-            TargetSystem.OnValueChanged += UpdateBar;
+            TargetSystem.OnValueChanged -= UpdateBar;
     }
 }

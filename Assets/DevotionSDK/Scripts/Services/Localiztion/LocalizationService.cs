@@ -12,6 +12,8 @@ namespace Devotion.SDK.Services.Localization
     {
         private static LocalizationConfig _config;
         private static readonly Dictionary<string, string> _localizationDictionary = new Dictionary<string, string>();
+        private static readonly Dictionary<string, string> _russianDictionary = new();
+        private const string LanguagePreference = "Localization.Language";
 
         public static SystemLanguage CurrentLanguage { get; private set; }
 
@@ -37,6 +39,8 @@ namespace Devotion.SDK.Services.Localization
             _config = config;
 
             var languageToLoad = config.defaultLanguage;
+            if (Enum.TryParse(PlayerPrefs.GetString(LanguagePreference, string.Empty), out SystemLanguage savedLanguage))
+                languageToLoad = savedLanguage;
             if (Array.IndexOf(_config.supportedLanguages, languageToLoad) < 0 && _config.supportedLanguages.Length > 0)
             {
                 languageToLoad = _config.supportedLanguages[0];
@@ -82,6 +86,8 @@ namespace Devotion.SDK.Services.Localization
 
             CurrentLanguage = language;
             LoadLocalizationData(language);
+            PlayerPrefs.SetString(LanguagePreference, language.ToString());
+            PlayerPrefs.Save();
 
             MineArena.Messages.Game.LanguageChanged.Publish(language);
         }
@@ -89,6 +95,15 @@ namespace Devotion.SDK.Services.Localization
         private static void LoadLocalizationData(SystemLanguage language)
         {
             _localizationDictionary.Clear();
+            _russianDictionary.Clear();
+            ReadLanguage(SystemLanguage.Russian, _russianDictionary);
+            foreach (var pair in _russianDictionary) _localizationDictionary[pair.Key] = pair.Value;
+            if (language != SystemLanguage.Russian) ReadLanguage(language, _localizationDictionary);
+            LocalizedTextRenderer.Rebuild(_russianDictionary, _localizationDictionary);
+        }
+
+        private static void ReadLanguage(SystemLanguage language, Dictionary<string, string> target)
+        {
 
             string normalizedRoot = string.IsNullOrWhiteSpace(_config.localizationFilesPath) ? string.Empty : _config.localizationFilesPath.TrimEnd('/', '\\');
             string path = string.IsNullOrEmpty(normalizedRoot) ? language.ToString() : $"{normalizedRoot}/{language}";
@@ -109,7 +124,7 @@ namespace Devotion.SDK.Services.Localization
 
             foreach (var pair in data.ToDictionary())
             {
-                _localizationDictionary[pair.Key] = pair.Value;
+                if (!string.IsNullOrWhiteSpace(pair.Value)) target[pair.Key] = pair.Value;
             }
         }
     }

@@ -119,6 +119,7 @@ namespace MineArena.Networking
         public void ApplyCustomization(PlayerCustomizationData data)
         {
             customization = data ?? PlayerCustomizationData.Default();
+            if (!isLocalPlayer) GetComponent<MineArena.Cosmetics.PlayerSkinView>()?.ApplyRemote(customization.skinId);
             Debug.Log("[NetworkPlayerView] ApplyCustomization playerId=" + playerId
                       + " weapon=" + customization.weaponId
                       + " skin=" + customization.skinId

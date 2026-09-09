@@ -64,6 +64,7 @@ namespace MineArena.Editor
             BuildWheel(catalog);
             RestyleExisting("Assets/Prefabs/Windows/WindowAchievements.prefab");
             BuildLevelProgress();
+            BuildAchievementPopup();
             RestyleExisting(UI + "GodModeWindow.prefab");
             BuildCraftItem("Assets/Resources/Prefabs/Windows/Crafting/CraftingItemView.prefab");
             BuildCraftItem("Assets/Prefabs/Windows/Crafting/CraftingItemView.prefab");
@@ -425,7 +426,7 @@ namespace MineArena.Editor
             var arrow = (RectTransform)so.FindProperty("_portalArrow").objectReferenceValue;
             Keep(root, new Transform[] { arrow });
             var frame = Panel("ProgressPanel", root.transform, "panel");
-            frame.anchorMin = frame.anchorMax = new Vector2(0.5f, 1); frame.pivot = new Vector2(0.5f, 1); frame.anchoredPosition = new Vector2(0, -124); frame.sizeDelta = new Vector2(600, 80); Outline(frame);
+            frame.anchorMin = frame.anchorMax = new Vector2(0.5f, 1); frame.pivot = new Vector2(0.5f, 1); frame.anchoredPosition = Vector2.zero; frame.sizeDelta = new Vector2(600, 80); Outline(frame);
             Text("Label", frame, "ЗАЧИСТКА", 18, 18, 8, 350, 25, true);
             var text = Text("Progress", frame, "0 / 0", 18, 432, 8, 150, 25); text.alignment = TextAlignmentOptions.Right;
             var progress = Slider(frame, "ProgressBar", 18, 43, 564, 18, false); progress.value = 0;
@@ -442,7 +443,10 @@ namespace MineArena.Editor
             wheel.SetParent(frame, false);
             var wr = (RectTransform)wheel; wr.anchorMin = wr.anchorMax = new Vector2(0, 1); wr.pivot = new Vector2(0.5f, 0.5f); wr.anchoredPosition = new Vector2(398, -410); wr.sizeDelta = new Vector2(580, 580);
             wheel.GetComponent<Image>().sprite = WheelSprite(); wheel.GetComponent<Image>().color = Color.white;
-            var pointer = Text("Pointer", frame, "▼", 46, 362, 116, 72, 62); pointer.alignment = TextAlignmentOptions.Center;
+            var pointerRect = Rect("Pointer", frame); Box(pointerRect, 362, 116, 72, 62);
+            pointerRect.pivot = new Vector2(0.5f, 1f); pointerRect.anchoredPosition = new Vector2(398, -116);
+            var pointer = pointerRect.gameObject.AddComponent<MineArena.UI.FortuneWheel.WheelPointerGraphic>();
+            pointer.color = new Color(0.824f, 0.596f, 0.247f); pointer.raycastTarget = false;
             var spin = Button("Start", frame, "Крутить!", 120, 729, 555, 62);
             var timer = Text("FreeSpinText", frame, "Первое вращение бесплатно", 22, 756, 145, 520, 60); timer.enableWordWrapping = true;
             Text("BuyHeading", frame, "ДОПОЛНИТЕЛЬНЫЕ ПОПЫТКИ", 19, 756, 235, 520, 40, true);

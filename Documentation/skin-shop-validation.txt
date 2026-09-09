@@ -1,0 +1,30 @@
+PASS Unique catalog IDs and all acquisition sources
+PASS Every skin has a texture and rendered preview
+PASS Default skin available; locked skins cannot be equipped
+PASS Duplicate grants are idempotent
+PASS Owned skin can be equipped
+PASS Ownership and equipped skin survive save round trip
+PASS Legacy saves initialize the default skin
+PASS Building model assigned; no stat bonus
+PASS IAP and offer mappings resolve to valid rewards
+Platform checkout requires product configuration and a platform sandbox test.
+PASS Insufficient funds do not unlock or charge
+PASS Currency purchase charges exactly once and unlocks
+PASS Repeat purchase does not charge
+PASS Premium skins cannot be bought with currency or equipped while locked
+PASS Incomplete quest cannot grant a skin
+PASS Unclaimed quest reward cannot grant a skin
+PASS Completed quest grants once
+PASS Unknown reward cannot unlock a skin
+PASS Daily cycle reward grants once
+PASS Purchased skin can be equipped
+PASS Skin changes only the body texture without mutating shared materials
+PASS Default appearance can be restored
+PASS Purchase balance and equipped appearance survive save/load together
+PASS Shop renders every catalog entry
+PASS Equipped skin action is disabled
+PASS Shop is registered exactly once in UIManager
+PASS Saved scene loads with exactly one shop construction site at (10.00, 0.49, 9.00)
+PASS Active scene player has the cosmetic renderer binding
+PASS Building footprint and player construction point are on level ground
+PASS Shop footprint does not intersect other solid colliders

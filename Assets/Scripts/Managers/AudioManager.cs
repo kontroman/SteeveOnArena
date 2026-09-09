@@ -18,6 +18,8 @@ namespace MineArena.Managers
         [SerializeField, Min(0f)] private float _musicFadeDuration = 1.25f;
         [SerializeField, Range(0f, 1f)] private float _musicVolume = 1f;
 
+        public MobSoundBus MobSounds { get; private set; }
+
         private AudioSource _musicSourceA;
         private AudioSource _musicSourceB;
         private AudioSource _effectSource;       
@@ -56,6 +58,8 @@ namespace MineArena.Managers
 
             var outputGroup = _effectSource != null ? _effectSource.outputAudioMixerGroup : null;
             ConfigureEffectSource(_effectSource);
+            MobSounds = gameObject.AddComponent<MobSoundBus>();
+            MobSounds.Initialize(outputGroup);
             ConfigureMusicSource(_musicSourceA, outputGroup);
             ConfigureMusicSource(_musicSourceB, outputGroup);
             _activeMusicSource = _musicSourceA;
@@ -110,21 +114,21 @@ namespace MineArena.Managers
             PlayMusic(Constants.AudioNames.SpawnMusic);
         }
 
-        public void PlayEffect(string name)
+        public void PlayEffect(string name, float volumeScale = 1f)
         {
             AudioClip clip = _music.GetEffect(name);
             if (clip == null || _effectSource == null)
                 return;
 
-            _effectSource.PlayOneShot(clip, Mathf.Max(0f, _music.GetEffectVolume(name)));
+            _effectSource.PlayOneShot(clip, Mathf.Max(0f, _music.GetEffectVolume(name)) * Mathf.Clamp01(volumeScale));
         }
 
-        public void PlayRandomEffect(string[] names)
+        public void PlayRandomEffect(string[] names, float volumeScale = 1f)
         {
             if (names == null || names.Length == 0)
                 return;
 
-            PlayEffect(names[Random.Range(0, names.Length)]);
+            PlayEffect(names[Random.Range(0, names.Length)], volumeScale);
         }
 
         public void PlayMusic(string name)

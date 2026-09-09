@@ -50,6 +50,7 @@ namespace MineArena.Game.Health
 
         public void TakeDamage(DamageData damageData)
         {
+            if (damageData.Damage <= 0f || float.IsNaN(damageData.Damage)) return;
             if (_currentHealth <= 0f) return;
             var deathFlow = GetComponent<PlayerDeathFlow>();
             if (deathFlow != null && deathFlow.IsProtected) return;

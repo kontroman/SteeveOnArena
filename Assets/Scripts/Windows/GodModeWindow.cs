@@ -299,7 +299,7 @@ namespace MineArena.Windows
                     continue;
 
                 _availableItems.Add(item);
-                _itemDropdown.options.Add(new TMP_Dropdown.OptionData(item.Name));
+                _itemDropdown.options.Add(new TMP_Dropdown.OptionData(item.DisplayName));
             }
 
             if (_itemDropdown.options.Count == 0)
@@ -557,18 +557,18 @@ namespace MineArena.Windows
             var playerExperience = Player.Instance?.Experience;
             if (playerExperience != null)
             {
-                _playerProgressLabel.text = $"Level: {playerExperience.CurrentLevel} | XP: {playerExperience.CurrentExperience}/{playerExperience.ExperiencePerLevel}";
+                _playerProgressLabel.text = $"Уровень: {playerExperience.CurrentLevel} | Опыт: {playerExperience.CurrentExperience}/{playerExperience.ExperiencePerLevel}";
                 return;
             }
 
             var playerData = GameRoot.PlayerProgress?.PlayerDataProgress;
             if (playerData != null)
             {
-                _playerProgressLabel.text = $"Level: {playerData.CurrentLevel} | XP: {playerData.CurrentExperience}/{Constants.GameSetting.ExperiencePerLevel}";
+                _playerProgressLabel.text = $"Уровень: {playerData.CurrentLevel} | Опыт: {playerData.CurrentExperience}/{Constants.GameSetting.ExperiencePerLevel}";
                 return;
             }
 
-            _playerProgressLabel.text = "Player progress is not ready";
+            _playerProgressLabel.text = "Прогресс игрока ещё не загружен";
         }
 
         private static TMP_InputField CreateInput(RectTransform parent, string name, string value, float x, float y, float width, float height)
@@ -630,6 +630,7 @@ namespace MineArena.Windows
             label.raycastTarget = false;
             label.horizontalOverflow = HorizontalWrapMode.Overflow;
             label.verticalOverflow = VerticalWrapMode.Truncate;
+            label.gameObject.AddComponent<MineArena.SDK.UI.LocalizedLegacyText>();
 
             return label;
         }

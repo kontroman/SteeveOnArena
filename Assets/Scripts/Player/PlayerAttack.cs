@@ -146,26 +146,32 @@ namespace MineArena.PlayerSystem
             if (camera == null)
                 return transform.position + transform.forward;
 
-            Ray ray = camera.ScreenPointToRay(Input.mousePosition);
-            var hits = Physics.RaycastAll(ray, 500f, ~0, QueryTriggerInteraction.Ignore);
-            System.Array.Sort(hits, (left, right) => left.distance.CompareTo(right.distance));
-
-            foreach (var hit in hits)
-            {
-                if (hit.collider == null || IsOwnerCollider(hit.collider) || ShouldIgnoreAttackClick(hit.collider))
-                    continue;
-
-                return hit.point;
-            }
-
-            return transform.position + transform.forward;
+            return ResolveAttackAim(camera.ScreenPointToRay(Input.mousePosition), transform.position, 500f);
         }
 
+        private Vector3 ResolveAttackAim(Ray ray, Vector3 origin, float maxDistance)
+        {
+            var hits = Physics.RaycastAll(ray, maxDistance, ~0, QueryTriggerInteraction.Ignore);
+            System.Array.Sort(hits, (left, right) => left.distance.CompareTo(right.distance));
+            foreach (var hit in hits)
+            {
+                if (hit.collider == null || IsOwnerCollider(hit.collider) || ShouldIgnoreAttackClick(hit.collider)) continue;
+                // Scenery must not bend screen-space aiming toward a roof or wall.
+                if (hit.collider.GetComponentInParent<MineArena.AI.MobHealth>() != null ||
+                    hit.collider.GetComponentInParent<NetworkPlayerView>() != null)
+                    return hit.collider.bounds.center;
+            }
+            var plane = new Plane(Vector3.up, origin);
+            if (plane.Raycast(ray, out float distance)) return ray.GetPoint(distance);
+            return origin + transform.forward * maxDistance;
+        }
         private IEnumerator AttackRoutine(Vector3 targetPoint)
         {
             _isAttacking = true;
 
-            Vector3 attackDirection = (targetPoint - transform.position).normalized;
+            Vector3 attackDirection = targetPoint - transform.position;
+            attackDirection.y = 0f;
+            attackDirection = attackDirection.sqrMagnitude > 0.0001f ? attackDirection.normalized : transform.forward;
 
             float rotationDuration = 0.07f;
             var rotationController = Player.Instance.GetComponentFromList<RotationController>();
@@ -347,10 +353,12 @@ namespace MineArena.PlayerSystem
                     continue;
                 }
 
-                if ((_config.AttackableLayers.value & (1 << hit.gameObject.layer)) == 0)
-                    continue;
-
                 var damageable = hit.GetComponentInParent<IDamageable>();
+                int targetLayer = damageable is Component targetComponent ? targetComponent.gameObject.layer : hit.gameObject.layer;
+                if ((_config.AttackableLayers.value & (1 << targetLayer)) == 0)
+                    continue;
+                if (damageable is Component body && !MineArena.AI.CombatTargeting.HasLineOfSight(
+                    attackOrigin, hit.bounds.center, transform, body.transform)) continue;
                 if (damageable != null && localTargets.Add(damageable))
                     _damageCommand.Execute(new DamageData(GetMeleeDamage(_config), damageable));
             }
@@ -468,19 +476,8 @@ namespace MineArena.PlayerSystem
             if (camera == null)
                 return origin + transform.forward * maxDistance;
 
-            var ray = camera.ScreenPointToRay(Input.mousePosition);
-            var hits = Physics.RaycastAll(ray, maxDistance, ~0, QueryTriggerInteraction.Ignore);
-            System.Array.Sort(hits, (left, right) => left.distance.CompareTo(right.distance));
-
-            foreach (var hit in hits)
-            {
-                if (hit.collider != null && !IsOwnerCollider(hit.collider) && !ShouldIgnoreAttackClick(hit.collider))
-                    return hit.point;
-            }
-
-            return ray.GetPoint(maxDistance);
+            return ResolveAttackAim(camera.ScreenPointToRay(Input.mousePosition), origin, maxDistance);
         }
-
         private void SpawnBowProjectile(AttackConfig bowConfig, Vector3 origin, Vector3 direction)
         {
             var projectilePrefab = GetArrowProjectilePrefab();

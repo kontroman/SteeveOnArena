@@ -97,8 +97,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7103af318be2bf540a6261244ec27c03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
-  destroyDelay: 2
+  speed: 8
+  destroyDelay: 5
+  stickDepth: 0.08
+  stuckLifetime: 2
+  enemySpeed: 8
+  gravity: 12
+  splashRadius: 1.25
+  sweepRadius: 0.12
 --- !u!1 &4150210766909756186
 GameObject:
   m_ObjectHideFlags: 0
@@ -160,7 +166,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 798d073f36aa43e591ac29bf08d7f1a0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -243,7 +249,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 4d676ddc214574a49895e2251989f66b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -326,7 +332,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 2580b7216c2b482eaf2a602ca9786e75, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

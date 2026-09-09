@@ -138,9 +138,11 @@ namespace MineArena.Managers
             InventoryUpdated?.Invoke();
         }
 
+        public static bool CanDiscard(Item item) => item != null && item.Name != "WoodenPickaxe";
+
         public void RemoveItem(Item item, int amount = 1)
         {
-            if (item == null)
+            if (!CanDiscard(item))
                 return;
 
             if (item is StackableItem stackable)

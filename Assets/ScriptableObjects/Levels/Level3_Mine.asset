@@ -55,7 +55,43 @@ MonoBehaviour:
   overrideCameraZoomLimits: 1
   cameraMinDistance: 8
   cameraMaxDistance: 16
-  weatherPresets: []
+  weatherPresets:
+  - presetName: Mine_ColdDepths
+    enableRain: 0
+    sunRotation: {x: 57, y: -110, z: 0}
+    sunIntensity: 0.7
+    sunColor: {r: 0.72, g: 0.83, b: 1.0, a: 1}
+    skyboxMaterial: {fileID: 2100000, guid: c1c961cbd00909b45b34d97fd7df5cbf, type: 2}
+    fogColor: {r: 0.17, g: 0.22, b: 0.29, a: 1}
+    fogDensity: 0.008
+    fogEnabled: 1
+    ambientLight: {r: 0.17, g: 0.22, b: 0.29, a: 1}
+    ambientIntensity: 0.55
+    rainIntensity: 0
+  - presetName: Mine_DustyGloom
+    enableRain: 0
+    sunRotation: {x: 57, y: -110, z: 0}
+    sunIntensity: 0.6
+    sunColor: {r: 1.0, g: 0.83, b: 0.65, a: 1}
+    skyboxMaterial: {fileID: 2100000, guid: c1c961cbd00909b45b34d97fd7df5cbf, type: 2}
+    fogColor: {r: 0.31, g: 0.27, b: 0.23, a: 1}
+    fogDensity: 0.016
+    fogEnabled: 1
+    ambientLight: {r: 0.31, g: 0.27, b: 0.23, a: 1}
+    ambientIntensity: 0.5
+    rainIntensity: 0
+  - presetName: Mine_BlueMist
+    enableRain: 0
+    sunRotation: {x: 48, y: -110, z: 0}
+    sunIntensity: 0.55
+    sunColor: {r: 0.55, g: 0.75, b: 1.0, a: 1}
+    skyboxMaterial: {fileID: 2100000, guid: c1c961cbd00909b45b34d97fd7df5cbf, type: 2}
+    fogColor: {r: 0.16, g: 0.25, b: 0.34, a: 1}
+    fogDensity: 0.022
+    fogEnabled: 1
+    ambientLight: {r: 0.16, g: 0.25, b: 0.34, a: 1}
+    ambientIntensity: 0.5
+    rainIntensity: 0
   weatherPreset:
     presetName: NightCave
     enableRain: 0

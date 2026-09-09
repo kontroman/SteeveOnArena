@@ -57,6 +57,7 @@ namespace MineArena.Windows
             if (!string.IsNullOrEmpty(_purchases.Status)) feedback.text = _purchases.Status;
             foreach (var product in _purchases.Catalog.Products)
             {
+                if (product.SkinIds != null && product.SkinIds.Count > 0) continue;
                 if (product.Item == null || product.Amount <= 0) continue;
                 var store = Array.Find(_purchases.Store, p => p.id == product.ProductId);
                 if (store == null) continue;

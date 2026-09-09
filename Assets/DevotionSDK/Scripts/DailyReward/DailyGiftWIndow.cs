@@ -20,6 +20,7 @@ namespace Devotion.SDK.UI
             [SerializeField] private TMP_Text amountText;
             [SerializeField] private TMP_Text statusText;
             [SerializeField] private TMP_Text itemText;
+            private Image claimedShade;
 
             public void ResolveReferences()
             {
@@ -52,7 +53,7 @@ namespace Devotion.SDK.UI
                 ResolveReferences();
             }
 
-            public void Refresh(int index, DailyRewardConfig config, int currentRewardIndex, Color claimedColor, Color currentColor, Color futureColor, bool canClaim)
+            public void Refresh(int index, DailyRewardConfig config, int currentRewardIndex, Color claimedColor, Color currentColor, Color futureColor, bool canClaim, bool claimed)
             {
                 var active = config != null && index < config.RewardsCount;
                 if (root != null)
@@ -80,6 +81,20 @@ namespace Devotion.SDK.UI
                     icon.enabled = icon.sprite != null;
                 }
                 ShowBlock(icon, blockIcon, reward?.ItemConfig);
+                if (claimedShade == null && root != null)
+                {
+                    var shade = new GameObject("ClaimedShade", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
+                    shade.transform.SetParent(root.transform, false);
+                    claimedShade = shade.GetComponent<Image>();
+                    claimedShade.color = new Color(0f, 0f, 0f, 0.55f);
+                    claimedShade.raycastTarget = false;
+                    var rect = claimedShade.rectTransform;
+                    rect.anchorMin = Vector2.zero;
+                    rect.anchorMax = Vector2.one;
+                    rect.offsetMin = rect.offsetMax = Vector2.zero;
+                }
+                if (claimedShade != null) claimedShade.gameObject.SetActive(claimed);
+                if (claimed && statusText != null) statusText.text = "ПОЛУЧЕНО";
             }
 
             private static Color GetStateColor(int index, int currentRewardIndex, Color claimedColor, Color currentColor, Color futureColor)
@@ -223,7 +238,7 @@ namespace Devotion.SDK.UI
                 if (slot == null)
                     continue;
 
-                slot.Refresh(i, config, rewardIndex, claimedSlotColor, currentSlotColor, futureSlotColor, manager != null && manager.CanClaim);
+                slot.Refresh(i, config, rewardIndex, claimedSlotColor, currentSlotColor, futureSlotColor, manager != null && manager.CanClaim, manager != null && manager.IsRewardClaimed(i));
             }
         }
 

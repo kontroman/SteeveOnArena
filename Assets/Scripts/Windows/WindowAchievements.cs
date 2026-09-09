@@ -17,7 +17,8 @@ namespace Windows
 {
     public class WindowAchievements : BaseWindow,
         IMessageSubscriber<AchievementMessages.AchievementTargetTaken>,
-        IMessageSubscriber<AchievementMessages.AchievementCompleted>
+        IMessageSubscriber<AchievementMessages.AchievementCompleted>,
+        IMessageSubscriber<GameMessages.WorldChestOpened>
     {
         [SerializeField] private Transform rowsRoot;
         [SerializeField] private QuestJournalRow rowPrefab;
@@ -51,6 +52,7 @@ namespace Windows
         public void Close() => CloseWindow();
         public void OnMessage(AchievementMessages.AchievementTargetTaken message) => Refresh();
         public void OnMessage(AchievementMessages.AchievementCompleted message) => Refresh();
+        public void OnMessage(GameMessages.WorldChestOpened message) => Refresh();
         public void Bind(IReadOnlyList<Achievement> quests)
         {
             _quests = quests?.ToList() ?? new List<Achievement>();
@@ -81,7 +83,7 @@ namespace Windows
             details.SetActive(_selected != null);
             if (_selected == null) return;
             detailTitle.text = QuestJournalRow.Title(_selected); description.text = QuestJournalRow.Description(_selected);
-            if (difficulty != null) difficulty.text = _selected.Data.DifficultyLabel + " · " + (_selected.Data.ItemTarget is ItemConfig ? "Добыча ресурсов" : "Охота на врагов");
+            if (difficulty != null) difficulty.text = _selected.Data.DifficultyLabel + " · " + (_selected.Data.ItemTarget is ChestCollectionTarget ? Devotion.SDK.Services.Localization.LocalizationService.GetLocalizedText("quest.chests.category") : _selected.Data.ItemTarget is ItemConfig ? "Добыча ресурсов" : "Охота на врагов");
             if (detailIcon != null)
             {
                 detailIcon.sprite = _selected.Data.QuestIcon;

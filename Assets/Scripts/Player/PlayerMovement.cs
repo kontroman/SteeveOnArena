@@ -223,7 +223,7 @@ namespace MineArena.PlayerSystem
             if (Time.time < _nextFootstepTime)
                 return;
 
-            GameRoot.GetManager<AudioManager>()?.PlayRandomEffect(Constants.AudioNames.Footsteps);
+            GameRoot.GetManager<AudioManager>()?.PlayRandomEffect(Constants.AudioNames.Footsteps, 0.5f);
             _nextFootstepTime = Time.time + _footstepInterval;
         }
 

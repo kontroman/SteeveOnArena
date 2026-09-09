@@ -5,7 +5,6 @@ using MineArena.PlayerSystem;
 using System.Threading.Tasks;
 using DG.Tweening;
 using MineArena.Items;
-using Devotion.SDK.Helpers;
 using MineArena.VFX;
 using MineArena.Basics;
 using MineArena.Managers;
@@ -30,45 +29,94 @@ namespace MineArena.Commands
 
             PlayerMovement pm = Player.Instance.GetComponentFromList<PlayerMovement>();
             PlayerAttack patc = Player.Instance.GetComponentFromList<PlayerAttack>();
-            RotationController rc = Player.Instance.GetComponentFromList<RotationController>();
 
             var pa = Player.Instance.GetComponentFromList<PlayerAnimatorController>() ??
                      Player.Instance.GetComponent<IPlayerAnimator>();
 
             PlayerEquipment equipment = Player.Instance.GetComponentFromList<PlayerEquipment>();
 
-            pm.SetMovement(false);
-            patc.SetComponentEnable(false);
-            rc.RotatePlayerToTarget(ore);
+            var manager = GameRoot.GetManager<InteractionManager>();
+            var previousHand = equipment != null ? equipment.LastActiveHandItem : HandItemType.Sword;
+            var originalScale = ore.localScale;
+            bool cancelled = false;
+            bool cleanedUp = false;
+            Tween shake = null;
+            Tween turn = null;
 
-            pa?.SetRunning(false);
-            equipment?.SetActiveHandItem(HandItemType.Pickaxe);
-
-            float miningDuration = equipment?.GetMiningDuration() ?? 3.33f;
-            int miningLoops = equipment?.GetMiningLoops() ?? 2;
-
-            for (int i = 0; i < miningLoops; i++)
+            void Cleanup()
             {
-                pa?.PlayMiningAnimation(_miningStateName, _miningLayer);
-
-                CoroutineHelper.Delay(0.7f, () =>
-                {
-                    if (ore == null)
-                        return;
-
-                    PlayDigVfx(ore);
-                    GameRoot.GetManager<AudioManager>()?.PlayEffect(Constants.AudioNames.MiningHit);
-                    ore.DOShakeScale(0.25f, 0.25f, 8, 90);
-                });
-
-                await CoroutineHelper.DelayAsync(miningDuration);
+                if (cleanedUp) return;
+                cleanedUp = true;
+                shake?.Kill();
+                turn?.Kill();
+                if (ore != null) ore.localScale = originalScale;
+                manager?.EndMining();
+                if (pm != null) pm.SetMovement(true);
+                if (pa != null) pa.ResetMiningAnimation();
+                if (patc != null) patc.SetComponentEnable(true);
+                if (equipment != null) equipment.SetActiveHandItem(previousHand);
             }
 
-            pm.SetMovement(true);
-            pa?.ResetMiningAnimation();
-            patc.SetComponentEnable(true);
+            void Cancel()
+            {
+                cancelled = true;
+                Cleanup();
+                if (interactable != null) interactable.CancelInteraction();
+            }
 
-            interactable.CompleteInteraction();
+            try
+            {
+                manager.BeginMining(interactable, Cancel);
+                pm.SetMovement(false);
+                patc.SetComponentEnable(false);
+                var direction = ore.position - pm.transform.position;
+                direction.y = 0;
+                if (direction.sqrMagnitude > 0.001f)
+                    turn = pm.transform.DORotateQuaternion(Quaternion.LookRotation(direction), 0.5f);
+                pa?.SetRunning(false);
+                equipment?.SetActiveHandItem(HandItemType.Pickaxe);
+                interactable.SetMiningPrompt(true);
+
+                float miningDuration = Mathf.Max(0.01f, equipment?.GetMiningDuration() ?? 3.33f);
+                int miningLoops = equipment?.GetMiningLoops() ?? 2;
+                for (int i = 0; i < miningLoops && !cancelled; i++)
+                {
+                    pa?.PlayMiningAnimation(_miningStateName, _miningLayer);
+                    float started = Time.time;
+                    bool hit = false;
+                    while (Time.time - started < miningDuration && !cancelled)
+                    {
+                        // Resume on Unity's main thread; there are no delayed hits left after cancellation.
+                        await Task.Yield();
+                        if (cancelled) break;
+                        if (ore == null || pm == null || !pm.isActiveAndEnabled || PlayerMovement.IsPlayerDead)
+                        {
+                            Cancel();
+                            break;
+                        }
+                        if (!hit && Time.time - started >= Mathf.Min(0.7f, miningDuration * 0.7f))
+                        {
+                            hit = true;
+                            PlayDigVfx(ore);
+                            GameRoot.GetManager<AudioManager>()?.PlayEffect(Constants.AudioNames.MiningHit);
+                            shake?.Kill();
+                            ore.localScale = originalScale;
+                            shake = ore.DOShakeScale(0.25f, 0.25f, 8, 90);
+                        }
+                    }
+                }
+                Cleanup();
+                if (!cancelled && interactable != null) interactable.CompleteInteraction();
+            }
+            catch
+            {
+                Cancel();
+                throw;
+            }
+            finally
+            {
+                Cleanup();
+            }
         }
 
         private void PlayDigVfx(Transform target)

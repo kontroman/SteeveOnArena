@@ -1,0 +1,5 @@
+PASS: 32 mono clips, nonempty PCM data, no clipping.
+PASS: explosion prefab, 3 non-looping particle layers and assigned shader.
+PASS: six spatial sources, fuse cancellation, explosion survives pool release, owner replacement stops playback.
+PASS: 30 simultaneous attacks throttled to one voice, explosion preempts full bus, duplicate explosions suppressed, disabled bus stops.
+Unity editor compilation completed. Gameplay listening still requires a playtest.

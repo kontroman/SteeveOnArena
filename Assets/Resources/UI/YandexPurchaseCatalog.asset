@@ -11,5 +11,15 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b3ed04c818a4f4182fcacfbf8771a90, type: 3}
   m_Name: YandexPurchaseCatalog
-  m_EditorClassIdentifier:
-  Products: []
+  m_EditorClassIdentifier: 
+  Products:
+  - ProductId: skin_shadow
+    Item: {fileID: 0}
+    SkinIds:
+    - skin_06
+    Amount: 1
+  - ProductId: pilot_style_bundle
+    Item: {fileID: 11400000, guid: 501e28faeabb676418a62d09f9eb6cb9, type: 2}
+    SkinIds:
+    - skin_07
+    Amount: 30

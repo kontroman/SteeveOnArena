@@ -76,7 +76,55 @@ MonoBehaviour:
   overrideCameraZoomLimits: 0
   cameraMinDistance: 8
   cameraMaxDistance: 25
-  weatherPresets: []
+  weatherPresets:
+  - presetName: Forest_Sunny
+    enableRain: 0
+    sunRotation: {x: 47, y: -110, z: 0}
+    sunIntensity: 0.95
+    sunColor: {r: 1.0, g: 0.96, b: 0.79, a: 1}
+    skyboxMaterial: {fileID: 2100000, guid: 133347283e115d147a5fcce7f47a538f, type: 2}
+    fogColor: {r: 0.58, g: 0.72, b: 0.59, a: 1}
+    fogDensity: 0.005
+    fogEnabled: 1
+    ambientLight: {r: 0.58, g: 0.72, b: 0.59, a: 1}
+    ambientIntensity: 0.9
+    rainIntensity: 0
+  - presetName: Forest_MorningMist
+    enableRain: 0
+    sunRotation: {x: 24, y: -110, z: 0}
+    sunIntensity: 0.65
+    sunColor: {r: 1.0, g: 0.85, b: 0.65, a: 1}
+    skyboxMaterial: {fileID: 2100000, guid: 8162517b6ec2309499f99e303b29f146, type: 2}
+    fogColor: {r: 0.61, g: 0.7, b: 0.63, a: 1}
+    fogDensity: 0.018
+    fogEnabled: 1
+    ambientLight: {r: 0.61, g: 0.7, b: 0.63, a: 1}
+    ambientIntensity: 0.75
+    rainIntensity: 0
+  - presetName: Forest_CoolHaze
+    enableRain: 0
+    sunRotation: {x: 48, y: -110, z: 0}
+    sunIntensity: 0.5
+    sunColor: {r: 0.79, g: 0.87, b: 1.0, a: 1}
+    skyboxMaterial: {fileID: 2100000, guid: 133347283e115d147a5fcce7f47a538f, type: 2}
+    fogColor: {r: 0.48, g: 0.58, b: 0.61, a: 1}
+    fogDensity: 0.012
+    fogEnabled: 1
+    ambientLight: {r: 0.48, g: 0.58, b: 0.61, a: 1}
+    ambientIntensity: 0.65
+    rainIntensity: 0
+  - presetName: Forest_Moonlight
+    enableRain: 0
+    sunRotation: {x: 40, y: -110, z: 0}
+    sunIntensity: 0.35
+    sunColor: {r: 0.61, g: 0.77, b: 1.0, a: 1}
+    skyboxMaterial: {fileID: 2100000, guid: c1c961cbd00909b45b34d97fd7df5cbf, type: 2}
+    fogColor: {r: 0.18, g: 0.28, b: 0.32, a: 1}
+    fogDensity: 0.012
+    fogEnabled: 1
+    ambientLight: {r: 0.18, g: 0.28, b: 0.32, a: 1}
+    ambientIntensity: 0.55
+    rainIntensity: 0
   weatherPreset:
     presetName: Sunday
     enableRain: 0

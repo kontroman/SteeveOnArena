@@ -12,9 +12,11 @@ namespace MineArena.Structs
         public GameObject ProjectilePrefab;
         public Transform Target;
         public Transform FirePoint;
+        public Transform Owner;
 
         public RangeAttackData(DamageData damageData, GameObject projectilePrefab, Transform target, Transform firePoint)
         {
+            Owner = null;
             DamageData = damageData;
             ProjectilePrefab = projectilePrefab;
             Target = target;
@@ -23,6 +25,7 @@ namespace MineArena.Structs
 
         public RangeAttackData(float damage, GameObject projectilePrefab, Transform target, Transform firePoint)
         {
+            Owner = null;
             ProjectilePrefab = projectilePrefab;
             Target = target;
             FirePoint = firePoint;

@@ -8,6 +8,14 @@ namespace Devotion.SDK.Services.SaveSystem.Progress
     public class AchievementProgress : BaseProgress
     {
         public SerializableDictionary<int, AchievementSaveData> Achievements = new();
+        public System.Collections.Generic.List<string> OpenedChestIds = new();
+        public bool HasOpenedChest(string id) => OpenedChestIds != null && OpenedChestIds.Contains(id);
+        public bool RegisterChest(string id)
+        {
+            if (string.IsNullOrWhiteSpace(id) || HasOpenedChest(id)) return false;
+            (OpenedChestIds ??= new System.Collections.Generic.List<string>()).Add(id);
+            return true;
+        }
 
         public void AddAchievement(Achievement achievement)
         {

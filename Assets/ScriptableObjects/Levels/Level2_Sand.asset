@@ -53,13 +53,61 @@ MonoBehaviour:
     Amount: 2
   levelPrefab: {fileID: 204151599868836669, guid: ce1f5b7c1945ea74a9fd5b34c5fb7b4f, type: 3}
   levelPrefabPosition: {x: 0, y: 2, z: 0}
-  levelPrefabRotation: {x: -0.70710677, y: 0, z: 0, w: 0.70710677}
+  levelPrefabRotation: {x: 0, y: 0, z: 0, w: 1}
   overrideCameraFollowOffset: 0
   cameraFollowOffset: {x: -8.78, y: 11.75, z: -7.11}
   overrideCameraZoomLimits: 0
   cameraMinDistance: 8
   cameraMaxDistance: 25
-  weatherPresets: []
+  weatherPresets:
+  - presetName: Desert_Noon
+    enableRain: 0
+    sunRotation: {x: 68, y: -110, z: 0}
+    sunIntensity: 1.2
+    sunColor: {r: 1.0, g: 0.94, b: 0.76, a: 1}
+    skyboxMaterial: {fileID: 2100000, guid: 133347283e115d147a5fcce7f47a538f, type: 2}
+    fogColor: {r: 0.86, g: 0.78, b: 0.58, a: 1}
+    fogDensity: 0.004
+    fogEnabled: 1
+    ambientLight: {r: 0.86, g: 0.78, b: 0.58, a: 1}
+    ambientIntensity: 1.05
+    rainIntensity: 0
+  - presetName: Desert_DustHaze
+    enableRain: 0
+    sunRotation: {x: 45, y: -110, z: 0}
+    sunIntensity: 0.8
+    sunColor: {r: 1.0, g: 0.83, b: 0.59, a: 1}
+    skyboxMaterial: {fileID: 2100000, guid: 133347283e115d147a5fcce7f47a538f, type: 2}
+    fogColor: {r: 0.72, g: 0.6, b: 0.4, a: 1}
+    fogDensity: 0.018
+    fogEnabled: 1
+    ambientLight: {r: 0.72, g: 0.6, b: 0.4, a: 1}
+    ambientIntensity: 0.8
+    rainIntensity: 0
+  - presetName: Desert_Sunset
+    enableRain: 0
+    sunRotation: {x: 12, y: -110, z: 0}
+    sunIntensity: 0.8
+    sunColor: {r: 1.0, g: 0.56, b: 0.3, a: 1}
+    skyboxMaterial: {fileID: 2100000, guid: 8162517b6ec2309499f99e303b29f146, type: 2}
+    fogColor: {r: 0.77, g: 0.5, b: 0.35, a: 1}
+    fogDensity: 0.009
+    fogEnabled: 1
+    ambientLight: {r: 0.77, g: 0.5, b: 0.35, a: 1}
+    ambientIntensity: 0.75
+    rainIntensity: 0
+  - presetName: Desert_ColdNight
+    enableRain: 0
+    sunRotation: {x: 42, y: -110, z: 0}
+    sunIntensity: 0.4
+    sunColor: {r: 0.6, g: 0.73, b: 1.0, a: 1}
+    skyboxMaterial: {fileID: 2100000, guid: c1c961cbd00909b45b34d97fd7df5cbf, type: 2}
+    fogColor: {r: 0.23, g: 0.29, b: 0.43, a: 1}
+    fogDensity: 0.005
+    fogEnabled: 1
+    ambientLight: {r: 0.23, g: 0.29, b: 0.43, a: 1}
+    ambientIntensity: 0.6
+    rainIntensity: 0
   weatherPreset:
     presetName: Sunday
     enableRain: 0

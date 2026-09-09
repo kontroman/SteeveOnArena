@@ -41,7 +41,7 @@ namespace MineArena.Platform
             Platform.Request("purchase", productId).Then(json =>
                 Process(new Queue<Purchase>(new[] { JsonUtility.FromJson<Purchase>(json) }))).Catch(Fail);
         }
-        private YandexProduct Find(string id) => Catalog?.Products.FirstOrDefault(p => p.ProductId == id && p.Item != null && p.Amount > 0);
+        private YandexProduct Find(string id) => Catalog?.Products.FirstOrDefault(p => p.ProductId == id && p.IsValid);
         private void Process(Queue<Purchase> purchases)
         {
             if (purchases.Count == 0) { Busy = false; Changed?.Invoke(); return; }
@@ -54,10 +54,14 @@ namespace MineArena.Platform
             ledger.GrantedTokens ??= new List<string>();
             if (!ledger.GrantedTokens.Contains(purchase.purchaseToken))
             {
-                int current = GameRoot.GetManager<InventoryManager>().GetItemAmount(product.Item.Name);
-                if ((long)current + product.Amount > int.MaxValue) { Fail(new Exception("Inventory limit")); return; }
+                var inventory = GameRoot.GetManager<InventoryManager>();
+                int current = product.Item != null ? inventory.GetItemAmount(product.Item.Name) : 0;
+                if (product.Item != null && (long)current + product.Amount > int.MaxValue) { Fail(new Exception("Inventory limit")); return; }
                 ledger.GrantedTokens.Add(purchase.purchaseToken);
-                GameRoot.GetManager<InventoryManager>().AddItemById(product.Item.Name, product.Amount);
+                if (product.SkinIds != null)
+                    foreach (var id in product.SkinIds) GameRoot.PlayerProgress.CosmeticsProgress.Unlock(id);
+                if (product.Item != null) inventory.AddItemById(product.Item.Name, product.Amount);
+                MineArena.Cosmetics.SkinService.NotifyChanged();
             }
             // Never consume until BOTH reward and receipt are durably saved in the cloud.
             // Keep the receipt on failure: a retry must save it without granting twice.

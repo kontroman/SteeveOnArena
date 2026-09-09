@@ -10,18 +10,64 @@ namespace MineArena.Items
 
         private Camera _mainCamera;
         private GameObject _canvas;
+        private Canvas _canvasComponent;
+        private bool _visible;
+        private UnityEngine.UI.Image _miningIcon;
+        private Sprite _pickaxeSprite;
+        private Vector2 _pickaxeSize;
+        private GameObject _cancelIcon;
+
+        public void SetMining(bool mining)
+        {
+            if (_miningIcon == null) return;
+            if (mining && _cancelIcon == null)
+            {
+                _cancelIcon = new GameObject("Cancel cross", typeof(RectTransform));
+                _cancelIcon.transform.SetParent(_miningIcon.transform, false);
+                foreach (float angle in new[] { -45f, 45f })
+                {
+                    var stroke = new GameObject("Stroke", typeof(RectTransform), typeof(CanvasRenderer), typeof(UnityEngine.UI.Image));
+                    stroke.transform.SetParent(_cancelIcon.transform, false);
+                    var rect = (RectTransform)stroke.transform;
+                    rect.sizeDelta = new Vector2(0.28f, 0.055f);
+                    rect.localRotation = Quaternion.Euler(0, 0, angle);
+                    var image = stroke.GetComponent<UnityEngine.UI.Image>();
+                    image.color = new Color(1f, 0.32f, 0.25f);
+                    image.material = _miningIcon.material;
+                    image.raycastTarget = false;
+                }
+            }
+            _miningIcon.enabled = !mining;
+            _miningIcon.sprite = _pickaxeSprite;
+            _miningIcon.color = Color.white;
+            _miningIcon.rectTransform.sizeDelta = _pickaxeSize;
+            if (_cancelIcon != null) _cancelIcon.SetActive(mining);
+        }
 
         private void Start()
         {
             _mainCamera = Camera.main;
-            _canvas = Instantiate(_billboardCanvas, transform);
-            _canvas.GetComponent<Canvas>().worldCamera = _mainCamera;
+            var interactable = GetComponent<InteractableObject>();
+            var prefab = interactable != null && interactable.IsMineable
+                ? Resources.Load<GameObject>("UI/MiningPrompt") : null;
+            if (prefab == null) prefab = _billboardCanvas;
+            if (prefab == null) return;
+            _canvas = Instantiate(prefab, transform);
+            _miningIcon = _canvas.transform.Find("Iron pickaxe")?.GetComponent<UnityEngine.UI.Image>();
+            if (_miningIcon != null)
+            {
+                _pickaxeSprite = _miningIcon.sprite;
+                _pickaxeSize = _miningIcon.rectTransform.sizeDelta;
+            }
+            _canvasComponent = _canvas.GetComponent<Canvas>();
+            _canvasComponent.worldCamera = _mainCamera;
 
             _canvas.transform.localPosition = _canvas.transform.localPosition + _posOffset;
             _canvas.transform.localScale = _canvas.transform.localScale + _sizeOffset;
+            _canvas.SetActive(_visible);
         }
 
-        private void Update()
+        private void LateUpdate()
         {
             if (_canvas == null)
                 return;
@@ -32,19 +78,20 @@ namespace MineArena.Items
             if (_mainCamera == null)
                 return;
 
-            Vector3 directionToCamera = (_mainCamera.transform.position - _canvas.transform.position).normalized;
-            _canvas.transform.rotation = Quaternion.LookRotation(directionToCamera);
-            _canvas.transform.rotation = Quaternion.Euler(0, 180 + _canvas.transform.rotation.eulerAngles.y, 0);
+            _canvas.transform.rotation = _mainCamera.transform.rotation;
+            if (_canvasComponent != null) _canvasComponent.worldCamera = _mainCamera;
         }
 
         public void ShowUI()
         {
+            _visible = true;
             if (_canvas)
                 _canvas.SetActive(true);
         }
 
         public void HideUI()
         {
+            _visible = false;
             if(_canvas)
                 _canvas.SetActive(false);
         }

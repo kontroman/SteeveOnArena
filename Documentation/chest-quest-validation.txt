@@ -1,0 +1,28 @@
+PASS All three placed chests have unique IDs
+PASS Quest catalog exactly matches placed chests
+PASS Every chest has valid loot
+PASS Exclusive sword has combat stats, material, icon and no crafting recipe
+PASS Reward registered in inventory database
+PASS Premature reward claim gives nothing
+PASS Opening is protected against reentry: villageChest
+PASS Chest can retry after cancellation and grants loot: villageChest
+PASS Loot reaches inventory: villageChest
+PASS Opened chest cannot grant loot twice: villageChest
+PASS Only unique chests advance completion: 1
+PASS Opening is protected against reentry: desertChest
+PASS Chest can retry after cancellation and grants loot: desertChest
+PASS Loot reaches inventory: desertChest
+PASS Opened chest cannot grant loot twice: desertChest
+PASS Only unique chests advance completion: 2
+PASS Opening is protected against reentry: forestChest
+PASS Chest can retry after cancellation and grants loot: forestChest
+PASS Loot reaches inventory: forestChest
+PASS Opened chest cannot grant loot twice: forestChest
+PASS Only unique chests advance completion: 3
+PASS Equipping reward uses its 110-damage attack configuration
+PASS Journal displays completed chest collection without target type errors
+PASS Chest collection survives save serialization
+PASS Final sword is granted exactly once
+PASS Sword is created as usable equipment
+PASS Reload cannot duplicate the final reward
+PASS Old saves without chest data are supported

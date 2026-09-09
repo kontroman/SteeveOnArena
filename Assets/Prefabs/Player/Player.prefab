@@ -1556,6 +1556,7 @@ GameObject:
   - component: {fileID: 8602299480994262816}
   - component: {fileID: 8602299480994262815}
   - component: {fileID: 8602299480994262814}
+  - component: {fileID: 8088489592339866710}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1642,6 +1643,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _currentHealth: 70
   _maxHealth: 100
+  _hitVfxId: 1
 --- !u!114 &8602299480994262816
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1656,6 +1658,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _runBoolParameter: isRunning
   _attackTriggerParameter: Attack
+  _bowShootTriggerParameter: BowShoot
   _handItemParameter: HandItemState
   _miningTriggerParameter: Mining
   _chestOpeningTriggerParameter: ChestOpening
@@ -1677,6 +1680,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2dd2585ad6b7e44fbed3dc8a27c61f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _landingVfxId: 6
+  _landingSurfaceMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  _landingRaycastDistance: 2
+  _landingVfxOffset: {x: 0, y: 0.03, z: 0}
+  _footstepInterval: 0.42
 --- !u!114 &8602299480994262814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1689,6 +1699,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3188bde1675170a4287f5e1dff19b2f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8088489592339866710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8602299480994262813}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a52573bf1f9c17498058f5d3f9b23eb, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  body: {fileID: 1112549171884300242}
 --- !u!1 &8949802829903020592
 GameObject:
   m_ObjectHideFlags: 0

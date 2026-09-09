@@ -21,6 +21,7 @@ namespace MineArena.AI
 
         private const float RetreatDuration = 1.5f;
         [Header("Facing")]
+        [SerializeField, Min(0f)] private float _turnSpeed = 540f;
         [SerializeField] private bool _useFacingAxis;
         [SerializeField] private FacingAxis _facingAxis = FacingAxis.PositiveZ;
         [SerializeField] private FacingAxis _facingUpAxis = FacingAxis.PositiveY;
@@ -71,6 +72,9 @@ namespace MineArena.AI
 
         private void Awake()
         {
+            _agent = GetComponent<NavMeshAgent>();
+            if (_agent != null) _agent.updateRotation = false;
+            _mobAnimator = GetComponent<MobAnimationController>();
             UpdateAxisCorrection();
         }
 
@@ -109,10 +113,7 @@ namespace MineArena.AI
             if (_agent != null && _agent.isOnNavMesh && _playerTransform != null && !_isRetreating)
                 _agent.SetDestination(_playerTransform.position);
 
-            if (_isRetreating)
-                UpdateRetreatFacing();
-            else
-                UpdateFacing();
+            UpdateFacing();
 
             if (_agent != null)
                 _mobAnimator?.UpdateMoveState(_agent.velocity, _agent.isStopped);
@@ -197,30 +198,23 @@ namespace MineArena.AI
 
         private void UpdateFacing()
         {
-            if (_agent == null || _playerTransform == null)
+            // Combat owns facing while stopped. Walking follows navigation, including avoidance and retreat.
+            if (_agent == null || !_agent.enabled || !_agent.isOnNavMesh || _agent.isStopped)
                 return;
 
-            Vector3 direction = _playerTransform.position - transform.position;
-            direction.y = 0f;
-
-            if (direction.sqrMagnitude < 0.0001f)
+            Vector3 direction = ResolveMovementFacing(_agent.velocity, _agent.desiredVelocity);
+            if (direction.sqrMagnitude < 0.01f)
                 return;
 
-            transform.rotation = GetAxisCorrectedLookRotation(direction);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation,
+                GetAxisCorrectedLookRotation(direction), _turnSpeed * Time.deltaTime);
         }
 
-        private void UpdateRetreatFacing()
+        private static Vector3 ResolveMovementFacing(Vector3 velocity, Vector3 desiredVelocity)
         {
-            if (_agent == null)
-                return;
-
-            Vector3 direction = _agent.velocity;
-            direction.y = 0f;
-
-            if (direction.sqrMagnitude < 0.0001f)
-                return;
-
-            transform.rotation = GetAxisCorrectedLookRotation(direction);
+            velocity.y = 0f;
+            desiredVelocity.y = 0f;
+            return velocity.sqrMagnitude >= 0.01f ? velocity : desiredVelocity;
         }
 
         private void HandlePlayerRevived(Transform playerTransform)
@@ -355,6 +349,7 @@ namespace MineArena.AI
         public void SetParameters(MobPreset preset)
         {
             _isDead = false;
+            if (_agent == null) _agent = GetComponent<NavMeshAgent>();
             if (_agent == null) return;
 
             _agent.speed = preset.Speed;

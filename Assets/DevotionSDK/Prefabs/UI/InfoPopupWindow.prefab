@@ -83,6 +83,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
+  - component: {fileID: 6867066535052004317}
   - component: {fileID: 1972818218159900876}
   - component: {fileID: 8197215916655006069}
   - component: {fileID: 1605127331106809249}
@@ -130,6 +131,7 @@ MonoBehaviour:
   _titleText: {fileID: 760923368083688533}
   _descriptionText: {fileID: 6500794497305809644}
   _iconImage: {fileID: 6041910839751624303}
+  _resourceIconPrefab: {fileID: 1840061424377608187, guid: 431b66e1e2718d54b9e42a395300faa9, type: 3}
   _okButton: {fileID: 7837208135910930766}
 --- !u!222 &1605127331106809249
 CanvasRenderer:
@@ -1045,3 +1047,15 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &6867066535052004317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2034741301751172578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc3ef974efe1e204b9e94c536f66621d, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
