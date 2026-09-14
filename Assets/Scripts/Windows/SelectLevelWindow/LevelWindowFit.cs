@@ -25,8 +25,7 @@ namespace MineArena.Windows.SelectLevel
                         bottomInset = Mathf.Max(bottomInset, root.InverseTransformPoint(corner).y - root.rect.yMin + 24f);
                 }
                 panel.anchoredPosition = new Vector2(0, (bottomInset - 16f) * 0.5f);
-                var backdrop = transform.Find("InventoryBackdrop") as RectTransform;
-                if (backdrop != null) backdrop.offsetMin = new Vector2(0, bottomInset - 12f);
+                // Reserve space only for the content; the backdrop covers the entire screen.
             }
             float scale = Mathf.Min(1f, (root.rect.width - 32f) / panel.sizeDelta.x,
                 (root.rect.height - bottomInset - 16f) / panel.sizeDelta.y);

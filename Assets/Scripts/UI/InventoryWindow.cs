@@ -30,33 +30,45 @@ namespace MineArena.UI
         private PlayerPreviewRenderer _playerPreviewRenderer;
         private bool _subscribed;
         private bool _equipmentSubscribed;
+        private Canvas _quickAccessCanvas;
+        private bool _previousOverrideSorting;
+        private int _previousSortingOrder;
+        private int _previousSortingLayer;
 
         private void Awake()
         {
-            // Let the HUD receive drops outside the inventory panel.
-            var backdrop = GetComponent<Image>();
-            if (backdrop != null)
-            {
-                var shade = new GameObject("InventoryBackdrop", typeof(RectTransform), typeof(Image));
-                shade.transform.SetParent(transform, false);
-                shade.transform.SetAsFirstSibling();
-                var rect = (RectTransform)shade.transform;
-                rect.anchorMin = Vector2.zero;
-                rect.anchorMax = Vector2.one;
-                rect.offsetMin = new Vector2(0, 160);
-                rect.offsetMax = Vector2.zero;
-                var image = shade.GetComponent<Image>();
-                image.color = backdrop.color;
-                image.raycastTarget = false;
-                backdrop.raycastTarget = false;
-                backdrop.enabled = false;
-            }
+            EnsureBackdrop();
             InitializeEquipmentSlots();
             InitializePlayerPreview();
         }
 
+        private void EnsureBackdrop()
+        {
+            var backdrop = GetComponent<Image>();
+            if (backdrop == null) return;
+            var existing = transform.Find("InventoryBackdrop");
+            var shade = existing != null ? existing.gameObject :
+                new GameObject("InventoryBackdrop", typeof(RectTransform), typeof(Image));
+            if (existing == null)
+            {
+                shade.transform.SetParent(transform, false);
+                shade.transform.SetAsFirstSibling();
+            }
+            var rect = (RectTransform)shade.transform;
+            rect.anchorMin = Vector2.zero;
+            rect.anchorMax = Vector2.one;
+            rect.offsetMin = rect.offsetMax = Vector2.zero;
+            var image = shade.GetComponent<Image>();
+            image.color = backdrop.color;
+            image.raycastTarget = false;
+            backdrop.raycastTarget = false;
+            backdrop.enabled = false;
+        }
+
         private void OnEnable()
         {
+            EnsureBackdrop();
+            RaiseQuickAccessPanel();
             InitializeEquipmentSlots();
             InitializePlayerPreview();
             Subscribe();
@@ -67,6 +79,7 @@ namespace MineArena.UI
 
         private void OnDisable()
         {
+            RestoreQuickAccessSorting();
             if (_subscribed)
             {
                 if (_inventoryManager != null)
@@ -82,6 +95,41 @@ namespace MineArena.UI
                 _playerEquipment.ArmorChanged -= HandleArmorChanged;
                 _equipmentSubscribed = false;
             }
+        }
+
+        private void LateUpdate()
+        {
+            if (_quickAccessCanvas == null) RaiseQuickAccessPanel();
+        }
+
+        private void RaiseQuickAccessPanel()
+        {
+            if (_quickAccessCanvas != null) return;
+            var hud = FindObjectOfType<PlayingWindow>();
+            if (hud == null || hud.QuickAccessPanel == null) return;
+            var panel = hud.QuickAccessPanel;
+            _quickAccessCanvas = panel.GetComponent<Canvas>();
+            if (_quickAccessCanvas == null) _quickAccessCanvas = panel.gameObject.AddComponent<Canvas>();
+            if (panel.GetComponent<GraphicRaycaster>() == null) panel.gameObject.AddComponent<GraphicRaycaster>();
+            _previousOverrideSorting = _quickAccessCanvas.overrideSorting;
+            _previousSortingOrder = _quickAccessCanvas.sortingOrder;
+            _previousSortingLayer = _quickAccessCanvas.sortingLayerID;
+            var windowCanvas = GetComponentInParent<Canvas>();
+            _quickAccessCanvas.overrideSorting = true;
+            _quickAccessCanvas.sortingLayerID = windowCanvas.sortingLayerID;
+            _quickAccessCanvas.sortingOrder = windowCanvas.sortingOrder + 1;
+        }
+
+        private void RestoreQuickAccessSorting()
+        {
+            // No hierarchy mutations: OnDisable also runs inside parent SetActive(false).
+            if (_quickAccessCanvas != null)
+            {
+                _quickAccessCanvas.sortingLayerID = _previousSortingLayer;
+                _quickAccessCanvas.sortingOrder = _previousSortingOrder;
+                _quickAccessCanvas.overrideSorting = _previousOverrideSorting;
+            }
+            _quickAccessCanvas = null;
         }
 
         private void UpdateUI()

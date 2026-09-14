@@ -42,6 +42,7 @@ namespace MineArena.Controllers
             }
 
             Instance = this;
+            if (GetComponent<PlayerDevelopment>() == null) gameObject.AddComponent<PlayerDevelopment>();
             if (GetComponent<PlayerDeathFlow>() == null) gameObject.AddComponent<PlayerDeathFlow>();
             _lobbyPosition = transform.position; _lobbyRotation = transform.rotation;
             SceneManager.sceneLoaded += HandleSceneLoaded;

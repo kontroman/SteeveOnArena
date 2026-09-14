@@ -96,7 +96,9 @@ namespace Windows
             var prize = _selected.Data.ItemPrize;
             reward.gameObject.SetActive(prize?.ItemConfig != null); if (prize?.ItemConfig != null) reward.Bind(prize.ItemConfig, Mathf.Max(1, prize.Amount));
             claim.interactable = IsReady(_selected);
+            claim.GetComponentInChildren<TMP_Text>(true).text = _selected.IsCompleted ? "Награда получена" : IsReady(_selected) ? "Забрать награду" : "Не выполнено";
             claimStatus.text = _selected.IsCompleted ? "Награда уже в инвентаре" : IsReady(_selected) ? "Задание выполнено — заберите награду" : "Награда откроется после выполнения";
+            claimStatus.text += "  •  +" + MineArena.PlayerSystem.PlayerExperience.QuestReward(_selected.Data.Difficulty) + " опыта";
         }
         public void Claim()
         {

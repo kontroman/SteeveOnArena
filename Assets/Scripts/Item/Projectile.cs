@@ -36,6 +36,7 @@ namespace MineArena
 
         public void SetParameters(Transform target, DamageData damageData, Transform owner = null)
         {
+            ResetFlightFeedback();
             CancelInvoke(nameof(ReturnToPool));
             _damageData = damageData;
             _target = target;
@@ -87,6 +88,7 @@ namespace MineArena
                 transform.rotation = Quaternion.LookRotation(direction.normalized);
 
             _velocity = transform.forward * speed;
+            OnPlayerFlightStarted();
 
             Invoke(nameof(ReturnToPool), destroyDelay);
         }
@@ -200,6 +202,7 @@ namespace MineArena
                 Mathf.Max(1, Mathf.RoundToInt(_damageData.Damage)),
                 _networkWeaponId,
                 hitCollider.ClosestPoint(transform.position));
+            OnPlayerCollision(true);
 
             if (_stickOnCollision && TryStickToCollider(hitCollider))
                 return true;
@@ -222,6 +225,7 @@ namespace MineArena
                 _damageData = new DamageData(_damageData.Damage, target);
 
             _damageData.Target?.TakeDamage(_damageData);
+            if (!_enemyShot) OnPlayerCollision(true);
 
             if (_stickOnCollision && TryStickToCollider(hitCollider))
                 return;
@@ -235,6 +239,7 @@ namespace MineArena
                 return false;
 
             CancelInvoke(nameof(ReturnToPool));
+            if (!_hasHit && !_enemyShot) OnPlayerCollision(false);
             _hasHit = true;
             _isMoving = false;
             transform.position -= transform.forward * stickDepth;
@@ -266,9 +271,13 @@ namespace MineArena
         }
 
         protected virtual void OnImpact() { }
+        protected virtual void OnPlayerFlightStarted() { }
+        protected virtual void OnPlayerCollision(bool hitTarget) { }
+        protected virtual void ResetFlightFeedback() { }
 
         private void OnDisable()
         {
+            ResetFlightFeedback();
             CancelInvoke(nameof(ReturnToPool));
             _target = null;
             _owner = null;

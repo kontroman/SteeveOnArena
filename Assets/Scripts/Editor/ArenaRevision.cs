@@ -103,6 +103,7 @@ namespace MineArena.Editor
                 var exit = Button(root, font, "Exit", "Arena.Exit", new Vector2(-155, -170), new Vector2(250, 58), new Color32(139, 61, 48, 255));
                 var exitRect = (RectTransform)exit.transform;
                 exitRect.anchorMin = exitRect.anchorMax = Vector2.one;
+                ArenaExitIconBuilder.Style(exit);
                 var shade = Rect(root, "Confirmation", Vector2.zero, Vector2.zero);
                 Stretch(shade);
                 shade.gameObject.AddComponent<Image>().color = new Color(0, 0, 0, .72f);
@@ -116,6 +117,7 @@ namespace MineArena.Editor
                 Label(panel, font, "Warning", "Arena.ExitWarning", new Vector2(0, 20), new Vector2(670, 140), 25);
                 var cancel = Button(panel, font, "Cancel", "Arena.Stay", new Vector2(-175, -120), new Vector2(310, 62), new Color32(66, 125, 103, 255));
                 var confirm = Button(panel, font, "Confirm", "Arena.ConfirmExit", new Vector2(175, -120), new Vector2(310, 62), new Color32(139, 61, 48, 255));
+                ArenaExitIconBuilder.StyleConfirmation(shade);
                 shade.gameObject.SetActive(false);
                 var ui = root.gameObject.AddComponent<ArenaExitUI>();
                 var data = new SerializedObject(ui);
@@ -208,6 +210,16 @@ namespace MineArena.Editor
                 current.SetValue(null, level);
                 var exit = hud.GetComponentInChildren<ArenaExitUI>(true);
                 var confirmation = (GameObject)new SerializedObject(exit).FindProperty("_confirmation").objectReferenceValue;
+                var exitButton = (Button)new SerializedObject(exit).FindProperty("_exitButton").objectReferenceValue;
+                var refreshExit = typeof(ArenaExitUI).GetMethod("RefreshVisibility", flags);
+                progress.TutorialProgress.Step = Managers.TutorialStep.EquipSword;
+                refreshExit.Invoke(exit, null);
+                Check(!exitButton.gameObject.activeSelf, "Tutorial hides arena exit icon");
+                typeof(ArenaExitUI).GetMethod("OpenConfirmation", flags).Invoke(exit, null);
+                Check(!confirmation.activeSelf, "Tutorial blocks direct exit confirmation");
+                progress.TutorialProgress.Step = Managers.TutorialStep.Complete;
+                refreshExit.Invoke(exit, null);
+                Check(exitButton.gameObject.activeSelf, "Completing tutorial restores arena exit icon");
                 Time.timeScale = .75f;
                 typeof(ArenaExitUI).GetMethod("OpenConfirmation", flags).Invoke(exit, null);
                 Check(confirmation.activeSelf && Time.timeScale == 0, "Exit warning pauses the arena");

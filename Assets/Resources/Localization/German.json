@@ -1696,10 +1696,13 @@
     {"key": "????: {0:0.##}.", "value": "Schaden: {0:0.##}."},
     {"key": "????? ??????: {0:0.##} ?.", "value": "Abbauzeit: {0:0.##} s."},
     {"key":"Arena.GoToPortal","value":"Geh zum Portal"},
+    {"key": "Arena.ReturnToLevel", "value": "Zurück"},
+    {"key":"Arena.NextWave","value":"Welle in {0}s"},
     {"key":"Arena.Exit","value":"Arena verlassen"},
     {"key":"Arena.ExitTitle","value":"Arena verlassen?"},
     {"key":"Arena.ExitWarning","value":"Wenn du die Arena vorzeitig ohne das Portal verlässt, verlierst du alle hier gesammelten Ressourcen."},
     {"key":"Arena.Stay","value":"Bleiben"},
-    {"key":"Arena.ConfirmExit","value":"Gehen und Beute verlieren"}
+    {"key":"Arena.ConfirmExit","value":"Gehen und Beute verlieren"},
+    {"key":"Не выполнено","value":"Nicht abgeschlossen"}
   ]
 }

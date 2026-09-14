@@ -108,6 +108,14 @@ namespace MineArena.Game.Health
 
         public void RestoreFullHealth() => SetCurrentValue(_maxHealth, false);
 
+        public void SetMaximumHealth(float maximum)
+        {
+            _maxHealth = Mathf.Max(1f, maximum);
+            // Reallocating points never heals or revives the player.
+            _currentHealth = Mathf.Min(_currentHealth, _maxHealth);
+            OnHealthChanged?.Invoke(_currentHealth, _maxHealth);
+        }
+
         protected virtual void Die()
         {
             if (Player.Instance != null && gameObject == Player.Instance.gameObject)

@@ -138,6 +138,10 @@ namespace MineArena.Windows.SelectLevel
             Canvas.ForceUpdateCanvases();
             detailScroll.StopMovement();
             detailScroll.verticalNormalizedPosition = 1;
+            listScroll.StopMovement();
+            float overflow = cardsRoot.rect.height - listScroll.viewport.rect.height;
+            listScroll.verticalNormalizedPosition = overflow > 0 && _cards.TryGetValue(index, out var selectedCard)
+                ? 1f - Mathf.Clamp01(-((RectTransform)selectedCard.transform).anchoredPosition.y / overflow) : 1f;
         }
 
         public static string DifficultyLabel(LevelDifficulty value)

@@ -1696,10 +1696,13 @@
     {"key": "????: {0:0.##}.", "value": "Danni: {0:0.##}."},
     {"key": "????? ??????: {0:0.##} ?.", "value": "Tempo di estrazione: {0:0.##} s."},
     {"key":"Arena.GoToPortal","value":"Vai al portale"},
+    {"key": "Arena.ReturnToLevel", "value": "Torna"},
+    {"key":"Arena.NextWave","value":"Ondata tra {0}s"},
     {"key":"Arena.Exit","value":"Esci dall’arena"},
     {"key":"Arena.ExitTitle","value":"Uscire dall’arena?"},
     {"key":"Arena.ExitWarning","value":"Se esci in anticipo senza usare il portale, perderai tutte le risorse raccolte in questa arena."},
     {"key":"Arena.Stay","value":"Resta"},
-    {"key":"Arena.ConfirmExit","value":"Esci e perdi il bottino"}
+    {"key":"Arena.ConfirmExit","value":"Esci e perdi il bottino"},
+    {"key":"Не выполнено","value":"Non completato"}
   ]
 }

@@ -1,0 +1,16 @@
+PASS Level1_Village: 12 monsters award exactly 45 XP
+PASS Kill order does not affect total
+PASS First full arena = 75% to level 2
+PASS Early portal exit does not award full-clear XP
+PASS Second full cycle awards another 45 XP with correct level remainder
+PASS Tutorial enemy receives only one normal monster share
+PASS Level2_Sand: 16 monsters award exactly 75 XP
+PASS Kill order does not affect total
+PASS Level3_Mine: 20 monsters award exactly 120 XP
+PASS Kill order does not affect total
+PASS Level4_Forest: 24 monsters award exactly 180 XP
+PASS Kill order does not affect total
+PASS Empty or extra spawn cannot exceed budget
+PASS Arena reward overrides health-based reward
+PASS Pool reuse clears previous arena reward
+PASS Zero budget does not fall back to normal reward

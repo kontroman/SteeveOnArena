@@ -17,15 +17,12 @@ namespace MineArena.UI
         public GameUiDestination Destination => destination;
         private void Update()
         {
-            var tutorial = MineArena.Managers.TutorialService.Progress;
-            GetComponent<Button>().interactable = !MineArena.Managers.TutorialService.Active || destination == GameUiDestination.Settings ||
-                destination == GameUiDestination.Crafting && tutorial.Step == MineArena.Managers.TutorialStep.Craft ||
-                destination == GameUiDestination.Levels && tutorial.Step == MineArena.Managers.TutorialStep.Launch;
+            GetComponent<Button>().interactable = MineArena.Managers.TutorialService.AllowHud(destination);
         }
         private void Awake() => GetComponent<Button>().onClick.AddListener(Open);
         public void Open()
         {
-            if (GameRoot.UIManager == null) return;
+            if (GameRoot.UIManager == null || !MineArena.Managers.TutorialService.AllowHud(destination)) return;
             switch (destination)
             {
                 case GameUiDestination.Inventory: GameRoot.UIManager.OpenWindow<InventoryWindow>(); break;
@@ -38,6 +35,7 @@ namespace MineArena.UI
                 case GameUiDestination.Wheel: GameRoot.UIManager.OpenWindow<FortuneWheelWindow>(); break;
                 case GameUiDestination.Settings: GameRoot.UIManager.OpenWindow<SettingsWindow>(); break;
             }
+            MineArena.Managers.TutorialService.HudOpened(destination);
         }
     }
 }

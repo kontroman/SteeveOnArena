@@ -32,6 +32,11 @@ namespace MineArena.Windows
             view.CloseRequested -= OnCloseClick;
         }
 
+        public void SelectLevel(int index)
+        {
+            if (view != null) view.Select(index);
+        }
+
         public override void CloseWindow()
         {
             GameRoot.UIManager.CloseWindow<SelectLevelWindow>();

@@ -58,6 +58,7 @@ namespace Achievements
             AchievementMessages.AchievementCompleted.Publish(this);
             _itemPrize.GiveTo();
             MineArena.Cosmetics.SkinService.GrantQuestRewards(_id);
+            MineArena.Controllers.Player.Instance?.Experience?.AddExperience(MineArena.PlayerSystem.PlayerExperience.QuestReward(Data.Difficulty));
             if (Data.ItemTarget is ChestCollectionTarget)
                 Devotion.SDK.Messages.Player.SavePlayerProgress.Publish();
         }

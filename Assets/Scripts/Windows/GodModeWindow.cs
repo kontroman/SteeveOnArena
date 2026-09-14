@@ -390,7 +390,8 @@ namespace MineArena.Windows
             var playerExperience = Player.Instance?.Experience;
             if (playerExperience != null)
             {
-                playerExperience.AddExperience(playerExperience.ExperiencePerLevel * levelAmount);
+                for (int i = 0; i < Mathf.Min(levelAmount, MineArena.PlayerSystem.PlayerExperience.MaxLevel); i++)
+                    playerExperience.AddExperience(playerExperience.ExperiencePerLevel - playerExperience.CurrentExperience);
                 RefreshPlayerProgressLabel();
                 return;
             }
@@ -398,7 +399,7 @@ namespace MineArena.Windows
             var playerData = GameRoot.PlayerProgress?.PlayerDataProgress;
             if (playerData != null)
             {
-                playerData.CacheExperience(playerData.CurrentLevel + levelAmount, playerData.CurrentExperience);
+                playerData.CacheExperience((int)System.Math.Min(MineArena.PlayerSystem.PlayerExperience.MaxLevel, (long)playerData.CurrentLevel + levelAmount), playerData.CurrentExperience);
             }
 
             RefreshPlayerProgressLabel();
@@ -431,12 +432,7 @@ namespace MineArena.Windows
             if (playerData == null)
                 return;
 
-            int experiencePerLevel = Constants.GameSetting.ExperiencePerLevel;
-            int nextExperience = playerData.CurrentExperience + amount;
-            int levelsToAdd = experiencePerLevel > 0 ? nextExperience / experiencePerLevel : 0;
-            int cachedExperience = experiencePerLevel > 0 ? nextExperience % experiencePerLevel : nextExperience;
-
-            playerData.CacheExperience(playerData.CurrentLevel + levelsToAdd, cachedExperience);
+            new MineArena.PlayerSystem.PlayerExperience(playerData).AddExperience(amount);
         }
 
         private ItemConfig GetSelectedItemConfig()

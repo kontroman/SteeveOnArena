@@ -1,4 +1,4 @@
-﻿using MineArena.Messages;
+using MineArena.Messages;
 using MineArena.Levels;
 using MineArena.ObjectPools;
 using System.Collections;
@@ -13,20 +13,41 @@ namespace MineArena.AI
         [SerializeField] private List<EncounterWaveConfig> _waves = new List<EncounterWaveConfig>();
         [SerializeField] private bool _loopWaves;
         [SerializeField] private float _startDelay = 1f;
-        [SerializeField] private float _nextWaveDelay = 5f;
+        [SerializeField, Min(1)] private int _maxAliveEnemies = 5;
+        [SerializeField, Min(0f)] private float _repeatDelay = 45f;
         [SerializeField] private float _retryDelay = 0.2f;
         private bool _configured;
         private bool _tutorialEncounter;
+        private int _experienceBudget = -1;
+        private int _spawnedThisCycle;
+        private readonly HashSet<MobHealth> _aliveEnemies = new HashSet<MobHealth>();
+        private float _nextCycleTime = -1f;
+        public event System.Action CycleStarted;
+        public event System.Action<MobHealth> EnemyKilled;
+        public float NextCycleSeconds => _nextCycleTime < 0f ? -1f : Mathf.Max(0f, _nextCycleTime - Time.time);
+
+        private void OnEnable() => MobHealth.MobDied += HandleMobDied;
+        private void OnDisable()
+        {
+            MobHealth.MobDied -= HandleMobDied;
+            StopSpawning();
+        }
+
+        public void StopSpawning()
+        {
+            StopAllCoroutines();
+            _nextCycleTime = -1f;
+        }
+
+        private void HandleMobDied(MobHealth health)
+        {
+            if (_aliveEnemies.Remove(health)) EnemyKilled?.Invoke(health);
+        }
 
         public int TotalMobCount
         {
             get
             {
-                if (_loopWaves)
-                {
-                    Debug.LogWarning($"{nameof(WaveSpawner)} has loop waves enabled. Level progress uses one pass of configured waves.");
-                }
-
                 int total = 0;
                 foreach (var wave in _waves)
                 {
@@ -38,16 +59,22 @@ namespace MineArena.AI
             }
         }
 
-        public void Configure(IReadOnlyList<EncounterWaveConfig> waves)
+        public void Configure(IReadOnlyList<EncounterWaveConfig> waves, int experienceBudget = -1)
         {
             _configured = true;
             _tutorialEncounter = MineArena.Managers.TutorialService.Expedition;
             _waves = waves != null ? new List<EncounterWaveConfig>(waves) : new List<EncounterWaveConfig>();
-            _loopWaves = false;
-            _startDelay = 4f;
-            _nextWaveDelay = 12f;
+            _experienceBudget = experienceBudget;
+            _spawnedThisCycle = 0;
+            _loopWaves = !_tutorialEncounter;
+            _startDelay = _tutorialEncounter ? 0f : 4f;
             if (_tutorialEncounter)
+            {
+                // The single tutorial enemy earns one normal enemy's share, not a whole arena's XP.
+                if (_experienceBudget >= 0)
+                    _experienceBudget = MineArena.PlayerSystem.PlayerExperience.ArenaMonsterReward(_experienceBudget, TotalMobCount, 0);
                 _waves = new List<EncounterWaveConfig> { new EncounterWaveConfig { MobCount = 1, MobTypes = new List<MobTypes> { MobTypes.Zombie } } };
+            }
         }
 
         void Start()
@@ -59,23 +86,25 @@ namespace MineArena.AI
         {
             // Scene preview arenas must never start their serialized waves independently.
             while (!_configured) yield return null;
-            while (MineArena.Managers.TutorialService.Expedition && MineArena.Managers.TutorialService.Progress.Step == MineArena.Managers.TutorialStep.Mine)
-                yield return null;
             if (_waves.Count == 0)
                 yield break;
 
+            if (TotalMobCount <= 0) yield break;
+            if (_startDelay > 0f)
+                yield return new WaitForSeconds(_startDelay);
             do
             {
-                if (_startDelay > 0f)
-                    yield return new WaitForSeconds(_startDelay);
-
+                _nextCycleTime = -1f;
+                _spawnedThisCycle = 0;
+                CycleStarted?.Invoke();
                 for (int waveIndex = 0; waveIndex < _waves.Count; waveIndex++)
-                {
-                    yield return StartCoroutine(SpawnWaveCoroutine(_waves[waveIndex]));
+                    yield return SpawnWaveCoroutine(_waves[waveIndex]);
 
-                    if (waveIndex < _waves.Count - 1 && _nextWaveDelay > 0f)
-                        yield return new WaitForSeconds(_nextWaveDelay);
-                }
+                // Wait for the entire encounter to be cleared before starting the countdown.
+                while (_aliveEnemies.Count > 0) yield return null;
+                if (!_loopWaves) yield break;
+                _nextCycleTime = Time.time + Mathf.Max(0f, _repeatDelay);
+                while (Time.time < _nextCycleTime) yield return null;
             } while (_loopWaves);
         }
 
@@ -89,16 +118,18 @@ namespace MineArena.AI
             while (spawnedCount < wave.MobCount)
             {
                 if (_tutorialEncounter && (!MineArena.Managers.TutorialService.Expedition ||
-                    MineArena.Managers.TutorialService.Progress.Step != MineArena.Managers.TutorialStep.Kill)) yield break;
+                    (MineArena.Managers.TutorialService.Progress.Step != MineArena.Managers.TutorialStep.Mine &&
+                     MineArena.Managers.TutorialService.Progress.Step != MineArena.Managers.TutorialStep.Kill))) yield break;
+                if (_aliveEnemies.Count >= Mathf.Max(1, _maxAliveEnemies))
+                {
+                    yield return null;
+                    continue;
+                }
                 bool spawnedAnyThisPass = TrySpawnSingle(wave, ref spawnedCount);
 
                 if (!spawnedAnyThisPass)
                 {
                     yield return new WaitForSeconds(_retryDelay);
-                }
-                else if (spawnedCount < wave.MobCount && wave.DelayBetweenMobs > 0f)
-                {
-                    yield return new WaitForSeconds(wave.DelayBetweenMobs);
                 }
                 else
                 {
@@ -141,6 +172,12 @@ namespace MineArena.AI
 
                 if (spawnPoint.TrySpawn(mobObject))
                 {
+                    mobObject.GetComponent<Mob>()?.SetTutorialDormant(_tutorialEncounter && MineArena.Managers.TutorialService.Progress.Step == MineArena.Managers.TutorialStep.Mine);
+                    var health = mobObject.GetComponent<MobHealth>();
+                    if (health != null && _experienceBudget >= 0)
+                        health.SetExperienceReward(MineArena.PlayerSystem.PlayerExperience.ArenaMonsterReward(_experienceBudget, TotalMobCount, _spawnedThisCycle));
+                    _spawnedThisCycle++;
+                    _aliveEnemies.Add(health);
                     spawnedCount++;
                     return true;
                 }

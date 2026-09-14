@@ -16,30 +16,49 @@ namespace MineArena.Windows
         [SerializeField] private Transform _resourcesRoot;
         [SerializeField] private Button _continueButton;
         [SerializeField] private Button _doubleRewardsButton;
+        [SerializeField] private Button _returnButton;
         [SerializeField] private LevelResourceChip _rewardPrefab;
 
+        private Action _returnClicked;
         private Action _continueClicked;
         private Action _doubleRewardsClicked;
         private bool _clicked;
+        private bool _canDoubleRewards;
+        private static bool TutorialExtraction => MineArena.Managers.TutorialService.Active && MineArena.Managers.TutorialService.Progress.Step == MineArena.Managers.TutorialStep.Exit;
+        public Transform TutorialTarget => _continueButton != null ? _continueButton.transform : null;
 
         private void Awake()
         {
             EnsureRuntimeLayout();
             _continueButton.onClick.AddListener(HandleContinueClicked);
             _doubleRewardsButton.onClick.AddListener(HandleDoubleRewardsClicked);
+            _returnButton.onClick.AddListener(HandleReturnClicked);
         }
 
-        public void Setup(IReadOnlyDictionary<ItemConfig, int> rewards, Action continueClicked, Action doubleRewardsClicked, bool canDoubleRewards)
+        public void Setup(IReadOnlyDictionary<ItemConfig, int> rewards, Action continueClicked, Action doubleRewardsClicked, bool canDoubleRewards, Action returnClicked = null)
         {
             EnsureRuntimeLayout();
             _clicked = false;
             _continueClicked = continueClicked;
+            _returnClicked = returnClicked;
+            _returnButton.gameObject.SetActive(returnClicked != null);
+            _returnButton.interactable = !TutorialExtraction;
+            _returnButton.GetComponentInChildren<TMP_Text>(true).text = Devotion.SDK.Services.Localization.LocalizationService.GetLocalizedText("Arena.ReturnToLevel");
             _doubleRewardsClicked = doubleRewardsClicked;
 
             _continueButton.interactable = true;
-            _doubleRewardsButton.interactable = canDoubleRewards;
+            _canDoubleRewards = canDoubleRewards && !TutorialExtraction;
+            _doubleRewardsButton.interactable = _canDoubleRewards;
 
             RefreshRewards(rewards);
+        }
+
+        private void HandleReturnClicked()
+        {
+            if (_clicked || _returnClicked == null || TutorialExtraction) return;
+            _clicked = true;
+            SetButtonsInteractable(false);
+            _returnClicked.Invoke();
         }
 
         private void HandleContinueClicked()
@@ -54,7 +73,7 @@ namespace MineArena.Windows
 
         private void HandleDoubleRewardsClicked()
         {
-            if (_clicked)
+            if (_clicked || TutorialExtraction || !_canDoubleRewards)
                 return;
 
             _clicked = true;
@@ -64,6 +83,7 @@ namespace MineArena.Windows
 
         private void SetButtonsInteractable(bool interactable)
         {
+            if (_returnButton != null) _returnButton.interactable = interactable;
             if (_continueButton != null)
                 _continueButton.interactable = interactable;
 
@@ -155,6 +175,9 @@ namespace MineArena.Windows
 
             if (_doubleRewardsButton == null)
                 _doubleRewardsButton = CreateButton(rectTransform, "Double Rewards", new Vector2(110f, -90f));
+
+            if (_returnButton == null)
+                _returnButton = CreateButton(rectTransform, "Return", new Vector2(0f, 20f));
         }
 
         private static Button CreateButton(RectTransform parent, string label, Vector2 anchoredPosition)

@@ -1696,10 +1696,13 @@
     {"key": "????: {0:0.##}.", "value": "Da?o: {0:0.##}."},
     {"key": "????? ??????: {0:0.##} ?.", "value": "Tiempo de miner?a: {0:0.##} s."},
     {"key":"Arena.GoToPortal","value":"Ve al portal"},
+    {"key": "Arena.ReturnToLevel", "value": "Volver"},
+    {"key":"Arena.NextWave","value":"Oleada en {0}s"},
     {"key":"Arena.Exit","value":"Salir de la arena"},
     {"key":"Arena.ExitTitle","value":"¿Salir de la arena?"},
     {"key":"Arena.ExitWarning","value":"Si sales antes de tiempo sin usar el portal, perderás todos los recursos recogidos en esta arena."},
     {"key":"Arena.Stay","value":"Quedarse"},
-    {"key":"Arena.ConfirmExit","value":"Salir y perder el botín"}
+    {"key":"Arena.ConfirmExit","value":"Salir y perder el botín"},
+    {"key":"Не выполнено","value":"Sin completar"}
   ]
 }

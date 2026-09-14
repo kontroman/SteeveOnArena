@@ -32,27 +32,35 @@ namespace Devotion.SDK.UI
         private bool _initialized;
         private bool? _fullHudVisible;
         private bool _arenaHud;
+        private TutorialStep? _hudStep;
         public RectTransform QuickAccessPanel => _inventoryPanel as RectTransform;
         public void RefreshTutorialVisibility()
         {
             var progress = GameRoot.PlayerProgress?.TutorialProgress;
-            bool show = progress != null && progress.Initialized && progress.Step == TutorialStep.Complete;
+            bool show = !TutorialService.Active;
             bool arena = LevelController.Current != null;
-            if (_fullHudVisible == show && _arenaHud == arena) return;
+            if (_fullHudVisible == show && _arenaHud == arena && _hudStep == progress?.Step) return;
             _fullHudVisible = show;
             _arenaHud = arena;
+            _hudStep = progress?.Step;
             foreach (string name in new[] { "PlayerPanel", "IconNavigation", "GiftNavigation", "CurrencyPouch", "Levels", "AchievementPopup" })
             {
                 var group = transform.Find(name);
-                if (group != null) group.gameObject.SetActive(show && (name != "GiftNavigation" || !arena));
+                bool visible = show;
+                if (name == "IconNavigation") visible |= TutorialService.AllowHud(GameUiDestination.Inventory) || TutorialService.AllowHud(GameUiDestination.Crafting);
+                if (name == "GiftNavigation") visible = !arena && (show || TutorialService.AllowHud(GameUiDestination.Daily) || TutorialService.AllowHud(GameUiDestination.Playtime) || TutorialService.AllowHud(GameUiDestination.Wheel));
+                if (group != null) group.gameObject.SetActive(visible);
             }
             if (_inventoryPanel != null) _inventoryPanel.gameObject.SetActive(true);
         }
 
         private void Awake()
         {
+            var playerPanel = transform.Find("PlayerPanel");
+            if (playerPanel != null && playerPanel.GetComponent<PlayerPanelUI>() == null) playerPanel.gameObject.AddComponent<PlayerPanelUI>();
             InitializeInventoryPanel();
             InitializePortrait();
+            HudActionNotice.Install(transform);
         }
 
         private void InitializePortrait()
@@ -99,6 +107,17 @@ namespace Devotion.SDK.UI
                 {
                     SelectInventorySlot(i);
                 }
+            }
+        }
+
+        private void LateUpdate()
+        {
+            // Recover HUD instances stranded by the old inventory reparenting code after a script reload.
+            // This runs outside any parent's activation/deactivation callback.
+            if (_inventoryPanel != null && _inventoryPanel.parent != transform)
+            {
+                _inventoryPanel.SetParent(transform, false);
+                _inventoryPanel.gameObject.SetActive(true);
             }
         }
 
@@ -390,27 +409,28 @@ namespace Devotion.SDK.UI
         private ResourceIcon ResolveResourceIcon(Transform slot)
         {
             var resourceIcon = slot.GetComponentInChildren<ResourceIcon>(true);
-            if (resourceIcon != null)
-                return resourceIcon;
-
-            if (_resourceIconPrefab == null)
-                _resourceIconPrefab = Resources.Load<ResourceIcon>(ResourceIconPrefabPath);
-
-            if (_resourceIconPrefab == null)
+            if (resourceIcon == null)
             {
-                Debug.LogWarning($"[PlayingWindow] ResourceIcon prefab not found at Resources/{ResourceIconPrefabPath}.");
-                return null;
+                if (_resourceIconPrefab == null)
+                    _resourceIconPrefab = Resources.Load<ResourceIcon>(ResourceIconPrefabPath);
+
+                if (_resourceIconPrefab == null)
+                {
+                    Debug.LogWarning($"[PlayingWindow] ResourceIcon prefab not found at Resources/{ResourceIconPrefabPath}.");
+                    return null;
+                }
+
+                resourceIcon = Instantiate(_resourceIconPrefab, slot);
+                resourceIcon.name = "ResourceIcon";
             }
 
-            resourceIcon = Instantiate(_resourceIconPrefab, slot);
-            resourceIcon.name = "ResourceIcon";
-
+            // Prefab instances need the same slot-relative sizing as newly created icons.
             if (resourceIcon.transform is RectTransform rectTransform)
             {
                 rectTransform.anchorMin = Vector2.zero;
                 rectTransform.anchorMax = Vector2.one;
-                rectTransform.offsetMin = Vector2.zero;
-                rectTransform.offsetMax = Vector2.zero;
+                rectTransform.offsetMin = new Vector2(10f, 10f);
+                rectTransform.offsetMax = new Vector2(-10f, -10f);
                 rectTransform.localScale = Vector3.one;
             }
 
@@ -498,57 +518,4 @@ namespace Devotion.SDK.UI
         }
     }
 
-    public sealed class PixelPortraitGraphic : MaskableGraphic
-    {
-        private static readonly string[] Pixels = {
-            "....########....",
-            "..############..",
-            ".##HHHHHHHHHH##.",
-            ".#HHHHHHHHHHHH#.",
-            ".#HHHSSSSSHHHH#.",
-            ".#HHSSSSSSSSHH#.",
-            ".#HSSSSSSSSSSH#.",
-            ".#SWWEESSWWEES#.",
-            ".#SWWEESSWWEES#.",
-            ".#SSSSSNNSSSSS#.",
-            "..#SSSSNNSSSS#..",
-            "..#SSMMMMMMSS#..",
-            "...#SSSLLSSS#...",
-            "....#SSSSSS#....",
-            "..###TTTTTT###..",
-            ".##TTTTTTTTTT##."
-        };
-
-        protected override void OnPopulateMesh(VertexHelper vh)
-        {
-            vh.Clear();
-            var r = rectTransform.rect;
-            float unit = Mathf.Min(r.width, r.height) / 16f;
-            for (int y = 0; y < 16; y++)
-            for (int x = 0; x < Pixels[y].Length; x++)
-            {
-                char pixel = Pixels[y][x];
-                if (pixel == '.') continue;
-                Color32 tint = pixel switch {
-                    '#' => new Color32(39, 35, 42, 255),
-                    'H' => new Color32(91, 56, 38, 255),
-                    'S' => new Color32(226, 167, 116, 255),
-                    'W' => new Color32(255, 245, 218, 255),
-                    'E' => new Color32(43, 91, 105, 255),
-                    'N' => new Color32(190, 127, 83, 255),
-                    'M' => new Color32(106, 63, 47, 255),
-                    'L' => new Color32(246, 195, 145, 255),
-                    _ => new Color32(56, 141, 149, 255)
-                };
-                var p = r.center + new Vector2(x - 8, 7 - y) * unit;
-                int start = vh.currentVertCount;
-                vh.AddVert(p, tint, Vector2.zero);
-                vh.AddVert(p + Vector2.right * unit, tint, Vector2.zero);
-                vh.AddVert(p + Vector2.one * unit, tint, Vector2.zero);
-                vh.AddVert(p + Vector2.up * unit, tint, Vector2.zero);
-                vh.AddTriangle(start, start + 1, start + 2);
-                vh.AddTriangle(start, start + 2, start + 3);
-            }
-        }
-    }
 }

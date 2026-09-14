@@ -4,27 +4,53 @@ PASS No building or crafting before the expedition
 PASS Portal permits only the first expedition
 PASS Unconfigured scene spawner cannot release preview waves
 PASS Tutorial has one enemy without changing the level asset
-PASS Enemy spawning waits for resource collection
+PASS Tutorial schedules its zombie immediately before resource collection
 PASS Kill or loose pickup cannot skip the mining step
-PASS Mining plus pickup releases the combat wave
+PASS Visible tutorial zombie has movement and attacks disabled before mining
+PASS Arrow is hidden when mining starts, before the resource is broken
+PASS Mining arrow disappears after the block breaks, before pickup
+PASS Collecting resource activates the existing zombie
+PASS Mining plus pickup begins combat
 PASS Restart in the lobby retains completed mining and restores portal guidance
 PASS Retry continues with the unfinished fight
 PASS Enemy death unlocks extraction guidance
-PASS Even an empty completion reward covers every workshop cost
-PASS Other buildings and upgrades are rejected
-PASS Guaranteed completion grant pays for the workshop with no mined resources or ads
-PASS Saved construction recovers the crafting checkpoint
-PASS Other recipes cannot consume tutorial funds
-PASS Resources left after construction pay for the first planks
-PASS Starting a craft does not complete the tutorial early
-PASS Paid tutorial craft survives save/load
-PASS Craft completion grants planks and unlocks the gift together
-PASS Gift can be claimed after the completed craft
-PASS Gift includes sixteen oak, twelve stone and two healing potions
+PASS Portal spotlight targets claim-and-return button
+PASS Only claim-and-return is interactable in tutorial extraction
+PASS Tutorial extraction rejects alternate handlers and claims once
+PASS First-level reward covers smith PLUS sword, including shared stone costs
+PASS First-level reward includes the sword stick
+PASS Only smith construction is taught
+PASS First-level reward pays for smith without mined resources
+PASS Saved smith resumes directly at sword crafting
+PASS After construction exactly eight stone and one stick remain
+PASS Tutorial crafting window is permitted
+PASS Actual craft row shows available/required for Stone: 8/8
+PASS Ingredient quantity has reserved width
+PASS Actual craft row shows available/required for Stick: 1/1
+PASS Ingredient quantity has reserved width
+PASS Planks and armor cannot consume tutorial resources
+PASS Remaining materials pay for the sword
+PASS Paid sword craft survives save/load
+PASS Sword output goes directly to equipment lesson
+PASS Inventory HUD action is visible and permitted during equipment lesson
+PASS Selected sword unlocks potion lesson and one potion
+PASS Potion assignment unlocks real rewards window
+PASS Rewards navigation appears when the lesson changes
+PASS Reward HUD is visible and allowed: PlaytimeRewards
+PASS Reward lesson permits its window: PlaytimeRewards
+PASS Reward HUD is visible and allowed: FortuneWheel
+PASS Reward lesson permits its window: FortuneWheel
+PASS Final gift can be claimed
+PASS Final gift includes one iron chestplate
+PASS Final gift adds no resources or healing potions
 PASS Saved completion prevents duplicate gift grants
 PASS Free play restores normal encounters and actions
 PASS Existing expedition progress is not forced through onboarding
 PASS Existing settlement is not forced through onboarding
+PASS Legacy checkpoint migrates without workshop or armor: Build
+PASS Legacy checkpoint migrates without workshop or armor: Craft
+PASS Legacy checkpoint migrates without workshop or armor: CraftArmor
+PASS Legacy checkpoint migrates without workshop or armor: EquipArmor
 PASS Tutorial arena has player, ore and extraction spawn points
 PASS First level has a mineable resource prefab
 PASS Guidance text for Portal
@@ -32,19 +58,42 @@ PASS Guidance text for Launch
 PASS Guidance text for Mine
 PASS Guidance text for Kill
 PASS Guidance text for Exit
-PASS Guidance text for Build
-PASS Guidance text for Craft
+PASS Guidance text for BuildSmith
+PASS Guidance text for CraftSword
+PASS Guidance text for EquipSword
+PASS Guidance text for Potion
+PASS Guidance text for Rewards
+PASS Guidance text for PlaytimeRewards
+PASS Guidance text for FortuneWheel
+PASS Guidance text for WorkshopButton
 PASS Guidance text for Gift
+PASS Mining popup uses three-face ResourceIcon instead of a flat texture
+PASS All three resource faces are present
+PASS Final popup illustrates the awarded chestplate
+PASS Animated hand is visible and passes pointer events for StoneSword
+PASS Animated hand is visible and passes pointer events for HealingPotion
+PASS Potion lesson keeps inventory open without another blocking popup
+PASS Circular spotlight passes clicks inside and blocks outside
+PASS Window button uses a rectangular clickable hole
+PASS Custom tutorial graphic produces a visible mesh: TutorialSpotlightGraphic
+PASS Custom tutorial graphic produces a visible mesh: TutorialHandGraphic
+PASS Quest panel has no workshop shortcut
 PASS Upper coach uses the shared light window frame
-PASS Distance label uses forty-point pixel font and pure yellow
+PASS Distance label uses forty-point UI font and pure yellow
 PASS Tutorial uses the project's Cyrillic font
 PASS Guidance fits the panel: Portal
 PASS Guidance fits the panel: Launch
 PASS Guidance fits the panel: Mine
 PASS Guidance fits the panel: Kill
 PASS Guidance fits the panel: Exit
-PASS Guidance fits the panel: Build
-PASS Guidance fits the panel: Craft
+PASS Guidance fits the panel: BuildSmith
+PASS Guidance fits the panel: CraftSword
+PASS Guidance fits the panel: EquipSword
+PASS Guidance fits the panel: Potion
+PASS Guidance fits the panel: Rewards
+PASS Guidance fits the panel: PlaytimeRewards
+PASS Guidance fits the panel: FortuneWheel
+PASS Guidance fits the panel: WorkshopButton
 PASS Guidance fits the panel: Gift
 PASS Popup uses the existing illustrated UI frame
 PASS Popup copy fits: Portal
@@ -52,8 +101,14 @@ PASS Popup copy fits: Launch
 PASS Popup copy fits: Mine
 PASS Popup copy fits: Kill
 PASS Popup copy fits: Exit
-PASS Popup copy fits: Build
-PASS Popup copy fits: Craft
+PASS Popup copy fits: BuildSmith
+PASS Popup copy fits: CraftSword
+PASS Popup copy fits: EquipSword
+PASS Popup copy fits: Potion
+PASS Popup copy fits: Rewards
+PASS Popup copy fits: PlaytimeRewards
+PASS Popup copy fits: FortuneWheel
+PASS Popup copy fits: WorkshopButton
 PASS Popup copy fits: Gift
 PASS Window request returns an inactive instance while popup is pending
 PASS Repeated trigger requests are coalesced
@@ -62,7 +117,12 @@ PASS Confirming the popup releases exactly one queued window
 PASS Leaving a trigger cancels its deferred window
 PASS Outdated stage windows never reopen
 PASS Scene without EventSystem gets a persistent active input module
-PASS Step three confirmation receives the top UI raycast while time is paused: hits=Confirm,Tutorial popup,Popup backdrop; point=(960.00, 328.00); screen=640x480; depth=13
+PASS Step three confirmation receives the top UI raycast while time is paused: hits=Confirm,Tutorial popup,Popup backdrop; point=(960.00, 328.00); screen=640x480; depth=17
 PASS Real pointer-click handler dismisses mining popup and unpauses gameplay
 PASS Returning to a scene with its own input disables the fallback
 PASS Repeated scene changes reuse one fallback input system
+PASS Missing scene canvas is replaced with interactive UI canvas
+PASS Portal level window opens on recovered canvas
+PASS Opening the portal window hides world guidance arrows
+PASS Inactive main canvas and cached portal window are reused
+PASS Destroyed canvas and cached portal window are recreated

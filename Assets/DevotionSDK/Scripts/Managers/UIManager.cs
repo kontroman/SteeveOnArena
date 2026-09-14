@@ -5,17 +5,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace Devotion.SDK.Managers
 {
     public class UIManager : BaseManager
     {
-        [SerializeField] private List<BaseWindow> _windows;
+        [SerializeField] private List<BaseWindow> _windows = new List<BaseWindow>();
         [SerializeField] private Canvas _mainCanvas;
 
         private readonly List<BaseWindow> _openedWindows = new List<BaseWindow>();
         private readonly Dictionary<Type, BaseWindow> _cachedWindows = new Dictionary<Type, BaseWindow>();
         private readonly Dictionary<Type, BaseWindow> _tutorialPending = new Dictionary<Type, BaseWindow>();
+        public bool HasOpenDialog => _openedWindows.Exists(w => w != null && w.gameObject.activeInHierarchy && !IsTransition(w.GetType()));
         private EventSystem _fallbackInput;
         private void OnEnable() { SceneManager.sceneLoaded += SceneLoaded; SceneManager.sceneUnloaded += SceneUnloaded; }
         private void OnDisable() { SceneManager.sceneLoaded -= SceneLoaded; SceneManager.sceneUnloaded -= SceneUnloaded; }
@@ -83,10 +85,8 @@ namespace Devotion.SDK.Managers
         public BaseWindow OpenWindow<T>() where T : BaseWindow
         {
             if (!MineArena.Managers.TutorialService.AllowWindow(typeof(T))) return null;
-            if (_mainCanvas == null)
-                _mainCanvas = GameObject.FindGameObjectWithTag(Constants.GameTags.MainCanvas).GetComponent<Canvas>();
-
-            if (Application.isPlaying) DontDestroyOnLoad(_mainCanvas.gameObject);
+            EnsureMainCanvas();
+            if (Application.isPlaying) EnsureInputSystem();
 
             BaseWindow window = GetOrCreateWindow<T>();
 
@@ -102,6 +102,42 @@ namespace Devotion.SDK.Managers
             Activate(window);
 
             return window;
+        }
+
+        private void EnsureMainCanvas(Canvas[] candidates = null)
+        {
+            if (_mainCanvas == null)
+            {
+                // FindGameObjectWithTag skips inactive objects and may return null between scenes.
+                foreach (var canvas in candidates ?? FindObjectsOfType<Canvas>(true))
+                    if (canvas.gameObject.scene.IsValid() && canvas.CompareTag(Constants.GameTags.MainCanvas))
+                    {
+                        _mainCanvas = canvas;
+                        break;
+                    }
+            }
+            if (_mainCanvas == null)
+            {
+                var root = new GameObject("MainCanvas", typeof(RectTransform), typeof(Canvas), typeof(CanvasScaler), typeof(GraphicRaycaster));
+                root.tag = Constants.GameTags.MainCanvas;
+                _mainCanvas = root.GetComponent<Canvas>();
+                _mainCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
+                var scaler = root.GetComponent<CanvasScaler>();
+                scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+                scaler.referenceResolution = new Vector2(1920, 1080);
+                scaler.matchWidthOrHeight = .5f;
+            }
+            if (!_mainCanvas.gameObject.activeInHierarchy && _mainCanvas.transform.parent != null)
+                _mainCanvas.transform.SetParent(null, true);
+            _mainCanvas.gameObject.SetActive(true);
+            _mainCanvas.enabled = true;
+            if (_mainCanvas.GetComponent<GraphicRaycaster>() == null) _mainCanvas.gameObject.AddComponent<GraphicRaycaster>();
+            if (Application.isPlaying)
+            {
+                // Persist only the UI root, even if a scene supplied a nested canvas.
+                _mainCanvas.transform.SetParent(null, true);
+                DontDestroyOnLoad(_mainCanvas.gameObject);
+            }
         }
 
         public BaseWindow ShowWindow<T>() where T : BaseWindow
@@ -171,7 +207,7 @@ namespace Devotion.SDK.Managers
 
         private GameObject FindWindowPrefab<T>() where T : BaseWindow
         {
-            return _windows.Find(w => w != null && w.GetType() == typeof(T))?.gameObject;
+            return _windows?.Find(w => w != null && w.GetType() == typeof(T))?.gameObject;
         }
 
         protected T GetWindowByType<T>() where T : BaseWindow
@@ -180,10 +216,12 @@ namespace Devotion.SDK.Managers
 
             if (_cachedWindows.TryGetValue(type, out BaseWindow cachedWindow))
             {
-                return (T)cachedWindow;
+                if (cachedWindow != null) return (T)cachedWindow;
+                _cachedWindows.Remove(type);
+                _openedWindows.RemoveAll(w => w == null);
             }
 
-            BaseWindow windowPrefab = _windows.Find(w => w != null && w.GetType() == type);
+            BaseWindow windowPrefab = _windows?.Find(w => w != null && w.GetType() == type);
             if (windowPrefab == null)
             {
                 Debug.LogError($"Window of type '{type}' not found.");
@@ -205,8 +243,9 @@ namespace Devotion.SDK.Managers
 
         public void RegisterWindow(BaseWindow window)
         {
+            _windows ??= new List<BaseWindow>();
             if (window == null || _windows.Contains(window)) return;
-
+            EnsureMainCanvas();
             window.transform.SetParent(_mainCanvas.transform, false);
             _windows.Add(window);
             _cachedWindows[window.GetType()] = window;

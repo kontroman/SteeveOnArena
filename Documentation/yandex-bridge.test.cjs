@@ -3,11 +3,12 @@ const assert = require('node:assert/strict');
 const vm = require('node:vm');
 const fs = require('node:fs');
 const source = fs.readFileSync('Assets/WebGLTemplates/MineArena/yandex-sdk.js', 'utf8');
-function setup({ local = false, loadError = false, saveError = false } = {}) {
+function setup({ local = false, loadError = false, saveError = false, playerName = 'Игрок Яндекса' } = {}) {
   const responses = [], calls = [], listeners = {}, storage = new Map();
   let callbacks, clock = 10000;
   const sdk = {
     getPlayer: async () => ({
+      getName: () => playerName,
       getData: async () => { if (loadError) throw Error('offline'); return { progress: '{"level":3}' }; },
       setData: async (data, flush) => { calls.push(['save', data, flush]); if (saveError) throw Error('offline'); }
     }),
@@ -37,6 +38,11 @@ function setup({ local = false, loadError = false, saveError = false } = {}) {
   return { api, request, calls, listeners, context, responses, get callbacks() { return callbacks; } };
 }
 const tick = () => new Promise(resolve => setImmediate(resolve));
+test('profile name is optional and does not require an authorization dialog', async () => {
+  assert.equal((await setup().request('playerName')).data, 'Игрок Яндекса');
+  assert.equal((await setup({ playerName: '' }).request('playerName')).data, '');
+  assert.equal((await setup({ local: true }).request('playerName')).data, '');
+});
 test('cloud load then durable save, no save before load', async () => {
   const s = setup();
   assert.equal((await s.request('save','progress','{}')).ok, false);

@@ -21,6 +21,18 @@ namespace MineArena.Windows
             InitWindow();
         }
 
+        private void OnEnable()
+        {
+            InitWindow();
+            // Gameplay windows can open while the arena is still being generated.
+            var canvas = GetComponent<Canvas>();
+            if (canvas == null) canvas = gameObject.AddComponent<Canvas>();
+            canvas.overrideSorting = true;
+            canvas.sortingOrder = short.MaxValue;
+            if (GetComponent<GraphicRaycaster>() == null)
+                gameObject.AddComponent<GraphicRaycaster>();
+        }
+
         private void InitWindow()
         {
             SetProgressValueImmediate(0);
@@ -57,7 +69,7 @@ namespace MineArena.Windows
 
             while (elapsedTime < _animationDuration)
             {
-                elapsedTime += Time.deltaTime;
+                elapsedTime += Time.unscaledDeltaTime;
                 float t = Mathf.Clamp01(elapsedTime / _animationDuration);
 
                 _progressBar.value = Mathf.Lerp(startValue, targetValue, SmoothStep(t));

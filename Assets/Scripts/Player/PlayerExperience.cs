@@ -18,10 +18,24 @@ namespace MineArena.PlayerSystem
 
         public event Action<float, float> OnExperienceChanged;
         public event Action<int> OnLevelChanged;
+        public event Action<int, int> OnExperienceGained;
 
         public int CurrentExperience => _currentExperience;
         public int CurrentLevel => _currentLevel;
-        public int ExperiencePerLevel => Constants.GameSetting.ExperiencePerLevel;
+        public const int MaxLevel = 100;
+        public int ExperiencePerLevel => RequiredExperience(_currentLevel);
+        // Argument is the current level: 1 -> 2 costs 60, 2 -> 3 costs 120.
+        public static int RequiredExperience(int level) => level <= 1 ? 60 : level == 2 ? 120 :
+            (int)Math.Min(1000000000d, 250d * Math.Pow(2d, level - 3));
+        public static int QuestReward(global::Structs.QuestDifficulty difficulty) => difficulty switch
+        { global::Structs.QuestDifficulty.Easy => 80, global::Structs.QuestDifficulty.Normal => 200, _ => 500 };
+        public static int MonsterReward(float health) => UnityEngine.Mathf.Clamp(15 + UnityEngine.Mathf.RoundToInt(health * .12f), 15, 150);
+        public static int ArenaMonsterReward(int totalExperience, int totalMonsters, int spawnIndex)
+        {
+            if (totalExperience <= 0 || totalMonsters <= 0 || spawnIndex < 0 || spawnIndex >= totalMonsters) return 0;
+            // Differences of cumulative integer shares preserve the exact full-clear budget.
+            return (int)((long)totalExperience * (spawnIndex + 1) / totalMonsters - (long)totalExperience * spawnIndex / totalMonsters);
+        }
 
         public float MaxValue => ExperiencePerLevel;
         public float CurrentValue => _currentExperience;
@@ -37,23 +51,27 @@ namespace MineArena.PlayerSystem
             if (amount <= 0)
                 return;
 
-            _currentExperience += amount;
+            if (_currentLevel >= MaxLevel) return;
+            int previousLevel = _currentLevel;
+            _currentExperience = (int)Math.Min(int.MaxValue, (long)_currentExperience + amount);
             bool levelChanged = ApplyLevelUps();
+
+            SaveData();
 
             if (levelChanged)
                 NotifyLevelChanged();
             NotifyExperienceChanged();
-
-            SaveData();
+            OnExperienceGained?.Invoke(amount, _currentLevel - previousLevel);
         }
 
         public void RestoreData(int level, int experience)
         {
-            _currentLevel = Math.Max(0, level);
+            _currentLevel = Math.Min(MaxLevel, Math.Max(1, level));
             _currentExperience = Math.Max(0, experience);
 
             ApplyLevelUps();
 
+            if (_progress != null && (_progress.CurrentLevel != _currentLevel || _progress.CurrentExperience != _currentExperience)) SaveData();
             NotifyLevelChanged();
             NotifyExperienceChanged();
         }
@@ -66,6 +84,7 @@ namespace MineArena.PlayerSystem
                 return;
             }
 
+            _currentLevel = Math.Max(1, _currentLevel);
             NotifyLevelChanged();
             NotifyExperienceChanged();
         }
@@ -77,18 +96,14 @@ namespace MineArena.PlayerSystem
 
         private bool ApplyLevelUps()
         {
-            if (ExperiencePerLevel <= 0)
-                return false;
-
-            int levelsToAdd = _currentExperience / ExperiencePerLevel;
-
-            if (levelsToAdd <= 0)
-                return false;
-
-            _currentLevel += levelsToAdd;
-            _currentExperience %= ExperiencePerLevel;
-
-            return true;
+            int oldLevel = _currentLevel;
+            while (_currentLevel < MaxLevel && _currentExperience >= ExperiencePerLevel)
+            {
+                _currentExperience -= ExperiencePerLevel;
+                _currentLevel++;
+            }
+            if (_currentLevel >= MaxLevel) _currentExperience = 0;
+            return oldLevel != _currentLevel;
         }
 
         private void NotifyExperienceChanged()

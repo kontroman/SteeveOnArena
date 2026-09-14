@@ -54,6 +54,7 @@ namespace MineArena.Game.UI
                 return;
 
             float targetFill = maxValue > 0f ? Mathf.Clamp01(currentValue / maxValue) : 0f;
+            if (_experience != null && _experience.CurrentLevel >= PlayerExperience.MaxLevel) targetFill = 1f;
 
             if (!_smoothFill)
             {

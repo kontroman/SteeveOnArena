@@ -1699,10 +1699,13 @@
     {"key": "????: {0:0.##}.", "value": "Damage: {0:0.##}."},
     {"key": "????? ??????: {0:0.##} ?.", "value": "Mining time: {0:0.##} s."},
     {"key":"Arena.GoToPortal","value":"Go to the portal"},
+    {"key": "Arena.ReturnToLevel", "value": "Return"},
+    {"key":"Arena.NextWave","value":"Next wave in {0}s"},
     {"key":"Arena.Exit","value":"Leave arena"},
     {"key":"Arena.ExitTitle","value":"Leave the arena?"},
     {"key":"Arena.ExitWarning","value":"If you leave early without using the portal, you will lose all resources collected in this arena."},
     {"key":"Arena.Stay","value":"Stay"},
-    {"key":"Arena.ConfirmExit","value":"Leave and lose loot"}
+    {"key":"Arena.ConfirmExit","value":"Leave and lose loot"},
+    {"key":"Не выполнено","value":"Not completed"}
   ]
 }

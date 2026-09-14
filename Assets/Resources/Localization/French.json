@@ -1696,10 +1696,13 @@
     {"key": "????: {0:0.##}.", "value": "D?g?ts : {0:0.##}."},
     {"key": "????? ??????: {0:0.##} ?.", "value": "Temps de minage : {0:0.##} s."},
     {"key":"Arena.GoToPortal","value":"Va au portail"},
+    {"key": "Arena.ReturnToLevel", "value": "Revenir"},
+    {"key":"Arena.NextWave","value":"Vague dans {0}s"},
     {"key":"Arena.Exit","value":"Quitter l’arène"},
     {"key":"Arena.ExitTitle","value":"Quitter l’arène ?"},
     {"key":"Arena.ExitWarning","value":"Si tu pars avant la fin sans passer par le portail, tu perdras toutes les ressources récoltées dans cette arène."},
     {"key":"Arena.Stay","value":"Rester"},
-    {"key":"Arena.ConfirmExit","value":"Partir et perdre le butin"}
+    {"key":"Arena.ConfirmExit","value":"Partir et perdre le butin"},
+    {"key":"Не выполнено","value":"Non terminé"}
   ]
 }

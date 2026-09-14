@@ -141,8 +141,8 @@ namespace MineArena.Editor
                 Check(hud.transform.Find("InventoryPanel").gameObject.activeSelf && !hud.transform.Find("PlayerPanel").gameObject.activeSelf && !hud.transform.Find("IconNavigation").gameObject.activeSelf, "Tutorial shows quick slots but hides player panel and navigation");
                 progress.TutorialProgress.Step = TutorialStep.Complete; window.RefreshTutorialVisibility();
                 Check(new[] { "PlayerPanel", "IconNavigation", "GiftNavigation", "CurrencyPouch", "Levels" }.All(n => hud.transform.Find(n).gameObject.activeSelf), "Finishing tutorial reveals all main HUD groups");
-                progress.TutorialProgress.Step = TutorialStep.Craft; window.RefreshTutorialVisibility();
-                Check(hud.transform.Find("InventoryPanel").gameObject.activeSelf && !hud.transform.Find("IconNavigation").gameObject.activeSelf, "Crafting checkpoint keeps slots visible and main HUD hidden");
+                progress.TutorialProgress.Step = TutorialStep.EquipSword; window.RefreshTutorialVisibility();
+                Check(hud.transform.Find("InventoryPanel").gameObject.activeSelf && hud.transform.Find("IconNavigation").gameObject.activeSelf, "Equipment checkpoint reveals inventory navigation and retains quick slots");
                 File.WriteAllLines("Documentation/expedition-validation.txt", checks);
                 Debug.Log("Expedition return validation: " + checks.Count + " checks passed.");
             }

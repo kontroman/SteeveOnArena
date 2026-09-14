@@ -7,6 +7,9 @@ Shader "Custom/WaterShaderV2_Fixed" {
         _Amplitude ("Wave Amplitude", Range(0, 0.5)) = 0.1
         _Frequency ("Wave Frequency", Range(0, 10)) = 2
         _EdgeBlend ("Edge Blend", Range(0, 0.2)) = 0.05
+        _TilesPerUnit ("Water Tiles Per World Unit", Float) = 0.25
+        _PixelResolution ("Pixels Per Tile", Float) = 64
+        _AnimationFPS ("Animation Frames Per Second", Range(1, 30)) = 12
     }
     
     SubShader {
@@ -18,6 +21,7 @@ Shader "Custom/WaterShaderV2_Fixed" {
         
         LOD 200
         Blend SrcAlpha OneMinusSrcAlpha
+        ZWrite Off
         
         Pass {
             CGPROGRAM
@@ -40,29 +44,39 @@ Shader "Custom/WaterShaderV2_Fixed" {
             float4 _MainTex_ST, _ShapeTex_ST;
             fixed4 _Color;
             float _Speed, _Amplitude, _Frequency, _EdgeBlend;
+            float _TilesPerUnit, _PixelResolution, _AnimationFPS;
 
             v2f vert (appdata v) {
                 v2f o;
                 
                 o.vertex = UnityObjectToClipPos(v.vertex);
                 
-                o.uvWave = TRANSFORM_TEX(v.uv, _MainTex);
+                // World coordinates keep the pixel size consistent on lakes and the ocean.
+                float2 worldUV = mul(unity_ObjectToWorld, v.vertex).xz * _TilesPerUnit;
+                o.uvWave = worldUV * _MainTex_ST.xy + _MainTex_ST.zw;
                 o.uvShape = TRANSFORM_TEX(v.uv, _ShapeTex);
 
                 return o;
             }
 
             fixed4 frag (v2f i) : SV_Target {
-                float2 displacedUV = i.uvWave;
-
-                displacedUV.x += _Time.x * _Speed * 0.1;
-                displacedUV.y += sin((i.uvWave.x + _Time.y * _Speed) * _Frequency) * _Amplitude;
-
-                fixed4 waveTex = tex2D(_MainTex, displacedUV);
+                float resolution = max(1.0, _PixelResolution);
+                float time = floor(_Time.y * _AnimationFPS) / max(1.0, _AnimationFPS) * _Speed;
+                float2 pixelUV = (floor(i.uvWave * resolution) + 0.5) / resolution;
+                float ripple = sin(pixelUV.x * _Frequency + time) * _Amplitude;
+                float2 flowA = float2(time * 0.04, time * 0.025 + ripple);
+                float2 flowB = float2(-time * 0.025, time * 0.035 - ripple);
+                // Move by whole texels so the drifting highlights retain square pixel edges.
+                flowA = floor(flowA * resolution) / resolution;
+                flowB = floor(flowB * resolution) / resolution;
+                fixed4 waveA = tex2D(_MainTex, pixelUV + flowA);
+                fixed4 waveB = tex2D(_MainTex, pixelUV + flowB + float2(0.5, 0.25));
+                fixed4 waveTex = lerp(waveA, waveB, 0.3);
                 fixed4 waterColor = _Color * waveTex;
 
                 fixed4 shape = tex2D(_ShapeTex, i.uvShape);
-                float shapeAlpha = smoothstep(0.5 - _EdgeBlend, 0.5 + _EdgeBlend, shape.a);
+                float edge = max(_EdgeBlend, 0.001);
+                float shapeAlpha = smoothstep(0.5 - edge, 0.5 + edge, shape.a);
 
                 waterColor.a *= shapeAlpha;
                 return waterColor;

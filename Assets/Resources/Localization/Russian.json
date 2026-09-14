@@ -1699,10 +1699,13 @@
     {"key": "????: {0:0.##}.", "value": "????: {0:0.##}."},
     {"key": "????? ??????: {0:0.##} ?.", "value": "????? ??????: {0:0.##} ?."},
     {"key":"Arena.GoToPortal","value":"Иди к порталу"},
+    {"key": "Arena.ReturnToLevel", "value": "Вернуться"},
+    {"key":"Arena.NextWave","value":"Волна через {0}с"},
     {"key":"Arena.Exit","value":"Выход с арены"},
     {"key":"Arena.ExitTitle","value":"Выйти с арены?"},
     {"key":"Arena.ExitWarning","value":"Если уйти раньше, не через портал, ты потеряешь все ресурсы, собранные на этой арене."},
     {"key":"Arena.Stay","value":"Остаться"},
-    {"key":"Arena.ConfirmExit","value":"Выйти и потерять добычу"}
+    {"key":"Arena.ConfirmExit","value":"Выйти и потерять добычу"},
+    {"key":"Не выполнено","value":"Не выполнено"}
   ]
 }

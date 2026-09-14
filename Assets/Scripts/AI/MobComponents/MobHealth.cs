@@ -16,10 +16,14 @@ namespace MineArena.AI
         private MobMovement _mobMovement;
         private MobCombat _mobCombat;
         private bool _deathHandled;
+        private int _experienceReward = -1;
+        public int ExperienceReward => _experienceReward >= 0 ? _experienceReward :
+            MineArena.PlayerSystem.PlayerExperience.MonsterReward(_preset != null ? _preset.MaxHealth : _maxHealth);
+        public void SetExperienceReward(int amount) => _experienceReward = Mathf.Max(0, amount);
 
         public static event Action<MobHealth> MobDied;
 
-        private void OnEnable() => _deathHandled = false;
+        private void OnEnable() { _deathHandled = false; _experienceReward = -1; }
 
         private void OnDisable()
         {
@@ -37,6 +41,7 @@ namespace MineArena.AI
         public void SetParameters(MobPreset preset)
         {
             _deathHandled = false;
+            _experienceReward = -1;
             _preset = preset;
             _maxHealth = preset.MaxHealth;
             if (MineArena.Managers.TutorialService.Expedition) _maxHealth = Mathf.Min(_maxHealth, 25f);
@@ -48,6 +53,7 @@ namespace MineArena.AI
         {
             if (_deathHandled) return;
             _deathHandled = true;
+            MineArena.Controllers.Player.Instance?.Experience?.AddExperience(ExperienceReward);
             GetComponent<MobFeedback>()?.Death();
             var drops = GetComponent<MineArena.Drop.Dropable>();
             if (drops != null && drops.DropOnDeath) drops.DropItems();

@@ -19,6 +19,7 @@ namespace MineArena.Windows
         private Transform _playerTarget;
         private Tween _popupShift;
         private int _killedMobs, _totalMobs;
+        private int _nextWaveSeconds = -1;
         private SystemLanguage _textLanguage;
 
         private void Awake()
@@ -75,13 +76,26 @@ namespace MineArena.Windows
             RefreshProgressText();
         }
 
+        public void SetNextWaveCountdown(float seconds)
+        {
+            int remaining = seconds < 0f ? -1 : Mathf.CeilToInt(seconds);
+            if (remaining == _nextWaveSeconds) return;
+            _nextWaveSeconds = remaining;
+            RefreshProgressText();
+        }
+
         private void RefreshProgressText()
         {
             _textLanguage = Devotion.SDK.Services.Localization.LocalizationService.CurrentLanguage;
             if (_progressText != null)
+            {
                 _progressText.text = _totalMobs > 0 && _killedMobs >= _totalMobs
                     ? Devotion.SDK.Services.Localization.LocalizationService.GetLocalizedText("Arena.GoToPortal")
                     : $"{_killedMobs}/{_totalMobs}";
+                if (_nextWaveSeconds >= 0)
+                    _progressText.text += " · " + string.Format(
+                        Devotion.SDK.Services.Localization.LocalizationService.GetLocalizedText("Arena.NextWave"), _nextWaveSeconds);
+            }
         }
 
         public void SetPortalTarget(Transform portal, Transform player)
@@ -89,14 +103,15 @@ namespace MineArena.Windows
             _portalTarget = portal;
             _playerTarget = player;
 
-            if (_portalArrow != null)
-                _portalArrow.gameObject.SetActive(_portalTarget != null && _playerTarget != null);
+            UpdatePortalArrow();
         }
 
         private void UpdatePortalArrow()
         {
-            if (_portalArrow == null || _portalTarget == null || _playerTarget == null)
-                return;
+            if (_portalArrow == null) return;
+            bool visible = _portalTarget != null && _playerTarget != null && !MineArena.Managers.TutorialService.Active && MineArena.Managers.TutorialService.WorldGuidanceVisible;
+            _portalArrow.gameObject.SetActive(visible);
+            if (!visible) return;
 
             Camera camera = _targetCamera != null ? _targetCamera : Camera.main;
             if (camera == null)

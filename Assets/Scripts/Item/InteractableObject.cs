@@ -68,7 +68,7 @@ namespace MineArena.Items
         public async void ExecuteCommand()
         {
             if (TutorialService.BlocksInput || MineArena.PlayerSystem.PlayerMovement.IsPlayerDead) return;
-            if (TutorialService.Active && (!TutorialService.Expedition || TutorialService.Progress.Step != TutorialStep.Mine || !IsMineable)) return;
+            if (TutorialService.Active && (!TutorialService.Expedition || !IsMineable)) return;
             if (_used) return;
 
             _used = true;
@@ -93,6 +93,7 @@ namespace MineArena.Items
 
         public void SetMiningPrompt(bool mining)
         {
+            if (mining) TutorialService.StartedMining();
             _canvas.SetMining(mining);
             ShowInteractionPrompt();
         }

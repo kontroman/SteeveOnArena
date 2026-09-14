@@ -73,6 +73,7 @@ namespace MineArena.Editor
             RestyleElementPrefabs();
             RegisterWindows();
             ApplyColorfulRevision();
+            BuildPlayerStats();
             AssetDatabase.SaveAssets();
             RenderAll();
             RenderJournalPreviews();
@@ -316,14 +317,15 @@ namespace MineArena.Editor
         private static void BuildComplete()
         {
             var root = Edit<LevelCompleteWindow>(UI + "LevelCompleteWindow.prefab");
-            var frame = Window(root, "Экспедиция завершена", 1100, 760, false);
+            var frame = Window(root, "Экспедиция завершена", 1100, 840, false);
             Text("Subtitle", frame, "Добыча и награда за прохождение", 24, 36, 121, 1028, 40);
             var rewards = Scroll(frame, "Rewards", 36, 198, 1028, 360).content; Grid(rewards, 4, new Vector2(235, 68));
             var proceed = Button("Continue", frame, "Забрать и вернуться", 36, 642, 498, 62);
             var twice = Button("Double", frame, "Удвоить • реклама", 564, 642, 498, 62, false);
+            var back = Button("Return", frame, "Вернуться", 300, 724, 498, 62, false);
             Text("Hint", frame, "Награды добавятся в инвентарь при возвращении", 20, 36, 583, 1028, 35);
             Set(root.GetComponent<LevelCompleteWindow>(), "_titleText", frame.Find("Title").GetComponent<TMP_Text>(), "_resourcesRoot", rewards,
-                "_continueButton", proceed, "_doubleRewardsButton", twice, "_rewardPrefab", Chip);
+                "_continueButton", proceed, "_doubleRewardsButton", twice, "_returnButton", back, "_rewardPrefab", Chip);
             Save(root, UI + "LevelCompleteWindow.prefab");
         }
 
@@ -578,7 +580,7 @@ namespace MineArena.Editor
                 if (!button && !box) continue;
                 var rect = image.rectTransform;
                 bool overlay = image.gameObject == root || ((name == "background" || name == "bg") && rect.anchorMin == Vector2.zero && rect.anchorMax == Vector2.one && rect.sizeDelta == Vector2.zero);
-                if (overlay && root.GetComponent<BaseWindow>() != null) { image.sprite = null; image.color = new Color(0.15f, 0.13f, 0.09f, 0.78f); continue; }
+                if (overlay && root.GetComponent<BaseWindow>() != null) { image.sprite = null; image.color = new Color(0.15f, 0.13f, 0.09f, root.GetComponent<LoadingWindow>() != null ? 1f : 0.78f); continue; }
                 image.sprite = S(button ? "card" : name.Contains("cell") || name.Contains("slot") || name.Contains("equip") ? "slot" : "panel");
                 image.type = UnityEngine.UI.Image.Type.Sliced; image.color = Color.white;
                 if (decorate && rect.rect.width > 600 && rect.rect.height > 300 && image.GetComponentInParent<ScrollRect>() == null)
@@ -651,7 +653,7 @@ namespace MineArena.Editor
         private static RectTransform Window(GameObject root, string title, float width, float height, bool close = true)
         {
             Stretch((RectTransform)root.transform);
-            var dim = root.GetComponent<Image>() ?? root.AddComponent<Image>(); dim.sprite = null; dim.color = new Color(0.15f, 0.13f, 0.09f, 0.78f); dim.raycastTarget = true;
+            var dim = root.GetComponent<Image>() ?? root.AddComponent<Image>(); dim.sprite = null; dim.color = new Color(0.15f, 0.13f, 0.09f, root.GetComponent<LoadingWindow>() != null ? 1f : 0.78f); dim.raycastTarget = true;
             var frame = Panel("BeigeWindow", root.transform, "panel");
             frame.anchorMin = frame.anchorMax = frame.pivot = new Vector2(0.5f, 0.5f); frame.sizeDelta = new Vector2(width, height); frame.anchoredPosition = Vector2.zero;
             Outline(frame); Brick(frame, 0.4f);

@@ -43,8 +43,8 @@ MonoBehaviour:
     _textTaskKey: '[Achievement]ExtractOre'
     _maxValueOnTask: 2
     _stableId: 0
-    _title:
-    _description:
+    _title: 
+    _description: 
     _questIcon: {fileID: -4897935743011327926, guid: b4b3fbe7bfb2b6a47b8f761862bae600, type: 3}
     _difficulty: 0
   - _itemPrize:
@@ -56,8 +56,8 @@ MonoBehaviour:
     _textTaskKey: '[Achievement]ExtractOre'
     _maxValueOnTask: 3
     _stableId: 1
-    _title:
-    _description:
+    _title: 
+    _description: 
     _questIcon: {fileID: -3105358528215680635, guid: b4b3fbe7bfb2b6a47b8f761862bae600, type: 3}
     _difficulty: 0
   - _itemPrize:
@@ -69,8 +69,8 @@ MonoBehaviour:
     _textTaskKey: '[Achievement]ExtractOre'
     _maxValueOnTask: 1
     _stableId: 2
-    _title:
-    _description:
+    _title: 
+    _description: 
     _questIcon: {fileID: 5541466793954395920, guid: b4b3fbe7bfb2b6a47b8f761862bae600, type: 3}
     _difficulty: 0
   - _itemPrize:
@@ -82,8 +82,8 @@ MonoBehaviour:
     _textTaskKey: '[Achievement]ExtractOre'
     _maxValueOnTask: 2
     _stableId: 3
-    _title:
-    _description:
+    _title: 
+    _description: 
     _questIcon: {fileID: 5601777678274115812, guid: b4b3fbe7bfb2b6a47b8f761862bae600, type: 3}
     _difficulty: 0
   - _itemPrize:
@@ -657,8 +657,9 @@ MonoBehaviour:
     _textTaskKey: quest.2000.description
     _maxValueOnTask: 3
     _stableId: 2000
-    _title: "Treasure Hunter"
-    _description: "Open all {0} chests: one in the village, desert and forest. Claim the ultra-rare Treasure Keeper sword (110 damage) in the journal."
+    _title: Treasure Hunter
+    _description: 'Open all {0} chests: one in the village, desert and forest. Claim
+      the ultra-rare Treasure Keeper sword (110 damage) in the journal.'
     _questIcon: {fileID: 21300000, guid: dda86073899eb07448c55eb25b05424f, type: 3}
     _difficulty: 2
   localizationConfig: {fileID: 11400000, guid: 1ea6a81e3921a1740bd34a6c4435b870, type: 2}

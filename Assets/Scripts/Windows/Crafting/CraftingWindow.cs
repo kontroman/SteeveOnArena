@@ -170,6 +170,40 @@ namespace MineArena.Windows.Crafting
             return window;
         }
 
+        public static CraftingWindow OpenItem(ItemConfig item, BuildingConfig building = null)
+        {
+            if (item == null || MineArena.Managers.TutorialService.Active) return null;
+            var window = Open(building);
+            if (window == null) return null;
+            var recipe = window._categories.SelectMany(category => category.Recipes)
+                .FirstOrDefault(entry => entry.Item == item && (building == null || entry.SourceBuilding == building));
+            if (recipe == null) return null;
+            window.SelectCategory(recipe.Category, true);
+            window.SelectRecipe(recipe);
+            window.StartCoroutine(window.FocusRecipeInList(recipe));
+            return window;
+        }
+
+        private IEnumerator FocusRecipeInList(CraftingRecipeEntry recipe)
+        {
+            // Wait for the previous tab's deferred Destroy calls and the new layout.
+            yield return null;
+            if (_selectedRecipe != recipe) yield break;
+            var scroll = _itemsRoot.GetComponentInParent<ScrollRect>();
+            var selected = _items.FirstOrDefault(entry => entry.Recipe == recipe);
+            if (scroll == null || scroll.content != _itemsRoot || selected?.Button == null) yield break;
+
+            LayoutRebuilder.ForceRebuildLayoutImmediate(_itemsRoot);
+            Canvas.ForceUpdateCanvases();
+            var viewport = scroll.viewport != null ? scroll.viewport : (RectTransform)scroll.transform;
+            var bounds = RectTransformUtility.CalculateRelativeRectTransformBounds(
+                _itemsRoot, selected.Button.transform);
+            float overflow = _itemsRoot.rect.height - viewport.rect.height;
+            float offset = _itemsRoot.rect.yMax - bounds.center.y - viewport.rect.height * 0.5f;
+            scroll.StopMovement();
+            scroll.verticalNormalizedPosition = overflow > 0 ? 1f - Mathf.Clamp01(offset / overflow) : 1f;
+        }
+
         public static void Toggle()
         {
             var window = FindExistingWindow();
@@ -265,7 +299,7 @@ namespace MineArena.Windows.Crafting
 
         public void Initialize(BuildingConfig initialBuilding)
         {
-            if (MineArena.Managers.TutorialService.Active) initialBuilding = MineArena.Managers.TutorialService.Workshop;
+            if (MineArena.Managers.TutorialService.CraftStep) initialBuilding = MineArena.Managers.TutorialService.CraftBuilding;
             _pendingInitialBuilding = initialBuilding;
 
             if (!isActiveAndEnabled)
@@ -749,7 +783,7 @@ namespace MineArena.Windows.Crafting
 
             var recipe = selectFirstRecipe ? category?.Recipes.FirstOrDefault() : _selectedRecipe;
             if (selectFirstRecipe && MineArena.Managers.TutorialService.Active)
-                recipe = category?.Recipes.FirstOrDefault(r => r.Item != null && r.Item.Name == "Planks");
+                recipe = category?.Recipes.FirstOrDefault(r => r.Item != null && r.Item.Name == MineArena.Managers.TutorialService.CraftItemId);
 
             if (recipe == null || recipe.Category != category)
             {
@@ -886,6 +920,7 @@ namespace MineArena.Windows.Crafting
         private void CreateCostRow(ResourceRequired cost)
         {
             var row = CreatePanel($"Cost_{cost.Resource.Name}", _costsRoot, _style.Slot);
+            ResourceSourceNavigation.Bind(row.gameObject, cost.Resource, this);
             row.sizeDelta = new Vector2(0f, 44f);
 
             var layout = row.gameObject.AddComponent<HorizontalLayoutGroup>();
@@ -910,13 +945,20 @@ namespace MineArena.Windows.Crafting
             SetResourceIcon(icon, resourceIcon, cost.Resource, _style.PlaceholderIcon);
 
             var name = CreateText("Name", row, cost.Resource.DisplayName, 18, FontStyles.Bold, TextAlignmentOptions.Left);
-            name.gameObject.AddComponent<LayoutElement>().flexibleWidth = 1f;
+            name.enableWordWrapping = false;
+            name.overflowMode = TextOverflowModes.Ellipsis;
+            var nameLayout = name.gameObject.AddComponent<LayoutElement>();
+            nameLayout.minWidth = 0;
+            nameLayout.flexibleWidth = 1f;
 
             var available = _adapter.GetAvailable(cost);
             var amount = CreateText("Amount", row, $"{available}/{cost.Amount}", 18, FontStyles.Bold, TextAlignmentOptions.Right);
             amount.color = available >= cost.Amount ? _style.SuccessText : _style.WarningText;
             amount.rectTransform.sizeDelta = new Vector2(90f, 0f);
-            amount.gameObject.AddComponent<LayoutElement>().preferredWidth = 90f;
+            amount.enableWordWrapping = false;
+            var amountLayout = amount.gameObject.AddComponent<LayoutElement>();
+            amountLayout.minWidth = amountLayout.preferredWidth = 90f;
+            amountLayout.flexibleWidth = 0;
         }
 
         private void CraftSelected()

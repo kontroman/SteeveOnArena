@@ -8,6 +8,7 @@ namespace MineArena.UI
         public Sprite Panel;
         public Sprite Ribbon;
         public Sprite Button;
+        public ResourceIcon ResourceIcon;
         public TMP_FontAsset BodyFont;
         public TMP_FontAsset HeadingFont;
     }

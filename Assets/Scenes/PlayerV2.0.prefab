@@ -845,7 +845,7 @@ MonoBehaviour:
     m_Bits: 256
   _bowAimRaycastDistance: 500
   _meleeMovementMultiplier: 0.7
-  _bowAttackSoundDelay: 0.2
+  _bowInputBuffer: 0.15
 --- !u!114 &7982167682220264229
 MonoBehaviour:
   m_ObjectHideFlags: 0

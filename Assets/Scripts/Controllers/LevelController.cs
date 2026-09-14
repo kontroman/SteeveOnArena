@@ -34,6 +34,9 @@ namespace MineArena.Controllers
         private bool _portalSpawned;
         private bool _levelCompleteOpened;
         private bool _rewardsApplied;
+        private bool _portalPaused;
+        private float _timeScaleBeforePortal;
+        private LevelCompleteWindow _completeWindow;
         private readonly Dictionary<ItemConfig, int> _collectedResources = new Dictionary<ItemConfig, int>();
 
         public IReadOnlyDictionary<ItemConfig, int> CollectedResources { get { return _collectedResources; } }
@@ -58,12 +61,17 @@ namespace MineArena.Controllers
 
         private void OnDestroy()
         {
+            RestorePortalTime();
             if (Current == this)
             {
                 Current = null;
             }
 
-            MobHealth.MobDied -= HandleMobDied;
+            if (_waveSpawner != null)
+            {
+                _waveSpawner.EnemyKilled -= HandleMobDied;
+                _waveSpawner.CycleStarted -= HandleCycleStarted;
+            }
             LevelConfig.ChangedInInspector -= HandleLevelConfigChangedInInspector;
         }
 
@@ -87,8 +95,6 @@ namespace MineArena.Controllers
             _levelCompleteOpened = false;
             _rewardsApplied = false;
             ResetCollectedResources();
-            MobHealth.MobDied -= HandleMobDied;
-            MobHealth.MobDied += HandleMobDied;
             promise.Resolve();
             return promise;
         }
@@ -242,7 +248,12 @@ namespace MineArena.Controllers
             if (_waveSpawner == null)
                 Debug.LogWarning($"{nameof(LevelController)}: {nameof(WaveSpawner)} was not found. Level progress will use 0 total mobs.");
 
-            if (_waveSpawner != null) _waveSpawner.Configure(_currentConfig.EncounterWaves);
+            if (_waveSpawner != null)
+            {
+                _waveSpawner.Configure(_currentConfig.EncounterWaves, _currentConfig.ExperiencePerClear);
+                _waveSpawner.EnemyKilled += HandleMobDied;
+                _waveSpawner.CycleStarted += HandleCycleStarted;
+            }
             _totalMobs = _waveSpawner != null ? _waveSpawner.TotalMobCount : 0;
             _killedMobs = 0;
 
@@ -266,12 +277,30 @@ namespace MineArena.Controllers
             }
         }
 
+        private void Update()
+        {
+            if (_waveSpawner == null) return;
+            if (PlayerMovement.IsPlayerDead) _waveSpawner.StopSpawning();
+            if (_progressWindow != null)
+                _progressWindow.SetNextWaveCountdown(_waveSpawner.NextCycleSeconds);
+        }
+
+        private void HandleCycleStarted()
+        {
+            _killedMobs = 0;
+            if (_progressWindow != null)
+            {
+                _progressWindow.SetNextWaveCountdown(-1f);
+                _progressWindow.SetProgress(0, _totalMobs);
+            }
+        }
+
         private void HandleMobDied(MobHealth mobHealth)
         {
             if (_levelCompleteOpened)
                 return;
 
-            _killedMobs = Mathf.Min(_killedMobs + 1, Mathf.Max(_totalMobs, _killedMobs + 1));
+            _killedMobs = Mathf.Min(_killedMobs + 1, _totalMobs);
             TutorialService.EnemyKilled();
 
             if (_progressWindow != null)
@@ -334,13 +363,20 @@ namespace MineArena.Controllers
                 effect.PlayRuntime();
         }
 
-        public bool TryEnterSpawnedPortal(Transform portalTrigger)
+        public bool TryEnterSpawnedPortal(Transform portalTrigger, Collider playerCollider)
         {
             if (_spawnedPortal == null || portalTrigger == null || !portalTrigger.IsChildOf(_spawnedPortal.transform))
                 return false;
 
-            HandlePortalEntered();
+            var portal = _spawnedPortal.GetComponentInChildren<LevelPortal>();
+            if (portal != null && playerCollider != null) portal.TryEnter(playerCollider);
             return true;
+        }
+
+        public void ExitSpawnedPortal(Transform portalTrigger, Collider playerCollider)
+        {
+            if (_spawnedPortal != null && portalTrigger.IsChildOf(_spawnedPortal.transform))
+                _spawnedPortal.GetComponentInChildren<LevelPortal>()?.Exit(playerCollider);
         }
 
         private static LevelPortal AddLevelPortalToTrigger(GameObject portalObject)
@@ -363,23 +399,39 @@ namespace MineArena.Controllers
                 return;
 
             _levelCompleteOpened = true;
-            var levels = GameRoot.GameConfig != null ? GameRoot.GameConfig.Levels : null;
-            if (levels != null && _currentConfig != null)
-            {
-                int completedIndex = levels.IndexOf(_currentConfig);
-                if (completedIndex >= 0 && completedIndex + 1 < levels.Count)
-                    GameRoot.PlayerProgress?.LevelsProgress?.UnlockNextLevel(completedIndex);
-            }
+            _timeScaleBeforePortal = Time.timeScale;
+            _portalPaused = true;
+            Time.timeScale = 0f;
             DisablePlayerControl();
 
-            var completeWindow = OpenOrCreateWindow<LevelCompleteWindow>();
-            if (completeWindow == null)
+            _completeWindow = OpenOrCreateWindow<LevelCompleteWindow>();
+            if (_completeWindow == null)
             {
                 Debug.LogWarning($"{nameof(LevelController)}: {nameof(LevelCompleteWindow)} could not be opened.");
+                ResumeLevel();
                 return;
             }
 
-            completeWindow.Setup(BuildDisplayedRewardTotals(), ContinueLevel, DoubleRewards, !TutorialService.Active && HasRewardedAdsProvider());
+            _completeWindow.Setup(BuildDisplayedRewardTotals(), ContinueLevel, DoubleRewards, !TutorialService.Active && HasRewardedAdsProvider(), ResumeLevel);
+        }
+
+        private void RestorePortalTime()
+        {
+            if (!_portalPaused) return;
+            _portalPaused = false;
+            Time.timeScale = _timeScaleBeforePortal;
+        }
+
+        private void ResumeLevel()
+        {
+            GameRoot.UIManager?.CloseWindow<LevelCompleteWindow>();
+            if (_completeWindow != null) _completeWindow.gameObject.SetActive(false);
+            _levelCompleteOpened = false;
+            RestorePortalTime();
+            Player player = Player.Instance != null ? Player.Instance : FindObjectOfType<Player>();
+            if (player == null || PlayerMovement.IsPlayerDead) return;
+            player.GetComponentFromList<PlayerMovement>()?.SetMovement(true);
+            player.GetComponentFromList<PlayerAttack>()?.SetComponentEnable(true);
         }
 
         private void ContinueLevel()
@@ -416,6 +468,14 @@ namespace MineArena.Controllers
                 return;
 
             _rewardsApplied = true;
+            var levels = GameRoot.GameConfig != null ? GameRoot.GameConfig.Levels : null;
+            if (levels != null && _currentConfig != null)
+            {
+                int completedIndex = levels.IndexOf(_currentConfig);
+                if (completedIndex >= 0 && completedIndex + 1 < levels.Count)
+                    GameRoot.PlayerProgress?.LevelsProgress?.UnlockNextLevel(completedIndex);
+            }
+
             var inventoryManager = GameRoot.GetManager<InventoryManager>();
             if (inventoryManager == null)
             {
@@ -427,7 +487,11 @@ namespace MineArena.Controllers
 
             foreach (var reward in CompletionRewards())
                 inventoryManager.AddItemById(reward.Key.Name, reward.Value * safeMultiplier);
-            if (TutorialService.Expedition) TutorialService.SetStep(TutorialStep.Build);
+            if (TutorialService.Expedition)
+            {
+                TutorialService.Progress.SmithSuppliesGranted = true;
+                TutorialService.SetStep(TutorialStep.BuildSmith);
+            }
 
             if (safeMultiplier > 1)
             {
@@ -499,6 +563,8 @@ namespace MineArena.Controllers
 
         private void ReturnToLobby()
         {
+            _waveSpawner?.StopSpawning();
+            RestorePortalTime();
             GameRoot.UIManager.CloseAllWindows();
             GameRoot.GetManager<UnitySceneLoader>()?.LoadSceneAsync(Constants.SceneNames.PlayerBaseScene);
         }
@@ -509,6 +575,7 @@ namespace MineArena.Controllers
         {
             if (!CanAbandon) return;
             _levelCompleteOpened = true;
+            _waveSpawner?.StopSpawning();
             DisablePlayerControl();
             DiscardCollectedResources();
             ReturnToLobby();

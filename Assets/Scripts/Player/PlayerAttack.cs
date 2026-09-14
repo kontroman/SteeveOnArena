@@ -55,7 +55,12 @@ namespace MineArena.PlayerSystem
         [SerializeField] private LayerMask _bowFallbackAttackableLayers = 1 << 8;
         [SerializeField] private float _bowAimRaycastDistance = 500f;
         [SerializeField, Range(0.1f, 1f)] private float _meleeMovementMultiplier = 0.7f;
-        [SerializeField, Min(0f)] private float _bowAttackSoundDelay = 0.2f;
+        [SerializeField, Range(0f, 0.3f)] private float _bowInputBuffer = 0.15f;
+        private float _bufferedBowClickUntil = float.NegativeInfinity;
+        private Transform _bowRecoilArm;
+        private Quaternion _armRotationBeforeRecoil;
+        private bool _recoilApplied;
+        private float _bowReleaseTime = float.NegativeInfinity;
 
         private float _nextAttackTime;
         private ICommand _damageCommand;
@@ -97,23 +102,35 @@ namespace MineArena.PlayerSystem
 
         private void OnDisable()
         {
+            RestoreBowRecoil();
+            _bowReleaseTime = float.NegativeInfinity;
             StopAllCoroutines();
             _isAttacking = false;
             _meleeActive = false;
             ClearPendingBowShot();
+            _bufferedBowClickUntil = float.NegativeInfinity;
         }
 
         private void Update()
         {
-            if (MineArena.Managers.TutorialService.BlocksInput) return;
-            if (MineArena.Managers.TutorialService.Active && MineArena.Managers.TutorialService.Progress.Step != MineArena.Managers.TutorialStep.Kill) return;
-            if (!_isEnabled || _isAttacking)
+            RestoreBowRecoil();
+            bool bowSelected = _equipment != null && _equipment.LastActiveHandItem == HandItemType.Bow && IsBowSelectedInQuickSlot();
+            if (!_isEnabled || MineArena.Managers.TutorialService.BlocksInput ||
+                (MineArena.Managers.TutorialService.Active && MineArena.Managers.TutorialService.Progress.Step != MineArena.Managers.TutorialStep.Kill) || IsPointerOverUi())
+            {
+                _bufferedBowClickUntil = float.NegativeInfinity;
                 return;
+            }
 
-            if (!Inputs.LKMPressed || Time.time < _nextAttackTime)
-                return;
+            if (!bowSelected) _bufferedBowClickUntil = float.NegativeInfinity;
+            else if (Inputs.LKMPressed) _bufferedBowClickUntil = Time.time + _bowInputBuffer;
 
-            if (IsPointerOverUi())
+            if (_hasPendingBowShot && !_bowShotReleased && bowSelected)
+                UpdateBowAim();
+
+            if (_isAttacking) return;
+
+            if ((!Inputs.LKMPressed && !(bowSelected && Time.time <= _bufferedBowClickUntil)) || Time.time < _nextAttackTime)
                 return;
 
             if (PotionEffects.SelectedPotion != null)
@@ -125,7 +142,10 @@ namespace MineArena.PlayerSystem
             if (_equipment != null && _equipment.LastActiveHandItem == HandItemType.Bow)
             {
                 if (IsBowSelectedInQuickSlot())
+                {
+                    _bufferedBowClickUntil = float.NegativeInfinity;
                     StartCoroutine(BowAttackRoutine());
+                }
 
                 return;
             }
@@ -252,17 +272,16 @@ namespace MineArena.PlayerSystem
             if (horizontalDirection.sqrMagnitude > 0.0001f)
                 Player.Instance.GetComponentFromList<RotationController>()?.RotateToDirection(horizontalDirection, 2, 0.08f);
 
-            _animator?.TriggerBowShoot();
-            StartCoroutine(PlayDelayedBowAttackSound());
-
             PreparePendingBowShot(bowConfig, targetPoint);
+            _animator?.TriggerBowShoot();
 
             try
             {
                 yield return WaitForAnimationState(
                     _bowStateName,
                     _bowLayerIndex,
-                    Mathf.Max(_bowStateFailSafe, bowConfig.AnimationDelay)
+                    Mathf.Max(_bowStateFailSafe, bowConfig.AnimationDelay),
+                    waitForNewPlayback: true
                 );
             }
             finally
@@ -288,13 +307,27 @@ namespace MineArena.PlayerSystem
             GameRoot.GetManager<AudioManager>()?.PlayEffect(Constants.AudioNames.SwrdAttack);
         }
 
-        private IEnumerator PlayDelayedBowAttackSound()
+        private void UpdateBowAim()
         {
-            if (_bowAttackSoundDelay > 0f)
-                yield return new WaitForSeconds(_bowAttackSoundDelay);
+            var origin = GetBowFirePoint().position;
+            _pendingBowTargetPoint = GetBowTargetPoint(origin, _pendingBowConfig);
+            GetComponent<RotationController>()?.RotateToDirection(_pendingBowTargetPoint - origin, 2, 0.08f);
+        }
 
-            if (_isAttacking)
-                GameRoot.GetManager<AudioManager>()?.PlayEffect(Constants.AudioNames.BowAttack);
+        private void LateUpdate()
+        {
+            float elapsed = Time.time - _bowReleaseTime;
+            if (!_isEnabled || _bowRecoilArm == null || elapsed < 0f || elapsed >= 0.14f) return;
+            _armRotationBeforeRecoil = _bowRecoilArm.localRotation;
+            _bowRecoilArm.localRotation *= Quaternion.Euler(-4f * Mathf.Sin(elapsed / 0.14f * Mathf.PI), 0f, 0f);
+            _recoilApplied = true;
+        }
+
+        private void RestoreBowRecoil()
+        {
+            if (_recoilApplied && _bowRecoilArm != null)
+                _bowRecoilArm.localRotation = _armRotationBeforeRecoil;
+            _recoilApplied = false;
         }
 
         public void HandleBowShootKeyframe()
@@ -303,6 +336,14 @@ namespace MineArena.PlayerSystem
                 return;
 
             _bowShotReleased = true;
+
+            // Resolve once more at the animation event, after the last input update.
+            if (_equipment != null && Camera.main != null && !IsPointerOverUi())
+                UpdateBowAim();
+            if (GameRoot.Instance != null)
+                GameRoot.GetManager<AudioManager>()?.PlayEffect(Constants.AudioNames.BowAttack);
+            _bowRecoilArm = FindChildTransform("bow")?.parent;
+            _bowReleaseTime = Time.time;
 
             var firePoint = GetBowFirePoint();
             var shotDirection = _pendingBowTargetPoint - firePoint.position;
@@ -476,7 +517,36 @@ namespace MineArena.PlayerSystem
             if (camera == null)
                 return origin + transform.forward * maxDistance;
 
-            return ResolveAttackAim(camera.ScreenPointToRay(Input.mousePosition), origin, maxDistance);
+            return ResolveBowAim(camera.ScreenPointToRay(Input.mousePosition), origin, maxDistance);
+        }
+
+        private Vector3 ResolveBowAim(Ray ray, Vector3 origin, float maxDistance)
+        {
+            var hits = Physics.RaycastAll(ray, maxDistance, ~0, QueryTriggerInteraction.Collide);
+            System.Array.Sort(hits, (left, right) => left.distance.CompareTo(right.distance));
+            foreach (var hit in hits)
+            {
+                var collider = hit.collider;
+                if (collider == null || IsOwnerCollider(collider) || ShouldIgnoreAttackClick(collider) ||
+                    collider.GetComponentInParent<Projectile>() != null) continue;
+
+                // Keep low targets hittable, but stop aiming through solid scenery.
+                if (collider.GetComponentInParent<MineArena.AI.MobHealth>() != null ||
+                    collider.GetComponentInParent<NetworkPlayerView>() != null)
+                    return collider.bounds.center;
+
+                // Enemy hurtboxes may be triggers (for example Zombie). Other
+                // triggers are interaction/area volumes, not aiming surfaces.
+                if (!collider.isTrigger) return hit.point;
+            }
+
+            // Empty space uses foot height, never the animated bow's height.
+            float groundHeight = TryGetComponent<CharacterController>(out var body)
+                ? body.bounds.min.y : transform.position.y;
+            var groundPlane = new Plane(Vector3.up, new Vector3(origin.x, groundHeight, origin.z));
+            if (groundPlane.Raycast(ray, out float distance) && distance <= maxDistance)
+                return ray.GetPoint(distance);
+            return origin + transform.forward * maxDistance;
         }
         private void SpawnBowProjectile(AttackConfig bowConfig, Vector3 origin, Vector3 direction)
         {
@@ -638,7 +708,8 @@ namespace MineArena.PlayerSystem
 
         private float GetConfiguredDamage(AttackConfig attackConfig)
         {
-            var damageToDeal = attackConfig.BaseDamage;
+            var development = GetComponent<PlayerDevelopment>();
+            var damageToDeal = development != null ? development.ModifyAttack(attackConfig.BaseDamage) : attackConfig.BaseDamage;
 
 #if UNITY_EDITOR || DEVOTION_GODMODE
             var config = GameRoot.GameConfig;
@@ -727,9 +798,12 @@ namespace MineArena.PlayerSystem
             _isEnabled = value;
             if (!value)
             {
+                RestoreBowRecoil();
+                _bowReleaseTime = float.NegativeInfinity;
                 StopAllCoroutines();
                 _isAttacking = false;
                 _hasPendingBowShot = false;
+                _bufferedBowClickUntil = float.NegativeInfinity;
                 _meleeActive = false;
             }
         }
@@ -748,7 +822,7 @@ namespace MineArena.PlayerSystem
             );
         }
 
-        private IEnumerator WaitForAnimationState(string stateName, int preferredLayerIndex, float failSafeTime)
+        private IEnumerator WaitForAnimationState(string stateName, int preferredLayerIndex, float failSafeTime, bool waitForNewPlayback = false)
         {
             if (_rawAnimator == null || string.IsNullOrWhiteSpace(stateName))
             {
@@ -761,6 +835,9 @@ namespace MineArena.PlayerSystem
 
             bool stateStarted = false;
             float elapsed = 0f;
+            int previousLayer = waitForNewPlayback ? FindAnimationStateLayer(preferredLayer, stateName) : -1;
+            var previousState = previousLayer >= 0 ? _rawAnimator.GetCurrentAnimatorStateInfo(previousLayer) : default;
+            bool waitingForRestart = previousLayer >= 0 && previousState.IsName(stateName);
 
             while (true)
             {
@@ -774,8 +851,17 @@ namespace MineArena.PlayerSystem
                     bool nextState = _rawAnimator.IsInTransition(activeLayer) &&
                                      _rawAnimator.GetNextAnimatorStateInfo(activeLayer).IsName(stateName);
 
-                    if (currentState || nextState)
+                    // SetTrigger is evaluated later by Animator. The outgoing shot can
+                    // still be current here; its completion does not finish the new shot.
+                    if (waitingForRestart)
                     {
+                        if (!currentState || info.normalizedTime < previousState.normalizedTime || nextState)
+                            waitingForRestart = false;
+                    }
+
+                    if (!waitingForRestart && (currentState || nextState))
+                    {
+                        if (!stateStarted && waitForNewPlayback) elapsed = 0f;
                         stateStarted = true;
 
                         if (currentState && info.normalizedTime >= 1f && !_rawAnimator.IsInTransition(activeLayer))

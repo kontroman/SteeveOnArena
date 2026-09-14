@@ -172,6 +172,7 @@ namespace MineArena.UI
             visual.localScale = Vector3.one;
             visual.sizeDelta = sourceRect.rect.size;
             visual.SetAsLastSibling();
+            InventoryDragLayer.Raise(visual);
 
             foreach (var canvasGroup in visual.GetComponentsInChildren<CanvasGroup>(true))
                 canvasGroup.blocksRaycasts = false;

@@ -16,10 +16,40 @@ namespace MineArena.Buildings
         [SerializeField] private Transform playerPositionOnBuild;
         [SerializeField] private bool overrideCinematicCamera;
         [SerializeField] private BuildingCinematicCameraSettings cinematicCameraSettings = new BuildingCinematicCameraSettings();
+        private BoxCollider constructionTrigger;
+        private Vector3 originalTriggerCenter;
+        private Vector3 originalTriggerSize;
 
         public Transform PlayerPositionOnBuild => playerPositionOnBuild;
         public BuildingConfig Config => config;
         public BuildingCinematicCameraSettings CinematicCameraSettings => overrideCinematicCamera ? cinematicCameraSettings : null;
+
+        private void Awake()
+        {
+            FitConstructionTrigger();
+            if (signObject != null && signObject.GetComponent<BuildingSignOutline>() == null)
+                signObject.AddComponent<BuildingSignOutline>();
+        }
+
+        private void FitConstructionTrigger()
+        {
+            if (signObject == null) return;
+            constructionTrigger = GetComponents<BoxCollider>().FirstOrDefault(collider => collider.isTrigger);
+            if (constructionTrigger == null) return;
+
+            originalTriggerCenter = constructionTrigger.center;
+            originalTriggerSize = constructionTrigger.size;
+            var scale = transform.lossyScale;
+            var width = BuildingSignOutline.Radius * 2f;
+            // Building zones are aligned with world axes. Convert world dimensions
+            // to local units because the existing village zones are scaled.
+            constructionTrigger.center = transform.InverseTransformPoint(
+                BuildingSignOutline.GetGroundCenter(signObject) + Vector3.up);
+            constructionTrigger.size = new Vector3(
+                width / Mathf.Max(Mathf.Abs(scale.x), 0.0001f),
+                2f / Mathf.Max(Mathf.Abs(scale.y), 0.0001f),
+                width / Mathf.Max(Mathf.Abs(scale.z), 0.0001f));
+        }
 
         private void OnTriggerEnter(Collider other)
         {
@@ -59,6 +89,13 @@ namespace MineArena.Buildings
 
         public void DestroySign()
         {
+            // Built buildings retain their original interaction area.
+            if (constructionTrigger != null)
+            {
+                constructionTrigger.center = originalTriggerCenter;
+                constructionTrigger.size = originalTriggerSize;
+                constructionTrigger = null;
+            }
             Destroy(signObject);
         }
     }

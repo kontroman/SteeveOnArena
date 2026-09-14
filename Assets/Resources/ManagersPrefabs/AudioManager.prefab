@@ -106,6 +106,12 @@ MonoBehaviour:
   - _name: BowAttack
     _clip: {fileID: 8300000, guid: 9820fe7dc361c594381ccb8df4501c1a, type: 3}
     _volume: 1
+  - _name: ArrowHitTarget
+    _clip: {fileID: 8300000, guid: 82e86436833c4cc79eafb0ed662446f0, type: 3}
+    _volume: 1
+  - _name: ArrowHitSurface
+    _clip: {fileID: 8300000, guid: 6710917dc898493eaf68cc5c35d58990, type: 3}
+    _volume: 1
   - _name: Skeleton
     _clip: {fileID: 8300000, guid: 9820fe7dc361c594381ccb8df4501c1a, type: 3}
     _volume: 1

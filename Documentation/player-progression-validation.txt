@@ -1,0 +1,18 @@
+PASS: thresholds, overflow, multi-level reward, one point per level, draft isolation, refunds, invalid allocations, JSON roundtrip, stable name, curve, prefab controls.
+PASS: Whole HUD panel opens registered stats dialog
+PASS: Plus buttons leave save and live stats unchanged
+PASS: Minus undoes tentative increase
+PASS: Save applies points and HP without free healing
+PASS: Speed and luck use saved ranks
+PASS: Defense changes real incoming damage
+PASS: Close discards uncommitted points
+PASS: Reopening starts from saved allocation
+PASS: Attack upgrade applies to damage multiplier
+PASS: Saved points can be redistributed
+PASS: Level up preserves unsaved draft and grants another point
+PASS: Fallback name appears safely
+PASS: Icon renderer exists: Health
+PASS: Icon renderer exists: Movement
+PASS: Icon renderer exists: Attack
+PASS: Icon renderer exists: Luck
+PASS: Icon renderer exists: Defense

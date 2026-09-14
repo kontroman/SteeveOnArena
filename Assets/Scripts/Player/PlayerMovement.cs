@@ -68,7 +68,7 @@ namespace MineArena.PlayerSystem
                 Vector3 horizontalMove = GetHorizontalMovement();
                 ApplyGravityAndJump();
 
-                float potionSpeed = GetComponent<PotionEffects>()?.MovementMultiplier ?? 1f;
+                float potionSpeed = (GetComponent<PotionEffects>()?.MovementMultiplier ?? 1f) * (GetComponent<PlayerDevelopment>()?.MovementMultiplier ?? 1f);
                 float attackSpeed = _playerAttack != null ? _playerAttack.MovementMultiplier : 1f;
                 Vector3 totalMovement = horizontalMove * Constants.PlayerSettings.Speed * potionSpeed * attackSpeed + new Vector3(0, _velocity.y, 0);
                 _characterController.Move(totalMovement * Time.deltaTime);

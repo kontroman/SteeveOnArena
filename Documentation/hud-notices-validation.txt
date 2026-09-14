@@ -1,0 +1,25 @@
+PASS No stat notice with no points
+PASS Level up enables stat notice
+PASS Spending all saved points clears notice
+PASS Uncommitted draft cannot change HUD availability
+PASS Saving a refund enables notice
+PASS Next day's daily reward enables notice
+PASS Claiming daily reward clears notice
+PASS Daily notice returns at next UTC day
+PASS Playtime reward config exists
+PASS Playtime reward stays hidden before threshold
+PASS Playtime notice activates at exact threshold
+PASS No notice after all time rewards claimed
+PASS First free spin is advertised before opening wheel
+PASS Notice query does not grant or initialize spins
+PASS No spin notice during cooldown
+PASS Notice appears when free-spin timer expires with wheel closed
+PASS Owned spins enable notice
+PASS 50 movement points add 25% speed
+PASS 50 attack points add 50% damage
+PASS 50 luck points give 25% critical chance
+PASS 50 defense points reduce damage by one third, not immunity
+PASS 50 health points add 100 HP
+PASS Four distinct HUD targets contain serialized notices
+PASS Saved prefab has no false active notices
+PASS Notices render and never intercept clicks

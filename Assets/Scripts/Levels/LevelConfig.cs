@@ -21,6 +21,9 @@ namespace MineArena.Levels
         [SerializeField] private List<LevelRewards> rewardResources;
         [SerializeField] private List<EncounterWaveConfig> encounterWaves = new List<EncounterWaveConfig>();
         public IReadOnlyList<EncounterWaveConfig> EncounterWaves => encounterWaves;
+        [SerializeField, Min(0), Tooltip("Total XP for killing every monster in one full encounter cycle.")]
+        private int experiencePerClear = 45;
+        public int ExperiencePerClear => Mathf.Max(0, experiencePerClear);
         [SerializeField] private GameObject levelPrefab;
         [SerializeField] private Vector3 levelPrefabPosition;
         [SerializeField] private Quaternion levelPrefabRotation;

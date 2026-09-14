@@ -21,18 +21,25 @@ namespace MineArena.UI
             _confirmation.SetActive(false);
         }
 
-        private void Update()
+        private void OnEnable() => RefreshVisibility();
+
+        private void RefreshVisibility()
         {
             var level = LevelController.Current;
-            bool visible = level != null && level.CanAbandon;
+            bool visible = !MineArena.Managers.TutorialService.Active && level != null && level.CanAbandon;
             _exitButton.gameObject.SetActive(visible);
             if (!visible && _paused) Cancel();
+        }
+
+        private void Update()
+        {
+            RefreshVisibility();
             if (_paused && Input.GetKeyDown(KeyCode.Escape)) Cancel();
         }
 
         private void OpenConfirmation()
         {
-            if (_paused || LevelController.Current == null || !LevelController.Current.CanAbandon) return;
+            if (_paused || MineArena.Managers.TutorialService.Active || LevelController.Current == null || !LevelController.Current.CanAbandon) return;
             _previousTimeScale = Time.timeScale;
             _paused = true;
             Time.timeScale = 0f;
@@ -44,7 +51,7 @@ namespace MineArena.UI
         {
             var level = LevelController.Current;
             Cancel();
-            if (level != null) level.AbandonLevel();
+            if (level != null && !MineArena.Managers.TutorialService.Active) level.AbandonLevel();
         }
 
         private void Cancel()

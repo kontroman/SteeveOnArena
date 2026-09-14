@@ -17,10 +17,31 @@ namespace MineArena.AI
         [SerializeField] private MobHealth _mobHealth;
         [SerializeField] private MobAnimationController _mobAnimation;
         [SerializeField] private MobPreset _preset;
+        public bool TutorialDormant { get; private set; }
 
         private void OnEnable()
         {
             if (_preset != null) SetPresetParameters(_preset);
+            SetTutorialDormant(false);
+        }
+        public void SetTutorialDormant(bool dormant)
+        {
+            TutorialDormant = dormant;
+            if (_mobMovement != null) _mobMovement.enabled = !dormant;
+            if (_mobCombat != null) _mobCombat.enabled = !dormant;
+            var agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+            if (agent != null && agent.enabled && agent.isOnNavMesh)
+            {
+                if (dormant) agent.ResetPath();
+                agent.isStopped = dormant;
+            }
+            if (dormant) _mobAnimation?.ForceIdle();
+        }
+        private void Update()
+        {
+            if (TutorialDormant && (!MineArena.Managers.TutorialService.Expedition ||
+                MineArena.Managers.TutorialService.Progress.Step != MineArena.Managers.TutorialStep.Mine))
+                SetTutorialDormant(false);
         }
 
         public void SetPresetParameters(MobPreset preset)

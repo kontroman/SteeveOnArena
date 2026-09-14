@@ -22,6 +22,7 @@ namespace Devotion.SDK.UI
         private RectTransform _rootCanvasRect;
         private RectTransform _draggedVisual;
 
+        public int Index => _index;
         public Image Background => _background;
         public ResourceIcon ResourceIcon => _resourceIcon;
 
@@ -194,6 +195,7 @@ namespace Devotion.SDK.UI
             visual.localScale = Vector3.one;
             visual.sizeDelta = sourceRect.rect.size;
             visual.SetAsLastSibling();
+            MineArena.UI.InventoryDragLayer.Raise(visual);
 
             foreach (var canvasGroup in visual.GetComponentsInChildren<CanvasGroup>(true))
                 canvasGroup.blocksRaycasts = false;

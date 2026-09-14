@@ -16,7 +16,8 @@ using UnityEngine.UI;
 
 namespace MineArena.Managers
 {
-    public enum TutorialStep { Portal, Launch, Mine, Kill, Exit, Build, Craft, Gift, Complete }
+    // Preserve serialized values of existing checkpoints.
+    public enum TutorialStep { Portal, Launch, Mine, Kill, Exit, Build, Craft, Gift, Complete, BuildSmith, CraftArmor, CraftSword, EquipArmor, EquipSword, Potion, Rewards, WorkshopButton, PlaytimeRewards, FortuneWheel }
 
     [Serializable]
     public sealed class TutorialProgress : BaseProgress
@@ -24,7 +25,10 @@ namespace MineArena.Managers
         public bool Initialized;
         public TutorialStep Step;
         public bool Mined;
+        public bool MiningStarted;
         public bool Collected;
+        public bool SmithSuppliesGranted;
+        public bool PotionGranted;
     }
 
     // Checkpoints live in the same save as inventory, buildings and paid crafting jobs.
@@ -34,6 +38,44 @@ namespace MineArena.Managers
         public static bool Active => Progress != null && Progress.Initialized && Progress.Step != TutorialStep.Complete;
         public static bool Expedition => Active && Progress.Step >= TutorialStep.Mine && Progress.Step <= TutorialStep.Exit;
         public static BuildingConfig Workshop => GameRoot.GameConfig?.BuildingsDatabase.AllBuildings.FirstOrDefault(b => b != null && b.name == "LumberjackBuilding");
+        public static BuildingConfig Smith => GameRoot.GameConfig?.BuildingsDatabase.AllBuildings.FirstOrDefault(b => b != null && b.name == "SmithBuilding");
+        public static bool CraftStep => Active && Progress.Step == TutorialStep.CraftSword;
+        public static string CraftItemId => "StoneSword";
+        public static BuildingConfig CraftBuilding => Smith;
+        public static bool AllowHud(MineArena.UI.GameUiDestination destination) => !Active || destination == MineArena.UI.GameUiDestination.Settings ||
+            destination == MineArena.UI.GameUiDestination.Crafting && (CraftStep || Progress.Step == TutorialStep.WorkshopButton) ||
+            destination == MineArena.UI.GameUiDestination.Inventory && (Progress.Step == TutorialStep.EquipArmor || Progress.Step == TutorialStep.EquipSword || Progress.Step == TutorialStep.Potion) ||
+            destination == MineArena.UI.GameUiDestination.Daily && Progress.Step == TutorialStep.Rewards ||
+            destination == MineArena.UI.GameUiDestination.Playtime && Progress.Step == TutorialStep.PlaytimeRewards ||
+            destination == MineArena.UI.GameUiDestination.Wheel && Progress.Step == TutorialStep.FortuneWheel ||
+            destination == MineArena.UI.GameUiDestination.Levels && Progress.Step == TutorialStep.Launch;
+        public static void HudOpened(MineArena.UI.GameUiDestination destination)
+        {
+            if (!Active || AwaitingConfirmation) return;
+            if (_instance != null && ReviewWindowOpen()) _instance._hudVisited = true;
+        }
+        private static string ReviewWindowName => Progress?.Step == TutorialStep.Rewards ? "DailyGiftWIndow" :
+            Progress?.Step == TutorialStep.PlaytimeRewards ? "PlaytimeGiftWindow" :
+            Progress?.Step == TutorialStep.FortuneWheel ? "FortuneWheelWindow" :
+            Progress?.Step == TutorialStep.WorkshopButton ? "CraftingWindow" : null;
+        private static bool ReviewWindowOpen() => ReviewWindowName != null &&
+            FindObjectsOfType<Devotion.SDK.Base.BaseWindow>().Any(w => w.GetType().Name == ReviewWindowName);
+        private bool _hudVisited;
+        private TutorialSpotlightGraphic _spotlight;
+        private RectTransform _dragHand;
+        private Image _dragItem;
+        private MineArena.UI.ResourceIcon _blockIllustration;
+        private static int StepNumber(TutorialStep step) => Array.IndexOf(Steps, step) + 1;
+        public static readonly TutorialStep[] Steps = { TutorialStep.Portal, TutorialStep.Launch, TutorialStep.Mine,
+            TutorialStep.Kill, TutorialStep.Exit, TutorialStep.BuildSmith, TutorialStep.CraftSword,
+            TutorialStep.EquipSword, TutorialStep.Potion, TutorialStep.Rewards, TutorialStep.PlaytimeRewards, TutorialStep.FortuneWheel, TutorialStep.WorkshopButton, TutorialStep.Gift };
+        private static TutorialStep CurrentCheckpoint(TutorialStep step)
+        {
+            if (step == TutorialStep.Build || step == TutorialStep.Craft || step == TutorialStep.CraftArmor)
+                return TutorialStep.BuildSmith;
+            if (step == TutorialStep.EquipArmor) return TutorialStep.EquipSword;
+            return step;
+        }
         private GameObject _overlay;
         private TMP_Text _title, _body, _arrow;
         private Button _gift;
@@ -55,6 +97,8 @@ namespace MineArena.Managers
         private Action _deferredCraft;
         public static bool AwaitingConfirmation => Active && _instance != null && _instance._acknowledged != Progress.Step;
         public static bool BlocksInput => AwaitingConfirmation || (_instance != null && (_instance._paused || Time.unscaledTime < _instance._inputResumeAt));
+        public static bool WorldGuidanceVisible => !AwaitingConfirmation && (GameRoot.Instance == null || GameRoot.UIManager?.HasOpenDialog != true) && !FindObjectsOfType<Devotion.SDK.Base.BaseWindow>().Any(w =>
+            w.GetType().Name != "PlayingWindow" && w.GetType().Name != "LevelProgressWindow");
         public static bool DeferCraft(Action open)
         {
             if (!AwaitingConfirmation) return false;
@@ -69,6 +113,7 @@ namespace MineArena.Managers
             var p = Progress;
             if (p == null) return;
             _boundProgress = p;
+            _hudVisited = false;
             if (!p.Initialized)
             {
                 p.Initialized = true;
@@ -78,6 +123,7 @@ namespace MineArena.Managers
                     ? TutorialStep.Complete : TutorialStep.Portal;
                 p.Save();
             }
+            SetStep(CurrentCheckpoint(p.Step));
             ResumeInLobby();
         }
 
@@ -92,11 +138,12 @@ namespace MineArena.Managers
         {
             if (!Active || LevelController.Current != null) return;
             if (Progress.Step >= TutorialStep.Launch && Progress.Step <= TutorialStep.Exit) SetStep(TutorialStep.Portal);
-            if (Progress.Step == TutorialStep.Build && GameRoot.GetManager<BuildingManager>()?.GetBuildingLevel(Workshop) > 0)
-                SetStep(TutorialStep.Craft);
+            if (Progress.Step == TutorialStep.BuildSmith && GameRoot.GetManager<BuildingManager>()?.GetBuildingLevel(Smith) > 0)
+                SetStep(TutorialStep.CraftSword);
         }
         public static void SetStep(TutorialStep step)
         {
+            step = CurrentCheckpoint(step);
             if (!Active || Progress.Step == step) return;
             Progress.Step = step;
             Progress.Save();
@@ -110,10 +157,16 @@ namespace MineArena.Managers
         public static bool AllowLevel(int index) => !Active || index == 0 && Progress.Step == TutorialStep.Launch;
         public static void BeginLevel()
         {
-            if (Active) SetStep(Progress.Collected ? TutorialStep.Kill : TutorialStep.Mine);
+            if (Active) { Progress.MiningStarted = false; SetStep(Progress.Collected ? TutorialStep.Kill : TutorialStep.Mine); }
         }
-        public static bool AllowBuilding(BuildingConfig config) => !Active || config == Workshop && Progress.Step == TutorialStep.Build;
-        public static bool AllowCraft(ItemConfig item) => !Active || Progress.Step == TutorialStep.Craft && item != null && item.Name == "Planks";
+        public static void StartedMining()
+        {
+            if (!Expedition || Progress.Step != TutorialStep.Mine) return;
+            Progress.MiningStarted = true;
+            if (_instance != null && _instance._arrow != null) _instance._arrow.gameObject.SetActive(false);
+        }
+        public static bool AllowBuilding(BuildingConfig config) => !Active || config == Smith && Progress.Step == TutorialStep.BuildSmith;
+        public static bool AllowCraft(ItemConfig item) => !Active || CraftStep && item != null && item.Name == CraftItemId;
         public static bool AllowWindow(Type type)
         {
             if (!Active) return true;
@@ -122,8 +175,12 @@ namespace MineArena.Managers
                 case "PlayingWindow": case "LoadingWindow": case "SettingsWindow": case "LevelProgressWindow": case "BlackWindow": return true;
                 case "SelectLevelWindow": return Progress.Step == TutorialStep.Launch;
                 case "LevelCompleteWindow": return Progress.Step == TutorialStep.Exit;
-                case "BuildingWindow": return Progress.Step == TutorialStep.Build;
-                case "CraftingWindow": return Progress.Step == TutorialStep.Craft;
+                case "BuildingWindow": return Progress.Step == TutorialStep.Build || Progress.Step == TutorialStep.BuildSmith;
+                case "CraftingWindow": return CraftStep || Progress.Step == TutorialStep.WorkshopButton;
+                case "InventoryWindow": return AllowHud(MineArena.UI.GameUiDestination.Inventory);
+                case "DailyGiftWIndow": return Progress.Step == TutorialStep.Rewards;
+                case "PlaytimeGiftWindow": return Progress.Step == TutorialStep.PlaytimeRewards;
+                case "FortuneWheelWindow": return Progress.Step == TutorialStep.FortuneWheel;
                 default: return false;
             }
         }
@@ -140,9 +197,44 @@ namespace MineArena.Managers
             SetStep(TutorialStep.Kill);
         }
         public static void EnemyKilled() { if (Expedition && Progress.Step == TutorialStep.Kill) SetStep(TutorialStep.Exit); }
-        public static void Built(BuildingConfig config) { if (Active && Progress.Step == TutorialStep.Build && config == Workshop) SetStep(TutorialStep.Craft); }
-        // Called before the craft output publishes its inventory save.
-        public static void Crafted(string id) { if (Active && Progress.Step == TutorialStep.Craft && id == "Planks") Progress.Step = TutorialStep.Gift; }
+        public static void Built(BuildingConfig config) {
+            if (Active && Progress.Step == TutorialStep.BuildSmith && config == Smith) SetStep(TutorialStep.CraftSword);
+        }
+        // Output and checkpoint are saved together by the production service.
+        public static void Crafted(string id) {
+            if (CraftStep && id == CraftItemId) Progress.Step = TutorialStep.EquipSword;
+        }
+        private static void RefreshExtendedProgress()
+        {
+            var inventory = GameRoot.GetManager<InventoryManager>();
+            if (inventory == null) return;
+            SetStep(CurrentCheckpoint(Progress.Step));
+            var saved = GameRoot.PlayerProgress.InventoryProgress;
+            if (Progress.Step == TutorialStep.BuildSmith && !Progress.SmithSuppliesGranted && Smith != null)
+            {
+                var costs = new Dictionary<string, int>();
+                foreach (var cost in Smith.GetLevelByNumber(1).RequiredResources.Concat(
+                    GameRoot.GameConfig.ItemDatabase.GetItemConfig("StoneSword").CraftCosts))
+                {
+                    costs.TryGetValue(cost.Resource.Name, out int amount);
+                    costs[cost.Resource.Name] = amount + cost.Amount;
+                }
+                foreach (var cost in costs) {
+                    saved.SavedResources.TryGetValue(cost.Key, out int amount);
+                    saved.SavedResources[cost.Key] = Math.Max(amount, cost.Value);
+                }
+                Progress.SmithSuppliesGranted = true;
+                inventory.InitManager(); Progress.Save();
+            }
+            if (Progress.Step == TutorialStep.BuildSmith && GameRoot.GetManager<BuildingManager>()?.GetBuildingLevel(Smith) > 0) SetStep(TutorialStep.CraftSword);
+            if (Progress.Step == TutorialStep.EquipSword && saved.GetQuickSlotItemId(saved.SelectedQuickSlotIndex) == "StoneSword") SetStep(TutorialStep.Potion);
+            if (Progress.Step == TutorialStep.Potion && !Progress.PotionGranted) {
+                saved.SavedResources.TryGetValue("HealingPotion", out int amount);
+                saved.SavedResources["HealingPotion"] = Math.Max(amount, 1);
+                Progress.PotionGranted = true; inventory.InitManager(); Progress.Save();
+            }
+            if (Progress.Step == TutorialStep.Potion && saved.QuickSlotItemIds.Contains("HealingPotion")) SetStep(TutorialStep.Rewards);
+        }
 
         public static bool ClaimGift()
         {
@@ -150,7 +242,7 @@ namespace MineArena.Managers
             var inventory = GameRoot.GetManager<InventoryManager>();
             if (inventory == null) return false;
             var resources = GameRoot.PlayerProgress.InventoryProgress.SavedResources;
-            foreach (var gift in new Dictionary<string, int> { ["WoodOak"] = 16, ["Stone"] = 12, ["HealingPotion"] = 2 })
+            foreach (var gift in new Dictionary<string, int> { ["IronChestplate"] = 1 })
             {
                 resources.TryGetValue(gift.Key, out int owned);
                 resources[gift.Key] = (int)Math.Min(int.MaxValue, (long)owned + gift.Value);
@@ -164,25 +256,22 @@ namespace MineArena.Managers
         // Guaranteed completion rewards, independent of random mining drops and ad multipliers.
         public static void EnsureFirstBuildingReward(Dictionary<ItemConfig, int> rewards)
         {
-            var level = Workshop?.GetLevelByNumber(1);
-            if (level == null) return;
-            foreach (var cost in level.RequiredResources)
+            var level = Smith?.GetLevelByNumber(1);
+            var sword = GameRoot.GameConfig?.ItemDatabase.GetItemConfig(CraftItemId);
+            if (level == null || sword == null) return;
+            var required = new Dictionary<ItemConfig, int>();
+            foreach (var cost in level.RequiredResources.Concat(sword.CraftCosts))
             {
                 if (cost.Resource == null) continue;
-                rewards.TryGetValue(cost.Resource, out int amount);
-                rewards[cost.Resource] = Mathf.Max(amount, cost.Amount);
+                required.TryGetValue(cost.Resource, out int amount);
+                required[cost.Resource] = amount + cost.Amount;
             }
-            var planks = GameRoot.GameConfig.ItemDatabase.GetItemConfig("Planks");
-            if (planks == null) return;
-            foreach (var cost in planks.CraftCosts)
+            foreach (var cost in required)
             {
-                if (cost.Resource == null) continue;
-                int construction = level.RequiredResources.Where(c => c.Resource == cost.Resource).Sum(c => c.Amount);
-                rewards.TryGetValue(cost.Resource, out int amount);
-                rewards[cost.Resource] = Mathf.Max(amount, construction + cost.Amount);
+                rewards.TryGetValue(cost.Key, out int amount);
+                rewards[cost.Key] = Mathf.Max(amount, cost.Value);
             }
         }
-
         private void Update()
         {
             if (GameRoot.Instance != null && Progress != _boundProgress) Initialize();
@@ -193,26 +282,35 @@ namespace MineArena.Managers
                 return;
             }
             if (_overlay == null) CreateOverlay();
+            RefreshExtendedProgress();
+            if (!AwaitingConfirmation && ReviewWindowOpen()) _hudVisited = true;
+            if (_hudVisited && !FindObjectsOfType<Devotion.SDK.Base.BaseWindow>().Any(w =>
+                w.GetType().Name != "PlayingWindow" && w.GetType().Name != "LevelProgressWindow"))
+            {
+                _hudVisited = false;
+                SetStep(Steps[Array.IndexOf(Steps, Progress.Step) + 1]);
+            }
             _overlay.SetActive(true);
             if (_shown != Progress.Step)
             {
                 ResumeTime();
                 _shown = Progress.Step;
                 _nextTargetSearch = 0;
-                _title.text = $"ПЕРВЫЕ ШАГИ   •   {(int)_shown + 1} / 8";
+                _title.text = $"ПЕРВЫЕ ШАГИ   •   {StepNumber(_shown)} / 14";
                 _body.text = Instructions(_shown);
-                _gift.gameObject.SetActive(_shown == TutorialStep.Craft);
-                _gift.GetComponentInChildren<TMP_Text>().text = "Мастерская [B]";
-                _popupTitle.text = "ПЕРВЫЕ ШАГИ  •  " + ((int)_shown + 1) + " / 8";
+                _gift.gameObject.SetActive(false);
+                _popupTitle.text = "ПЕРВЫЕ ШАГИ  •  " + StepNumber(_shown) + " / 14";
                 _popupBody.text = Instructions(_shown);
                 _confirmLabel.text = _shown == TutorialStep.Gift ? "Забрать подарок" : "Понятно!";
-                _illustration.sprite = StepIllustration(_shown);
+                UpdateIllustration(_shown);
                 _popup.SetActive(false);
-                if (_shown != TutorialStep.Craft) _deferredCraft = null;
+                if (!CraftStep) _deferredCraft = null;
             }
             bool busy = FindObjectsOfType<BuildingConstructionSequence>().Any(s => s.IsPlaying) ||
                 FindObjectsOfType<Devotion.SDK.Base.BaseWindow>().Any(w => w.GetType().Name == "LoadingWindow" || w.GetType().Name == "SettingsWindow") ||
-                Progress.Step == TutorialStep.Build && LevelController.Current != null;
+                Progress.Step == TutorialStep.BuildSmith && LevelController.Current != null;
+            KeepInventoryLessonOpen();
+            if ((_shown == TutorialStep.Kill || _shown == TutorialStep.Exit) && AwaitingConfirmation) _acknowledged = _shown;
             if (AwaitingConfirmation && !busy && !_popup.activeSelf)
             {
                 // Scene-local EventSystem is destroyed when leaving the base; restore input BEFORE pausing.
@@ -238,7 +336,10 @@ namespace MineArena.Managers
                 _target = FindTarget();
             }
             var camera = Camera.main;
-            _arrow.gameObject.SetActive(_target != null && camera != null && !_popup.activeSelf && !busy);
+            UpdateDragLesson(!busy && !_popup.activeSelf);
+            UpdateSpotlight(!busy && !_popup.activeSelf && !_hudVisited ? _target as RectTransform : null);
+            _arrow.gameObject.SetActive(_target != null && !(_target is RectTransform) && camera != null && !_popup.activeSelf && !busy && WorldGuidanceVisible &&
+                !(Progress.Step == TutorialStep.Mine && (Progress.MiningStarted || Progress.Mined)));
             if (_arrow.gameObject.activeSelf)
             {
                 bool ui = _target is RectTransform;
@@ -289,10 +390,10 @@ namespace MineArena.Managers
             _popup.SetActive(false); _shade.SetActive(false); ResumeTime();
             if (_shown == TutorialStep.Gift) ClaimGift();
             var craft = _deferredCraft; _deferredCraft = null;
-            if (Active && Progress.Step == TutorialStep.Craft)
+            if (CraftStep)
             {
                 if (craft != null) craft.Invoke();
-                else MineArena.Windows.Crafting.CraftingWindow.Open(Workshop);
+                else MineArena.Windows.Crafting.CraftingWindow.Open(CraftBuilding);
             }
         }
 
@@ -300,14 +401,24 @@ namespace MineArena.Managers
         {
             switch (step)
             {
+                case TutorialStep.PlaytimeRewards: return "Нажми награды за время в игре.\nЗдесь подарки за проведённое время. Осмотри окно и закрой его.";
+                case TutorialStep.FortuneWheel: return "Нажми колесо фортуны: здесь можно выиграть призы.\nОсмотри условия вращения и закрой окно.";
+                case TutorialStep.BuildSmith: return "Подойди к участку кузницы и нажми «Построить».\nНаграды первой локации хватит на кузницу и меч.";
+                case TutorialStep.CraftArmor: return "Создай железный нагрудник в кузнице.\nМатериалы уже у тебя. Дождись завершения крафта.";
+                case TutorialStep.CraftSword: return "Теперь создай каменный меч и дождись результата.\nОн сильнее стартового деревянного меча.";
+                case TutorialStep.EquipArmor: return "Открой инвентарь. Перетащи железный нагрудник\nв слот брони на груди — он уменьшает входящий урон.";
+                case TutorialStep.EquipSword: return "Открой инвентарь и перетащи каменный меч в нижний слот.\nВыбери этот слот клавишей 1–5, чтобы взять меч в руки.";
+                case TutorialStep.Potion: return "Перетащи зелье лечения из инвентаря в нижний слот.\nВыбери его клавишей 1–5 и используй для лечения.";
+                case TutorialStep.Rewards: return "Нажми подсвеченную кнопку наград.\nЗдесь подарки за ежедневный вход. Осмотри окно и закрой его.";
+                case TutorialStep.WorkshopButton: return "Кнопка «Мастерская» открывает рецепты зданий.\nНажми её, осмотри крафт и закрой окно. Горячая клавиша — B.";
                 case TutorialStep.Portal: return "Добро пожаловать! Подойди к порталу.\nWASD — движение. Жёлтый указатель покажет путь.";
                 case TutorialStep.Launch: return "Выбери первый уровень и нажми «Начать».\nУчебная экспедиция: добыча ресурсов и один зомби.";
                 case TutorialStep.Mine: return "Подойди к блоку и нажми E, чтобы добыть его.\nЗатем подбери выпавшие ресурсы.";
                 case TutorialStep.Kill: return "Теперь победи зомби.\nЛевая кнопка мыши — атака. Меч уже в быстром слоте.";
-                case TutorialStep.Exit: return "Отлично! Войди в появившийся портал.\nЗабери награду и вернись на базу — хватит на мастерскую!";
+                case TutorialStep.Exit: return "Портал открыт! Можно продолжать бегать и добывать ресурсы.\nКогда будешь готов, войди в портал и вернись на базу.";
                 case TutorialStep.Build: return "Подойди к участку мастерской и нажми «Построить».\nДерево и камень для постройки уже у тебя.";
                 case TutorialStep.Craft: return "После «Понятно» откроется мастерская. Создай доски.\nДождись заполнения полосы: первый крафт занимает 7 секунд.";
-                case TutorialStep.Gift: return "Обучение завершено! Твой подарок:\n16 дуба, 12 камня и 2 зелья лечения. Дальше — твои приключения!";
+                case TutorialStep.Gift: return "Обучение завершено! Твой подарок — железный нагрудник.\nНадень его в инвентаре, чтобы получать меньше урона.";
                 default: return "";
             }
         }
@@ -316,23 +427,130 @@ namespace MineArena.Managers
             IEnumerable<Transform> targets = Array.Empty<Transform>();
             switch (Progress.Step)
             {
+                case TutorialStep.EquipArmor:
+                case TutorialStep.EquipSword:
+                case TutorialStep.Potion:
+                    if (FindObjectOfType<MineArena.UI.InventoryWindow>() != null) return null;
+                    return HudTarget(MineArena.UI.GameUiDestination.Inventory);
+                case TutorialStep.Rewards: return _hudVisited ? null : HudTarget(MineArena.UI.GameUiDestination.Daily);
+                case TutorialStep.PlaytimeRewards: return _hudVisited ? null : HudTarget(MineArena.UI.GameUiDestination.Playtime);
+                case TutorialStep.FortuneWheel: return _hudVisited ? null : HudTarget(MineArena.UI.GameUiDestination.Wheel);
+                case TutorialStep.WorkshopButton: return _hudVisited ? null : HudTarget(MineArena.UI.GameUiDestination.Crafting);
                 case TutorialStep.Portal: targets = FindObjectsOfType<ArenaPortal>().Select(p => p.transform); break;
                 case TutorialStep.Launch: return FindObjectOfType<MineArena.Windows.SelectLevel.LevelSelectionView>()?.TutorialTarget;
                 case TutorialStep.Mine:
+                    if (Progress.MiningStarted || Progress.Mined) return null;
                     var pickups = FindObjectsOfType<ItemInteractor>();
                     targets = Progress.Mined && pickups.Length > 0 ? pickups.Select(p => p.transform) : FindObjectsOfType<InteractableObject>().Where(p => p.IsMineable).Select(p => p.transform); break;
                 case TutorialStep.Kill: targets = FindObjectsOfType<MobHealth>().Where(m => m.CurrentValue > 0).Select(m => m.transform); break;
-                case TutorialStep.Exit: targets = FindObjectsOfType<LevelPortal>().Select(p => p.transform); break;
+                case TutorialStep.Exit:
+                    var completion = FindObjectOfType<MineArena.Windows.LevelCompleteWindow>();
+                    if (completion != null) return completion.TutorialTarget;
+                    targets = FindObjectsOfType<LevelPortal>().Select(p => p.transform); break;
                 case TutorialStep.Build:
+                case TutorialStep.BuildSmith:
                     var buildingWindow = FindObjectOfType<MineArena.Windows.BuildingWindow>();
                     if (buildingWindow != null) return buildingWindow.TutorialTarget;
-                    targets = FindObjectsOfType<BuildingZone>().Where(z => z.Config == Workshop).Select(z => z.transform); break;
+                    targets = FindObjectsOfType<BuildingZone>().Where(z => z.Config == (Progress.Step == TutorialStep.BuildSmith ? Smith : Workshop)).Select(z => z.transform); break;
                 case TutorialStep.Craft:
+                case TutorialStep.CraftArmor:
+                case TutorialStep.CraftSword:
                     var crafting = FindObjectOfType<MineArena.Windows.Crafting.CraftingWindow>();
                     if (crafting != null) return crafting.TutorialTarget;
-                    return _gift != null ? _gift.transform : null;
+                    return HudTarget(MineArena.UI.GameUiDestination.Crafting);
             }
             return targets.OrderBy(t => (t.position - Player.Instance.transform.position).sqrMagnitude).FirstOrDefault();
+        }
+        private static Transform HudTarget(MineArena.UI.GameUiDestination destination) =>
+            FindObjectsOfType<MineArena.UI.GameUiAction>().FirstOrDefault(a => a.Destination == destination)?.transform;
+
+        private void UpdateSpotlight(RectTransform target)
+        {
+            if (_spotlight == null)
+            {
+                var go = new GameObject("Tutorial circular spotlight", typeof(RectTransform), typeof(TutorialSpotlightGraphic));
+                go.transform.SetParent(_overlay.transform, false); go.transform.SetAsFirstSibling();
+                _spotlight = go.GetComponent<TutorialSpotlightGraphic>();
+                _spotlight.rectTransform.anchorMin = Vector2.zero; _spotlight.rectTransform.anchorMax = Vector2.one;
+                _spotlight.rectTransform.sizeDelta = Vector2.zero;
+            }
+            _spotlight.gameObject.SetActive(target != null);
+            if (target == null) return;
+            var corners = new Vector3[4]; target.GetWorldCorners(corners);
+            var min = OverlayPoint(target, corners[0]); var max = OverlayPoint(target, corners[2]);
+            if (target.GetComponent<MineArena.UI.GameUiAction>() != null)
+                _spotlight.Focus((min + max) * .5f, (max - min).magnitude * .5f + 10);
+            else _spotlight.FocusRect(Rect.MinMaxRect(min.x - 10, min.y - 10, max.x + 10, max.y + 10));
+        }
+        private Vector2 OverlayPoint(Transform source, Vector3 point)
+        {
+            var canvas = source.GetComponentInParent<Canvas>();
+            var cam = canvas == null || canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvas.worldCamera;
+            RectTransformUtility.ScreenPointToLocalPointInRectangle((RectTransform)_overlay.transform,
+                RectTransformUtility.WorldToScreenPoint(cam, point), null, out var local);
+            return local;
+        }
+        private void KeepInventoryLessonOpen()
+        {
+            if (Progress.Step == TutorialStep.Potion && FindObjectOfType<MineArena.UI.InventoryWindow>() != null)
+                _acknowledged = Progress.Step;
+        }
+        private void UpdateDragLesson(bool visible)
+        {
+            if (_dragHand == null)
+            {
+                var ghost = new GameObject("Drag item demonstration", typeof(RectTransform), typeof(Image));
+                ghost.transform.SetParent(_overlay.transform, false);
+                _dragItem = ghost.GetComponent<Image>(); _dragItem.raycastTarget = false; _dragItem.preserveAspect = true;
+                _dragItem.rectTransform.sizeDelta = new Vector2(60, 60);
+                var hand = new GameObject("Minecraft drag hand", typeof(RectTransform), typeof(TutorialHandGraphic));
+                hand.transform.SetParent(_overlay.transform, false);
+                _dragHand = (RectTransform)hand.transform; _dragHand.sizeDelta = new Vector2(84, 112);
+                hand.GetComponent<TutorialHandGraphic>().raycastTarget = false;
+            }
+            bool lesson = Progress.Step == TutorialStep.EquipSword || Progress.Step == TutorialStep.Potion;
+            var inventory = lesson ? FindObjectOfType<MineArena.UI.InventoryWindow>() : null;
+            string id = Progress.Step == TutorialStep.Potion ? "HealingPotion" : "StoneSword";
+            var cell = inventory != null ? inventory.GetComponentsInChildren<MineArena.UI.InventoryCellUI>().FirstOrDefault(c => c.Item?.Name == id) : null;
+            var slots = FindObjectsOfType<Devotion.SDK.UI.PlayingInventorySlotUI>().OrderBy(s => s.Index).ToArray();
+            var saved = GameRoot.PlayerProgress.InventoryProgress;
+            var destination = slots.FirstOrDefault(s => string.IsNullOrEmpty(saved.GetQuickSlotItemId(s.Index))) ??
+                slots.FirstOrDefault(s => saved.GetQuickSlotItemId(s.Index) != "StoneSword");
+            bool show = visible && inventory != null && cell != null && destination != null && !Input.GetMouseButton(0);
+            _dragHand.gameObject.SetActive(show); _dragItem.gameObject.SetActive(show);
+            if (!show) return;
+            var sourceRect = (RectTransform)cell.transform;
+            var endRect = (RectTransform)destination.transform;
+            Vector2 start = OverlayPoint(sourceRect, sourceRect.TransformPoint(sourceRect.rect.center));
+            Vector2 end = OverlayPoint(endRect, endRect.TransformPoint(endRect.rect.center));
+            float phase = Mathf.Repeat(Time.unscaledTime, 2.8f) / 2.8f;
+            float t = Mathf.SmoothStep(0, 1, Mathf.InverseLerp(.18f, .8f, phase));
+            var point = Vector2.Lerp(start, end, t) + Vector2.up * Mathf.Sin(t * Mathf.PI) * 35;
+            _dragItem.sprite = cell.Item.Icon; _dragItem.color = new Color(1, 1, 1, .75f);
+            _dragItem.rectTransform.anchoredPosition = point;
+            _dragHand.anchoredPosition = point + new Vector2(26, -42);
+            _dragHand.localScale = Vector3.one * (phase < .18f ? Mathf.Lerp(1, .88f, phase / .18f) : .88f);
+        }
+        private void UpdateIllustration(TutorialStep step)
+        {
+            _illustration.sprite = StepIllustration(step);
+            var item = GameRoot.GameConfig?.ItemDatabase.GetItemConfig(step == TutorialStep.Mine ? "WoodOak" : step == TutorialStep.Craft ? "Planks" : "");
+            bool block = item is StackableItemConfig resource && resource.BlockStyleIcon;
+            if (block && _blockIllustration == null)
+            {
+                var prefab = _theme != null ? _theme.ResourceIcon : null;
+                if (prefab != null) {
+                    _blockIllustration = Instantiate(prefab, _illustration.transform);
+                    var rect = (RectTransform)_blockIllustration.transform;
+                    rect.anchorMin = Vector2.zero; rect.anchorMax = Vector2.one; rect.offsetMin = rect.offsetMax = Vector2.zero;
+                    foreach (var graphic in _blockIllustration.GetComponentsInChildren<Graphic>()) graphic.raycastTarget = false;
+                }
+            }
+            _illustration.enabled = !block || _blockIllustration == null;
+            if (_blockIllustration != null) {
+                _blockIllustration.gameObject.SetActive(block);
+                if (block) _blockIllustration.SetResource((StackableItemConfig)item);
+            }
         }
         private void CreateOverlay()
         {
@@ -353,7 +571,8 @@ namespace MineArena.Managers
             var button = new GameObject("Claim tutorial gift", typeof(RectTransform), typeof(Image), typeof(Button)); button.transform.SetParent(panel.transform, false);
             var br = (RectTransform)button.transform; br.anchorMin = br.anchorMax = new Vector2(1, 1); br.pivot = new Vector2(1, 1); br.anchoredPosition = new Vector2(-18, -12); br.sizeDelta = new Vector2(220, 38);
             button.GetComponent<Image>().color = new Color(.24f, .58f, .39f);
-            _gift = button.GetComponent<Button>(); _gift.onClick.AddListener(() => { if (Active && Progress.Step == TutorialStep.Craft) MineArena.Windows.Crafting.CraftingWindow.Open(Workshop); });
+            _gift = button.GetComponent<Button>(); _gift.onClick.AddListener(() => { if (CraftStep) MineArena.Windows.Crafting.CraftingWindow.Open(CraftBuilding); });
+            button.SetActive(false);
             Label(button.transform, "Label", 20, new Vector2(10, -4), new Vector2(205, 30)).text = "Забрать подарок";
             _arrow = Label(_overlay.transform, "Target arrow", 27, Vector2.zero, new Vector2(100, 100)); _arrow.alignment = TextAlignmentOptions.Center; _arrow.color = new Color(1, .78f, .18f); _arrow.outlineWidth = .2f; _arrow.outlineColor = Color.black;
             ((RectTransform)_arrow.transform).pivot = new Vector2(.5f, .5f);
@@ -362,7 +581,7 @@ namespace MineArena.Managers
             pointer.GetComponent<TutorialArrowGraphic>().raycastTarget = false;
             _shade = new GameObject("Popup backdrop", typeof(RectTransform), typeof(Image)); _shade.transform.SetParent(_overlay.transform, false);
             var shadeRect = (RectTransform)_shade.transform; shadeRect.anchorMin = Vector2.zero; shadeRect.anchorMax = Vector2.one; shadeRect.sizeDelta = Vector2.zero;
-            _shade.GetComponent<Image>().color = new Color(.025f, .04f, .09f, .78f);
+            _shade.GetComponent<Image>().color = new Color(.025f, .04f, .09f, .65f);
             _popup = new GameObject("Tutorial popup", typeof(RectTransform), typeof(Image)); _popup.transform.SetParent(_overlay.transform, false);
             var popupRect = (RectTransform)_popup.transform; popupRect.anchorMin = popupRect.anchorMax = new Vector2(.5f, .5f); popupRect.sizeDelta = new Vector2(820, 480);
             var frame = _popup.GetComponent<Image>(); frame.sprite = Skin("craft_panel"); frame.type = Image.Type.Sliced; frame.color = Color.white;
@@ -409,6 +628,18 @@ namespace MineArena.Managers
         private static Sprite Skin(string name) => Resources.Load<Sprite>("Prefabs/Windows/Crafting/Textures/" + name);
         public static Sprite StepIllustration(TutorialStep step)
         {
+            if (step == TutorialStep.Gift) return GameRoot.GameConfig?.ItemDatabase.GetItemConfig("IronChestplate")?.Icon;
+            if (step == TutorialStep.Rewards || step == TutorialStep.PlaytimeRewards || step == TutorialStep.FortuneWheel || step == TutorialStep.WorkshopButton)
+            {
+                var destination = step == TutorialStep.Rewards ? MineArena.UI.GameUiDestination.Daily :
+                    step == TutorialStep.PlaytimeRewards ? MineArena.UI.GameUiDestination.Playtime :
+                    step == TutorialStep.FortuneWheel ? MineArena.UI.GameUiDestination.Wheel : MineArena.UI.GameUiDestination.Crafting;
+                return FindObjectsOfType<MineArena.UI.GameUiAction>(true).FirstOrDefault(a => a.Destination == destination)?.transform.Find("Icon")?.GetComponent<Image>()?.sprite;
+            }
+            if (step == TutorialStep.BuildSmith) return Smith?.GetLevelByNumber(1)?.Preview;
+            if (step == TutorialStep.CraftArmor || step == TutorialStep.EquipArmor) return GameRoot.GameConfig?.ItemDatabase.GetItemConfig("IronChestplate")?.Icon;
+            if (step == TutorialStep.CraftSword || step == TutorialStep.EquipSword) return GameRoot.GameConfig?.ItemDatabase.GetItemConfig("StoneSword")?.Icon;
+            if (step == TutorialStep.Potion) return GameRoot.GameConfig?.ItemDatabase.GetItemConfig("HealingPotion")?.Icon;
             if (step == TutorialStep.Build) return Workshop?.GetLevelByNumber(1)?.Preview;
             if (step == TutorialStep.Portal || step == TutorialStep.Launch || step == TutorialStep.Exit)
                 return GameRoot.GameConfig?.Levels.FirstOrDefault()?.LevelIcon;
@@ -428,49 +659,4 @@ namespace MineArena.Managers
         }
     }
 
-    // Mesh arrow stays sharp at any resolution and does not depend on font glyph coverage.
-    public sealed class TutorialArrowGraphic : MaskableGraphic
-    {
-        protected override void OnPopulateMesh(VertexHelper vh)
-        {
-            vh.Clear();
-            var r = rectTransform.rect;
-            // Authored on a pixel grid: dark outline, cream highlight and amber bevel.
-            string[] pixels = {
-                ".....#####.....",
-                ".....#hhh#.....",
-                ".....#hyg#.....",
-                ".....#hyg#.....",
-                ".....#hyg#.....",
-                ".....#hyg#.....",
-                "######hyg######",
-                "#hhhhhhyyyyggg#",
-                ".#hyyyyyyyygg#.",
-                "..#hyyyyyygg#..",
-                "...#hyyyygg#...",
-                "....#hyygg#....",
-                ".....#hgg#.....",
-                "......#g#......",
-                ".......#......."
-            };
-            float unit = Mathf.Min(r.width, r.height) / 15f;
-            for (int y = 0; y < pixels.Length; y++)
-            for (int x = 0; x < pixels[y].Length; x++)
-            {
-                char pixel = pixels[y][x];
-                if (pixel == '.') continue;
-                Color32 tint = pixel == '#' ? new Color32(48, 32, 28, 255) :
-                    pixel == 'h' ? new Color32(255, 249, 194, 255) :
-                    pixel == 'g' ? new Color32(215, 133, 30, 255) : new Color32(255, 211, 64, 255);
-                var p = r.center + new Vector2(x - 7.5f, 6.5f - y) * unit;
-                int start = vh.currentVertCount;
-                vh.AddVert(p, tint, Vector2.zero);
-                vh.AddVert(p + Vector2.right * unit, tint, Vector2.zero);
-                vh.AddVert(p + Vector2.one * unit, tint, Vector2.zero);
-                vh.AddVert(p + Vector2.up * unit, tint, Vector2.zero);
-                vh.AddTriangle(start, start + 1, start + 2);
-                vh.AddTriangle(start, start + 2, start + 3);
-            }
-        }
-    }
 }

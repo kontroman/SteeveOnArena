@@ -134,6 +134,7 @@
             finally { pause('purchase', false); }
             break;
           case 'consume': await (await getPayments()).consumePurchase(r.key); break;
+          case 'playerName': data = player && typeof player.getName === 'function' ? player.getName() || '' : ''; break;
           case 'environment': data = sdk ? sdk.environment.i18n.lang : 'ru'; break;
           case 'ready':
             if (!ready) {

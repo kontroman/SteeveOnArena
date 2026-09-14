@@ -109,8 +109,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 382, y: -8}
-  m_SizeDelta: {x: 200, y: 25}
+  m_AnchoredPosition: {x: 158, y: -8}
+  m_SizeDelta: {x: 424, y: 25}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &1524943718302490551
 CanvasRenderer:
@@ -409,27 +409,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 7311144377421117328}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Script: {fileID: 11500000, guid: 38035af7922e47c0983b678326db1487, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 37cf7065af4583540aa5fd84a7dd8bcc, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &7882716423135276398
 GameObject:
   m_ObjectHideFlags: 0
@@ -661,7 +651,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 18, y: -8}
-  m_SizeDelta: {x: 350, y: 25}
+  m_SizeDelta: {x: 130, y: 25}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &2184653583909529205
 CanvasRenderer:

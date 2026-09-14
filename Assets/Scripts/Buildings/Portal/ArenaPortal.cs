@@ -12,7 +12,7 @@ namespace MineArena.Buildings.Portal
         {
             if (other.IsPlayer())
             {
-                if (LevelController.Current != null && LevelController.Current.TryEnterSpawnedPortal(transform))
+                if (LevelController.Current != null && LevelController.Current.TryEnterSpawnedPortal(transform, other))
                     return;
 
                 if (LevelController.Current == null && MineArena.Managers.TutorialService.EnterPortal())
@@ -24,6 +24,7 @@ namespace MineArena.Buildings.Portal
         {
             if (other.IsPlayer())
             {
+                LevelController.Current?.ExitSpawnedPortal(transform, other);
                 GameRoot.UIManager.CloseWindow<SelectLevelWindow>();
             }
         }

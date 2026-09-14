@@ -22,6 +22,7 @@ namespace MineArena.Windows.Elements
         {
             Setup(config.Resource, config.Amount);
             _cost = config;
+            ResourceSourceNavigation.Bind(gameObject, config.Resource, GetComponentInParent<Devotion.SDK.Base.BaseWindow>());
             RefreshCost();
         }
         public void RefreshCost()
@@ -37,6 +38,8 @@ namespace MineArena.Windows.Elements
         public void Setup(ItemConfig item, int amount = 0)
         {
             _cost = default;
+            var sourceButton = GetComponent<Button>();
+            if (sourceButton != null) { sourceButton.onClick.RemoveAllListeners(); sourceButton.interactable = false; }
             if (item == null) return;
             bool cube = item.BlockStyleIcon && item is StackableItemConfig;
             if (cube && _blockIcon == null && _iconPrefab != null)
