@@ -222,8 +222,16 @@ namespace MineArena
             _hasHit = true;
 
             if (target != null)
-                _damageData = new DamageData(_damageData.Damage, target);
+                _damageData = new DamageData(_damageData.Damage, target, transform.position - _velocity.normalized);
 
+            _damageData.SourcePosition = transform.position - _velocity.normalized;
+            if (_damageData.Target is Component hitBody &&
+                hitBody.GetComponent<PlayerSystem.PlayerShield>() is PlayerSystem.PlayerShield shield && shield.TryBlock(_damageData))
+            {
+                if (!_enemyShot) OnPlayerCollision(false);
+                ReturnToPool();
+                return;
+            }
             _damageData.Target?.TakeDamage(_damageData);
             if (!_enemyShot) OnPlayerCollision(true);
 
@@ -308,6 +316,7 @@ namespace MineArena
                 Vector3 point = body.ClosestPoint(transform.position);
                 if (!direct && (Vector3.Distance(point, transform.position) > splashRadius ||
                     !AI.CombatTargeting.HasLineOfSight(transform.position, AI.CombatTargeting.AimPoint(_target), transform, _target))) continue;
+                _damageData.SourcePosition = direct ? transform.position - _velocity.normalized : transform.position;
                 _damageData.Target?.TakeDamage(_damageData);
                 break; // Multiple player colliders still receive only one hit.
             }

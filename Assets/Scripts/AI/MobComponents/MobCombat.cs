@@ -263,6 +263,7 @@ namespace MineArena.AI
             }
 
             GetComponent<MobFeedback>()?.Attack();
+            _damageData.SourcePosition = transform.position;
             _attackCommand.Execute(_damageData);
         }
 

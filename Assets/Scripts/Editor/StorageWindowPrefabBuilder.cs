@@ -31,6 +31,7 @@ namespace MineArena.Editor
             var sourceCell = inventoryPrefab.GetComponentsInChildren<InventoryCellUI>(true).First(c => c.GetComponent<Image>() != null);
             var root = Edit<StorageWindow>(StorageWindowPath);
             var window = root.GetComponent<StorageWindow>();
+            var storageConfig = AssetDatabase.LoadAssetAtPath<MineArena.Buildings.BuildingConfig>("Assets/ScriptableObjects/Configs/Buildings/StorageBuilding.asset");
             var frame = Window(root, "Хранилище", 1380, 850);
             Ribbon(frame, "587F79", null);
             Text("Description", frame, "Вещи игрока и запасы хранилища", 21, 36, 112, 1290, 36);
@@ -46,20 +47,22 @@ namespace MineArena.Editor
             {
                 Grid(scroll.content, 6, new Vector2(90, 78));
                 scroll.content.GetComponent<GridLayoutGroup>().spacing = new Vector2(10, 10);
-                for (int i = 0; i < 30; i++)
+                for (int i = 0; i < (scroll == storageScroll ? storageConfig.Levels.Max(level => level.StorageSlots) : 30); i++)
                 {
                     var cell = Object.Instantiate(sourceCell, scroll.content);
                     cell.name = "Slot_" + (i + 1).ToString("00");
                     foreach (var drag in cell.GetComponentsInChildren<InventoryCellDragHandler>(true)) Object.DestroyImmediate(drag);
                     cell.Clear();
                     cell.gameObject.SetActive(true);
+                    if (scroll == storageScroll) StorageLockedSlotGraphic.SetLocked(cell, i >= storageConfig.GetLevelByNumber(1).StorageSlots);
                 }
             }
             var empty = Text("StorageEmpty", frame, "Склад пока пуст", 21, 724, 750, 600, 30);
             Text("InventoryHint", frame, "Блоки, материалы и снаряжение", 20, 52, 750, 604, 30);
             Set(window, "_inventoryContent", inventoryScroll.content, "_storageContent", storageScroll.content,
                 "_cellTemplate", inventoryScroll.content.GetChild(0).GetComponent<InventoryCellUI>(),
-                "_inventoryCount", inventoryCount, "_storageCount", storageCount, "_storageEmpty", empty.gameObject);
+                "_inventoryCount", inventoryCount, "_storageCount", storageCount, "_storageEmpty", empty.gameObject,
+                "_storageBuilding", storageConfig);
             Save(root, StorageWindowPath);
             RegisterStorageWindow();
             AssetDatabase.SaveAssets();

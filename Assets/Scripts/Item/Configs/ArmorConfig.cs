@@ -7,7 +7,8 @@ namespace MineArena.Items
         Helmet,
         Chest,
         Leggings,
-        Boots
+        Boots,
+        OffHand
     }
 
     public enum ArmorGrade
@@ -26,6 +27,9 @@ namespace MineArena.Items
         [SerializeField] private ArmorSlot _slot;
         [SerializeField] private ArmorGrade _grade;
         [SerializeField] private Material _material;
+
+        [SerializeField, Min(1)] private int _maxDurability = 336;
+        public int MaxDurability => _slot == ArmorSlot.OffHand ? Mathf.Max(1, _maxDurability) : 0;
 
         public int Resist => _resist;
         public ArmorSlot Slot => _slot;

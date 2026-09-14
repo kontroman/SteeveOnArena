@@ -32,7 +32,7 @@ namespace Devotion.SDK.UI
                 bool taken = index < claimed;
                 float remaining = Mathf.Max(0, entry.Minutes * 60f - seconds);
                 Countdown.text = taken ? "Спасибо за игру!" : remaining > 0 ? "Через " + FormatRemaining(remaining) : "Доступна сейчас";
-                Status.text = taken ? "ПОЛУЧЕНО" : !valid ? "НЕДОСТУПНО" : remaining <= 0 ? "МОЖНО ЗАБРАТЬ" : "СКОРО ОТКРОЕТСЯ";
+                Status.text = taken ? "ПОЛУЧЕНО" : !valid ? "НЕДОСТУПНО" : remaining <= 0 ? "МОЖНО ЗАБРАТЬ" : "Через " + FormatRemaining(remaining);
                 Status.color = taken || remaining <= 0 ? new Color32(35, 112, 89, 255) : new Color32(104, 74, 146, 255);
                 Progress.fillAmount = Mathf.Clamp01(seconds / Mathf.Max(1, entry.Minutes * 60f));
                 Background.color = taken ? new Color32(212, 243, 227, 255) : Color.white;

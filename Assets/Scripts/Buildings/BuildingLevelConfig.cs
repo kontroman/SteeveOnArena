@@ -14,6 +14,7 @@ namespace MineArena.Buildings
         [SerializeField] private GameObject _modelPrefab;
         [SerializeField] private Sprite _preview;
         [SerializeField, Min(0)] private int _craftOutputBonus;
+        [SerializeField, Min(0)] private int _storageSlots;
         [SerializeField, Range(0, 50)] private int _expeditionRewardBonusPercent;
         [SerializeField] private List<MineArena.Levels.LevelRewards> _production = new();
         [SerializeField, Min(1)] private float _productionSeconds = 60f;
@@ -24,6 +25,7 @@ namespace MineArena.Buildings
         public GameObject ModelPrefab => _modelPrefab;
         public Sprite Preview => _preview;
         public int CraftOutputBonus => _craftOutputBonus;
+        public int StorageSlots => Mathf.Max(0, _storageSlots);
         public int ExpeditionRewardBonusPercent => _expeditionRewardBonusPercent;
         public IReadOnlyList<MineArena.Levels.LevelRewards> Production => _production;
         public float ProductionSeconds => Mathf.Max(1f, _productionSeconds);

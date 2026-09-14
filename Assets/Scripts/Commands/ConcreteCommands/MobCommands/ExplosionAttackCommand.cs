@@ -38,7 +38,7 @@ namespace MineArena.Commands
                 if (damageable == null || !damagedTargets.Add(damageable))
                     continue;
 
-                damageable.TakeDamage(new DamageData(explosionData.Damage, damageable));
+                damageable.TakeDamage(new DamageData(explosionData.Damage, damageable, explosionData.Position));
             }
 
             var selfDamageable = explosionData.Owner != null

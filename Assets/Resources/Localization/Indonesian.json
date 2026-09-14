@@ -1692,17 +1692,93 @@
       "key": "Вариант",
       "value": "Pilihan"
     },
-    {"key": "???? +{0} ? ?????.", "value": "Memberikan +{0} armor."},
-    {"key": "????: {0:0.##}.", "value": "Kerusakan: {0:0.##}."},
-    {"key": "????? ??????: {0:0.##} ?.", "value": "Waktu menambang: {0:0.##} dtk."},
-    {"key":"Arena.GoToPortal","value":"Pergi ke portal"},
-    {"key": "Arena.ReturnToLevel", "value": "Kembali"},
-    {"key":"Arena.NextWave","value":"Gelombang dalam {0}d"},
-    {"key":"Arena.Exit","value":"Keluar dari arena"},
-    {"key":"Arena.ExitTitle","value":"Keluar dari arena?"},
-    {"key":"Arena.ExitWarning","value":"Jika kamu keluar lebih awal tanpa melalui portal, semua sumber daya yang dikumpulkan di arena ini akan hilang."},
-    {"key":"Arena.Stay","value":"Tetap di sini"},
-    {"key":"Arena.ConfirmExit","value":"Keluar dan kehilangan jarahan"},
-    {"key":"Не выполнено","value":"Belum selesai"}
+    {
+      "key": "???? +{0} ? ?????.",
+      "value": "Memberikan +{0} armor."
+    },
+    {
+      "key": "????: {0:0.##}.",
+      "value": "Kerusakan: {0:0.##}."
+    },
+    {
+      "key": "????? ??????: {0:0.##} ?.",
+      "value": "Waktu menambang: {0:0.##} dtk."
+    },
+    {
+      "key": "Arena.GoToPortal",
+      "value": "Pergi ke portal"
+    },
+    {
+      "key": "Arena.ReturnToLevel",
+      "value": "Kembali"
+    },
+    {
+      "key": "Arena.NextWave",
+      "value": "Gelombang dalam {0}d"
+    },
+    {
+      "key": "Arena.Exit",
+      "value": "Keluar dari arena"
+    },
+    {
+      "key": "Arena.ExitTitle",
+      "value": "Keluar dari arena?"
+    },
+    {
+      "key": "Arena.ExitWarning",
+      "value": "Jika kamu keluar lebih awal tanpa melalui portal, semua sumber daya yang dikumpulkan di arena ini akan hilang."
+    },
+    {
+      "key": "Arena.Stay",
+      "value": "Tetap di sini"
+    },
+    {
+      "key": "Arena.ConfirmExit",
+      "value": "Keluar dan kehilangan jarahan"
+    },
+    {
+      "key": "Не выполнено",
+      "value": "Belum selesai"
+    },
+    {
+      "key": "Storage.TransferHint",
+      "value": "Klik: tumpukan • Klik kanan: satu item • Seret untuk pindah"
+    },
+    {
+      "key": "Storage.CraftingHint",
+      "value": "Item di gudang tidak digunakan untuk membuat barang"
+    },
+    {
+      "key": "Storage.StarterPickaxe",
+      "value": "Beliung awal selalu tetap bersamamu"
+    },
+    {
+      "key": "Storage.TransferFailed",
+      "value": "Item tidak dapat dipindahkan"
+    },
+    {
+      "key": "Storage.Upgrade",
+      "value": "Tingkatkan gudang"
+    },
+    {
+      "key": "Storage.EquippedProtected",
+      "value": "Lepas perlengkapan atau hapus item dari bilah cepat dahulu"
+    },
+    {
+      "key": "Storage.UnlockHint",
+      "value": "Tingkatkan gudang untuk membuka lebih banyak slot"
+    },
+    {
+      "key": "Storage.Full",
+      "value": "Gudang penuh. Kosongkan slot atau tingkatkan gudang"
+    },
+    {
+      "key": "Storage.UpgradeDescription",
+      "value": "Peningkatan membuka slot gudang tambahan."
+    },
+    {
+      "key": "Storage.Capacity",
+      "value": "Slot gudang: {0}"
+    }
   ]
 }

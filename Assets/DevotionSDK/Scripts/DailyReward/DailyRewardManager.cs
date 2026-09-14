@@ -85,6 +85,28 @@ namespace Devotion.SDK.DailyReward
         public bool CanClaim => GetConfig() != null && GetProgress() != null &&
             GetProgress().IsRewardAvailable(GetCurrentUtcDayNumber(), GetConfig().RewardsCount);
 
+        public int CurrentRewardIndex
+        {
+            get
+            {
+                var config = GetConfig();
+                var progress = GetProgress();
+                if (config == null || progress == null || !config.HasRewards) return -1;
+                int index = progress.GetRewardIndexForClaim(GetCurrentUtcDayNumber(), config.RewardsCount);
+                return index >= 0 ? index : progress.NextRewardIndex;
+            }
+        }
+
+        public DateTime GetRewardAvailableAtLocal(int index)
+        {
+            var now = DateTime.UtcNow;
+            var progress = GetProgress();
+            long today = now.Date.Ticks / TimeSpan.TicksPerDay;
+            long firstDay = CanClaim ? today : Math.Max(today + 1, (progress?.LastClaimedUtcDayNumber ?? today) + 1);
+            int daysAhead = Mathf.Max(0, index - CurrentRewardIndex);
+            return new DateTime((firstDay + daysAhead) * TimeSpan.TicksPerDay, DateTimeKind.Utc).ToLocalTime();
+        }
+
         public bool IsRewardClaimed(int index)
         {
             var config = GetConfig();

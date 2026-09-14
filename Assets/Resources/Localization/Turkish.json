@@ -1692,17 +1692,93 @@
       "key": "Вариант",
       "value": "Seçenek"
     },
-    {"key": "???? +{0} ? ?????.", "value": "+{0} z?rh verir."},
-    {"key": "????: {0:0.##}.", "value": "Hasar: {0:0.##}."},
-    {"key": "????? ??????: {0:0.##} ?.", "value": "Kazma s?resi: {0:0.##} sn."},
-    {"key":"Arena.GoToPortal","value":"Portala git"},
-    {"key": "Arena.ReturnToLevel", "value": "Geri dön"},
-    {"key":"Arena.NextWave","value":"Dalga: {0}sn"},
-    {"key":"Arena.Exit","value":"Arenadan çık"},
-    {"key":"Arena.ExitTitle","value":"Arenadan çıkılsın mı?"},
-    {"key":"Arena.ExitWarning","value":"Portalı kullanmadan erken çıkarsan bu arenada topladığın tüm kaynakları kaybedersin."},
-    {"key":"Arena.Stay","value":"Kal"},
-    {"key":"Arena.ConfirmExit","value":"Çık ve ganimeti kaybet"},
-    {"key":"Не выполнено","value":"Tamamlanmadı"}
+    {
+      "key": "???? +{0} ? ?????.",
+      "value": "+{0} z?rh verir."
+    },
+    {
+      "key": "????: {0:0.##}.",
+      "value": "Hasar: {0:0.##}."
+    },
+    {
+      "key": "????? ??????: {0:0.##} ?.",
+      "value": "Kazma s?resi: {0:0.##} sn."
+    },
+    {
+      "key": "Arena.GoToPortal",
+      "value": "Portala git"
+    },
+    {
+      "key": "Arena.ReturnToLevel",
+      "value": "Geri dön"
+    },
+    {
+      "key": "Arena.NextWave",
+      "value": "Dalga: {0}sn"
+    },
+    {
+      "key": "Arena.Exit",
+      "value": "Arenadan çık"
+    },
+    {
+      "key": "Arena.ExitTitle",
+      "value": "Arenadan çıkılsın mı?"
+    },
+    {
+      "key": "Arena.ExitWarning",
+      "value": "Portalı kullanmadan erken çıkarsan bu arenada topladığın tüm kaynakları kaybedersin."
+    },
+    {
+      "key": "Arena.Stay",
+      "value": "Kal"
+    },
+    {
+      "key": "Arena.ConfirmExit",
+      "value": "Çık ve ganimeti kaybet"
+    },
+    {
+      "key": "Не выполнено",
+      "value": "Tamamlanmadı"
+    },
+    {
+      "key": "Storage.TransferHint",
+      "value": "Tıkla: yığın • Sağ tıkla: tek eşya • Taşımak için sürükle"
+    },
+    {
+      "key": "Storage.CraftingHint",
+      "value": "Depodaki eşyalar üretimde kullanılmaz"
+    },
+    {
+      "key": "Storage.StarterPickaxe",
+      "value": "Başlangıç kazman her zaman sende kalır"
+    },
+    {
+      "key": "Storage.TransferFailed",
+      "value": "Eşya taşınamadı"
+    },
+    {
+      "key": "Storage.Upgrade",
+      "value": "Depoyu geliştir"
+    },
+    {
+      "key": "Storage.EquippedProtected",
+      "value": "Önce eşyayı çıkar veya hızlı erişim çubuğundan kaldır"
+    },
+    {
+      "key": "Storage.UnlockHint",
+      "value": "Daha fazla yuva açmak için depoyu geliştir"
+    },
+    {
+      "key": "Storage.Full",
+      "value": "Depo dolu. Bir yuva boşalt veya depoyu geliştir"
+    },
+    {
+      "key": "Storage.UpgradeDescription",
+      "value": "Geliştirmeler ek depo yuvaları açar."
+    },
+    {
+      "key": "Storage.Capacity",
+      "value": "Depo yuvaları: {0}"
+    }
   ]
 }

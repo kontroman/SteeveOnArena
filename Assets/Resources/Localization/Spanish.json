@@ -1692,17 +1692,93 @@
       "key": "Вариант",
       "value": "Opción"
     },
-    {"key": "???? +{0} ? ?????.", "value": "Otorga +{0} de armadura."},
-    {"key": "????: {0:0.##}.", "value": "Da?o: {0:0.##}."},
-    {"key": "????? ??????: {0:0.##} ?.", "value": "Tiempo de miner?a: {0:0.##} s."},
-    {"key":"Arena.GoToPortal","value":"Ve al portal"},
-    {"key": "Arena.ReturnToLevel", "value": "Volver"},
-    {"key":"Arena.NextWave","value":"Oleada en {0}s"},
-    {"key":"Arena.Exit","value":"Salir de la arena"},
-    {"key":"Arena.ExitTitle","value":"¿Salir de la arena?"},
-    {"key":"Arena.ExitWarning","value":"Si sales antes de tiempo sin usar el portal, perderás todos los recursos recogidos en esta arena."},
-    {"key":"Arena.Stay","value":"Quedarse"},
-    {"key":"Arena.ConfirmExit","value":"Salir y perder el botín"},
-    {"key":"Не выполнено","value":"Sin completar"}
+    {
+      "key": "???? +{0} ? ?????.",
+      "value": "Otorga +{0} de armadura."
+    },
+    {
+      "key": "????: {0:0.##}.",
+      "value": "Da?o: {0:0.##}."
+    },
+    {
+      "key": "????? ??????: {0:0.##} ?.",
+      "value": "Tiempo de miner?a: {0:0.##} s."
+    },
+    {
+      "key": "Arena.GoToPortal",
+      "value": "Ve al portal"
+    },
+    {
+      "key": "Arena.ReturnToLevel",
+      "value": "Volver"
+    },
+    {
+      "key": "Arena.NextWave",
+      "value": "Oleada en {0}s"
+    },
+    {
+      "key": "Arena.Exit",
+      "value": "Salir de la arena"
+    },
+    {
+      "key": "Arena.ExitTitle",
+      "value": "¿Salir de la arena?"
+    },
+    {
+      "key": "Arena.ExitWarning",
+      "value": "Si sales antes de tiempo sin usar el portal, perderás todos los recursos recogidos en esta arena."
+    },
+    {
+      "key": "Arena.Stay",
+      "value": "Quedarse"
+    },
+    {
+      "key": "Arena.ConfirmExit",
+      "value": "Salir y perder el botín"
+    },
+    {
+      "key": "Не выполнено",
+      "value": "Sin completar"
+    },
+    {
+      "key": "Storage.TransferHint",
+      "value": "Clic: pila • Clic derecho: una unidad • Arrastra para mover"
+    },
+    {
+      "key": "Storage.CraftingHint",
+      "value": "Los objetos guardados no se usan para fabricar"
+    },
+    {
+      "key": "Storage.StarterPickaxe",
+      "value": "El pico inicial siempre se queda contigo"
+    },
+    {
+      "key": "Storage.TransferFailed",
+      "value": "No se pudo mover el objeto"
+    },
+    {
+      "key": "Storage.Upgrade",
+      "value": "Mejorar almacén"
+    },
+    {
+      "key": "Storage.EquippedProtected",
+      "value": "Primero desequipa el objeto o quítalo de la barra rápida"
+    },
+    {
+      "key": "Storage.UnlockHint",
+      "value": "Mejora el almacén para desbloquear más espacios"
+    },
+    {
+      "key": "Storage.Full",
+      "value": "Almacén lleno. Libera un espacio o mejora el almacén"
+    },
+    {
+      "key": "Storage.UpgradeDescription",
+      "value": "Las mejoras desbloquean más espacios de almacenamiento."
+    },
+    {
+      "key": "Storage.Capacity",
+      "value": "Espacios del almacén: {0}"
+    }
   ]
 }

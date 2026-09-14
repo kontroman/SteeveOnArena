@@ -108,8 +108,9 @@ for(const [name,milestone]of Object.entries(milestones))milestone.allocations=Ob
 function route(fraction,runMinutes,lootFraction=.75){
  const inventory={},built={},owned={},runs=[0,0,0,0],checkpoints={};let minutes=0,jobs=0,allowed=0,craftMinutes=0;
  const key=id=>items[id]?.category||id;
+ const rewardBonus=()=>Math.min(50,Object.entries(built).reduce((sum,[name,level])=>sum+(buildings[name]?.find(entry=>entry.level===level)?.bonus||0),0));
  function advance(dt){minutes+=dt;const farm=built.FarmBuilding||0;if(farm){const wheatPerMinute=[0,1.5,4/1.5,6][farm];inventory[key('Wheat')]=(inventory[key('Wheat')]||0)+dt*wheatPerMinute;}}
- function trip(i,tutorial=false){runs[i]++;advance(tutorial?5:runMinutes[i]);const l=levels[i],bonus=(built.StorageBuilding||0)*5;
+ function trip(i,tutorial=false){runs[i]++;advance(tutorial?5:runMinutes[i]);const l=levels[i],bonus=rewardBonus();
   for(const[id,n]of Object.entries(tutorial?tutorialRewards:l.rewards))inventory[key(id)]=(inventory[key(id)]||0)+n+Math.floor(n*bonus/100);
   if(!tutorial)for(const[id,n]of Object.entries(l.mining))inventory[key(id)]=(inventory[key(id)]||0)+n*fraction;
   if(!tutorial)for(const[id,n]of Object.entries(l.enemyDrops))inventory[key(id)]=(inventory[key(id)]||0)+n*lootFraction;
@@ -119,7 +120,7 @@ function route(fraction,runMinutes,lootFraction=.75){
   if((inventory[k]||0)+1e-7>=n){inventory[k]-=n;return;}
   if(Object.keys(item.cost).length){if(owners[id])build(...owners[id]);while((inventory[k]||0)+1e-7<n){const count=item.stackable?Math.ceil((n-(inventory[k]||0))/item.output):1;for(const[input,q]of Object.entries(item.cost))need(input,q*count);inventory[k]=(inventory[k]||0)+item.output*count;advance(item.seconds/60);craftMinutes+=item.seconds/60;jobs++;}}
   else if(id==='Wheat'){if(!built.FarmBuilding)build('FarmBuilding',1);advance((n-(inventory[k]||0))/[0,1.5,4/1.5,6][built.FarmBuilding]);}
-  else{let best=-1,bestRate=0;for(let i=0;i<=allowed;i++){const l=levels[i];let amount=0;for(const[x,q]of Object.entries(l.rewards))if(key(x)===k)amount+=q+Math.floor(q*(built.StorageBuilding||0)*.05);for(const[x,q]of Object.entries(l.mining))if(key(x)===k)amount+=q*fraction;for(const[x,q]of Object.entries(l.enemyDrops))if(key(x)===k)amount+=q*lootFraction;if(amount/runMinutes[i]>bestRate){best=i;bestRate=amount/runMinutes[i];}}if(best<0)throw Error('Unavailable '+id);let guard=0;while((inventory[k]||0)+1e-7<n){trip(best);if(++guard>1000)throw Error('Trip overflow');}}
+  else{let best=-1,bestRate=0;for(let i=0;i<=allowed;i++){const l=levels[i];let amount=0;for(const[x,q]of Object.entries(l.rewards))if(key(x)===k)amount+=q+Math.floor(q*rewardBonus()/100);for(const[x,q]of Object.entries(l.mining))if(key(x)===k)amount+=q*fraction;for(const[x,q]of Object.entries(l.enemyDrops))if(key(x)===k)amount+=q*lootFraction;if(amount/runMinutes[i]>bestRate){best=i;bestRate=amount/runMinutes[i];}}if(best<0)throw Error('Unavailable '+id);let guard=0;while((inventory[k]||0)+1e-7<n){trip(best);if(++guard>1000)throw Error('Trip overflow');}}
   inventory[k]=(inventory[k]||0)-n;
  }
  const checkpoint=name=>checkpoints[name]={minutes:Number(minutes.toFixed(1)),runs:[...runs],trips:runs.reduce((a,b)=>a+b,0),craftJobs:jobs,craftMinutes:Number(craftMinutes.toFixed(1))};

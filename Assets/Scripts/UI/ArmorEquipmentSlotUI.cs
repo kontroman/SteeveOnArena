@@ -45,11 +45,14 @@ namespace MineArena.UI
         public void SetArmor(ArmorConfig armor)
         {
             _armor = armor;
+            var placeholder = transform.Find("EmptyShieldIcon");
+            if (placeholder != null) placeholder.gameObject.SetActive(armor == null);
             EnsureIcon();
 
             if (_icon == null)
                 return;
 
+            ItemDurabilityBar.Bind(gameObject, armor);
             _icon.sprite = armor != null ? armor.Icon : null;
             _icon.enabled = armor != null && armor.Icon != null;
             _icon.gameObject.SetActive(_icon.enabled);

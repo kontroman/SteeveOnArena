@@ -1,0 +1,87 @@
+PASS Real resource and durable equipment configs resolve
+PASS Quick-slot items cannot be deposited, including partial stacks
+PASS Quick slot 0 protects its item regardless of selected slot
+PASS Quick slot 1 protects its item regardless of selected slot
+PASS Quick slot 2 protects its item regardless of selected slot
+PASS Quick slot 3 protects its item regardless of selected slot
+PASS Quick slot 4 protects its item regardless of selected slot
+PASS Equipped slot Helmet protects its item
+PASS Equipped slot Chest protects its item
+PASS Equipped slot Leggings protects its item
+PASS Equipped slot Boots protects its item
+PASS Equipped slot OffHand protects its item
+PASS Partial deposit conserves quantities
+PASS Full deposit merges storage stack and removes carried resource
+PASS Empty carried stack clears quick slot
+PASS Missing or invalid quantities cannot duplicate items
+PASS Withdraw one item
+PASS Forged or stale storage entry is rejected
+PASS Mismatched config is rejected
+PASS Withdraw whole stack restores original total
+PASS Repeated withdrawal cannot duplicate the removed stack
+PASS Overflow leaves both containers unchanged
+PASS Deposit overflow is atomic
+PASS Equipped shield cannot be deposited even with a reserve; wear remains unchanged
+PASS Unequipped quick-slot equipment is still protected
+PASS Unequipped item can be deposited after removing quick-slot assignment
+PASS Deposit preserves worn copy and exposes pristine reserve
+PASS Depositing equipment clears armor and quick slot even with a reserve
+PASS Two independently worn copies can coexist in the inventory
+PASS Player save round trip preserves current wear and storage
+PASS Save round trip preserves reserve wear and deposit promotes it
+PASS Each equipment copy gets its own storage entry
+PASS Two worn shields remain separate
+PASS Breaking the active copy retains reserve wear
+PASS Clearing carried inventory does not erase storage
+PASS Old saves initialize an empty storage
+PASS Starter pickaxe cannot be stranded in storage
+PASS Unbuilt storage rejects deposits
+PASS First stack occupies one slot
+PASS Level-one equipment slot 2
+PASS Level-one equipment slot 3
+PASS Level-one equipment slot 4
+PASS Level-one equipment slot 5
+PASS Level-one equipment slot 6
+PASS Level-one equipment slot 7
+PASS Level-one equipment slot 8
+PASS Level-one equipment slot 9
+PASS Level-one equipment slot 10
+PASS Level-one equipment slot 11
+PASS Level-one equipment slot 12
+PASS Level-one equipment slot 13
+PASS Level-one equipment slot 14
+PASS Level-one equipment slot 15
+PASS Level-one equipment slot 16
+PASS Level-one equipment slot 17
+PASS Level-one equipment slot 18
+PASS Full storage rejects new item atomically
+PASS Existing stack can grow in full storage
+PASS Upgrade immediately permits a new slot
+PASS Old over-capacity saves retain all items and reject new slots
+PASS Over-capacity items can always be withdrawn
+PASS Storage prefab binding _inventoryContent
+PASS Storage prefab binding _storageContent
+PASS Storage prefab binding _cellTemplate
+PASS Storage prefab binding _inventoryCount
+PASS Storage prefab binding _storageCount
+PASS Storage prefab binding _storageEmpty
+PASS Storage prefab binding _storageBuilding
+PASS Protected item cannot start a drag or transfer by click
+PASS Drop rechecks protection and cannot bypass it
+PASS Removing quick-slot assignment enables dragging immediately
+PASS Equipped and quick-slot items are omitted from transfer panel
+PASS Unequipped items return to transfer panel
+PASS Level one shows 18 open slots and 12 locked slots
+PASS Dropping on locked slot cannot transfer even with free slots
+PASS Visible cells have click and drag controls
+PASS Window transfer refreshes both panels through InventoryUpdated
+PASS Drag across panels deposits whole stack
+PASS Drag within same panel does not transfer
+PASS Drag onto empty opposite viewport withdraws items
+PASS Storage durability bar reads stored copy rather than inventory
+PASS Built storage retains upgrade button
+PASS Storage no longer grants expedition rewards
+PASS Level two opens six more slots
+PASS Level three unlocks all 30 slots
+PASS Maximum level hides upgrade button
+PASS Unbuilt storage cannot transfer items

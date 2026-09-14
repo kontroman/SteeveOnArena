@@ -85,7 +85,7 @@ const buildings={
 for(const [id,levels] of Object.entries(buildings)) edit(paths[id],s=> {
  const models=[...s.matchAll(/^    _modelPrefab: (.+)$/gm)].map(m=>m[1]);
  const previews=[...s.matchAll(/^    _preview: (.+)$/gm)].map(m=>m[1]);
- const blocks=levels.map(([cost,unlocks],i)=>`  - _level: ${i+1}\n    _requiredResources:\n${costs(cost,'    ')}\n    _unlocks:${unlocks.length?'\n'+unlocks.map(u=>'    - '+ref(u)).join('\n'):' []'}\n    _modelPrefab: ${models[Math.min(i,models.length-1)]}\n    _preview: ${previews[Math.min(i,previews.length-1)]}\n    _craftOutputBonus: ${['FarmBuilding','AlchemyBuilding'].includes(id)?i:0}\n    _expeditionRewardBonusPercent: ${id==='StorageBuilding'?(i+1)*5:0}`);
+ const blocks=levels.map(([cost,unlocks],i)=>`  - _level: ${i+1}\n    _requiredResources:\n${costs(cost,'    ')}\n    _unlocks:${unlocks.length?'\n'+unlocks.map(u=>'    - '+ref(u)).join('\n'):' []'}\n    _modelPrefab: ${models[Math.min(i,models.length-1)]}\n    _preview: ${previews[Math.min(i,previews.length-1)]}\n    _craftOutputBonus: ${['FarmBuilding','AlchemyBuilding'].includes(id)?i:0}\n    _expeditionRewardBonusPercent: 0\n    _storageSlots: ${id==='StorageBuilding'?[18,24,30][i]:0}`);
  s=s.replace(/  _levels:[\s\S]*?(?=  _currentLevel:)/,'  _levels:\n'+blocks.join('\n')+'\n');
  if(id==='AlchemyBuilding') s=field(s,'_buildingName',JSON.stringify('Алхимическая лаборатория'));
  return s;

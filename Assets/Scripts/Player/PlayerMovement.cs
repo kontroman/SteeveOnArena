@@ -251,6 +251,7 @@ namespace MineArena.PlayerSystem
 
         private void RotatePlayer(Vector3 moveDirection)
         {
+            if (GetComponent<PlayerShield>()?.IsAimingBlock == true) return;
             if (_playerAttack != null && _playerAttack.IsAttacking)
                 return;
 

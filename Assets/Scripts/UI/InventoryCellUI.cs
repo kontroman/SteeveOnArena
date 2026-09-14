@@ -21,6 +21,12 @@ namespace MineArena.UI
 
         public Items.Item Item => _item;
         public bool HasItem => _item != null;
+        public void ShowStoredTransferCount(int amount)
+        {
+            if (_counter == null) return;
+            _counter.text = amount.ToString();
+            _counter.enabled = amount > 1;
+        }
         public Image Icon => _icon;
         public RectTransform ActiveIconRectTransform => _usesBlockableIcon && _blockableIconRectTransform != null ? _blockableIconRectTransform : _iconRectTransform;
         public CanvasGroup ActiveIconCanvasGroup => _usesBlockableIcon && _blockableCanvasGroup != null ? _blockableCanvasGroup : _iconCanvasGroup;
@@ -59,6 +65,7 @@ namespace MineArena.UI
         {
             Initialize();
             _item = item;
+            ItemDurabilityBar.Bind(gameObject, item?.Name);
             bool useBlockableIcon = ShouldUseBlockableIcon(item);
             _usesBlockableIcon = useBlockableIcon;
 
@@ -113,6 +120,7 @@ namespace MineArena.UI
         {
             Initialize();
             _item = null;
+            ItemDurabilityBar.Bind(gameObject, (ArmorConfig)null);
             _usesBlockableIcon = false;
 
             if (_icon2 != null)
@@ -137,6 +145,7 @@ namespace MineArena.UI
         public void ClearItemPreserveIcon()
         {
             _item = null;
+            ItemDurabilityBar.Bind(gameObject, (ArmorConfig)null);
             _usesBlockableIcon = false;
 
             if (_icon2 != null)

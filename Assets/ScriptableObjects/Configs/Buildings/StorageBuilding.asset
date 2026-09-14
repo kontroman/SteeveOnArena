@@ -24,7 +24,8 @@ MonoBehaviour:
     _modelPrefab: {fileID: 299713464059821661, guid: 942ecdfa5a1507c46bc55d3cbfbf535e, type: 3}
     _preview: {fileID: 21300000, guid: 322511bac4b37824e909cd41250f9764, type: 3}
     _craftOutputBonus: 0
-    _expeditionRewardBonusPercent: 5
+    _expeditionRewardBonusPercent: 0
+    _storageSlots: 18
     _production: []
     _productionSeconds: 60
   - _level: 2
@@ -39,7 +40,8 @@ MonoBehaviour:
     _modelPrefab: {fileID: 299713464059821661, guid: 942ecdfa5a1507c46bc55d3cbfbf535e, type: 3}
     _preview: {fileID: 21300000, guid: d8fef14b2c0db9240a9f8b7a4b0c237b, type: 3}
     _craftOutputBonus: 0
-    _expeditionRewardBonusPercent: 10
+    _expeditionRewardBonusPercent: 0
+    _storageSlots: 24
     _production: []
     _productionSeconds: 60
   - _level: 3
@@ -54,7 +56,8 @@ MonoBehaviour:
     _modelPrefab: {fileID: 299713464059821661, guid: 942ecdfa5a1507c46bc55d3cbfbf535e, type: 3}
     _preview: {fileID: 21300000, guid: cfce91dfa7d836c40815bba031675f80, type: 3}
     _craftOutputBonus: 0
-    _expeditionRewardBonusPercent: 15
+    _expeditionRewardBonusPercent: 0
+    _storageSlots: 30
     _production: []
     _productionSeconds: 60
   _currentLevel: 0

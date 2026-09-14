@@ -54,7 +54,9 @@ namespace MineArena.Windows.Crafting
         [SerializeField] private GameObject _batchControls;
         [SerializeField] private Button _singleBatchButton;
         [SerializeField] private Button _allBatchesButton;
-        private bool _craftAll;
+        [SerializeField] private Button _fiveBatchesButton;
+        [SerializeField] private Button _tenBatchesButton;
+        private int _requestedBatches = 1;
         private int _selectedBatches = 1;
         public Transform TutorialTarget => _craftButton != null ? _craftButton.transform : null;
         [SerializeField] private Image _craftButtonImage;
@@ -284,7 +286,7 @@ namespace MineArena.Windows.Crafting
             else if (_selectedRecipe != null)
             {
                 _craftButtonLabel.text = $"Создать ×{_adapter.GetCraftAmount(_selectedRecipe) * _selectedBatches} · {_selectedRecipe.Item.CraftSeconds:0.#} с";
-                _craftButton.interactable = _adapter.CanCraft(_selectedRecipe);
+                _craftButton.interactable = CanCraftSelectedBatch();
             }
         }
 
@@ -795,7 +797,7 @@ namespace MineArena.Windows.Crafting
 
         private void SelectRecipe(CraftingRecipeEntry recipe)
         {
-            _craftAll = false;
+            _requestedBatches = 1;
             _selectedRecipe = recipe;
             _resultText.text = string.Empty;
             RefreshItemStates();
@@ -860,7 +862,7 @@ namespace MineArena.Windows.Crafting
                 if (text.name == "CostsTitle") text.text = _selectedRecipe.IsProduction ? "ВЫРАЩИВАНИЕ" : "НУЖНЫЕ РЕСУРСЫ";
 
             var unlocked = _adapter.IsUnlocked(_selectedRecipe);
-            var canCraft = _adapter.CanCraft(_selectedRecipe);
+            var canCraft = CanCraftSelectedBatch();
 
             if (_selectedRecipe.HasBuildingRequirement)
             {
@@ -986,29 +988,44 @@ namespace MineArena.Windows.Crafting
             RefreshDetails();
         }
 
-        private void SelectSingleBatch() { _craftAll = false; RefreshDetails(); RefreshCraftProgress(); }
-        private void SelectAllBatches() { _craftAll = true; RefreshDetails(); RefreshCraftProgress(); }
+        private bool CanCraftSelectedBatch() => _adapter.CanCraft(_selectedRecipe)
+            && _adapter.GetMaxBatches(_selectedRecipe) >= _selectedBatches;
+
+        private void SelectBatch(int batches)
+        {
+            _requestedBatches = batches;
+            RefreshDetails();
+            RefreshCraftProgress();
+        }
+
+        private void SelectSingleBatch() => SelectBatch(1);
+        private void SelectFiveBatches() => SelectBatch(5);
+        private void SelectTenBatches() => SelectBatch(10);
+        private void SelectAllBatches() => SelectBatch(0);
 
         private void RefreshBatchControls()
         {
             bool visible = _selectedRecipe != null && _selectedRecipe.Item.Stackable && !_selectedRecipe.IsProduction && !MineArena.Managers.TutorialService.Active;
             if (_batchControls != null) _batchControls.SetActive(visible);
             int max = visible ? _adapter.GetMaxBatches(_selectedRecipe) : 1;
-            _selectedBatches = visible && _craftAll ? Mathf.Max(1, max) : 1;
-            if (_singleBatchButton == null || _allBatchesButton == null) return;
-            _singleBatchButton.onClick.RemoveListener(SelectSingleBatch);
-            _singleBatchButton.onClick.AddListener(SelectSingleBatch);
-            _allBatchesButton.onClick.RemoveListener(SelectAllBatches);
-            _allBatchesButton.onClick.AddListener(SelectAllBatches);
-            _singleBatchButton.interactable = _adapter.ActiveJob == null;
-            _allBatchesButton.interactable = _adapter.ActiveJob == null && max > 1;
-            _singleBatchButton.GetComponentInChildren<TMP_Text>().text = "×1";
-            _allBatchesButton.GetComponentInChildren<TMP_Text>().text = "Всё · " + max;
-            var selected = new Color32(88, 127, 121, 255);
-            _singleBatchButton.targetGraphic.color = _craftAll ? Color.white : selected;
-            _allBatchesButton.targetGraphic.color = _craftAll ? selected : Color.white;
-            _singleBatchButton.GetComponentInChildren<TMP_Text>().color = _craftAll ? new Color32(81, 71, 55, 255) : Color.white;
-            _allBatchesButton.GetComponentInChildren<TMP_Text>().color = _craftAll ? Color.white : new Color32(81, 71, 55, 255);
+            _selectedBatches = !visible ? 1 : _requestedBatches == 0 ? Mathf.Max(1, max) : _requestedBatches;
+            RefreshBatchButton(_singleBatchButton, 1, "×1", max, SelectSingleBatch);
+            RefreshBatchButton(_fiveBatchesButton, 5, "×5", max, SelectFiveBatches);
+            RefreshBatchButton(_tenBatchesButton, 10, "×10", max, SelectTenBatches);
+            RefreshBatchButton(_allBatchesButton, 0, "ВСЕ", max, SelectAllBatches);
+        }
+
+        private void RefreshBatchButton(Button button, int batches, string label, int max, UnityEngine.Events.UnityAction onClick)
+        {
+            if (button == null) return;
+            button.onClick.RemoveListener(onClick);
+            button.onClick.AddListener(onClick);
+            button.interactable = _adapter.ActiveJob == null && max >= Mathf.Max(1, batches);
+            bool selected = _requestedBatches == batches;
+            button.targetGraphic.color = selected ? new Color32(88, 127, 121, 255) : Color.white;
+            var text = button.GetComponentInChildren<TMP_Text>();
+            text.text = label;
+            text.color = selected ? Color.white : new Color32(81, 71, 55, 255);
         }
 
         private CraftingCategory ResolveInitialCategory(BuildingConfig initialBuilding)

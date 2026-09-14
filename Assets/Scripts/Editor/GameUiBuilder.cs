@@ -249,7 +249,7 @@ namespace MineArena.Editor
             Box((RectTransform)kept[0], 536, 170, 704, 486);
             var grid = kept[0].GetComponent<GridLayoutGroup>();
             grid.cellSize = new Vector2(90, 86); grid.spacing = new Vector2(10, 12); grid.constraint = GridLayoutGroup.Constraint.FixedColumnCount; grid.constraintCount = 7;
-            for (int i = 1; i <= 4; i++) Box((RectTransform)kept[i], 38, 181 + (i - 1) * 114, 90, 90);
+            ShieldBuilder.ArrangeEquipment(root);
             Box((RectTransform)kept[5], 154, 170, 332, 490);
             foreach (var raw in kept[5].GetComponentsInChildren<RawImage>(true)) if (raw.texture == null) raw.color = Color.clear;
             Text("Hint", frame, "Перетаскивайте предметы в слоты экипировки и на панель быстрого доступа.", 21, 38, 704, 1190, 60).enableWordWrapping = true;
@@ -539,9 +539,10 @@ namespace MineArena.Editor
             var costList = costs.gameObject.AddComponent<VerticalLayoutGroup>(); costList.spacing = 8; costList.childControlWidth = true; costList.childForceExpandWidth = true; costList.childControlHeight = false; costList.childForceExpandHeight = false;
             var result = Text("Result", right, "", 20, 24, 412, 526, 42); result.enableWordWrapping = true;
             var batch = Rect("BatchControls", right); Box(batch, 24, 456, 526, 38);
-            var singleBatch = Button("SingleBatch", batch, "×1", 0, 0, 112, 38, false);
-            var allBatches = Button("AllBatches", batch, "Всё", 124, 0, 210, 38, false);
-            Text("BatchDuration", batch, "Один таймер", 17, 350, 0, 176, 38);
+            var singleBatch = Button("SingleBatch", batch, "×1", 0, 0, 124, 38, false);
+            var fiveBatches = Button("FiveBatches", batch, "×5", 134, 0, 124, 38, false);
+            var tenBatches = Button("TenBatches", batch, "×10", 268, 0, 124, 38, false);
+            var allBatches = Button("AllBatches", batch, "ВСЕ", 402, 0, 124, 38, false);
             var craft = Button("Craft", right, "Создать", 24, 502, 526, 58);
             var empty = Text("EmptyState", right, "Нет доступных рецептов", 24, 24, 180, 526, 60); empty.gameObject.SetActive(false);
             Set(window, "_rootImage", root.GetComponent<Image>(), "_windowPanelImage", frame.GetComponent<Image>(), "_windowPanel", frame,
@@ -549,7 +550,7 @@ namespace MineArena.Editor
                 "_listViewportImage", recipes.viewport.GetComponent<Image>(), "_itemsRoot", recipes.content, "_costsRoot", costs, "_detailIconSlotImage", slot.GetComponent<Image>(),
                 "_detailIcon", icon, "_detailResourceIcon", block, "_detailName", name, "_detailDescription", description, "_detailRequirement", requirement,
                 "_emptyState", empty, "_resultText", result, "_craftButton", craft, "_craftButtonImage", craft.GetComponent<Image>(), "_craftButtonLabel", craft.GetComponentInChildren<TMP_Text>(),
-                "_batchControls", batch.gameObject, "_singleBatchButton", singleBatch, "_allBatchesButton", allBatches,
+                "_batchControls", batch.gameObject, "_singleBatchButton", singleBatch, "_fiveBatchesButton", fiveBatches, "_tenBatchesButton", tenBatches, "_allBatchesButton", allBatches,
                 "_resourceIconPrefab", AssetDatabase.LoadAssetAtPath<ResourceIcon>("Assets/Prefabs/Windows/ResourceIcon.prefab"),
                 "_panelSprite", S("panel"), "_panelInsetSprite", S("inset"), "_slotSprite", S("slot"), "_slotSelectedSprite", S("selected"),
                 "_buttonSprite", S("card"), "_buttonSelectedSprite", S("selected"), "_buttonDisabledSprite", S("inset"), "_craftButtonSprite", S("button"), "_placeholderIconSprite", S("slot"));

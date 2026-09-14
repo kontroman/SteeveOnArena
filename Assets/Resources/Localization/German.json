@@ -1692,17 +1692,93 @@
       "key": "Вариант",
       "value": "Option"
     },
-    {"key": "???? +{0} ? ?????.", "value": "Gew?hrt +{0} R?stung."},
-    {"key": "????: {0:0.##}.", "value": "Schaden: {0:0.##}."},
-    {"key": "????? ??????: {0:0.##} ?.", "value": "Abbauzeit: {0:0.##} s."},
-    {"key":"Arena.GoToPortal","value":"Geh zum Portal"},
-    {"key": "Arena.ReturnToLevel", "value": "Zurück"},
-    {"key":"Arena.NextWave","value":"Welle in {0}s"},
-    {"key":"Arena.Exit","value":"Arena verlassen"},
-    {"key":"Arena.ExitTitle","value":"Arena verlassen?"},
-    {"key":"Arena.ExitWarning","value":"Wenn du die Arena vorzeitig ohne das Portal verlässt, verlierst du alle hier gesammelten Ressourcen."},
-    {"key":"Arena.Stay","value":"Bleiben"},
-    {"key":"Arena.ConfirmExit","value":"Gehen und Beute verlieren"},
-    {"key":"Не выполнено","value":"Nicht abgeschlossen"}
+    {
+      "key": "???? +{0} ? ?????.",
+      "value": "Gew?hrt +{0} R?stung."
+    },
+    {
+      "key": "????: {0:0.##}.",
+      "value": "Schaden: {0:0.##}."
+    },
+    {
+      "key": "????? ??????: {0:0.##} ?.",
+      "value": "Abbauzeit: {0:0.##} s."
+    },
+    {
+      "key": "Arena.GoToPortal",
+      "value": "Geh zum Portal"
+    },
+    {
+      "key": "Arena.ReturnToLevel",
+      "value": "Zurück"
+    },
+    {
+      "key": "Arena.NextWave",
+      "value": "Welle in {0}s"
+    },
+    {
+      "key": "Arena.Exit",
+      "value": "Arena verlassen"
+    },
+    {
+      "key": "Arena.ExitTitle",
+      "value": "Arena verlassen?"
+    },
+    {
+      "key": "Arena.ExitWarning",
+      "value": "Wenn du die Arena vorzeitig ohne das Portal verlässt, verlierst du alle hier gesammelten Ressourcen."
+    },
+    {
+      "key": "Arena.Stay",
+      "value": "Bleiben"
+    },
+    {
+      "key": "Arena.ConfirmExit",
+      "value": "Gehen und Beute verlieren"
+    },
+    {
+      "key": "Не выполнено",
+      "value": "Nicht abgeschlossen"
+    },
+    {
+      "key": "Storage.TransferHint",
+      "value": "Klick: Stapel • Rechtsklick: ein Stück • Ziehen zum Verschieben"
+    },
+    {
+      "key": "Storage.CraftingHint",
+      "value": "Gelagerte Dinge werden nicht zum Herstellen verwendet"
+    },
+    {
+      "key": "Storage.StarterPickaxe",
+      "value": "Die Startspitzhacke bleibt immer bei dir"
+    },
+    {
+      "key": "Storage.TransferFailed",
+      "value": "Gegenstand konnte nicht verschoben werden"
+    },
+    {
+      "key": "Storage.Upgrade",
+      "value": "Lager verbessern"
+    },
+    {
+      "key": "Storage.EquippedProtected",
+      "value": "Gegenstand zuerst ablegen oder aus der Schnellleiste entfernen"
+    },
+    {
+      "key": "Storage.UnlockHint",
+      "value": "Verbessere das Lager, um weitere Plätze freizuschalten"
+    },
+    {
+      "key": "Storage.Full",
+      "value": "Lager voll. Schaffe Platz oder verbessere das Lager"
+    },
+    {
+      "key": "Storage.UpgradeDescription",
+      "value": "Verbesserungen schalten zusätzliche Lagerplätze frei."
+    },
+    {
+      "key": "Storage.Capacity",
+      "value": "Lagerplätze: {0}"
+    }
   ]
 }

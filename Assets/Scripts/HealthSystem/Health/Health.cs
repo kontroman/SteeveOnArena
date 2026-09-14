@@ -62,6 +62,7 @@ namespace MineArena.Game.Health
                     return;
             }
 #endif
+            if (GetComponent<PlayerShield>() is PlayerShield shield && shield.TryBlock(damageData)) return;
             var damageToApply = damageData.Damage;
 
             if (damageToApply > 0f)

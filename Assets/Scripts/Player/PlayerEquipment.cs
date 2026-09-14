@@ -33,6 +33,8 @@ namespace MineArena.PlayerSystem
         [SerializeField] private ArmorConfig _chest;
         [SerializeField] private ArmorConfig _leggings;
         [SerializeField] private ArmorConfig _boots;
+        [SerializeField] private ArmorConfig _shield;
+        public ArmorConfig Shield => _shield;
 
         [Header("Armor visuals (existing on character)")]
         [SerializeField] private ArmorVisual _helmetVisual;
@@ -55,6 +57,7 @@ namespace MineArena.PlayerSystem
 
             _animator = _animatorController ?? GetComponent<IPlayerAnimator>();
             ResolveHandItemReferences();
+            if (GetComponent<PlayerShield>() == null) gameObject.AddComponent<PlayerShield>();
             LoadArmorFromProgress();
 
             UpdateHandAnimatorState();
@@ -113,6 +116,10 @@ namespace MineArena.PlayerSystem
 
             switch (armor.Slot)
             {
+                case ArmorSlot.OffHand:
+                    _shield = armor;
+                    ArmorChanged?.Invoke(ArmorSlot.OffHand, armor);
+                    break;
                 case ArmorSlot.Helmet:
                     _helmet = armor;
                     ApplyArmorVisual(_helmetVisual, _helmet);
@@ -144,6 +151,10 @@ namespace MineArena.PlayerSystem
 
             switch (slot)
             {
+                case ArmorSlot.OffHand:
+                    removedArmor = _shield;
+                    _shield = null;
+                    break;
                 case ArmorSlot.Helmet:
                     removedArmor = _helmet;
                     _helmet = null;
@@ -187,6 +198,7 @@ namespace MineArena.PlayerSystem
                 ArmorSlot.Chest => _chest,
                 ArmorSlot.Leggings => _leggings,
                 ArmorSlot.Boots => _boots,
+                ArmorSlot.OffHand => _shield,
                 _ => null
             };
         }
@@ -331,6 +343,7 @@ namespace MineArena.PlayerSystem
             if (progress == null)
                 return;
 
+            _shield = ResolveSavedArmor(progress.GetEquippedArmorItemId(ArmorSlot.OffHand.ToString()), ArmorSlot.OffHand);
             _helmet = ResolveSavedArmor(progress.GetEquippedArmorItemId(ArmorSlot.Helmet.ToString()), ArmorSlot.Helmet);
             _chest = ResolveSavedArmor(progress.GetEquippedArmorItemId(ArmorSlot.Chest.ToString()), ArmorSlot.Chest);
             _leggings = ResolveSavedArmor(progress.GetEquippedArmorItemId(ArmorSlot.Leggings.ToString()), ArmorSlot.Leggings);
@@ -359,6 +372,7 @@ namespace MineArena.PlayerSystem
 
         private void NotifyAllArmorChanged()
         {
+            ArmorChanged?.Invoke(ArmorSlot.OffHand, _shield);
             ArmorChanged?.Invoke(ArmorSlot.Helmet, _helmet);
             ArmorChanged?.Invoke(ArmorSlot.Chest, _chest);
             ArmorChanged?.Invoke(ArmorSlot.Leggings, _leggings);

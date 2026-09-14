@@ -188,13 +188,13 @@ namespace Devotion.SDK.UI
             {
                 new("NetheriteHelmet", "Незеритовый шлем", FortuneWheelRewardType.UniqueItem, 2, 1, FortuneWheelRewardRarity.Legendary,
                     new[] { "NetheriteHelmet", "NetheriteChestplate", "NetheriteLeggings", "NetheriteBoots", "NetheritheSword", "NetherithePickaxe" }),
-                new("IronOre", "Железо x15", FortuneWheelRewardType.StackableItem, 65, 15, FortuneWheelRewardRarity.Common),
+                new("IronIngot", "Железные слитки x15", FortuneWheelRewardType.StackableItem, 65, 15, FortuneWheelRewardRarity.Common),
                 new("DiamondSword", "Алмазный меч", FortuneWheelRewardType.UniqueItem, 4, 1, FortuneWheelRewardRarity.Epic,
                     new[] { "DiamondSword", "DiamondPickaxe" }),
-                new("GoldOre", "Золото x10", FortuneWheelRewardType.StackableItem, 15, 10, FortuneWheelRewardRarity.Common),
-                new("Diamond Armor", "Алмазная броня", FortuneWheelRewardType.UniqueItem, 4, 1, FortuneWheelRewardRarity.Epic,
+                new("GoldIngot", "Золотые слитки x10", FortuneWheelRewardType.StackableItem, 15, 10, FortuneWheelRewardRarity.Common),
+                new("Diamond Armor", "Алмазный нагрудник", FortuneWheelRewardType.UniqueItem, 4, 1, FortuneWheelRewardRarity.Epic,
                     new[] { "Diamond Helmet", "Diamond Armor", "Diamond Leggings", "Diamond Boots" }),
-                new("DiamondOre", "Алмазы x5", FortuneWheelRewardType.StackableItem, 10, 5, FortuneWheelRewardRarity.Uncommon)
+                new("DiamondOre", "Алмазная руда x5", FortuneWheelRewardType.StackableItem, 10, 5, FortuneWheelRewardRarity.Uncommon)
             };
         }
 
@@ -633,7 +633,7 @@ namespace Devotion.SDK.UI
 
         public static FortuneWheelReward CreateCompensation(string itemId, int amount)
         {
-            return new FortuneWheelReward(itemId, $"Алмазы x{amount}", FortuneWheelRewardType.StackableItem, 1, amount, FortuneWheelRewardRarity.Uncommon);
+            return new FortuneWheelReward(itemId, $"Алмазная руда x{amount}", FortuneWheelRewardType.StackableItem, 1, amount, FortuneWheelRewardRarity.Uncommon);
         }
     }
 }

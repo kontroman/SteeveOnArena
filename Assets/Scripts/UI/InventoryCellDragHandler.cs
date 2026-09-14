@@ -16,6 +16,7 @@ namespace MineArena.UI
         [SerializeField] private Canvas _canvas;
 
         private InventoryCellUI _cellUI;
+        private Item _draggedItem;
         private Canvas _rootCanvas;
         private RectTransform _rootCanvasRect;
         private RectTransform _draggedVisual;
@@ -47,6 +48,9 @@ namespace MineArena.UI
             if (_cellUI == null || !_cellUI.HasItem)
                 return;
 
+            var storage = GetComponentInParent<MineArena.Windows.StorageWindow>();
+            if (storage != null && !storage.CanStartTransfer(_cellUI)) return;
+
             ResolveCanvasReferences();
             if (_rootCanvasRect == null)
                 return;
@@ -60,6 +64,7 @@ namespace MineArena.UI
                 return;
 
             PrepareDraggedVisual(sourceRect, _draggedVisual);
+            _draggedItem = _cellUI.Item;
             UpdateDraggedVisualPosition(eventData);
 
             _originalIconCanvasGroup = _cellUI.ActiveIconCanvasGroup;
@@ -90,6 +95,15 @@ namespace MineArena.UI
 
             var raycastResults = new List<RaycastResult>();
             EventSystem.current.RaycastAll(eventData, raycastResults);
+
+            var storage = GetComponentInParent<MineArena.Windows.StorageWindow>();
+            if (storage != null)
+            {
+                storage.TryDrop(_cellUI, _draggedItem, raycastResults);
+                CleanupDraggedVisual();
+                RestoreOriginalIconVisual();
+                return;
+            }
 
             var dropTarget = FindDropTarget(raycastResults);
             if (dropTarget != null && dropTarget.TryDropInventoryItem(_cellUI.Item))
@@ -182,6 +196,13 @@ namespace MineArena.UI
                 Destroy(_draggedVisual.gameObject);
                 _draggedVisual = null;
             }
+        }
+
+        private void OnDisable()
+        {
+            CleanupDraggedVisual();
+            RestoreOriginalIconVisual();
+            _draggedItem = null;
         }
 
         private void RestoreOriginalIconVisual()

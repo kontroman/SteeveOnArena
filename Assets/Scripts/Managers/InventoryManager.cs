@@ -380,7 +380,7 @@ namespace MineArena.Managers
             return string.Equals(left, right, StringComparison.OrdinalIgnoreCase);
         }
 
-        private static Item CreateItemFromConfig(ItemConfig config, int amount = 1)
+        public static Item CreateItemFromConfig(ItemConfig config, int amount = 1)
         {
             if (config == null)
                 return null;

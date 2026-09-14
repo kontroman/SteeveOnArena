@@ -14,6 +14,17 @@ namespace MineArena.PlayerSystem
                 && _currentPriority >= priority;
         }
 
+        // Continuous aiming owns facing for this frame, without allocating a tween per mouse move.
+        public void FaceDirection(Vector3 direction, int priority)
+        {
+            direction.y = 0;
+            if (priority < _currentPriority || direction.sqrMagnitude < .0001f) return;
+            _activeTween?.Kill();
+            _activeTween = null;
+            _currentPriority = 0;
+            transform.rotation = Quaternion.LookRotation(direction);
+        }
+
         //TODO: think about callback action
         public void RotateToDirection(Vector3 direction, int priority, float duration)
         {

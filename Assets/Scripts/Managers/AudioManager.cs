@@ -123,6 +123,12 @@ namespace MineArena.Managers
             _effectSource.PlayOneShot(clip, Mathf.Max(0f, _music.GetEffectVolume(name)) * Mathf.Clamp01(volumeScale));
         }
 
+        public void PlayEffect(AudioClip clip, float volumeScale = 1f)
+        {
+            if (clip != null && _effectSource != null)
+                _effectSource.PlayOneShot(clip, Mathf.Clamp01(volumeScale));
+        }
+
         public void PlayRandomEffect(string[] names, float volumeScale = 1f)
         {
             if (names == null || names.Length == 0)

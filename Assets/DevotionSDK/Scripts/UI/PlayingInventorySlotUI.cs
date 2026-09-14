@@ -94,6 +94,7 @@ namespace Devotion.SDK.UI
 
         public void SetItem(Item item, Sprite fallbackSprite)
         {
+            ItemDurabilityBar.Bind(gameObject, item?.Name);
             if (item == null)
             {
                 ClearItem();
@@ -120,6 +121,7 @@ namespace Devotion.SDK.UI
 
         public void ClearItem()
         {
+            ItemDurabilityBar.Bind(gameObject, (ArmorConfig)null);
             SetFlatIcon(null);
 
             if (_resourceIcon != null)

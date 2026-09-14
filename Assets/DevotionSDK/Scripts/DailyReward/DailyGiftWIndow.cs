@@ -53,7 +53,7 @@ namespace Devotion.SDK.UI
                 ResolveReferences();
             }
 
-            public void Refresh(int index, DailyRewardConfig config, int currentRewardIndex, Color claimedColor, Color currentColor, Color futureColor, bool canClaim, bool claimed)
+            public void Refresh(int index, DailyRewardConfig config, int currentRewardIndex, Color claimedColor, Color currentColor, Color futureColor, bool canClaim, bool claimed, string availableAt)
             {
                 var active = config != null && index < config.RewardsCount;
                 if (root != null)
@@ -70,7 +70,7 @@ namespace Devotion.SDK.UI
                 if (dayText != null)
                     dayText.text = $"День {index + 1}";
                 if (itemText != null) itemText.text = reward?.DisplayName;
-                if (statusText != null) statusText.text = index < currentRewardIndex ? "ПОЛУЧЕНО" : index == currentRewardIndex ? (canClaim ? "СЕГОДНЯ" : "СЛЕДУЮЩИЙ") : "СКОРО";
+                if (statusText != null) statusText.text = claimed ? "ПОЛУЧЕНО" : index == currentRewardIndex && canClaim ? "СЕГОДНЯ" : availableAt;
 
                 if (amountText != null)
                     amountText.text = reward != null ? $"x{reward.Amount}" : string.Empty;
@@ -127,6 +127,14 @@ namespace Devotion.SDK.UI
         private bool referencesResolved;
         private bool claimButtonBound;
         private bool closeButtonBound;
+        private float nextRefresh;
+
+        private void Update()
+        {
+            if (Time.unscaledTime < nextRefresh) return;
+            nextRefresh = Time.unscaledTime + 0.5f;
+            Refresh();
+        }
 
         public void Setup(DailyRewardManager rewardManager, DailyRewardConfig rewardsConfig, int currentRewardIndex)
         {
@@ -180,6 +188,7 @@ namespace Devotion.SDK.UI
 
         private void Refresh()
         {
+            if (manager != null) rewardIndex = manager.CurrentRewardIndex;
             if (titleText != null)
                 titleText.text = "Ежедневный подарок";
 
@@ -238,7 +247,10 @@ namespace Devotion.SDK.UI
                 if (slot == null)
                     continue;
 
-                slot.Refresh(i, config, rewardIndex, claimedSlotColor, currentSlotColor, futureSlotColor, manager != null && manager.CanClaim, manager != null && manager.IsRewardClaimed(i));
+                string availableAt = manager != null
+                    ? "Через " + PlaytimeGiftWindow.FormatRemaining((float)(manager.GetRewardAvailableAtLocal(i).ToUniversalTime() - System.DateTime.UtcNow).TotalSeconds)
+                    : string.Empty;
+                slot.Refresh(i, config, rewardIndex, claimedSlotColor, currentSlotColor, futureSlotColor, manager != null && manager.CanClaim, manager != null && manager.IsRewardClaimed(i), availableAt);
             }
         }
 

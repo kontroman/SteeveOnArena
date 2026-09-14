@@ -6,8 +6,9 @@ using static Devotion.SDK.Helpers.ContainersHelper;
 namespace Devotion.SDK.Services.SaveSystem.Progress
 {
     [Serializable]
-    public class InventoryProgress : BaseProgress
+    public partial class InventoryProgress : BaseProgress
     {
+        [SerializeField] private SerializableDictionary<string, int> itemDurability = new();
         private const int QuickSlotCount = 5;
         private const string StarterSwordItemId = "WoodSword";
 
@@ -125,12 +126,49 @@ namespace Devotion.SDK.Services.SaveSystem.Progress
             selectedQuickSlotIndex = 0;
         }
 
+        public int GetItemDurability(string id, int maximum)
+        {
+            if (string.IsNullOrEmpty(id) || !SavedResources.TryGetValue(id, out int owned) || owned <= 0) return 0;
+            itemDurability ??= new();
+            return itemDurability.TryGetValue(id, out int value) ? Mathf.Clamp(value, 0, maximum) : maximum;
+        }
+
+        // One displayed non-stackable item per ID; any reserve copies are pristine.
+        // Persist wear/removal and equipment/quick-slot cleanup together in one save.
+        public bool DamageDurableItem(string id, int loss, int maximum)
+        {
+            int current = GetItemDurability(id, maximum);
+            if (current <= 0 || loss <= 0) return false;
+            int remaining = Mathf.Max(0, current - loss);
+            if (remaining > 0) itemDurability[id] = remaining;
+            else
+            {
+                itemDurability.Remove(id);
+                if (SavedResources[id] > 1) SavedResources[id]--;
+                else { SavedResources.Remove(id); inventoryItemOrder?.Remove(id); }
+                PromoteReserveDurability(id);
+                var slots = new List<string>(EquippedArmorItemIds.Keys);
+                foreach (var slot in slots)
+                    if (EquippedArmorItemIds[slot] == id) EquippedArmorItemIds.Remove(slot);
+                EnsureQuickSlots();
+                for (int i = 0; i < quickSlotItemIds.Count; i++)
+                    if (quickSlotItemIds[i] == id) quickSlotItemIds[i] = string.Empty;
+            }
+            Save();
+            return remaining == 0;
+        }
+
         public void AddResource(string id, int amount = 1)
         {
             if (string.IsNullOrWhiteSpace(id))
                 return;
 
             bool isNewItem = !SavedResources.ContainsKey(id);
+            if (isNewItem)
+            {
+                itemDurability?.Remove(id);
+                reserveWear?.RemoveAll(entry => entry.ItemId == id);
+            }
 
             if (savedResources.TryGetValue(id, out int currentAmount))
                 savedResources[id] = currentAmount + amount;
@@ -158,12 +196,30 @@ namespace Devotion.SDK.Services.SaveSystem.Progress
             else
                 savedResources[id] = newAmount;
 
+            if (amount > 0)
+            {
+                // Removing the displayed copy advances to the next saved worn copy.
+                // At most the saved reserve count needs processing, even for large stacks.
+                itemDurability?.Remove(id);
+                reserveWear ??= new();
+                int remaining = amount - 1;
+                for (int i = 0; i < reserveWear.Count && remaining > 0;)
+                {
+                    if (reserveWear[i].ItemId != id) { i++; continue; }
+                    reserveWear.RemoveAt(i);
+                    remaining--;
+                }
+                PromoteReserveDurability(id);
+            }
+
             Debug.LogError("[TODO]: remove autosave");
             Save();
         }
 
         public void ClearInventory(bool clearQuickSlots = true)
         {
+            itemDurability?.Clear();
+            reserveWear?.Clear();
             SavedResources.Clear();
             inventoryItemOrder?.Clear();
             EquippedArmorItemIds.Clear();

@@ -208,7 +208,8 @@ namespace MineArena.UI
                 return false;
 
             var armorConfig = ResolveArmorConfig(item);
-            if (armorConfig == null || armorConfig.Slot != slot)
+            if (armorConfig == null || armorConfig.Slot != slot ||
+                _inventoryManager.GetItemAmount(item.Name) <= 0)
                 return false;
 
             _playerEquipment.EquipArmor(armorConfig);
@@ -337,6 +338,7 @@ namespace MineArena.UI
             AddEquippedArmorCount(counts, ArmorSlot.Chest);
             AddEquippedArmorCount(counts, ArmorSlot.Leggings);
             AddEquippedArmorCount(counts, ArmorSlot.Boots);
+            AddEquippedArmorCount(counts, ArmorSlot.OffHand);
         }
 
         private void AddEquippedArmorCount(Dictionary<string, int> counts, ArmorSlot slot)
@@ -416,6 +418,8 @@ namespace MineArena.UI
             InitializeEquipmentSlot(ArmorSlot.Chest, _equipChest);
             InitializeEquipmentSlot(ArmorSlot.Leggings, _equipLeggins);
             InitializeEquipmentSlot(ArmorSlot.Boots, _equipBoots);
+            var offHand = ResolveSlotImage(null, "EquipOffHand");
+            if (offHand != null) InitializeEquipmentSlot(ArmorSlot.OffHand, offHand);
         }
 
         private void InitializeEquipmentSlot(ArmorSlot slot, Image image)

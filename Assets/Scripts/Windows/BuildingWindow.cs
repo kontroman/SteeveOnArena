@@ -77,6 +77,7 @@ namespace MineArena.Windows
                 if (shown.CraftOutputBonus > 0) _previewCaption.text += "\n+" + shown.CraftOutputBonus + " к выходу каждого крафта";
                 if (shown.Production.Count > 0) _previewCaption.text += "\nУрожай каждые " + shown.ProductionSeconds + " с";
                 if (shown.ExpeditionRewardBonusPercent > 0) _previewCaption.text += "\nНаграды экспедиции +" + shown.ExpeditionRewardBonusPercent + "%";
+                if (shown.StorageSlots > 0) _previewCaption.text += "\nЯчеек на складе: " + shown.StorageSlots;
             }
             if (_buildButton != null)
             {
@@ -88,7 +89,9 @@ namespace MineArena.Windows
                 _unlocksEmpty.gameObject.SetActive(_targetLevel == null || _targetLevel.Unlocks == null || _targetLevel.Unlocks.Count == 0);
                 _unlocksEmpty.text = MineArena.Cosmetics.SkinCatalog.Load()?.Building == config
                     ? "Коллекция скинов и гардероб. Покупай образы за валюту, получай за задания и награды. Скины меняют только внешний вид."
-                    : "У этого здания нет новых рецептов.";
+                    : StorageWindow.IsStorage(config)
+                        ? "Улучшение открывает дополнительные ячейки склада."
+                        : "У этого здания нет новых рецептов.";
             }
             if (_targetLevel != null)
             {

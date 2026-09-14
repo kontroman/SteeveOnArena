@@ -57,6 +57,11 @@ namespace MineArena.Buildings
             {
                 if (config == null) return;
                 var manager = GameRoot.GetManager<BuildingManager>();
+                if (manager != null && manager.GetBuildingLevel(config) > 0 && StorageWindow.IsStorage(config))
+                {
+                    StorageWindow.Open(config, transform);
+                    return;
+                }
                 if (manager != null && manager.GetBuildingLevel(config) > 0 &&
                     MineArena.Cosmetics.SkinCatalog.Load()?.Building == config)
                 {
@@ -84,6 +89,7 @@ namespace MineArena.Buildings
             if (other.IsPlayer())
             {
                 GameRoot.UIManager.CloseWindow<BuildingWindow>();
+                if (StorageWindow.IsStorage(config)) GameRoot.UIManager.CloseWindow<StorageWindow>();
             }
         }
 

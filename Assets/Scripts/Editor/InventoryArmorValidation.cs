@@ -77,7 +77,7 @@ namespace MineArena.Editor
                 foreach (var grade in new[] { ArmorGrade.Leather, ArmorGrade.Iron, ArmorGrade.Gold, ArmorGrade.Diamond, ArmorGrade.Netherite })
                 {
                     var set = armor.Where(a => a.Grade == grade).ToArray();
-                    foreach (ArmorSlot slot in Enum.GetValues(typeof(ArmorSlot)))
+                    foreach (ArmorSlot slot in new[] { ArmorSlot.Helmet, ArmorSlot.Chest, ArmorSlot.Leggings, ArmorSlot.Boots })
                     {
                         var field = new[] { "_helmet", "_chest", "_leggings", "_boots" }[(int)slot];
                         typeof(PlayerEquipment).GetField(field, Fields).SetValue(equipment, set.SingleOrDefault(a => a.Slot == slot));

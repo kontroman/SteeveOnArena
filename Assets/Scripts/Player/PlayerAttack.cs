@@ -115,7 +115,7 @@ namespace MineArena.PlayerSystem
         {
             RestoreBowRecoil();
             bool bowSelected = _equipment != null && _equipment.LastActiveHandItem == HandItemType.Bow && IsBowSelectedInQuickSlot();
-            if (!_isEnabled || MineArena.Managers.TutorialService.BlocksInput ||
+            if ((GetComponent<PlayerShield>()?.WantsToBlock ?? false) || !_isEnabled || MineArena.Managers.TutorialService.BlocksInput ||
                 (MineArena.Managers.TutorialService.Active && MineArena.Managers.TutorialService.Progress.Step != MineArena.Managers.TutorialStep.Kill) || IsPointerOverUi())
             {
                 _bufferedBowClickUntil = float.NegativeInfinity;

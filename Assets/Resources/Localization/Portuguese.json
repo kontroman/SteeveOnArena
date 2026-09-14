@@ -1692,17 +1692,93 @@
       "key": "Вариант",
       "value": "Opção"
     },
-    {"key": "???? +{0} ? ?????.", "value": "Concede +{0} de armadura."},
-    {"key": "????: {0:0.##}.", "value": "Dano: {0:0.##}."},
-    {"key": "????? ??????: {0:0.##} ?.", "value": "Tempo de minera??o: {0:0.##} s."},
-    {"key":"Arena.GoToPortal","value":"Vá até o portal"},
-    {"key": "Arena.ReturnToLevel", "value": "Voltar"},
-    {"key":"Arena.NextWave","value":"Onda em {0}s"},
-    {"key":"Arena.Exit","value":"Sair da arena"},
-    {"key":"Arena.ExitTitle","value":"Sair da arena?"},
-    {"key":"Arena.ExitWarning","value":"Se sair antes da hora sem usar o portal, você perderá todos os recursos coletados nesta arena."},
-    {"key":"Arena.Stay","value":"Ficar"},
-    {"key":"Arena.ConfirmExit","value":"Sair e perder o saque"},
-    {"key":"Не выполнено","value":"Não concluído"}
+    {
+      "key": "???? +{0} ? ?????.",
+      "value": "Concede +{0} de armadura."
+    },
+    {
+      "key": "????: {0:0.##}.",
+      "value": "Dano: {0:0.##}."
+    },
+    {
+      "key": "????? ??????: {0:0.##} ?.",
+      "value": "Tempo de minera??o: {0:0.##} s."
+    },
+    {
+      "key": "Arena.GoToPortal",
+      "value": "Vá até o portal"
+    },
+    {
+      "key": "Arena.ReturnToLevel",
+      "value": "Voltar"
+    },
+    {
+      "key": "Arena.NextWave",
+      "value": "Onda em {0}s"
+    },
+    {
+      "key": "Arena.Exit",
+      "value": "Sair da arena"
+    },
+    {
+      "key": "Arena.ExitTitle",
+      "value": "Sair da arena?"
+    },
+    {
+      "key": "Arena.ExitWarning",
+      "value": "Se sair antes da hora sem usar o portal, você perderá todos os recursos coletados nesta arena."
+    },
+    {
+      "key": "Arena.Stay",
+      "value": "Ficar"
+    },
+    {
+      "key": "Arena.ConfirmExit",
+      "value": "Sair e perder o saque"
+    },
+    {
+      "key": "Не выполнено",
+      "value": "Não concluído"
+    },
+    {
+      "key": "Storage.TransferHint",
+      "value": "Clique: pilha • Clique direito: um item • Arraste para mover"
+    },
+    {
+      "key": "Storage.CraftingHint",
+      "value": "Itens guardados não são usados na fabricação"
+    },
+    {
+      "key": "Storage.StarterPickaxe",
+      "value": "A picareta inicial fica sempre com você"
+    },
+    {
+      "key": "Storage.TransferFailed",
+      "value": "Não foi possível transferir o item"
+    },
+    {
+      "key": "Storage.Upgrade",
+      "value": "Melhorar depósito"
+    },
+    {
+      "key": "Storage.EquippedProtected",
+      "value": "Primeiro desequipe o item ou remova-o da barra rápida"
+    },
+    {
+      "key": "Storage.UnlockHint",
+      "value": "Melhore o depósito para desbloquear mais espaços"
+    },
+    {
+      "key": "Storage.Full",
+      "value": "Depósito cheio. Libere um espaço ou melhore o depósito"
+    },
+    {
+      "key": "Storage.UpgradeDescription",
+      "value": "As melhorias desbloqueiam mais espaços no depósito."
+    },
+    {
+      "key": "Storage.Capacity",
+      "value": "Espaços no depósito: {0}"
+    }
   ]
 }

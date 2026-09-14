@@ -1692,17 +1692,93 @@
       "key": "Вариант",
       "value": "Options"
     },
-    {"key": "???? +{0} ? ?????.", "value": "Conf?re +{0} en armure."},
-    {"key": "????: {0:0.##}.", "value": "D?g?ts : {0:0.##}."},
-    {"key": "????? ??????: {0:0.##} ?.", "value": "Temps de minage : {0:0.##} s."},
-    {"key":"Arena.GoToPortal","value":"Va au portail"},
-    {"key": "Arena.ReturnToLevel", "value": "Revenir"},
-    {"key":"Arena.NextWave","value":"Vague dans {0}s"},
-    {"key":"Arena.Exit","value":"Quitter l’arène"},
-    {"key":"Arena.ExitTitle","value":"Quitter l’arène ?"},
-    {"key":"Arena.ExitWarning","value":"Si tu pars avant la fin sans passer par le portail, tu perdras toutes les ressources récoltées dans cette arène."},
-    {"key":"Arena.Stay","value":"Rester"},
-    {"key":"Arena.ConfirmExit","value":"Partir et perdre le butin"},
-    {"key":"Не выполнено","value":"Non terminé"}
+    {
+      "key": "???? +{0} ? ?????.",
+      "value": "Conf?re +{0} en armure."
+    },
+    {
+      "key": "????: {0:0.##}.",
+      "value": "D?g?ts : {0:0.##}."
+    },
+    {
+      "key": "????? ??????: {0:0.##} ?.",
+      "value": "Temps de minage : {0:0.##} s."
+    },
+    {
+      "key": "Arena.GoToPortal",
+      "value": "Va au portail"
+    },
+    {
+      "key": "Arena.ReturnToLevel",
+      "value": "Revenir"
+    },
+    {
+      "key": "Arena.NextWave",
+      "value": "Vague dans {0}s"
+    },
+    {
+      "key": "Arena.Exit",
+      "value": "Quitter l’arène"
+    },
+    {
+      "key": "Arena.ExitTitle",
+      "value": "Quitter l’arène ?"
+    },
+    {
+      "key": "Arena.ExitWarning",
+      "value": "Si tu pars avant la fin sans passer par le portail, tu perdras toutes les ressources récoltées dans cette arène."
+    },
+    {
+      "key": "Arena.Stay",
+      "value": "Rester"
+    },
+    {
+      "key": "Arena.ConfirmExit",
+      "value": "Partir et perdre le butin"
+    },
+    {
+      "key": "Не выполнено",
+      "value": "Non terminé"
+    },
+    {
+      "key": "Storage.TransferHint",
+      "value": "Clic : pile • Clic droit : un objet • Glisser pour déplacer"
+    },
+    {
+      "key": "Storage.CraftingHint",
+      "value": "Les objets stockés ne servent pas à fabriquer"
+    },
+    {
+      "key": "Storage.StarterPickaxe",
+      "value": "La pioche de départ reste toujours avec vous"
+    },
+    {
+      "key": "Storage.TransferFailed",
+      "value": "Impossible de déplacer cet objet"
+    },
+    {
+      "key": "Storage.Upgrade",
+      "value": "Améliorer le stockage"
+    },
+    {
+      "key": "Storage.EquippedProtected",
+      "value": "Retirez d’abord l’objet équipé ou son raccourci"
+    },
+    {
+      "key": "Storage.UnlockHint",
+      "value": "Améliorez le stockage pour débloquer des emplacements"
+    },
+    {
+      "key": "Storage.Full",
+      "value": "Stockage plein. Libérez une place ou améliorez-le"
+    },
+    {
+      "key": "Storage.UpgradeDescription",
+      "value": "Les améliorations débloquent des emplacements supplémentaires."
+    },
+    {
+      "key": "Storage.Capacity",
+      "value": "Emplacements de stockage : {0}"
+    }
   ]
 }
