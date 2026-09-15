@@ -41,12 +41,12 @@ namespace MineArena.Editor
         }
         private static Button Button(string name,Transform parent,string text,float x,float y,float w,float h)
         {
-            var panel=Panel(name,parent,x,y,w,h,"craft_button_green");var button=panel.gameObject.AddComponent<Button>();
+            var panel=Panel(name,parent,x,y,w,h,"craft_button_green");var button=panel.gameObject.AddComponent<MineArena.UI.AnimatedButton>();
             button.targetGraphic=panel;var label=Label("Label",panel.transform,text,8,4,w-16,h-8,22);label.alignment=TextAlignmentOptions.Center;return button;
         }
         private static void BuildWindow(SkinCatalog catalog)
         {
-            var card=Panel("SkinCard",null,0,0,190,224);var cardButton=card.gameObject.AddComponent<Button>();
+            var card=Panel("SkinCard",null,0,0,190,224);var cardButton=card.gameObject.AddComponent<MineArena.UI.AnimatedButton>();
             var portrait=Panel("Portrait",card.transform,15,10,160,154);portrait.sprite=catalog.Skins[0].Preview;portrait.type=Image.Type.Simple;portrait.preserveAspect=true;portrait.raycastTarget=false;
             var title=Label("Name",card.transform,"Путешественник\nБазовый",8,168,174,50,19);title.alignment=TextAlignmentOptions.Center;
             title.enableAutoSizing=true;title.fontSizeMin=14;title.fontSizeMax=19;

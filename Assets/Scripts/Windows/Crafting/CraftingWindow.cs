@@ -20,9 +20,6 @@ namespace MineArena.Windows.Crafting
         private const string TabPrefabResourcePath = "Prefabs/Windows/Crafting/CraftingTabButton";
         private const string ItemPrefabResourcePath = "Prefabs/Windows/Crafting/CraftingItemView";
         private const string ResourceIconPrefabResourcePath = "Prefabs/Windows/ResourceIcon";
-        private const float OpenAnimationDuration = 0.12f;
-        private const float ClosedScale = 0.92f;
-        private const float OpenScale = 1f;
 
         private static readonly Vector2 AnchorStretchMin = Vector2.zero;
         private static readonly Vector2 AnchorStretchMax = Vector2.one;
@@ -85,7 +82,6 @@ namespace MineArena.Windows.Crafting
         private CraftingCategory _selectedCategory;
         private CraftingRecipeEntry _selectedRecipe;
         private BuildingConfig _pendingInitialBuilding;
-        private Coroutine _openAnimation;
         private bool _layoutReady;
         private bool _usesPrefabLayout;
         private Button _buildingButton;
@@ -234,11 +230,7 @@ namespace MineArena.Windows.Crafting
             _adapter.InventoryChanged -= HandleInventoryChanged;
             _adapter.Disconnect();
 
-            if (_openAnimation != null)
-            {
-                StopCoroutine(_openAnimation);
-                _openAnimation = null;
-            }
+
         }
 
         private Image _craftProgressFill;
@@ -328,10 +320,7 @@ namespace MineArena.Windows.Crafting
             _pendingInitialBuilding = null;
         }
 
-        public override void CloseWindow()
-        {
-            gameObject.SetActive(false);
-        }
+        public override void CloseWindow() { MineArena.UI.WindowAnimation.For(gameObject).Hide(); }
 
         private void EnsureLayout()
         {
@@ -669,10 +658,7 @@ namespace MineArena.Windows.Crafting
                 rect.sizeDelta = new Vector2(156f, 0f);
 
                 var label = CreateText("Label", rect, category.DisplayName, 16, FontStyles.Bold, TextAlignmentOptions.Center);
-                label.enableAutoSizing = true;
-                label.fontSizeMin = 10f;
-                label.fontSizeMax = 16f;
-                Stretch(label.rectTransform, 8f);
+                CraftingTabButton.ConfigureLabel(label, rect);
 
                 var tab = new TabView(category, button, image, label);
                 button.onClick.AddListener(() => SelectCategory(category, false));
@@ -1059,36 +1045,7 @@ namespace MineArena.Windows.Crafting
 
         private void PlayOpenAnimation()
         {
-            if (_openAnimation != null)
-            {
-                StopCoroutine(_openAnimation);
-            }
-
-            _openAnimation = StartCoroutine(OpenAnimationRoutine());
-        }
-
-        private IEnumerator OpenAnimationRoutine()
-        {
-            _canvasGroup.alpha = 0f;
-            _windowPanel.localScale = Vector3.one * ClosedScale;
-
-            var elapsed = 0f;
-
-            while (elapsed < OpenAnimationDuration)
-            {
-                elapsed += Time.unscaledDeltaTime;
-                var t = Mathf.Clamp01(elapsed / OpenAnimationDuration);
-                var eased = 1f - Mathf.Pow(1f - t, 3f);
-
-                _canvasGroup.alpha = eased;
-                _windowPanel.localScale = Vector3.one * Mathf.Lerp(ClosedScale, OpenScale, eased);
-
-                yield return null;
-            }
-
-            _canvasGroup.alpha = 1f;
-            _windowPanel.localScale = Vector3.one;
-            _openAnimation = null;
+            MineArena.UI.WindowAnimation.For(gameObject).Show();
         }
 
         private void ClearTabs()
@@ -1399,7 +1356,7 @@ namespace MineArena.Windows.Crafting
             var rect = CreatePanel(name, parent, sprite);
             image = rect.GetComponent<Image>();
 
-            var button = rect.gameObject.AddComponent<Button>();
+            var button = rect.gameObject.AddComponent<MineArena.UI.AnimatedButton>();
             button.targetGraphic = image;
             button.transition = Selectable.Transition.ColorTint;
             button.colors = CreateButtonColors();

@@ -503,8 +503,8 @@ namespace MineArena.Editor
             var iconSlot = Rect("IconSlot", rect); Box(iconSlot, 14, 17, 56, 56);
             var icon = Image("Icon", iconSlot, null); Stretch(icon.rectTransform); icon.preserveAspect = true; icon.gameObject.SetActive(false);
             AddBlock(iconSlot, Vector2.zero, 0.75f); var block = iconSlot.GetComponentInChildren<ResourceIcon>(true);
-            var name = Text("Name", rect, "", 23, 86, 13, 410, 34);
-            var meta = Text("Meta", rect, "", 17, 86, 51, 410, 30);
+            var name = Text("Name", rect, "", 22, 86, 13, 410, 34);
+            var meta = Text("Meta", rect, "", 18, 86, 43, 410, 46); meta.enableWordWrapping = true; meta.alignment = TextAlignmentOptions.TopLeft; meta.lineSpacing = 8;
             var locked = Image("LockedState", rect, S("lock")); Box(locked.rectTransform, 509, 18, 20, 24); locked.color = Ink; locked.gameObject.SetActive(false);
             Set(root.GetComponent<CraftingItemView>(), "_button", root.GetComponent<Button>(), "_icon", icon, "_blockIcon", block, "_name", name, "_meta", meta,
                 "_lockedState", locked.gameObject, "_selectionHighlight", selected.gameObject, "_canvasGroup", root.GetComponent<CanvasGroup>());
@@ -531,11 +531,11 @@ namespace MineArena.Editor
             var icon = Image("DetailIcon", slot, null); Box(icon.rectTransform, 16, 16, 76, 76); icon.preserveAspect = true;
             icon.gameObject.SetActive(false);
             AddBlock(slot, Vector2.zero, 1.05f); var block = slot.GetComponentInChildren<ResourceIcon>(true);
-            var name = Text("DetailName", right, "Выберите рецепт", 28, 152, 24, 396, 50, true);
-            var requirement = Text("Requirement", right, "Доступность зависит от уровня здания", 20, 152, 83, 396, 55); requirement.enableWordWrapping = true;
-            var description = Text("Description", right, "Создавайте снаряжение из добытых ресурсов", 22, 24, 144, 526, 72); description.enableWordWrapping = true;
-            Text("CostsTitle", right, "НУЖНЫ РЕСУРСЫ", 22, 24, 222, 526, 36, true);
-            var costs = Scroll(right, "Costs", 24, 264, 526, 144).content;
+            var name = Text("DetailName", right, "Выберите рецепт", 22, 152, 24, 396, 50, true);
+            var requirement = Text("Requirement", right, "Доступность зависит от уровня здания", 18, 152, 83, 396, 55); requirement.enableWordWrapping = true; requirement.alignment = TextAlignmentOptions.TopLeft; requirement.lineSpacing = 8;
+            var description = Text("Description", right, "Создавайте снаряжение из добытых ресурсов", 18, 24, 144, 526, 90); description.enableWordWrapping = true; description.alignment = TextAlignmentOptions.TopLeft; description.lineSpacing = 8;
+            Text("CostsTitle", right, "НУЖНЫ РЕСУРСЫ", 22, 24, 240, 526, 36, true);
+            var costs = Scroll(right, "Costs", 24, 282, 526, 126).content;
             var costList = costs.gameObject.AddComponent<VerticalLayoutGroup>(); costList.spacing = 8; costList.childControlWidth = true; costList.childForceExpandWidth = true; costList.childControlHeight = false; costList.childForceExpandHeight = false;
             var result = Text("Result", right, "", 20, 24, 412, 526, 42); result.enableWordWrapping = true;
             var batch = Rect("BatchControls", right); Box(batch, 24, 456, 526, 38);
@@ -683,7 +683,7 @@ namespace MineArena.Editor
         private static Button Button(string name, Transform parent, string text, float x, float y, float w, float h, bool primary = true)
         {
             var rect = Panel(name, parent, primary ? "button" : "card"); Box(rect, x, y, w, h);
-            var button = rect.gameObject.AddComponent<Button>(); button.targetGraphic = rect.GetComponent<Image>(); button.targetGraphic.raycastTarget = true;
+            var button = rect.gameObject.AddComponent<MineArena.UI.AnimatedButton>(); button.targetGraphic = rect.GetComponent<Image>(); button.targetGraphic.raycastTarget = true;
             var colors = button.colors; colors.pressedColor = new Color(0.8f, 0.8f, 0.75f); colors.disabledColor = new Color(0.75f, 0.75f, 0.7f, 0.65f); button.colors = colors;
             var label = Text("Label", rect, text, h < 50 ? 20 : 25, 8, 0, w - 16, h, primary); label.alignment = TextAlignmentOptions.Center; label.color = primary ? C("FFFAE9") : Ink;
             return button;

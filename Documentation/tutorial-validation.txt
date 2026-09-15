@@ -117,7 +117,7 @@ PASS Confirming the popup releases exactly one queued window
 PASS Leaving a trigger cancels its deferred window
 PASS Outdated stage windows never reopen
 PASS Scene without EventSystem gets a persistent active input module
-PASS Step three confirmation receives the top UI raycast while time is paused: hits=Confirm,Tutorial popup,Popup backdrop; point=(960.00, 328.00); screen=640x480; depth=17
+PASS Step three confirmation receives the top UI raycast while time is paused: hits=Confirm,Tutorial popup,Popup backdrop; point=(960.00, 304.00); screen=640x480; depth=18
 PASS Real pointer-click handler dismisses mining popup and unpauses gameplay
 PASS Returning to a scene with its own input disables the fallback
 PASS Repeated scene changes reuse one fallback input system

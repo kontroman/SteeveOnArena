@@ -10,7 +10,7 @@ using Windows;
 namespace MineArena.UI
 {
     public enum GameUiDestination { Inventory, Crafting, Levels, Shop, Daily, Playtime, Achievements, Wheel, Settings }
-    [RequireComponent(typeof(Button))]
+    [RequireComponent(typeof(MineArena.UI.AnimatedButton))]
     public sealed class GameUiAction : MonoBehaviour
     {
         [SerializeField] private GameUiDestination destination;

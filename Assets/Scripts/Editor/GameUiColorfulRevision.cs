@@ -150,7 +150,7 @@ namespace MineArena.Editor
             string rowPath = "Assets/Resources/UI/QuestJournalRow.prefab";
             var row = Panel("QuestJournalRow", null, "card"); row.sizeDelta = new Vector2(450, 132); row.GetComponent<Image>().sprite = normal;
             row.gameObject.AddComponent<LayoutElement>().preferredHeight = 132;
-            var button = row.gameObject.AddComponent<Button>(); button.targetGraphic = row.GetComponent<Image>(); button.targetGraphic.raycastTarget = true;
+            var button = row.gameObject.AddComponent<MineArena.UI.AnimatedButton>(); button.targetGraphic = row.GetComponent<Image>(); button.targetGraphic.raycastTarget = true;
             var stripe = Image("StatusStripe", row, null); Box(stripe.rectTransform, 4, 6, 5, 120);
             var title = Text("Title", row, "", 23, 86, 12, 346, 34);
             var state = Text("State", row, "", 17, 86, 48, 346, 26);

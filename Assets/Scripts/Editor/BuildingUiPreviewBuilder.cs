@@ -11,6 +11,29 @@ namespace MineArena.Editor
 {
     public static partial class GameUiBuilder
     {
+        [InitializeOnLoadMethod]
+        private static void WatchBuildingPreviews() => EditorApplication.update += () =>
+        {
+            const string request = "Temp/building-previews.request";
+            if (!File.Exists(request) || EditorApplication.isCompiling || EditorApplication.isUpdating || EditorApplication.isPlayingOrWillChangePlaymode) return;
+            File.Delete(request);
+            try
+            {
+                foreach (string name in new[] { "SmithBuilding", "StorageBuilding", "LumberjackBuilding" })
+                {
+                    var config = AssetDatabase.LoadAssetAtPath<BuildingConfig>("Assets/ScriptableObjects/Configs/Buildings/" + name + ".asset");
+                    foreach (var level in config.Levels)
+                    {
+                        string path = AssetDatabase.GetAssetPath(level.Preview);
+                        BakeBuilding(level.ModelPrefab, path, name == "LumberjackBuilding" ? 0f : 180f);
+                        AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceUpdate);
+                    }
+                }
+                File.WriteAllText("Temp/building-previews.result", "PASS");
+            }
+            catch (System.Exception e) { File.WriteAllText("Temp/building-previews.result", e.ToString()); }
+        };
+
         [MenuItem("MineArena/UI/Refresh Building UI")]
         public static void RefreshBuildingUI()
         {
@@ -28,7 +51,7 @@ namespace MineArena.Editor
                     var level = config.Levels[i];
                     if (level.ModelPrefab == null) continue;
                     string path = folder + AssetDatabase.AssetPathToGUID(AssetDatabase.GetAssetPath(config)) + "-" + i + ".png";
-                    BakeBuilding(level.ModelPrefab, path);
+                    BakeBuilding(level.ModelPrefab, path, config.name == "SmithBuilding" || config.name == "StorageBuilding" ? 180f : 0f);
                     ImportSprite(path, 1024);
                     serialized.FindProperty("_levels").GetArrayElementAtIndex(i).FindPropertyRelative("_preview").objectReferenceValue = AssetDatabase.LoadAssetAtPath<Sprite>(path);
                     count++;
@@ -58,7 +81,7 @@ namespace MineArena.Editor
             Debug.Log("[BuildingUI] Built panels and " + count + " model previews for " + configs.Length + " buildings.");
         }
 
-        private static void BakeBuilding(GameObject prefab, string path)
+        private static void BakeBuilding(GameObject prefab, string path, float yaw = 0f)
         {
             var utility = new PreviewRenderUtility();
             Texture2D texture = null;
@@ -73,7 +96,7 @@ namespace MineArena.Editor
                 utility.camera.orthographic = true;
                 utility.camera.orthographicSize = bounds.extents.magnitude * 1.12f;
                 float distance = Mathf.Max(10, bounds.size.magnitude * 3);
-                utility.camera.transform.position = bounds.center + new Vector3(1, 0.75f, -1).normalized * distance;
+                utility.camera.transform.position = bounds.center + Quaternion.Euler(0, yaw, 0) * new Vector3(1, 0.75f, -1).normalized * distance;
                 utility.camera.transform.LookAt(bounds.center);
                 float vertical = 0, horizontal = 0;
                 for (int corner = 0; corner < 8; corner++)
@@ -85,11 +108,11 @@ namespace MineArena.Editor
                 utility.camera.orthographicSize = Mathf.Max(vertical, horizontal / (768f / 576f)) * 1.08f;
                 utility.camera.nearClipPlane = 0.01f; utility.camera.farClipPlane = distance * 3;
                 utility.camera.clearFlags = CameraClearFlags.SolidColor;
-                utility.camera.backgroundColor = new Color(0.98f, 0.95f, 0.87f, 1);
+                utility.camera.backgroundColor = Color.clear;
                 foreach (var light in utility.lights) { light.intensity = 0; light.shadows = LightShadows.None; }
                 var shader = Shader.Find("Hidden/MineArena/BuildingPreviewUnlit");
                 if (shader == null) throw new System.InvalidOperationException("Building preview shader is missing.");
-                utility.BeginStaticPreview(new Rect(0, 0, 768, 576));
+                utility.BeginPreview(new Rect(0, 0, 768, 576), GUIStyle.none);
                 contactShadow = new Material(shader) { hideFlags = HideFlags.HideAndDontSave };
                 contactShadow.SetFloat("_Shadow", 1);
                 var shadowPosition = new Vector3(bounds.center.x, bounds.min.y - 0.02f, bounds.center.z);
@@ -118,7 +141,17 @@ namespace MineArena.Editor
                             utility.DrawMesh(mesh.sharedMesh, mesh.transform.localToWorldMatrix, unlit, sub);
                         }
                 }
-                utility.camera.Render(); texture = utility.EndStaticPreview();
+                utility.camera.Render();
+                var previousTarget = RenderTexture.active;
+                try
+                {
+                    RenderTexture.active = utility.camera.targetTexture;
+                    texture = new Texture2D(768, 576, TextureFormat.RGBA32, false);
+                    texture.ReadPixels(new Rect(0, 0, 768, 576), 0, 0);
+                    texture.Apply();
+                }
+                finally { RenderTexture.active = previousTarget; }
+                utility.EndPreview();
                 File.WriteAllBytes(path, texture.EncodeToPNG());
             }
             finally

@@ -198,7 +198,7 @@ namespace MineArena.Editor
             var root = Panel("LevelCard", null, _sprites["card"]);
             root.sizeDelta = new Vector2(378, 128);
             Height(root, 128);
-            var button = root.gameObject.AddComponent<Button>();
+            var button = root.gameObject.AddComponent<MineArena.UI.AnimatedButton>();
             Style(button);
             var number = Label("Number", root, "01", 17, Muted, 16, 10, 40, 24, true);
             var icon = Panel("Icon", root, null).GetComponent<Image>();
@@ -350,7 +350,7 @@ namespace MineArena.Editor
         {
             var rect = Panel(name, parent, sprite);
             Box(rect, x, y, w, h);
-            var button = rect.gameObject.AddComponent<Button>();
+            var button = rect.gameObject.AddComponent<MineArena.UI.AnimatedButton>();
             Style(button);
             return button;
         }

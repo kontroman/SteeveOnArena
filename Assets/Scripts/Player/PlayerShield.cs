@@ -19,8 +19,8 @@ namespace MineArena.PlayerSystem
         public bool WantsToBlock => isActiveAndEnabled && _equipment != null && _equipment.Shield != null
             && _equipment.LastActiveHandItem != HandItemType.Bow && !PlayerMovement.IsPlayerDead
             && Time.timeScale > 0 && !Managers.TutorialService.BlocksInput
-            && Input.GetMouseButton(1) && Application.isFocused
-            && (EventSystem.current == null || !EventSystem.current.IsPointerOverGameObject())
+            && (MineArena.UI.MobileGameInput.Enabled ? MineArena.UI.MobileGameInput.ShieldHeld : Input.GetMouseButton(1)) && Application.isFocused
+            && (MineArena.UI.MobileGameInput.Enabled || EventSystem.current == null || !EventSystem.current.IsPointerOverGameObject())
             && !(Devotion.SDK.Controllers.GameRoot.UIManager?.HasOpenDialog ?? false);
         public bool IsAimingBlock => WantsToBlock && (_attack == null || !_attack.IsAttacking);
         public bool IsBlocking => isActiveAndEnabled && _blockHeld && _equipment != null && _equipment.Shield != null
@@ -45,6 +45,11 @@ namespace MineArena.PlayerSystem
             if (_posed && _arm != null) _arm.localRotation = _baseArmRotation;
             _posed = false;
             if (!IsAimingBlock) return;
+            if (MineArena.UI.MobileGameInput.Enabled)
+            {
+                GetComponent<RotationController>()?.FaceDirection(MineArena.UI.MobileGameInput.AimDirection(transform), 2);
+                return;
+            }
             var camera = Camera.main;
             if (camera == null || !TryResolveBlockDirection(camera.ScreenPointToRay(Input.mousePosition), transform.position, out var direction)) return;
             var rotation = GetComponent<RotationController>();

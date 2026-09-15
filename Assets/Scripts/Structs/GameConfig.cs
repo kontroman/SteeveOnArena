@@ -28,6 +28,11 @@ namespace MineArena.Structs
         [SerializeField] private DailyRewardConfig dailyRewardConfig;
         [SerializeField, Min(1)] private int freeFortuneSpinCooldownMinutes = 30;
 
+        [Header("Mobile controls")]
+        [SerializeField, Tooltip("Включить мобильные джойстики и кнопки в редакторе. Можно переключать во время Play Mode; на сборки не влияет.")]
+        private bool mobileControlsInEditor;
+        public bool MobileControlsInEditor => mobileControlsInEditor;
+
         public List<LevelConfig> Levels { get { return levels; } }
         public List<ItemPrize> Prizes { get { return _prizes; } }
         public List<DataAchievement> DataAchievements { get { return _dataAchievements; } }

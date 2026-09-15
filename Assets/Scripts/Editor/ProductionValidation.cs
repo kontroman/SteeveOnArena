@@ -30,12 +30,92 @@ namespace MineArena.Editor
                 File.Delete("Temp/repair-production.request");
                 RebindPotions();
             }
+            if (File.Exists("Temp/validate-potion-slots.request") && !EditorApplication.isCompiling && !EditorApplication.isUpdating && !EditorApplication.isPlayingOrWillChangePlaymode)
+            {
+                File.Delete("Temp/validate-potion-slots.request");
+                try { ValidatePotionSlots(); }
+                catch (Exception e) { File.WriteAllText("Documentation/potion-slots-validation.txt", "FAIL " + e); }
+            }
             if (!File.Exists("Temp/validate-production.request")) return;
             if (EditorApplication.isCompiling || EditorApplication.isUpdating) return;
             File.Delete("Temp/validate-production.request");
             try { Validate(); }
             catch (Exception e) { File.WriteAllText("Documentation/production-unity-validation.txt", "FAIL " + e); Debug.LogException(e); }
         };
+
+        [MenuItem("MineArena/Validation/Potion quick slots")]
+        public static void ValidatePotionSlots()
+        {
+            if (EditorApplication.isPlayingOrWillChangePlaymode || GameRoot.Instance != null || MineArena.Controllers.Player.Instance != null || Object.FindObjectsOfType<SaveService>().Any(s => s.IsLoaded))
+                throw new InvalidOperationException("Run in Edit Mode without an initialized game.");
+            var scene = EditorSceneManager.NewPreviewScene();
+            var lines = new List<string>();
+            void Check(bool ok, string label) { if (!ok) throw new Exception(label); lines.Add("PASS " + label); }
+            try
+            {
+                var go = new GameObject("Potion slot validation");
+                UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(go, scene);
+                var root = go.AddComponent<GameRoot>();
+                typeof(GameRoot).GetProperty("Instance").SetValue(null, root);
+                var config = AssetDatabase.LoadAssetAtPath<GameConfig>("Assets/ScriptableObjects/GameConfig.asset");
+                config.ItemDatabase.Initialize();
+                var progress = new PlayerProgress("potion-slot-validation");
+                typeof(GameRoot).GetField("gameConfig", Private).SetValue(root, config);
+                typeof(GameRoot).GetField("playerProgress", Private).SetValue(root, progress);
+                var inventory = go.AddComponent<InventoryManager>();
+                ((Dictionary<Type, BaseManager>)typeof(GameRoot).GetField("_managers", Private).GetValue(root))[typeof(InventoryManager)] = inventory;
+                inventory.InitManager();
+                var player = go.AddComponent<MineArena.Controllers.Player>();
+                typeof(MineArena.Controllers.Player).GetField("_components", Private).SetValue(player, new List<Component>());
+                typeof(MineArena.Controllers.Player).GetProperty("Instance").SetValue(null, player);
+                var health = go.AddComponent<MineArena.Game.Health.Health>();
+                typeof(MineArena.Game.Health.Health).GetField("_maxHealth", Private).SetValue(health, 100f);
+                health.SetCurrentValue(10, false);
+                var effects = go.AddComponent<PotionEffects>();
+                var hud = (GameObject)PrefabUtility.InstantiatePrefab(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/DevotionSDK/Prefabs/UI/PlayingWindow.prefab"), scene);
+                var window = hud.GetComponent<Devotion.SDK.UI.PlayingWindow>();
+                typeof(Devotion.SDK.UI.PlayingWindow).GetMethod("InitializeInventoryPanel", Private).Invoke(window, null);
+                var slot = hud.GetComponentsInChildren<Devotion.SDK.UI.PlayingInventorySlotUI>(true).First(x => x.Index == 0);
+                var click = new UnityEngine.EventSystems.PointerEventData(null) { button = UnityEngine.EventSystems.PointerEventData.InputButton.Left };
+                foreach (string id in new[] { "HealingPotion", "SpeedPotion", "RegenerationPotion" })
+                {
+                    var potion = (PotionConfig)config.ItemDatabase.GetItemConfig(id);
+                    inventory.AddItemById(id, 3);
+                    typeof(PotionEffects).GetField("_nextDrink", Private).SetValue(effects, -1f);
+                    Check(slot.TryDropInventoryItem(new StackableItem(potion, 3)) && inventory.GetItemAmount(id) == 3, id + " dropping into quick slot does not consume");
+                    slot.OnPointerClick(click);
+                    Check(inventory.GetItemAmount(id) == 2, id + " one slot click consumes exactly one (3 -> 2)");
+                    slot.OnPointerClick(click);
+                    Check(inventory.GetItemAmount(id) == 2, id + " cooldown does not consume");
+                    var restored = JsonUtility.FromJson<InventoryProgress>(JsonUtility.ToJson(progress.InventoryProgress));
+                    Check(restored.SavedResources[id] == 2, id + " reduced count survives serialization");
+                }
+                Check(health.CurrentValue == 50, "Healing click applies its effect once");
+                progress.InventoryProgress.SetQuickSlotItemId(0, "HealingPotion");
+                typeof(PotionEffects).GetField("_nextDrink", Private).SetValue(effects, -1f);
+                health.SetCurrentValue(100, false);
+                slot.OnPointerClick(click);
+                Check(inventory.GetItemAmount("HealingPotion") == 2, "Full health does not consume");
+                health.SetCurrentValue(0, false);
+                slot.OnPointerClick(click);
+                Check(inventory.GetItemAmount("HealingPotion") == 2, "Dead player does not consume");
+                health.SetCurrentValue(10, false);
+                inventory.TrySpendExact(config.ItemDatabase.GetItemConfig("HealingPotion"), 1);
+                slot.OnPointerClick(click);
+                Check(inventory.GetItemAmount("HealingPotion") == 0, "Last potion consumes exactly one (1 -> 0)");
+                typeof(PotionEffects).GetField("_nextDrink", Private).SetValue(effects, -1f);
+                float before = health.CurrentValue;
+                slot.OnPointerClick(click);
+                Check(inventory.GetItemAmount("HealingPotion") == 0 && health.CurrentValue == before, "Empty slot cannot consume or heal");
+                File.WriteAllLines("Documentation/potion-slots-validation.txt", lines);
+            }
+            finally
+            {
+                typeof(GameRoot).GetProperty("Instance").SetValue(null, null);
+                typeof(MineArena.Controllers.Player).GetProperty("Instance").SetValue(null, null);
+                EditorSceneManager.ClosePreviewScene(scene);
+            }
+        }
 
         [MenuItem("MineArena/Balance/Rebind Potion Assets")]
         public static void RebindPotions()

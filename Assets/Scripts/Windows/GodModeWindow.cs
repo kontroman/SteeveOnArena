@@ -602,7 +602,7 @@ namespace MineArena.Windows
             image.color = color;
             image.raycastTarget = true;
 
-            var button = rect.gameObject.AddComponent<Button>();
+            var button = rect.gameObject.AddComponent<MineArena.UI.AnimatedButton>();
             button.targetGraphic = image;
 
             var text = CreateLabel(rect, "Label", label, 13, FontStyle.Normal, 6f, 2f, width - 12f, height - 4f);

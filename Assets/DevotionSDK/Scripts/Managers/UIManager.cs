@@ -78,7 +78,12 @@ namespace Devotion.SDK.Managers
                 foreach (var other in new List<BaseWindow>(_openedWindows))
                     if (other != null && other != window && !IsTransition(other.GetType()))
                     { other.gameObject.SetActive(false); _openedWindows.Remove(other); }
-            if (!_openedWindows.Contains(window)) { window.gameObject.SetActive(true); _openedWindows.Add(window); }
+            if (!_openedWindows.Contains(window) || !window.gameObject.activeSelf)
+            {
+                if (IsTransition(window.GetType()) || !Application.isPlaying) window.gameObject.SetActive(true);
+                else MineArena.UI.WindowAnimation.For(window.gameObject).Show();
+                if (!_openedWindows.Contains(window)) _openedWindows.Add(window);
+            }
             window.transform.SetAsLastSibling();
         }
 
@@ -152,11 +157,17 @@ namespace Devotion.SDK.Managers
             {
                 if (_openedWindows[i] is T window)
                 {
-                    window.gameObject.SetActive(false);
+                    HideWindow(window);
                     _openedWindows.RemoveAt(i);
                     return;
                 }
             }
+        }
+
+        private static void HideWindow(BaseWindow window)
+        {
+            if (IsTransition(window.GetType()) || !Application.isPlaying) window.gameObject.SetActive(false);
+            else MineArena.UI.WindowAnimation.For(window.gameObject).Hide();
         }
 
         public void CloseAllWindows()
@@ -165,7 +176,7 @@ namespace Devotion.SDK.Managers
             foreach (BaseWindow window in _openedWindows)
             {
                 if (window != null)
-                    window.gameObject.SetActive(false);
+                    HideWindow(window);
             }
 
             _openedWindows.Clear();

@@ -90,15 +90,15 @@ namespace MineArena.PlayerSystem
             if (_cameraTransform == null)
                 _cameraTransform = Camera.main != null ? Camera.main.transform : null;
 
-            float moveX = Input.GetAxisRaw("Horizontal");
-            float moveZ = Input.GetAxisRaw("Vertical");
+            float moveX = MineArena.UI.MobileGameInput.Movement.x;
+            float moveZ = MineArena.UI.MobileGameInput.Movement.y;
 
             Vector3 moveDirection = new Vector3(moveX, 0, moveZ);
 
             if (moveDirection.magnitude > 0.1f)
             {
                 _animator?.SetRunning(true);
-                moveDirection.Normalize();
+                moveDirection = Vector3.ClampMagnitude(moveDirection, 1f);
 
                 Vector3 cameraForward = _cameraTransform != null ? _cameraTransform.forward : Vector3.forward;
                 cameraForward.y = 0;
@@ -122,7 +122,7 @@ namespace MineArena.PlayerSystem
             {
                 _velocity.y = -2f;
 
-                if (Input.GetButtonDown("Jump"))
+                if (MineArena.UI.MobileGameInput.Jump)
                 {
                     _velocity.y = Constants.PlayerSettings.JumpForce;
                 }

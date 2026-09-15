@@ -453,7 +453,7 @@ namespace MineArena.Editor
         private static Button CreateButton(string name, Transform parent, Sprite sprite, out Image image)
         {
             var rect = CreatePanel(name, parent, sprite, out image);
-            var button = rect.gameObject.AddComponent<Button>();
+            var button = rect.gameObject.AddComponent<MineArena.UI.AnimatedButton>();
             button.targetGraphic = image;
             button.transition = Selectable.Transition.ColorTint;
             return button;

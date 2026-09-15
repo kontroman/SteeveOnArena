@@ -43,7 +43,7 @@ namespace MineArena.Editor
 
         private static void BuildTabPrefab()
         {
-            var root = new GameObject("CraftingTabButton", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image), typeof(Button), typeof(CraftingTabButton));
+            var root = new GameObject("CraftingTabButton", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image), typeof(MineArena.UI.AnimatedButton), typeof(CraftingTabButton));
             SetLayerRecursively(root, 5);
 
             var rect = (RectTransform)root.transform;
@@ -64,10 +64,7 @@ namespace MineArena.Editor
             selected.gameObject.SetActive(false);
 
             var label = CreateText("Label", rect, "Tab", 16f, FontStyles.Bold, TextAlignmentOptions.Center);
-            label.enableAutoSizing = true;
-            label.fontSizeMin = 10f;
-            label.fontSizeMax = 16f;
-            Stretch(label.rectTransform, 8f);
+            CraftingTabButton.ConfigureLabel(label, rect);
 
             var component = root.GetComponent<CraftingTabButton>();
             var serializedObject = new SerializedObject(component);
@@ -82,7 +79,7 @@ namespace MineArena.Editor
 
         private static void BuildItemPrefab()
         {
-            var root = new GameObject("CraftingItemView", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image), typeof(Button), typeof(CanvasGroup), typeof(LayoutElement), typeof(CraftingItemView));
+            var root = new GameObject("CraftingItemView", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image), typeof(MineArena.UI.AnimatedButton), typeof(CanvasGroup), typeof(LayoutElement), typeof(CraftingItemView));
             SetLayerRecursively(root, 5);
 
             var rect = (RectTransform)root.transform;

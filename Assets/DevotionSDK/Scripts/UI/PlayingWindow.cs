@@ -61,6 +61,7 @@ namespace Devotion.SDK.UI
             InitializeInventoryPanel();
             InitializePortrait();
             HudActionNotice.Install(transform);
+            MobileControlsHud.Install(transform);
         }
 
         private void InitializePortrait()
@@ -98,14 +99,13 @@ namespace Devotion.SDK.UI
         private void Update()
         {
             RefreshTutorialVisibility();
-            RefreshPotionButton();
             if (Input.GetKeyDown(KeyCode.R)) PotionEffects.TryDrinkSelected();
             for (int i = 0; i < SlotCount; i++)
             {
                 if (Input.GetKeyDown((KeyCode)((int)KeyCode.Alpha1 + i)) ||
                     Input.GetKeyDown((KeyCode)((int)KeyCode.Keypad1 + i)))
                 {
-                    SelectInventorySlot(i);
+                    ActivateInventorySlot(i);
                 }
             }
         }
@@ -121,47 +121,31 @@ namespace Devotion.SDK.UI
             }
         }
 
-        private Button _potionButton;
-        private TMPro.TMP_Text _potionLabel;
-        private void RefreshPotionButton()
-        {
-            var potion = PotionEffects.SelectedPotion;
-            if (_potionButton == null && potion != null)
-            {
-                var go = new GameObject("DrinkPotion", typeof(RectTransform), typeof(Image), typeof(Button));
-                go.transform.SetParent(transform, false);
-                var rect = go.GetComponent<RectTransform>();
-                rect.anchorMin = rect.anchorMax = new Vector2(0.5f, 0f);
-                rect.pivot = new Vector2(0.5f, 0f);
-                rect.anchoredPosition = new Vector2(0, 125f);
-                rect.sizeDelta = new Vector2(320f, 44f);
-                go.GetComponent<Image>().color = new Color32(94, 116, 62, 245);
-                _potionButton = go.GetComponent<Button>();
-                _potionButton.onClick.AddListener(() => PotionEffects.TryDrinkSelected());
-                var label = new GameObject("Label", typeof(RectTransform), typeof(TMPro.TextMeshProUGUI));
-                label.transform.SetParent(go.transform, false);
-                _potionLabel = label.GetComponent<TMPro.TMP_Text>();
-                var existingFont = GetComponentInChildren<TMPro.TMP_Text>();
-                if (existingFont != null) _potionLabel.font = existingFont.font;
-                _potionLabel.fontSize = 18;
-                _potionLabel.alignment = TMPro.TextAlignmentOptions.Center;
-                _potionLabel.raycastTarget = false;
-                _potionLabel.rectTransform.anchorMin = Vector2.zero;
-                _potionLabel.rectTransform.anchorMax = Vector2.one;
-                _potionLabel.rectTransform.offsetMin = _potionLabel.rectTransform.offsetMax = Vector2.zero;
-            }
-            if (_potionButton == null) return;
-            _potionButton.gameObject.SetActive(potion != null);
-            if (potion != null)
-            {
-                _potionLabel.text = potion.DisplayName + " · Выпить [R]";
-                _potionButton.interactable = _inventoryManager != null && _inventoryManager.GetItemAmount(potion.Name) > 0;
-            }
-        }
-
         public void OnAchievmentButtonClick() => GameRoot.UIManager.ShowWindow<WindowAchievements>();
 
         public void OnWheelButtonClick() => GameRoot.UIManager.ShowWindow<FortuneWheelWindow>();
+
+        public void SelectSwordSlot()
+        {
+            var progress = GameRoot.PlayerProgress?.InventoryProgress;
+            if (progress == null) return;
+            if (ResolveItemConfig(progress.GetQuickSlotItemId(progress.SelectedQuickSlotIndex)) is WeaponItemConfig selected && selected.Kind == WeaponItemKind.Sword) return;
+            for (int i = 0; i < progress.QuickSlotItemIds.Count; i++)
+            {
+                if (ResolveItemConfig(progress.GetQuickSlotItemId(i)) is WeaponItemConfig weapon && weapon.Kind == WeaponItemKind.Sword)
+                {
+                    SelectInventorySlot(i);
+                    return;
+                }
+            }
+        }
+
+        public void ActivateInventorySlot(int index)
+        {
+            if (!IsValidSlotIndex(index)) return;
+            SelectInventorySlot(index);
+            PotionEffects.TryDrinkSelected();
+        }
 
         public void SelectInventorySlot(int index)
         {

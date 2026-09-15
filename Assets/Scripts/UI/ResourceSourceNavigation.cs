@@ -18,7 +18,7 @@ namespace MineArena.UI
 
         public static void Bind(GameObject row, ItemConfig item, BaseWindow owner)
         {
-            var button = row.GetComponent<Button>() ?? row.AddComponent<Button>();
+            var button = row.GetComponent<Button>() ?? row.AddComponent<MineArena.UI.AnimatedButton>();
             var graphic = row.GetComponent<Image>() ?? row.AddComponent<Image>();
             if (graphic.sprite == null) graphic.color = Color.clear;
             graphic.raycastTarget = true;

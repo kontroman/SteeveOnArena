@@ -291,6 +291,11 @@ namespace MineArena.Managers
                 SetStep(Steps[Array.IndexOf(Steps, Progress.Step) + 1]);
             }
             _overlay.SetActive(true);
+            var popupRect = (RectTransform)_popup.transform;
+            var canvasSize = ((RectTransform)_overlay.transform).rect.size;
+            float popupScale = Mathf.Clamp01(Mathf.Min((canvasSize.x - 24) / popupRect.sizeDelta.x,
+                (canvasSize.y - 24) / popupRect.sizeDelta.y));
+            popupRect.localScale = Vector3.one * popupScale;
             if (_shown != Progress.Step)
             {
                 ResumeTime();
@@ -399,6 +404,18 @@ namespace MineArena.Managers
 
         public static string Instructions(TutorialStep step)
         {
+            if (MineArena.UI.MobileGameInput.Enabled || MineArena.UI.MobileGameInput.PreviewInEditor || Application.isMobilePlatform || (!Application.isEditor && Input.touchSupported))
+            {
+                switch (step)
+                {
+                    case TutorialStep.EquipSword: return "Перетащи меч из инвентаря в нижний быстрый слот.\nЗакрой инвентарь и коснись этого слота, чтобы взять меч.";
+                    case TutorialStep.Potion: return "Перетащи зелье в нижний слот и закрой инвентарь.\nКоснись зелья в панели, чтобы сразу выпить его.";
+                    case TutorialStep.Portal: return "Подойди к порталу: левый джойстик управляет движением.\nЖёлтый указатель покажет путь.";
+                    case TutorialStep.Mine: return "У блока нажми «Добыча», затем подбери ресурсы.\nДвижение или «Стоп» отменяет добычу.";
+                    case TutorialStep.Kill: return "Победи зомби: отклони правый джойстик в его сторону.\nПока держишь джойстик, меч атакует. Левым можно двигаться.";
+                    case TutorialStep.WorkshopButton: return "Кнопка «Мастерская» открывает рецепты зданий.\nКоснись её, осмотри крафт и закрой окно.";
+                }
+            }
             switch (step)
             {
                 case TutorialStep.PlaytimeRewards: return "Нажми награды за время в игре.\nЗдесь подарки за проведённое время. Осмотри окно и закрой его.";
@@ -408,7 +425,7 @@ namespace MineArena.Managers
                 case TutorialStep.CraftSword: return "Теперь создай каменный меч и дождись результата.\nОн сильнее стартового деревянного меча.";
                 case TutorialStep.EquipArmor: return "Открой инвентарь. Перетащи железный нагрудник\nв слот брони на груди — он уменьшает входящий урон.";
                 case TutorialStep.EquipSword: return "Открой инвентарь и перетащи каменный меч в нижний слот.\nВыбери этот слот клавишей 1–5, чтобы взять меч в руки.";
-                case TutorialStep.Potion: return "Перетащи зелье лечения из инвентаря в нижний слот.\nВыбери его клавишей 1–5 и используй для лечения.";
+                case TutorialStep.Potion: return "Перетащи зелье лечения в нижний слот.\nНажми на него или клавишу 1–5, чтобы выпить.";
                 case TutorialStep.Rewards: return "Нажми подсвеченную кнопку наград.\nЗдесь подарки за ежедневный вход. Осмотри окно и закрой его.";
                 case TutorialStep.WorkshopButton: return "Кнопка «Мастерская» открывает рецепты зданий.\nНажми её, осмотри крафт и закрой окно. Горячая клавиша — B.";
                 case TutorialStep.Portal: return "Добро пожаловать! Подойди к порталу.\nWASD — движение. Жёлтый указатель покажет путь.";
@@ -502,7 +519,7 @@ namespace MineArena.Managers
                 var ghost = new GameObject("Drag item demonstration", typeof(RectTransform), typeof(Image));
                 ghost.transform.SetParent(_overlay.transform, false);
                 _dragItem = ghost.GetComponent<Image>(); _dragItem.raycastTarget = false; _dragItem.preserveAspect = true;
-                _dragItem.rectTransform.sizeDelta = new Vector2(60, 60);
+                _dragItem.rectTransform.sizeDelta = new Vector2(80, 80);
                 var hand = new GameObject("Minecraft drag hand", typeof(RectTransform), typeof(TutorialHandGraphic));
                 hand.transform.SetParent(_overlay.transform, false);
                 _dragHand = (RectTransform)hand.transform; _dragHand.sizeDelta = new Vector2(84, 112);
@@ -533,6 +550,10 @@ namespace MineArena.Managers
         }
         private void UpdateIllustration(TutorialStep step)
         {
+            bool building = step == TutorialStep.BuildSmith || step == TutorialStep.Build;
+            _illustration.rectTransform.sizeDelta = building ? new Vector2(320, 240) : new Vector2(160, 160);
+            ((RectTransform)_popup.transform).sizeDelta = new Vector2(820, building ? 608 : 528);
+            _popupBody.rectTransform.anchoredPosition = new Vector2(48, building ? -364 : -284);
             _illustration.sprite = StepIllustration(step);
             var item = GameRoot.GameConfig?.ItemDatabase.GetItemConfig(step == TutorialStep.Mine ? "WoodOak" : step == TutorialStep.Craft ? "Planks" : "");
             bool block = item is StackableItemConfig resource && resource.BlockStyleIcon;
@@ -568,7 +589,7 @@ namespace MineArena.Managers
             panel.GetComponent<Image>().sprite = Skin("craft_panel"); panel.GetComponent<Image>().type = Image.Type.Sliced;
             _title = Label(panel.transform, "Title", 20, new Vector2(24, -10), new Vector2(792, 28)); _title.color = new Color(1, .8f, .32f);
             _body = Label(panel.transform, "Instructions", 21, new Vector2(24, -40), new Vector2(792, 64));
-            var button = new GameObject("Claim tutorial gift", typeof(RectTransform), typeof(Image), typeof(Button)); button.transform.SetParent(panel.transform, false);
+            var button = new GameObject("Claim tutorial gift", typeof(RectTransform), typeof(Image), typeof(MineArena.UI.AnimatedButton)); button.transform.SetParent(panel.transform, false);
             var br = (RectTransform)button.transform; br.anchorMin = br.anchorMax = new Vector2(1, 1); br.pivot = new Vector2(1, 1); br.anchoredPosition = new Vector2(-18, -12); br.sizeDelta = new Vector2(220, 38);
             button.GetComponent<Image>().color = new Color(.24f, .58f, .39f);
             _gift = button.GetComponent<Button>(); _gift.onClick.AddListener(() => { if (CraftStep) MineArena.Windows.Crafting.CraftingWindow.Open(CraftBuilding); });
@@ -583,17 +604,17 @@ namespace MineArena.Managers
             var shadeRect = (RectTransform)_shade.transform; shadeRect.anchorMin = Vector2.zero; shadeRect.anchorMax = Vector2.one; shadeRect.sizeDelta = Vector2.zero;
             _shade.GetComponent<Image>().color = new Color(.025f, .04f, .09f, .65f);
             _popup = new GameObject("Tutorial popup", typeof(RectTransform), typeof(Image)); _popup.transform.SetParent(_overlay.transform, false);
-            var popupRect = (RectTransform)_popup.transform; popupRect.anchorMin = popupRect.anchorMax = new Vector2(.5f, .5f); popupRect.sizeDelta = new Vector2(820, 480);
+            var popupRect = (RectTransform)_popup.transform; popupRect.anchorMin = popupRect.anchorMax = new Vector2(.5f, .5f); popupRect.sizeDelta = new Vector2(820, 528);
             var frame = _popup.GetComponent<Image>(); frame.sprite = Skin("craft_panel"); frame.type = Image.Type.Sliced; frame.color = Color.white;
             var ribbon = new GameObject("Golden ribbon", typeof(RectTransform), typeof(Image)); ribbon.transform.SetParent(_popup.transform, false);
             var ribbonRect = (RectTransform)ribbon.transform; ribbonRect.anchorMin = new Vector2(0, 1); ribbonRect.anchorMax = Vector2.one; ribbonRect.pivot = new Vector2(.5f, 1); ribbonRect.sizeDelta = new Vector2(-36, 72); ribbonRect.anchoredPosition = new Vector2(0, -18);
             ribbon.GetComponent<Image>().sprite = Skin("craft_button_selected"); ribbon.GetComponent<Image>().type = Image.Type.Sliced;
             _popupTitle = Label(_popup.transform, "Popup title", 29, new Vector2(40, -35), new Vector2(740, 45)); _popupTitle.alignment = TextAlignmentOptions.Center; _popupTitle.color = new Color(1, .95f, .78f);
             var icon = new GameObject("Step illustration", typeof(RectTransform), typeof(Image)); icon.transform.SetParent(_popup.transform, false);
-            var ir = (RectTransform)icon.transform; ir.anchorMin = ir.anchorMax = new Vector2(.5f, 1); ir.pivot = new Vector2(.5f, 1); ir.anchoredPosition = new Vector2(0, -106); ir.sizeDelta = new Vector2(112, 112);
+            var ir = (RectTransform)icon.transform; ir.anchorMin = ir.anchorMax = new Vector2(.5f, 1); ir.pivot = new Vector2(.5f, 1); ir.anchoredPosition = new Vector2(0, -106); ir.sizeDelta = new Vector2(160, 160);
             _illustration = icon.GetComponent<Image>(); _illustration.preserveAspect = true; _illustration.raycastTarget = false;
-            _popupBody = Label(_popup.transform, "Popup instructions", 27, new Vector2(48, -236), new Vector2(724, 132)); _popupBody.alignment = TextAlignmentOptions.Center; _popupBody.color = new Color(1, .97f, .88f);
-            var confirm = new GameObject("Confirm", typeof(RectTransform), typeof(Image), typeof(Button)); confirm.transform.SetParent(_popup.transform, false);
+            _popupBody = Label(_popup.transform, "Popup instructions", 27, new Vector2(48, -284), new Vector2(724, 132)); _popupBody.alignment = TextAlignmentOptions.Center; _popupBody.color = new Color(1, .97f, .88f);
+            var confirm = new GameObject("Confirm", typeof(RectTransform), typeof(Image), typeof(MineArena.UI.AnimatedButton)); confirm.transform.SetParent(_popup.transform, false);
             var cr = (RectTransform)confirm.transform; cr.anchorMin = cr.anchorMax = new Vector2(.5f, 0); cr.pivot = new Vector2(.5f, 0); cr.anchoredPosition = new Vector2(0, 28); cr.sizeDelta = new Vector2(300, 64);
             confirm.GetComponent<Image>().sprite = Skin("craft_button_green"); confirm.GetComponent<Image>().type = Image.Type.Sliced; confirm.GetComponent<Button>().onClick.AddListener(ConfirmPopup);
             _confirmLabel = Label(confirm.transform, "Label", 27, new Vector2(0, -8), new Vector2(300, 48)); _confirmLabel.alignment = TextAlignmentOptions.Center;

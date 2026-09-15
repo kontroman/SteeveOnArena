@@ -30,23 +30,29 @@ namespace MineArena.Managers
 
         public Transform CurrentTargetTransform { get { return _currentInteractable.gameObject.transform; } }
 
+        public bool HasMobileInteraction => _currentInteractable != null || _cancelMining != null;
+        public bool IsMining => _cancelMining != null;
+        public bool IsMineableTarget => _currentInteractable != null && _currentInteractable.IsMineable;
+
         private void Update()
         {
             if (_cancelMining != null)
             {
-                bool attack = Input.GetMouseButtonDown(0) &&
+                bool attack = MineArena.UI.MobileGameInput.Attack &&
+                    (MineArena.UI.MobileGameInput.Enabled ||
                     (UnityEngine.EventSystems.EventSystem.current == null ||
-                     !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject());
+                     !UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject()));
                 if (_miningTarget == null || MineArena.PlayerSystem.PlayerMovement.IsPlayerDead ||
-                    Time.timeScale == 0 || TutorialService.BlocksInput || Input.GetKeyDown(KeyCode.E) ||
-                    Mathf.Abs(Input.GetAxisRaw("Horizontal")) > 0.1f ||
-                    Mathf.Abs(Input.GetAxisRaw("Vertical")) > 0.1f || Input.GetButtonDown("Jump") || attack)
+                    MineArena.UI.MobileGameInput.Blocked || MineArena.UI.MobileGameInput.Interact ||
+                    Mathf.Abs(MineArena.UI.MobileGameInput.Movement.x) > 0.1f ||
+                    Mathf.Abs(MineArena.UI.MobileGameInput.Movement.y) > 0.1f || MineArena.UI.MobileGameInput.Jump || attack)
                     _cancelMining.Invoke();
                 return;
             }
+            if (MineArena.UI.MobileGameInput.Blocked || Player.Instance == null) return;
             UpdateClosestObject();
 
-            if (_currentInteractable != null && Input.GetKeyDown(KeyCode.E))
+            if (_currentInteractable != null && MineArena.UI.MobileGameInput.Interact)
             {
                 _currentInteractable?.HideInteractionPrompt();
                 _currentInteractable.ExecuteCommand();
@@ -75,6 +81,7 @@ namespace MineArena.Managers
 
             foreach (var interactable in _nearbyObjects)
             {
+                if (interactable == null) continue;
                 float distance = Vector3.Distance(interactable.transform.position, Player.Instance.transform.position);
 
                 if (distance < closestDistance)

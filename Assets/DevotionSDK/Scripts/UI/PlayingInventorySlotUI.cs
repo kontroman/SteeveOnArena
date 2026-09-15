@@ -46,7 +46,8 @@ namespace Devotion.SDK.UI
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            _owner?.SelectInventorySlot(_index);
+            if (eventData.button == PointerEventData.InputButton.Left && !eventData.dragging)
+                _owner?.ActivateInventorySlot(_index);
         }
 
         public bool TryDropInventoryItem(Item item)

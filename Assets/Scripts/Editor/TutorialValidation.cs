@@ -325,6 +325,10 @@ namespace MineArena.Editor
                 foreach (TutorialStep step in TutorialService.Steps)
                     if (step != TutorialStep.Complete) Check(popupBody.GetPreferredValues(TutorialService.Instructions(step), 724, 1000).y <= 132, "Popup copy fits: " + step);
                 GameUiBuilder.Render(popup, "Documentation/UI/Tutorial-Popup.png");
+                typeof(TutorialService).GetMethod("UpdateIllustration", Private).Invoke(tutor, new object[] { TutorialStep.BuildSmith });
+                popupBody.text = TutorialService.Instructions(TutorialStep.BuildSmith);
+                popup.transform.Find("Popup title").GetComponent<TMP_Text>().text = popup.transform.Find("Popup title").GetComponent<TMP_Text>().text.Replace("1 / 14", "6 / 14");
+                GameUiBuilder.Render(popup, "Documentation/UI/Tutorial-Building.png");
                 typeof(TutorialService).GetMethod("UpdateIllustration", Private).Invoke(tutor, new object[] { TutorialStep.Mine });
                 popupBody.text = TutorialService.Instructions(TutorialStep.Mine);
                 popup.transform.Find("Popup title").GetComponent<TMP_Text>().text = "ПЕРВЫЕ ШАГИ • 3 / 14";

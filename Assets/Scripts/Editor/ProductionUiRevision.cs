@@ -48,7 +48,7 @@ namespace MineArena.Editor
                     for (int level = 0; level < building.Levels.Count; level++)
                     {
                         string path = "Assets/Art/UI/Buildings/" + AssetDatabase.AssetPathToGUID(AssetDatabase.GetAssetPath(building)) + "-" + level + ".png";
-                        BakeBuilding(building.Levels[level].ModelPrefab, path); ImportSprite(path, 1024);
+                        BakeBuilding(building.Levels[level].ModelPrefab, path, building.name == "SmithBuilding" || building.name == "StorageBuilding" ? 180f : 0f); ImportSprite(path, 1024);
                         data.FindProperty("_levels").GetArrayElementAtIndex(level).FindPropertyRelative("_preview").objectReferenceValue = AssetDatabase.LoadAssetAtPath<Sprite>(path);
                     }
                     data.ApplyModifiedPropertiesWithoutUndo(); AssetDatabase.SaveAssetIfDirty(building);

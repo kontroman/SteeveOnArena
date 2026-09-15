@@ -185,7 +185,7 @@ namespace MineArena.Windows
             var rect = CreateRect(label, parent, new Vector2(0.5f, 0f), new Vector2(0.5f, 0f), anchoredPosition, new Vector2(190f, 48f));
             var image = rect.gameObject.AddComponent<Image>();
             image.color = new Color(0.18f, 0.44f, 0.9f, 1f);
-            var button = rect.gameObject.AddComponent<Button>();
+            var button = rect.gameObject.AddComponent<MineArena.UI.AnimatedButton>();
             button.targetGraphic = image;
 
             var text = CreateText(rect, label, Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero, 20);

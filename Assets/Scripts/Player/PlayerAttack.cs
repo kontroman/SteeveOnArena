@@ -123,14 +123,14 @@ namespace MineArena.PlayerSystem
             }
 
             if (!bowSelected) _bufferedBowClickUntil = float.NegativeInfinity;
-            else if (Inputs.LKMPressed) _bufferedBowClickUntil = Time.time + _bowInputBuffer;
+            else if (MineArena.UI.MobileGameInput.Attack) _bufferedBowClickUntil = Time.time + _bowInputBuffer;
 
             if (_hasPendingBowShot && !_bowShotReleased && bowSelected)
                 UpdateBowAim();
 
             if (_isAttacking) return;
 
-            if ((!Inputs.LKMPressed && !(bowSelected && Time.time <= _bufferedBowClickUntil)) || Time.time < _nextAttackTime)
+            if ((!MineArena.UI.MobileGameInput.Attack && !(bowSelected && Time.time <= _bufferedBowClickUntil)) || Time.time < _nextAttackTime)
                 return;
 
             if (PotionEffects.SelectedPotion != null)
@@ -157,11 +157,12 @@ namespace MineArena.PlayerSystem
 
         private static bool IsPointerOverUi()
         {
-            return EventSystem.current != null && EventSystem.current.IsPointerOverGameObject();
+            return MineArena.UI.MobileGameInput.Blocked || (!MineArena.UI.MobileGameInput.Enabled && EventSystem.current != null && EventSystem.current.IsPointerOverGameObject());
         }
 
         private Vector3 GetAttackClickTargetPoint()
         {
+            if (MineArena.UI.MobileGameInput.Enabled) return transform.position + MineArena.UI.MobileGameInput.AimDirection(transform) * 10f;
             var camera = Camera.main;
             if (camera == null)
                 return transform.position + transform.forward;
@@ -512,6 +513,7 @@ namespace MineArena.PlayerSystem
         private Vector3 GetBowTargetPoint(Vector3 origin, AttackConfig bowConfig)
         {
             var maxDistance = Mathf.Max(1f, bowConfig.Radius, _bowAimRaycastDistance);
+            if (MineArena.UI.MobileGameInput.Enabled) return origin + MineArena.UI.MobileGameInput.AimDirection(transform) * maxDistance;
             var camera = Camera.main;
 
             if (camera == null)

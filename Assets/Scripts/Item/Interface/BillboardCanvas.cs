@@ -64,13 +64,14 @@ namespace MineArena.Items
 
             _canvas.transform.localPosition = _canvas.transform.localPosition + _posOffset;
             _canvas.transform.localScale = _canvas.transform.localScale + _sizeOffset;
-            _canvas.SetActive(_visible);
+            _canvas.SetActive(_visible && !HideOnMobile);
         }
 
         private void LateUpdate()
         {
             if (_canvas == null)
                 return;
+            if (HideOnMobile) { HideUI(); return; }
 
             if (_mainCamera == null)
                 _mainCamera = Camera.main;
@@ -82,8 +83,13 @@ namespace MineArena.Items
             if (_canvasComponent != null) _canvasComponent.worldCamera = _mainCamera;
         }
 
+        private bool HideOnMobile => GetComponent<InteractableObject>()?.IsMineable == true &&
+            (Application.isMobilePlatform || MineArena.UI.MobileGameInput.Enabled ||
+             (!Application.isEditor && Input.touchSupported) || MineArena.UI.MobileGameInput.PreviewInEditor);
+
         public void ShowUI()
         {
+            if (HideOnMobile) { HideUI(); return; }
             _visible = true;
             if (_canvas)
                 _canvas.SetActive(true);

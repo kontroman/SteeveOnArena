@@ -199,7 +199,7 @@ namespace MineArena.Editor
                 }
                 var prefab = PrefabUtility.SaveAsPrefabAsset(root,"Assets/Prefabs/Buildings/SkinShop/SkinShop.prefab");
                 // Reuse the project's existing preview baker without rebuilding unrelated UI.
-                typeof(GameUiBuilder).GetMethod("BakeBuilding",BindingFlags.NonPublic|BindingFlags.Static).Invoke(null,new object[]{prefab,Art+"building.png"});
+                typeof(GameUiBuilder).GetMethod("BakeBuilding",BindingFlags.NonPublic|BindingFlags.Static).Invoke(null,new object[]{prefab,Art+"building.png",0f});
                 Import(Art+"building.png");
                 return prefab;
             }

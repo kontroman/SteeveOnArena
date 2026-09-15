@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Devotion.SDK.Base;
 using Devotion.SDK.Controllers;
 using Devotion.SDK.Helpers;
@@ -121,7 +121,7 @@ namespace MineArena.Windows
                 }
             }
             if (_upgrade != null || _storageEmpty == null) return;
-            var go = new GameObject("UpgradeStorage", typeof(RectTransform), typeof(Image), typeof(Button));
+            var go = new GameObject("UpgradeStorage", typeof(RectTransform), typeof(Image), typeof(MineArena.UI.AnimatedButton));
             go.layer = gameObject.layer;
             go.transform.SetParent(_storageEmpty.transform.parent, false);
             var rect = (RectTransform)go.transform;

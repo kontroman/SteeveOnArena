@@ -19,7 +19,7 @@ namespace MineArena.UI
             foreach (var graphic in GetComponentsInChildren<Graphic>(true)) graphic.raycastTarget = false;
             var background = GetComponent<Image>() ?? gameObject.AddComponent<Image>();
             background.raycastTarget = true;
-            var button = GetComponent<Button>() ?? gameObject.AddComponent<Button>();
+            var button = GetComponent<Button>() ?? gameObject.AddComponent<MineArena.UI.AnimatedButton>();
             button.targetGraphic = background;
             button.onClick.AddListener(Open);
             foreach (var text in GetComponentsInChildren<TMP_Text>(true))

@@ -1,0 +1,17 @@
+PASS HealingPotion dropping into quick slot does not consume
+PASS HealingPotion one slot click consumes exactly one (3 -> 2)
+PASS HealingPotion cooldown does not consume
+PASS HealingPotion reduced count survives serialization
+PASS SpeedPotion dropping into quick slot does not consume
+PASS SpeedPotion one slot click consumes exactly one (3 -> 2)
+PASS SpeedPotion cooldown does not consume
+PASS SpeedPotion reduced count survives serialization
+PASS RegenerationPotion dropping into quick slot does not consume
+PASS RegenerationPotion one slot click consumes exactly one (3 -> 2)
+PASS RegenerationPotion cooldown does not consume
+PASS RegenerationPotion reduced count survives serialization
+PASS Healing click applies its effect once
+PASS Full health does not consume
+PASS Dead player does not consume
+PASS Last potion consumes exactly one (1 -> 0)
+PASS Empty slot cannot consume or heal

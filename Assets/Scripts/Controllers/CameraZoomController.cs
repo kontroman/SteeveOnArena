@@ -59,11 +59,25 @@ namespace MineArena.Controllers
 
         private void HandleZoomInput()
         {
+            if (MineArena.UI.MobileGameInput.Blocked) return;
             float scroll = Input.mouseScrollDelta.y;
+            if (MineArena.UI.MobileGameInput.Enabled && Input.touchCount > 0)
+            {
+                if (!MineArena.UI.MobileGameInput.Pinching) return;
+                if (Input.touchCount != 2) return;
+                var first = Input.GetTouch(0);
+                var second = Input.GetTouch(1);
+                if (MineArena.UI.MobileTouchControl.OwnsPointer(first.fingerId) || MineArena.UI.MobileTouchControl.OwnsPointer(second.fingerId)) return;
+                if (first.phase == TouchPhase.Began || second.phase == TouchPhase.Began ||
+                    first.phase == TouchPhase.Ended || second.phase == TouchPhase.Ended ||
+                    first.phase == TouchPhase.Canceled || second.phase == TouchPhase.Canceled) return;
+                float previous = Vector2.Distance(first.position - first.deltaPosition, second.position - second.deltaPosition);
+                scroll = (Vector2.Distance(first.position, second.position) - previous) / Mathf.Max(1, Mathf.Min(Screen.width, Screen.height)) * 12f;
+            }
             if (Mathf.Approximately(scroll, 0f))
                 return;
 
-            if (_ignoreWhenPointerOverUi && EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+            if (!MineArena.UI.MobileGameInput.Enabled && _ignoreWhenPointerOverUi && EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
                 return;
 
             _targetDistance = Mathf.Clamp(_targetDistance - MineArena.UI.CameraSensitivity.Apply(scroll, _zoomStep), _minDistance, _maxDistance);

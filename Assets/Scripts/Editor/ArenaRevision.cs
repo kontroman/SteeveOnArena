@@ -323,7 +323,7 @@ namespace MineArena.Editor
         {
             var rect = Rect(parent, name, position, size);
             rect.gameObject.AddComponent<Image>().color = color;
-            var button = rect.gameObject.AddComponent<Button>();
+            var button = rect.gameObject.AddComponent<MineArena.UI.AnimatedButton>();
             Label(rect, font, "Label", key, Vector2.zero, size - new Vector2(24, 8), 25);
             return button;
         }
